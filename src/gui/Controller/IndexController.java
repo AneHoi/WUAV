@@ -1,4 +1,4 @@
-package gui;
+package gui.Controller;
 
 public class IndexController {
 }
