@@ -1,5 +1,6 @@
 package GUI.Controller;
 
+import BE.User;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.css.PseudoClass;
@@ -34,19 +35,30 @@ public class TopBarView implements Initializable {
     private String logo = "data/Images/WUAV Logo.png";
     private String profilePicture = "data/Images/ProfilePicture.png";
 
+    private User loggedInUser;
+
+    private ControllerAssistant controllerAssistant;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        controllerAssistant = ControllerAssistant.getInstance();
+        loggedInUser = controllerAssistant.getLoggedInUser();
+        loadUserInfo();
+
+
+    }
+
+    private void loadUserInfo() {
         imgLogo.setImage(loadImages(logo));
         rectangle.setArcWidth(30.0);   // Corner radius
         rectangle.setArcHeight(30.0);
-        ImagePattern pattern = new ImagePattern(
+        ImagePattern pattern = new ImagePattern( //TODO change to users profile picture
                 new Image("file:data/Images/ProfilePicture.png", 100, 150, true, true) // Resizing
         );
         rectangle.setFill(pattern);
-        lblFirstName.setText("Michael");
-        lblLastName.setText("Tonnesen");
+        lblFirstName.setText("Michael"); //TODO Change to users real name
+        lblLastName.setText("Tonnesen"); //TODO Chnage to users real last name
         lblLogOut.setText("Log Out");
-
     }
 
     private Image loadImages(String url) {

@@ -1,3 +1,8 @@
+/*
+--ORANGE: rgba(232,73,16,1);
+--DARK GREY: rgba(51,51,51,1);
+--DARK BLUE: rgba(23,38,58,1);
+*/
 
 .topBarView {
     -fx-background-color: rgba(51,51,51,1);
@@ -10,9 +15,13 @@
 
 }
 
-
-.image-view-wrapper:border {
-    -fx-border-color: black;
+.vboxBorderOrange {
+    -fx-border-color: rgba(232,73,16,1);
     -fx-border-style: solid;
-    -fx-border-width: 5;
+    -fx-border-width: 0 3 0 0;
+}
+
+.burgerBarMenuLabels  {
+    -fx-font-size: 26;
+    -fx-text-fill: WHITE;
 }
