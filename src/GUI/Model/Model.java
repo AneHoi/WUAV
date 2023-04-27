@@ -1,4 +1,4 @@
-package gui.Model;
+package GUI.Model;
 
 public class Model {
 }
