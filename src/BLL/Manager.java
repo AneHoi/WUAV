@@ -1,4 +1,4 @@
-package bll;
+package BLL;
 
 public class Manager {
 }
