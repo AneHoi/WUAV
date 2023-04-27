@@ -1,9 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="GUI.Controller.TopBarView"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-</AnchorPane>
+
+<HBox fx:id="hboxTop" minHeight="200.0" minWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="imgProfilePicture" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+         <HBox.margin>
+            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+         </HBox.margin>
+      </ImageView>
+      <VBox prefHeight="0.0">
+         <children>
+            <FlowPane alignment="TOP_CENTER" prefWidth="200.0">
+               <children>
+                  <Label fx:id="lblFirstName" text="Label" textFill="WHITE">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                     <FlowPane.margin>
+                        <Insets top="30.0" />
+                     </FlowPane.margin>
+                  </Label>
+               </children>
+            </FlowPane>
+            <FlowPane alignment="TOP_CENTER" prefWidth="200.0">
+               <children>
+                  <Label fx:id="lblLastName" text="Label" textFill="WHITE">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Label>
+               </children>
+            </FlowPane>
+            <Line endX="100.0" startX="-100.0" stroke="WHITE" />
+            <FlowPane alignment="TOP_CENTER" prefWidth="200.0">
+               <children>
+                  <Label fx:id="lblLogOut" text="Label" textFill="WHITE" underline="true">
+                     <font>
+                        <Font name="System Bold" size="32.0" />
+                     </font>
+                  </Label>
+               </children>
+            </FlowPane>
+         </children>
+      </VBox>
+      <FlowPane alignment="TOP_RIGHT" columnHalignment="RIGHT" rowValignment="TOP" HBox.hgrow="ALWAYS">
+         <HBox.margin>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+         </HBox.margin>
+         <children>
+            <ImageView fx:id="imgLogo" fitHeight="113.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+               <FlowPane.margin>
+                  <Insets />
+               </FlowPane.margin>
+            </ImageView>
+         </children>
+      </FlowPane>
+   </children>
+</HBox>
