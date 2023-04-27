@@ -1,21 +1,14 @@
 package GUI.Controller;
 
-import BE.User;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.css.PseudoClass;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
@@ -54,11 +47,7 @@ public class BurgerBarView implements Initializable {
         imgBurgerOrange = loadImages(burgerOrange);
         imgBurgerNormal = loadImages(burger);
         loadIconsToBar();
-
-
         imgBurger.setOnMouseClicked(event -> expandMenuBar());
-
-
     }
 
     private void expandMenuBar() {
@@ -131,19 +120,6 @@ public class BurgerBarView implements Initializable {
 
     }
 
-    private void turnBorderOrange() {
-        PseudoClass burgerBarMenuBorder = PseudoClass.getPseudoClass("border");
-        vboxBurgerMenu.getStyleClass().add("vboxBorderOrange");
-        BooleanProperty burgerBarMenuBorderActive = new SimpleBooleanProperty() {
-            @Override
-            protected void invalidated() {
-                vboxBurgerMenu.pseudoClassStateChanged(burgerBarMenuBorder, get());
-            }
-        };
-        imgBurger.setOnMouseClicked(ev -> burgerBarMenuBorderActive.set(!burgerBarMenuBorderActive.get()));
-
-    }
-
     private Image loadImages(String url) {
         Image image = null;
         try {
@@ -157,24 +133,4 @@ public class BurgerBarView implements Initializable {
 
     }
 
-    /* USE This to make a border around the BurgerBarMenu when the burger is clicked on.
-
-        PseudoClass burgerBarMenuBorder = PseudoClass.getPseudoClass("border");
-
-
-           vboxBurgerMenu.getStyleClass().add("image-view-wrapper");
-
-        BooleanProperty imageViewBorderActive = new SimpleBooleanProperty() {
-            @Override
-            protected void invalidated() {
-                imgBurger.pseudoClassStateChanged(burgerBarMenuBorder, get());
-            }
-        };
-
-        imgBurger.setOnMouseClicked(ev -> imageViewBorderActive
-                .set(!imageViewBorderActive.get()));
-
-
-    }
-     */
 }
