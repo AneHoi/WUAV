@@ -1,4 +1,14 @@
 package GUI.Controller;
 
-public class CreateNewCustomerView {
+import javafx.fxml.Initializable;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class CreateNewCustomerView implements Initializable {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
 }
+
