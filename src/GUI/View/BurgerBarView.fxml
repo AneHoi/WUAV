@@ -1,9 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="GUI.Controller.BurgerBarView"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
 
-</AnchorPane>
+<VBox fx:id="vboxBurgerMenu" minHeight="632.0" minWidth="125.0" styleClass="burgerBarView" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.BurgerBarView">
+   <children>
+      <FlowPane fx:id="flowBurger" alignment="CENTER" minWidth="125.0" prefWidth="125.0">
+         <children>
+            <ImageView fx:id="imgBurger" fitHeight="110.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </FlowPane>
+      <FlowPane fx:id="flowHome" alignment="CENTER" minWidth="125.0" prefWidth="125.0">
+         <children>
+            <ImageView fx:id="imgHome" fitHeight="110.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </FlowPane>
+      <FlowPane fx:id="flowCustomers" alignment="CENTER" minWidth="125.0" prefWidth="125.0">
+         <children>
+            <ImageView fx:id="imgCustomers" fitHeight="110.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </FlowPane>
+      <FlowPane fx:id="flowCases" alignment="CENTER" minWidth="125.0" prefWidth="125.0">
+         <children>
+            <ImageView fx:id="imgCases" fitHeight="110.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </FlowPane>
+      <FlowPane fx:id="flowUsers" alignment="CENTER" minWidth="125.0" prefWidth="125.0">
+         <children>
+            <ImageView fx:id="imgUsers" fitHeight="110.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </FlowPane>
+   </children>
+</VBox>
