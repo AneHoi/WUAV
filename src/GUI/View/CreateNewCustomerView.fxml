@@ -1,9 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="GUI.Controller.CreateNewCustomerView"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-</AnchorPane>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="565.0" prefWidth="926.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox spacing="30.0">
+               <children>
+                  <Label prefHeight="58.0" prefWidth="414.0" text="Create new costumer" underline="true" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="40.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtCostumerName" alignment="CENTER" promptText="Costumername...">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtAddress" alignment="CENTER" promptText="Address...">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtTelefonnumber" alignment="CENTER" promptText="Telefonenumber...">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtEmail" alignment="CENTER" promptText="Email...">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtCVR" alignment="CENTER" promptText="CVR...">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextField>
+               </children>
+               <HBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox>
+               <children>
+                  <HBox fx:id="hBoxSearch" alignment="TOP_RIGHT" prefHeight="67.0" prefWidth="295.0">
+                     <children>
+                        <TextField alignment="CENTER" prefHeight="29.0" prefWidth="200.0" promptText="Search for a costumer">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </TextField>
+                        <ImageView fitHeight="39.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../data/Images/Burger%20orange.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <Label text="Search through existing customers:" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <TableView prefHeight="430.0" prefWidth="407.0">
+                    <columns>
+                      <TableColumn prefWidth="140.0" text="Costumer" />
+                      <TableColumn text="Address" />
+                        <TableColumn prefWidth="85.0" text="CVR" />
+                        <TableColumn prefWidth="100.0" text="Created date" />
+                    </columns>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+               <HBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </HBox.margin>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+</BorderPane>
