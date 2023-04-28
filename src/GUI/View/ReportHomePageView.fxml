@@ -13,7 +13,8 @@
 
 
 <BorderPane maxWidth="-Infinity" prefHeight="632.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/19"
-            xmlns:fx="http://javafx.com/fxml/1">
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="GUI.Controller.ReportHomePageView">
     <center>
         <VBox BorderPane.alignment="CENTER">
             <BorderPane.margin>

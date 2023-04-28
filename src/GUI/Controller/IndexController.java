@@ -22,7 +22,7 @@ public class IndexController implements Initializable {
         controllerAssistant.setBorderPane(borderIndex);
         try {
             Model model = new Model();
-            controllerAssistant.loadCenter("ReportHomePageView.fxml");
+            controllerAssistant.loadCenter("CaseHomePageView.fxml");
             controllerAssistant.loadLeft("BurgerBarView.fxml");
             controllerAssistant.loadTop("TopBarView.fxml");
         } catch (IOException e) {

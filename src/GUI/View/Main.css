@@ -11,10 +11,6 @@
     -fx-background-color: rgba(23,38,58,1);
 }
 
-.profilePicture {
-
-}
-
 .vboxBorderOrange {
     -fx-border-color: rgba(232,73,16,1);
     -fx-border-style: solid;
@@ -23,7 +19,7 @@
 
 .burgerBarMenuLabels  {
     -fx-font-size: 26;
-    -fx-text-fill: WHITE;
+    -fx-text-fill: rgba(0,0,0,1);
 }
 
 .AddAndEditSectionButtons {
@@ -31,4 +27,31 @@
     -fx-font-size: 32;
     -fx-border-radius: 15;
     -fx-background-radius: 15;
+}
+
+.CaseHomePageTextFields {
+    -fx-background-color: rgba(51,51,51,1);
+    -fx-text-fill: rgba(0,0,0,1);
+    -fx-font-size: 24;
+    -fx-alignment: CENTER;
+}
+
+.CaseHomePageTextArea {
+    -fx-text-fill: rgba(0,0,0,1);
+    -fx-font-size: 24;
+
+}
+
+.CaseHomePageTextArea .content {
+    -fx-background-color: rgba(51,51,51,1);
+}
+
+
+.CaseHomePageButtons {
+    -fx-background-color: rgba(232,73,16,1);
+    -fx-font-size: 18;
+    -fx-text-fill: WHITE;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+
 }
