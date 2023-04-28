@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -41,13 +42,40 @@ public class BurgerBarView implements Initializable {
     private Image imgBurgerOrange;
     private Image imgBurgerNormal;
 
+    private ControllerAssistant controllerAssistant;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        controllerAssistant = ControllerAssistant.getInstance();
         imgBurgerOrange = loadImages(burgerOrange);
         imgBurgerNormal = loadImages(burger);
         loadIconsToBar();
         imgBurger.setOnMouseClicked(event -> expandMenuBar());
+        imgCases.setOnMouseClicked(event -> loadCasesView());
+        imgHome.setOnMouseClicked(event -> loadReportHomePage());
+    }
+
+    private void loadReportHomePage() {
+        try {
+            controllerAssistant.loadCenter("ReportHomePageView.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load Cases Home Page", ButtonType.OK);
+            alert.showAndWait();
+
+        }
+    }
+
+    private void loadCasesView() {
+        try {
+            controllerAssistant.loadCenter("CaseHomePageView.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load Cases Home Page", ButtonType.OK);
+            alert.showAndWait();
+
+        }
     }
 
     private void expandMenuBar() {
