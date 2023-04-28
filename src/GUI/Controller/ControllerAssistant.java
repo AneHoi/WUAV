@@ -49,7 +49,7 @@ public class ControllerAssistant {
     public void loadCenter(String file) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/" + file));
-        ScrollPane newScene = loader.load();
+        Pane newScene = loader.load();
 
         borderPane.setCenter(newScene);
     }
