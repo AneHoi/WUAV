@@ -37,10 +37,10 @@ GO
 CREATE TABLE Customer(
     Customer_ID                 INT IDENTITY(1,1)                       NOT NULL,
     Customer_Name               NVARCHAR(250)                           NOT NULL,
-    Customer_Address            NVARCHAR(250)                           NOT NULL,
+    Customer_Adress             NVARCHAR(250)                           NOT NULL,
     Customer_Mail               NVARCHAR(250)                           NOT NULL,
     Customer_tlf                NVARCHAR(50)                            NOT NULL,
-    Customer_CVR                INT                                     NOT NULL,
+    Customer_CVR                INT,
     Customer_Type               NVARCHAR(50)                            NOT NULL,
 
     CONSTRAINT PK_CUSTOMER_ID PRIMARY KEY(Customer_ID)
@@ -51,7 +51,7 @@ CREATE TABLE User_Passwords(
     User_User_ID                INT                                     NOT NULL,
     User_User_Name              NVARCHAR(250)                           NOT NULL,
     Users_Password              NVARCHAR(MAX)                           NOT NULL,
-    Users_Salt                  NVARCHAR(MAX)                           NOT NULL,
+    Users_Salt                  NVARCHAR(MAX),
 
     CONSTRAINT FK_USER_USER_ID FOREIGN KEY(User_User_ID)
     REFERENCES User_(User_ID),
@@ -63,7 +63,7 @@ CREATE TABLE Case_(
     Case_ID                     INT IDENTITY(1,1)                       NOT NULL,
     Case_Name                   NVARCHAR(500)                           NOT NULL,
     Case_Description            NVARCHAR(750)                           NOT NULL,
-    Case_Contact_Person         NVARCHAR(250)                           NOT NULL,
+    Case_Conatact_Person        NVARCHAR(250)                           NOT NULL,
     Case_Customer_ID            INT                                     NOT NULL,
     Case_Assigned_Tech_ID       INT                                     NOT NULL,
 
