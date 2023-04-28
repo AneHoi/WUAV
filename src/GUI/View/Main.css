@@ -25,3 +25,10 @@
     -fx-font-size: 26;
     -fx-text-fill: WHITE;
 }
+
+.AddAndEditSectionButtons {
+    -fx-background-color: rgba(232,73,16,1);
+    -fx-font-size: 32;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+}
