@@ -19,7 +19,7 @@
 
 .burgerBarMenuLabels  {
     -fx-font-size: 26;
-    -fx-text-fill: rgba(0,0,0,1);
+    -fx-text-fill: WHITE;
 }
 
 .AddAndEditSectionButtons {
@@ -31,13 +31,13 @@
 
 .CaseHomePageTextFields {
     -fx-background-color: rgba(51,51,51,1);
-    -fx-text-fill: rgba(0,0,0,1);
+    -fx-text-fill: WHITE;
     -fx-font-size: 24;
     -fx-alignment: CENTER;
 }
 
 .CaseHomePageTextArea {
-    -fx-text-fill: rgba(0,0,0,1);
+    -fx-text-fill: WHITE;
     -fx-font-size: 24;
 
 }
