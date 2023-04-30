@@ -52,8 +52,19 @@ public class BurgerBarView implements Initializable {
         imgBurgerNormal = loadImages(burger);
         loadIconsToBar();
         imgBurger.setOnMouseClicked(event -> expandMenuBar());
-        imgCases.setOnMouseClicked(event -> loadCasesView());
+        imgCases.setOnMouseClicked(event -> loadSearchForCases());
         imgHome.setOnMouseClicked(event -> loadUserHomePage());
+    }
+
+    private void loadSearchForCases() {
+        try {
+            controllerAssistant.loadCenter("SearchForCaseView.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load Search For Case Page", ButtonType.OK);
+            alert.showAndWait();
+
+        }
     }
 
     private void loadUserHomePage() {
