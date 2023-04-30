@@ -43,7 +43,7 @@
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <left>
-            <VBox spacing="50.0" BorderPane.alignment="CENTER">
+            <VBox spacing="45.0" BorderPane.alignment="CENTER">
                <children>
                   <TextField fx:id="txtReportName" prefHeight="50.0" prefWidth="300.0" promptText="Report Name..." styleClass="CaseHomePageTextFields">
                      <VBox.margin>
@@ -64,11 +64,11 @@
             </VBox>
          </left>
          <center>
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="30.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="45.0" BorderPane.alignment="CENTER">
                <children>
                   <TextField fx:id="txtSearchField" prefHeight="40.0" promptText="Search..." styleClass="CaseHomePageTextFields">
                      <VBox.margin>
-                        <Insets left="100.0" right="20.0" top="20.0" />
+                        <Insets bottom="-35.0" left="100.0" right="20.0" top="20.0" />
                      </VBox.margin>
                   </TextField>
                   <Label text="Search through existing reports:">
@@ -76,7 +76,7 @@
                         <Font size="24.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="-30.0" left="20.0" />
+                        <Insets bottom="-45.0" left="20.0" />
                      </VBox.margin>
                   </Label>
                   <TableView fx:id="tblViewExstingReports" prefHeight="380.0" prefWidth="455.0">
@@ -97,7 +97,7 @@
             </VBox>
          </center>
          <right>
-            <VBox spacing="50.0" BorderPane.alignment="CENTER">
+            <VBox spacing="45.0" BorderPane.alignment="CENTER">
                <children>
                   <TextField fx:id="txtAddendumName" prefHeight="50.0" prefWidth="300.0" promptText="Addendum Name..." styleClass="CaseHomePageTextFields">
                      <VBox.margin>
