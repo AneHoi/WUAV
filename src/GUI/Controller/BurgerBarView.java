@@ -53,7 +53,18 @@ public class BurgerBarView implements Initializable {
         loadIconsToBar();
         imgBurger.setOnMouseClicked(event -> expandMenuBar());
         imgCases.setOnMouseClicked(event -> loadCasesView());
-        imgHome.setOnMouseClicked(event -> loadReportHomePage());
+        imgHome.setOnMouseClicked(event -> loadUserHomePage());
+    }
+
+    private void loadUserHomePage() {
+        try {
+            controllerAssistant.loadCenter("UserHomePageView.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load Home Page", ButtonType.OK);
+            alert.showAndWait();
+
+        }
     }
 
     private void loadReportHomePage() {
