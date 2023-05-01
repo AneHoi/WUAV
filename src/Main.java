@@ -12,6 +12,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         //Parent root = FXMLLoader.load(getClass().getResource("GUI/view/LoginView.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("GUI/view/CreateNewCustomerView.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("GUI/view/DisplayCutomers.fxml"));
         Parent root = FXMLLoader.load(getClass().getResource("GUI/view/Index.fxml"));
 
         primaryStage.setTitle("WUAV");

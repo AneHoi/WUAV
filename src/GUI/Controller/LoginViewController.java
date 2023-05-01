@@ -3,6 +3,7 @@ package GUI.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -28,10 +29,13 @@ public class LoginViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         SetImg();
-        pswPassword.setEffect(shadow);
-        txtUsername.setEffect(shadow);
-        btnLogin.setEffect(shadow);
-        imgWUAVLogo.setEffect(shadow);
+        setEffect(pswPassword, txtUsername, btnLogin, imgWUAVLogo);
+    }
+
+    private void setEffect(Node... node) {
+        for (Node nodes: node) {
+            nodes.setEffect(shadow);
+        }
     }
 
     private void SetImg() {
