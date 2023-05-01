@@ -59,6 +59,7 @@ public class CreateNewCustomerView implements Initializable {
         clmCreatedDate.setCellFactory(new PropertyValueFactory<>("customerType"));
 
         customerObservableList.addAll(model.getAllCostumers());
+        //TODO fix me
         //tableviewCostumers.setItems(customerObservableList);
     }
 
