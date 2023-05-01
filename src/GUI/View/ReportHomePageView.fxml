@@ -38,7 +38,7 @@
                                                         <Insets top="2.0"/>
                                                     </HBox.margin>
                                                 </Label>
-                                                <Label fx:id="lblCustomerName" text="LABEL CUSTMER" wrapText="true"/>
+                                                <Label fx:id="lblCustomerName" text="LABEL CUSTOMER" wrapText="true"/>
                                             </children>
                                         </HBox>
                                         <HBox alignment="BOTTOM_LEFT">

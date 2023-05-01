@@ -43,9 +43,9 @@
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <left>
-            <VBox spacing="50.0" BorderPane.alignment="CENTER">
+            <VBox spacing="45.0" BorderPane.alignment="CENTER">
                <children>
-                  <TextField fx:id="txtReportName" prefHeight="50.0" prefWidth="300.0" promptText="Report Name..." styleClass="CaseHomePageTextFields">
+                  <TextField fx:id="txtReportName" prefHeight="50.0" prefWidth="300.0" promptText="Report Name..." styleClass="textFields">
                      <VBox.margin>
                         <Insets left="25.0" right="25.0" top="20.0" />
                      </VBox.margin>
@@ -55,7 +55,7 @@
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>
                   </TextArea>
-                  <Button fx:id="btnCreateNewReport" mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" styleClass="CaseHomePageButtons" text="Create New Report" underline="true">
+                  <Button fx:id="btnCreateNewReport" mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" styleClass="orangeButtons" text="Create New Report" underline="true">
                      <VBox.margin>
                         <Insets left="25.0" />
                      </VBox.margin>
@@ -64,11 +64,11 @@
             </VBox>
          </left>
          <center>
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="30.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="45.0" BorderPane.alignment="CENTER">
                <children>
-                  <TextField fx:id="txtSearchField" prefHeight="40.0" promptText="Search..." styleClass="CaseHomePageTextFields">
+                  <TextField fx:id="txtSearchField" prefHeight="40.0" promptText="Search..." styleClass="textFields">
                      <VBox.margin>
-                        <Insets left="100.0" right="20.0" top="20.0" />
+                        <Insets bottom="-35.0" left="100.0" right="20.0" top="20.0" />
                      </VBox.margin>
                   </TextField>
                   <Label text="Search through existing reports:">
@@ -76,10 +76,10 @@
                         <Font size="24.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="-30.0" left="20.0" />
+                        <Insets bottom="-45.0" left="20.0" />
                      </VBox.margin>
                   </Label>
-                  <TableView fx:id="tblViewExstingReports" prefHeight="380.0" prefWidth="455.0">
+                  <TableView fx:id="tblViewExistingReports" prefHeight="380.0" prefWidth="455.0">
                      <VBox.margin>
                         <Insets left="20.0" right="20.0" />
                      </VBox.margin>
@@ -97,9 +97,9 @@
             </VBox>
          </center>
          <right>
-            <VBox spacing="50.0" BorderPane.alignment="CENTER">
+            <VBox spacing="45.0" BorderPane.alignment="CENTER">
                <children>
-                  <TextField fx:id="txtAddendumName" prefHeight="50.0" prefWidth="300.0" promptText="Addendum Name..." styleClass="CaseHomePageTextFields">
+                  <TextField fx:id="txtAddendumName" prefHeight="50.0" prefWidth="300.0" promptText="Addendum Name..." styleClass="textFields">
                      <VBox.margin>
                         <Insets left="25.0" right="25.0" top="20.0" />
                      </VBox.margin>
@@ -109,7 +109,7 @@
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>
                   </TextArea>
-                  <Button fx:id="btnCreateNewAddendum" mnemonicParsing="false" prefHeight="39.0" prefWidth="215.0" styleClass="CaseHomePageButtons" text="Create New Addendum" underline="true">
+                  <Button fx:id="btnCreateNewAddendum" mnemonicParsing="false" prefHeight="39.0" prefWidth="215.0" styleClass="orangeButtons" text="Create New Addendum" underline="true">
                      <VBox.margin>
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>
