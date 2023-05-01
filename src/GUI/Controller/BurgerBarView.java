@@ -54,7 +54,7 @@ public class BurgerBarView implements Initializable {
         imgBurger.setOnMouseClicked(event -> expandMenuBar());
         imgCases.setOnMouseClicked(event -> loadSearchForCases());
         imgHome.setOnMouseClicked(event -> loadUserHomePage());
-        imgCustomers.setOnMouseClicked(event -> loadCustomerView(););
+        imgCustomers.setOnMouseClicked(event -> loadCustomerView());
     }
 
     private void loadCustomerView() {
