@@ -55,7 +55,7 @@
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>
                   </TextArea>
-                  <Button fx:id="btnCreateNewReport" mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" styleClass="orangeButtons" text="Create New Report" underline="true">
+                  <Button fx:id="btnCreateNewReport" mnemonicParsing="false" onAction="#handleCreateNewReport" prefHeight="35.0" prefWidth="200.0" styleClass="orangeButtons" text="Create New Report" underline="true">
                      <VBox.margin>
                         <Insets left="25.0" />
                      </VBox.margin>
@@ -109,7 +109,7 @@
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>
                   </TextArea>
-                  <Button fx:id="btnCreateNewAddendum" mnemonicParsing="false" prefHeight="39.0" prefWidth="215.0" styleClass="orangeButtons" text="Create New Addendum" underline="true">
+                  <Button fx:id="btnCreateNewAddendum" mnemonicParsing="false" onAction="#handleCreateNewAddendum" prefHeight="39.0" prefWidth="215.0" styleClass="orangeButtons" text="Create New Addendum" underline="true">
                      <VBox.margin>
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>

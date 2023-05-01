@@ -7,12 +7,12 @@ public class Report {
     private String reportName;
     private String reportDescription;
     private int caseID;
-    private int assignedTechnician;
+    private String assignedTechnician;
     private LocalDate createdDate;
     private int logID;
     private boolean isActive;
 
-    public Report(int reportID, String reportName, String reportDescription, int caseID, int assignedTechnician, LocalDate createdDate, int logID, boolean isActive) {
+    public Report(int reportID, String reportName, String reportDescription, int caseID, String assignedTechnician, LocalDate createdDate, int logID, boolean isActive) {
         this.reportID = reportID;
         this.reportName = reportName;
         this.reportDescription = reportDescription;
@@ -55,11 +55,11 @@ public class Report {
         this.caseID = caseID;
     }
 
-    public int getAssignedTechnician() {
+    public String getAssignedTechnician() {
         return assignedTechnician;
     }
 
-    public void setAssignedTechnician(int assignedTechnician) {
+    public void setAssignedTechnician(String assignedTechnician) {
         this.assignedTechnician = assignedTechnician;
     }
 
@@ -79,11 +79,18 @@ public class Report {
         this.logID = logID;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
+    public boolean isActive() { return this.isActive;}
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public String getIsActive() {
+        String yesOrNO = "";
+        if (isActive) {
+            yesOrNO = "Active";
+        } else
+            yesOrNO = "Inactive";
+        return yesOrNO;
     }
 }
