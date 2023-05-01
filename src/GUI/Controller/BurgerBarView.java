@@ -55,6 +55,17 @@ public class BurgerBarView implements Initializable {
         imgCases.setOnMouseClicked(event -> loadSearchForCases());
         imgHome.setOnMouseClicked(event -> loadUserHomePage());
         imgCustomers.setOnMouseClicked(event -> loadCustomerView());
+        imgUsers.setOnMouseClicked(event -> loadUserView());
+    }
+
+    private void loadUserView() {
+        try {
+            controllerAssistant.loadCenter("CreateUserView.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load Create New User Page", ButtonType.OK);
+            alert.showAndWait();
+        }
     }
 
     private void loadCustomerView() {
@@ -113,7 +124,7 @@ public class BurgerBarView implements Initializable {
     }
 
     private void expandMenuBar() {
-        if(imgBurger.getImage().equals(imgBurgerNormal)) {
+        if (imgBurger.getImage().equals(imgBurgerNormal)) {
             imgBurger.setImage(imgBurgerOrange);
             vboxBurgerMenu.setMinWidth(250);
             loadLabelsForIcons();
@@ -147,16 +158,16 @@ public class BurgerBarView implements Initializable {
     private void loadLabelsForIcons() {
         Label home = new Label("Home");
         home.getStyleClass().add("burgerBarMenuLabels");
-        home.setPadding(new Insets(0,0,20,0));
+        home.setPadding(new Insets(0, 0, 20, 0));
         Label customers = new Label("Customers");
         customers.getStyleClass().add("burgerBarMenuLabels");
-        customers.setPadding(new Insets(0,0,20,0));
+        customers.setPadding(new Insets(0, 0, 20, 0));
         Label cases = new Label("Cases");
         cases.getStyleClass().add("burgerBarMenuLabels");
-        cases.setPadding(new Insets(0,0,20,0));
+        cases.setPadding(new Insets(0, 0, 20, 0));
         Label users = new Label("Users");
         users.getStyleClass().add("burgerBarMenuLabels");
-        users.setPadding(new Insets(0,0,20,0));
+        users.setPadding(new Insets(0, 0, 20, 0));
         flowHome.getChildren().add(home);
         flowCustomers.getChildren().add(customers);
         flowCases.getChildren().add(cases);
