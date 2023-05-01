@@ -123,3 +123,5 @@ fabric.properties
 .idea/**/azureSettings.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij
+.idea/inspectionProfiles/Project_Default.xml
+/WUAV.iml
