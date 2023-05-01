@@ -84,6 +84,9 @@
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
                   </Label>
                   <TableView fx:id="tblViewFilteredCases" prefHeight="450.0" prefWidth="600.0">
                      <columnResizePolicy>

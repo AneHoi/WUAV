@@ -25,7 +25,7 @@
          <children>
             <VBox>
                <children>
-                  <Label prefHeight="40.0" prefWidth="400.0" text="Your active cases:">
+                  <Label prefHeight="40.0" prefWidth="400.0" text="Your active cases:" underline="true">
                      <VBox.margin>
                         <Insets left="25.0" />
                      </VBox.margin>
@@ -51,7 +51,7 @@
             </VBox>
             <VBox>
                <children>
-                  <Label prefHeight="40.0" prefWidth="400.0" text="Recently viewed customers:">
+                  <Label prefHeight="40.0" prefWidth="400.0" text="Recently viewed customers:" underline="true">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
