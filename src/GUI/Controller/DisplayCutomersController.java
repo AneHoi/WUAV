@@ -11,7 +11,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class DisplayCutomersController implements Initializable {
@@ -39,6 +38,7 @@ public class DisplayCutomersController implements Initializable {
         clmType.setCellFactory(new PropertyValueFactory<>("customerType"));
 
 
+        //TODO fix me
         //tblView.setItems(customerObservableList);
     }
 }
