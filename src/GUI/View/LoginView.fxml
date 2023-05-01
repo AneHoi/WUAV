@@ -1,9 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="GUI.Controller.LoginView"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-</AnchorPane>
+<BorderPane prefHeight="400.0" prefWidth="640.0" style="-fx-background-color: FFFFFF;" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.LoginViewController">
+   <top>
+      <ImageView fx:id="imgWUAVLogo" fitHeight="75.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_RIGHT">
+         <BorderPane.margin>
+            <Insets right="20.0" top="20.0" />
+         </BorderPane.margin></ImageView>
+   </top>
+   <center>
+      <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="txtUsername" alignment="CENTER" prefHeight="50.0" prefWidth="300.0" promptText="Username" styleClass="backgroundAndWhiteText">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <PasswordField fx:id="pswPassword" alignment="CENTER" prefHeight="50.0" prefWidth="300.0" promptText="Password" styleClass="backgroundAndWhiteText">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </PasswordField>
+            <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#login" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: E84910;" styleClass="roundedEdges" text="LOGIN" textFill="WHITE" underline="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets bottom="20.0" top="20.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>
