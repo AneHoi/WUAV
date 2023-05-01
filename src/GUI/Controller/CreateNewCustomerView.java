@@ -42,6 +42,7 @@ public class CreateNewCustomerView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //TODO restrict the user from typing invalid characters in the CVR-section.
         model = new Model();
         customerObservableList = FXCollections.observableArrayList();
 
@@ -53,14 +54,14 @@ public class CreateNewCustomerView implements Initializable {
 
     private void updateCostumerView() {
 
-        clmCostumerName.setCellFactory(new PropertyValueFactory<>("customerName"));
-        clmAddress.setCellFactory(new PropertyValueFactory<>("address"));
-        clmCVR.setCellFactory(new PropertyValueFactory<>("CVR"));
-        clmCreatedDate.setCellFactory(new PropertyValueFactory<>("customerType"));
+        clmCostumerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        clmAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        clmCVR.setCellValueFactory(new PropertyValueFactory<>("CVR"));
+        clmCreatedDate.setCellValueFactory(new PropertyValueFactory<>("customerType"));
 
+        customerObservableList.clear();
         customerObservableList.addAll(model.getAllCostumers());
-        //TODO fix me
-        //tableviewCostumers.setItems(customerObservableList);
+        tableviewCostumers.setItems(customerObservableList);
     }
 
     private void setEffect(Node... node) {
@@ -84,12 +85,13 @@ public class CreateNewCustomerView implements Initializable {
     }
 
     public void search(KeyEvent keyEvent) {
-        //TODO FIXME
+        //TODO Make a search algorithm for the costumerTableView
     }
 
 
     public void saveCostumer() {
 
+        //Generated a random id for the customer to be saved.
         int id = (int) (Math.random() * (100 - 1 + 1) + 1);
         String name = txtCostumerName.getText();
         String address = txtAddress.getText();
@@ -99,7 +101,6 @@ public class CreateNewCustomerView implements Initializable {
         Customer customer = new Customer(id, name, address, tlf, email, cvr, "");
         model.saveCustomer(customer);
         updateCostumerView();
-        System.out.println("Saved: " + name);
     }
 }
 
