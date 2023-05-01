@@ -54,6 +54,18 @@ public class BurgerBarView implements Initializable {
         imgBurger.setOnMouseClicked(event -> expandMenuBar());
         imgCases.setOnMouseClicked(event -> loadSearchForCases());
         imgHome.setOnMouseClicked(event -> loadUserHomePage());
+        imgCustomers.setOnMouseClicked(event -> loadCustomerView(););
+    }
+
+    private void loadCustomerView() {
+        try {
+            controllerAssistant.loadCenter("CreateNewCustomerView.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load Create New Customer Page", ButtonType.OK);
+            alert.showAndWait();
+
+        }
     }
 
     private void loadSearchForCases() {
