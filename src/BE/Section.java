@@ -9,8 +9,10 @@ public class Section {
     private int sectionID;
     private String sectionTitle;
     private Image sketch;
+    private byte[] sketchBytes;
     private String sketchComment;
     private Image image;
+    private byte[] imageBytes;
     private String imageComment;
     private String description;
     private String madeByTechnician;
