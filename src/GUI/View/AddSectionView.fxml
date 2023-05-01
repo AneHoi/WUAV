@@ -28,11 +28,11 @@
                    style="-fx-background-color: #D9D9D9;" text="Image comment"/>
         <TextField fx:id="txtDescription" alignment="TOP_LEFT" layoutX="40.0" layoutY="325.0" prefHeight="200.0"
                    prefWidth="450.0" style="-fx-background-color: #D9D9D9;" text="Description"/>
-        <Button fx:id="btnAddSketch" layoutX="220.0" layoutY="125.0" mnemonicParsing="false" prefHeight="40.0"
+        <Button fx:id="btnAddSketch" styleClass="orangeButtons" layoutX="220.0" layoutY="125.0" mnemonicParsing="false" prefHeight="40.0"
                 prefWidth="100.0" style="-fx-background-color: #D9D9D9;" text="Add Sketch"/>
-        <Button fx:id="btnAddImage" layoutX="220.0" layoutY="225.0" mnemonicParsing="false" prefHeight="40.0"
+        <Button fx:id="btnAddImage" styleClass="orangeButtons" layoutX="220.0" layoutY="225.0" mnemonicParsing="false" prefHeight="40.0"
                 prefWidth="100.0" style="-fx-background-color: #D9D9D9;" text="Add Image"/>
-        <Button fx:id="btnSubmitSection" layoutX="580.0" layoutY="530.0" mnemonicParsing="false" prefHeight="50.0"
+        <Button fx:id="btnSubmitSection" styleClass="orangeButtons" layoutX="580.0" layoutY="530.0" mnemonicParsing="false" prefHeight="50.0"
                 prefWidth="150.0" style="-fx-background-color: #E84910;" text="Submit" textFill="WHITE"
                 underline="true">
             <font>

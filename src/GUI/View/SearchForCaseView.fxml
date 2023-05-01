@@ -28,7 +28,7 @@
          <children>
             <VBox spacing="45.0">
                <children>
-                  <TextField fx:id="txtCustomer" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Customer...">
+                  <TextField fx:id="txtCustomer" styleClass="textFields" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Customer...">
                      <VBox.margin>
                         <Insets left="25.0" right="25.0" top="25.0" />
                      </VBox.margin>
@@ -36,7 +36,7 @@
                         <Font size="24.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="txtCustomerAddress" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Customer Address...">
+                  <TextField fx:id="txtCustomerAddress" styleClass="textFields" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Customer Address...">
                      <VBox.margin>
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>
@@ -44,7 +44,7 @@
                         <Font size="24.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="txtCaseName" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Case Name...">
+                  <TextField fx:id="txtCaseName" styleClass="textFields" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Case Name...">
                      <VBox.margin>
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>
@@ -52,7 +52,7 @@
                         <Font size="24.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="txtTechnician" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Technician...">
+                  <TextField fx:id="txtTechnician" styleClass="textFields"  alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Technician...">
                      <VBox.margin>
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>
@@ -60,12 +60,12 @@
                         <Font size="24.0" />
                      </font>
                   </TextField>
-                  <DatePicker fx:id="dpDate" prefHeight="50.0" prefWidth="250.0" promptText="Date..." showWeekNumbers="true" style="-fx-font-size: 24;">
+                  <DatePicker fx:id="dpDate" styleClass="textFields" prefHeight="50.0" prefWidth="250.0" promptText="Date..." showWeekNumbers="true" style="-fx-font-size: 24;">
                      <VBox.margin>
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>
                   </DatePicker>
-                  <Button fx:id="btnFilter" mnemonicParsing="false" onAction="#handleFilter" prefHeight="35.0" prefWidth="200.0" text="Filter" underline="true">
+                  <Button fx:id="btnFilter" styleClass="orangeButtons" mnemonicParsing="false" onAction="#handleFilter" prefHeight="35.0" prefWidth="200.0" text="Filter" underline="true">
                      <VBox.margin>
                         <Insets left="25.0" />
                      </VBox.margin>

@@ -29,7 +29,7 @@
     -fx-background-radius: 15;
 }
 
-.CaseHomePageTextFields {
+.textFields {
     -fx-background-color: rgba(51,51,51,1);
     -fx-text-fill: WHITE;
     -fx-font-size: 24;
@@ -47,7 +47,7 @@
 }
 
 
-.CaseHomePageButtons {
+.orangeButtons {
     -fx-background-color: rgba(232,73,16,1);
     -fx-font-size: 18;
     -fx-text-fill: WHITE;
