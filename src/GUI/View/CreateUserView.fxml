@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane fx:controller="GUI.Controller.CreateUserView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="632.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="632.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateUserView">
    <top>
       <Label text="Create New User" underline="true" BorderPane.alignment="TOP_LEFT">
          <font>
@@ -25,7 +24,7 @@
       </Label>
    </top>
    <center>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="45.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <VBox spacing="45.0">
                <children>
@@ -33,41 +32,59 @@
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets left="25.0" right="25.0" top="25.0" />
+                     </VBox.margin>
                   </TextField>
                   <TextField fx:id="txtUserNameCreate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="User Name..." styleClass="textFields">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets left="25.0" right="25.0" />
+                     </VBox.margin>
                   </TextField>
                   <TextField fx:id="txtTelephoneCreate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Telephone Number..." styleClass="textFields">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets left="25.0" right="25.0" />
+                     </VBox.margin>
                   </TextField>
                   <TextField fx:id="txtEmailCreate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Email..." styleClass="textFields">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets left="25.0" right="25.0" />
+                     </VBox.margin>
                   </TextField>
-                  <ComboBox fx:id="cbUserTypeCreate" prefHeight="50.0" prefWidth="250.0" promptText="User type" />
+                  <ComboBox fx:id="cbUserTypeCreate" prefHeight="50.0" prefWidth="250.0" promptText="User type">
+                     <VBox.margin>
+                        <Insets left="25.0" right="25.0" />
+                     </VBox.margin></ComboBox>
                   <Button fx:id="btnCreateNewUser" mnemonicParsing="false" onAction="#handleCreateNewUser" prefHeight="35.0" prefWidth="200.0" styleClass="orangeButtons" text="Create New User" underline="true">
                      <font>
                         <Font size="18.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets left="25.0" right="25.0" />
+                     </VBox.margin>
                   </Button>
                </children>
                <HBox.margin>
-                  <Insets left="25.0" right="25.0" top="25.0" />
+                  <Insets />
                </HBox.margin>
             </VBox>
             <VBox>
                <children>
-                  <Label text="Existing Users:">
+                  <Label text="Existing Users:" underline="true">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="System Bold" size="24.0" />
                      </font>
                      <VBox.margin>
-                        <Insets top="25.0" />
+                        <Insets left="25.0" top="25.0" />
                      </VBox.margin>
                   </Label>
                   <TableView fx:id="tblViewExistingUsers" prefHeight="400.0" prefWidth="400.0">
@@ -80,6 +97,9 @@
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
+                     <VBox.margin>
+                        <Insets left="25.0" right="25.0" />
+                     </VBox.margin>
                   </TableView>
                </children>
             </VBox>
