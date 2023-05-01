@@ -9,15 +9,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane prefHeight="632.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.UserHomePageView">
    <top>
       <Label fx:id="lblWelcomeUser" alignment="TOP_LEFT" text="Welcome User" underline="true" BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
-            <Insets left="25.0" top="25.0" />
+            <Insets left="25.0" />
          </BorderPane.margin>
          <font>
-            <Font size="40.0" />
+            <Font name="System Bold" size="40.0" />
          </font>
       </Label>
    </top>
