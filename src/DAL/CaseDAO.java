@@ -1,6 +1,7 @@
 package DAL;
 
 import BE.Case;
+import BE.Technician;
 import DAL.Interfaces.ICaseDAO;
 
 import java.sql.*;
@@ -15,6 +16,7 @@ public class CaseDAO implements ICaseDAO {
     public CaseDAO() {
         db = DBConnector.getInstance();
     }
+
     @Override
     public List<Case> getCasesForThisCustomer(int customerID) throws SQLException {
         List<Case> cases = new ArrayList<>();
@@ -31,7 +33,7 @@ public class CaseDAO implements ICaseDAO {
                 String techName = rs.getString("User_Full_Name");
                 LocalDate date = rs.getDate("Case_Created_Date").toLocalDate();
 
-                Case c = new Case(caseID,caseName,caseDescription,contactPerson,customerID,techName,date);
+                Case c = new Case(caseID, caseName, caseDescription, contactPerson, customerID, techName, date);
                 cases.add(c);
             }
         } catch (SQLException ex) {
@@ -49,12 +51,23 @@ public class CaseDAO implements ICaseDAO {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, caseName);
             ps.setString(2, caseDescription);
-            ps.setString(3,caseContact);
-            ps.setInt(4,customerID);
+            ps.setString(3, caseContact);
+            ps.setInt(4, customerID);
             ps.setDate(5, Date.valueOf(LocalDate.now()));
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException("Could not create New Case");
+        }
+    }
+
+    @Override
+    public void addTechnicianToCase(int caseID, int technicianID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "UPDATE Case_ SET Case_Assigned_Tech_ID = " + technicianID + " WHERE Case_ID = " + caseID+";";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new SQLException("Could not add Technician to Case");
         }
     }
 }

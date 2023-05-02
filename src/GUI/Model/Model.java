@@ -80,4 +80,8 @@ public class Model {
     public void createNewCase(String caseName, String caseContact, String caseDescription, int customerID) throws SQLException {
         manager.createNewCase(caseName,caseContact,caseDescription, customerID);
     }
+
+    public void addTechnicianToCase(int caseID, int technicianID) throws SQLException {
+        manager.addTechnicianToCase(caseID, technicianID);
+    }
 }

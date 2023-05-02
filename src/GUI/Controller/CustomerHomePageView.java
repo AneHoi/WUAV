@@ -191,8 +191,6 @@ public class CustomerHomePageView implements Initializable {
         });
     }
 
-
-
     private void addShadow(Node... node) {
         for (Node nodes : node) {
             nodes.setEffect(shadow);
@@ -219,12 +217,19 @@ public class CustomerHomePageView implements Initializable {
         updateTableView();
     }
 
-    public void search(MouseEvent mouseEvent) {
-    }
-
     public void handleAddTechnician(ActionEvent actionEvent) {
+        Case selectedCase = (Case) tblViewExistingCases.getSelectionModel().getSelectedItem();
+        int caseID = selectedCase.getCaseID();
+        Technician technician = (Technician) cbTechnician.getSelectionModel().getSelectedItem();
+        int technicianID = technician.getUserID();
+        try {
+            model.addTechnicianToCase(caseID,technicianID);
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR,"Could not add Technician to Case", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+        updateTableView();
+
     }
 
-    public void searchKey(KeyEvent keyEvent) {
-    }
 }
