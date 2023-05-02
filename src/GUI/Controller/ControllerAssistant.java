@@ -32,7 +32,6 @@ public class ControllerAssistant {
      */
     public static ControllerAssistant getInstance() {
         if (controllerAssistant == null) controllerAssistant = new ControllerAssistant();
-
         return controllerAssistant;
     }
 

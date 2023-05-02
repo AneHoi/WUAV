@@ -43,7 +43,7 @@ public class CreateNewCustomerView implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //TODO restrict the user from typing invalid characters in the CVR-section.
-        model = new Model();
+        model = Model.getInstance();
         customerObservableList = FXCollections.observableArrayList();
 
         imgSearch.setImage(loadImages(search));

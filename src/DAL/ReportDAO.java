@@ -2,6 +2,7 @@ package DAL;
 
 import BE.Report;
 import DAL.Interfaces.IReportDAO;
+import GUI.Controller.ControllerAssistant;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -14,21 +15,22 @@ public class ReportDAO implements IReportDAO {
 
     public ReportDAO() {
         db = DBConnector.getInstance();
-
     }
 
     @Override
-    public void createNewReport(String reportName, String reportDescription, int caseID) throws SQLException {
+    public void createNewReport(String reportName, String reportDescription, int caseID, int userID) throws SQLException {
         LocalDate date = LocalDate.now();
         try (Connection conn = db.getConnection()) {
-            String sql = "INSERT INTO Report(Report_Name, Report_Description, Report_Case_ID, Report_Created_Date, Report_Log_ID, Report_Is_Active)  VALUES(?,?,?,?,?,?)";
+            String sql = "INSERT INTO Report(Report_Name, Report_Description, Report_Assigned_Tech_ID, Report_Case_ID, Report_Created_Date, Report_Log_ID, Report_Is_Active) VALUES(?,?,?,?,?,?,?);";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, reportName);
             ps.setString(2, reportDescription);
-            ps.setInt(3, caseID);
-            ps.setDate(4, Date.valueOf(date));
-            ps.setInt(5, 1); //TODO Change this to reflect a new Log each time
-            ps.setBoolean(6, true);
+            ps.setInt(3,userID);
+            ps.setInt(4, caseID);
+            ps.setDate(5, Date.valueOf(date));
+            ps.setInt(6,1);
+            ps.setBoolean(7, true);
+            ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
             throw new SQLException("Could not create report");

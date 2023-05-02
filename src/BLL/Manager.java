@@ -26,8 +26,8 @@ public class Manager {
         dao.saveCustomer(customer);
     }
 
-    public void createNewReport(String reportName, String reportDescription, int caseID) throws SQLException {
-        reportDAO.createNewReport(reportName,reportDescription, caseID);
+    public void createNewReport(String reportName, String reportDescription, int caseID, int userID) throws SQLException {
+        reportDAO.createNewReport(reportName,reportDescription, caseID, userID);
     }
 
     public List<Report> getReports(int caseID) throws SQLException {

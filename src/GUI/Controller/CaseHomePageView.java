@@ -2,6 +2,7 @@ package GUI.Controller;
 
 import BE.Addendum;
 import BE.Case;
+import BE.Customer;
 import BE.Report;
 import GUI.Model.Model;
 import javafx.beans.Observable;
@@ -14,8 +15,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -37,6 +40,7 @@ public class CaseHomePageView implements Initializable {
 
     private Model model;
 
+    private Customer currentCustomer;
     private Case currentCase;
 
     private List<Report> reports;
@@ -45,13 +49,20 @@ public class CaseHomePageView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        currentCase = new Case(1, "hej", "hej", "Hej", 1, 1);
+        currentCase = new Case(1, "Hej", "Hej", "ConBob", 1, "TechBob", LocalDate.now());
+        currentCustomer = new Customer(1, "Norlys", "Gade 1", "+45 75 12 00 00", "email@email.com", 12345678, "Corporate");
         controllerAssistant = ControllerAssistant.getInstance();
-        model = new Model();
+        model = Model.getInstance();
         updateTableView();
         disableAddendum();
         btnCreateNewReport.setDisable(true);
         lblCaseName.setText(currentCase.getCaseName());
+        addListeners();
+
+
+    }
+
+    private void addListeners() {
         txtReportName.textProperty().addListener(createNewReportBtnListener);
         txtReportDescription.textProperty().addListener(createNewReportBtnListener);
         txtAddendumName.textProperty().addListener(createNewAddendumBtnListener);
@@ -59,6 +70,27 @@ public class CaseHomePageView implements Initializable {
         tblViewExistingReports.getSelectionModel().selectedItemProperty().addListener(selectedItemListener);
         txtAddendumName.textProperty().addListener(textFieldListener);
         txtAddendumDescription.textProperty().addListener(textFieldListener);
+
+        tblViewExistingReports.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && tblViewExistingReports.getSelectionModel().getSelectedItem() != null) {
+                Report selectedItem = (Report) tblViewExistingReports.getSelectionModel().getSelectedItem();
+                if (selectedItem.isActive()) {
+                    try {
+                        model.setCurrentReport(selectedItem);
+                        model.setCurrentCase(currentCase);
+                        model.setCurrentCustomer(currentCustomer);
+                        controllerAssistant.loadCenter("ReportHomePageView.fxml");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Report Home Page", ButtonType.CANCEL);
+                        alert.showAndWait();
+                    }
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Report is inactive, please make a Addendum instead", ButtonType.OK);
+                    alert.showAndWait();
+                }
+            }
+        });
 
     }
 
@@ -120,9 +152,9 @@ public class CaseHomePageView implements Initializable {
     private void updateTableView() {
         try {
             reports = model.getReports(currentCase.getCaseID());
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR,"Could not get reports from Database", ButtonType.CANCEL);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get reports from Database", ButtonType.CANCEL);
             alert.showAndWait();
         }
         observableReports = FXCollections.observableArrayList();
@@ -141,19 +173,20 @@ public class CaseHomePageView implements Initializable {
         String reportDescription = txtReportDescription.getText();
         int caseID = currentCase.getCaseID();
         try {
-            model.createNewReport(reportName, reportDescription, caseID);
+            model.createNewReport(reportName, reportDescription, caseID, controllerAssistant.getLoggedInUser().getUserID()); //TODO UserID might not be right here, we need to fix this.
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not create a new report", ButtonType.CANCEL);
             alert.showAndWait();
         }
-
-
+        updateTableView();
     }
 
     public void handleCreateNewAddendum(ActionEvent actionEvent) {
         String addendumName = txtAddendumName.getText();
         String addendumDescription = txtAddendumDescription.getText();
+
+        //TODO Finish this once Addendums are created in the DB
     }
 }
 
