@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class CreateNewCustomerView implements Initializable {
@@ -78,9 +79,11 @@ public class CreateNewCustomerView implements Initializable {
                 String lowerCaseFilter = newValue.toLowerCase();
                 filteredList.setPredicate(customer -> {
                     String cvrString = String.valueOf(customer.getCVR());
+                    String customerType = Objects.toString(customer.getCustomerType(), "");
+                    customerType = customerType.toLowerCase();
                     return customer.getCustomerName().toLowerCase().contains(lowerCaseFilter)
                             || customer.getAddress().toLowerCase().contains(lowerCaseFilter)
-                            || customer.getCustomerType().toLowerCase().contains(lowerCaseFilter)
+                            || customerType.contains(lowerCaseFilter)
                             || cvrString.contains(lowerCaseFilter);
                 });
                 tblViewCustomers.setItems(filteredList);

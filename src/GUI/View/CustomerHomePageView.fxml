@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -37,14 +38,6 @@
                         <Font size="24.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="txtCaseID" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Case ID..." styleClass="textFields">
-                     <VBox.margin>
-                        <Insets left="25.0" right="25.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </TextField>
                   <TextField fx:id="txtContactPerson" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Contact Person..." styleClass="textFields">
                      <VBox.margin>
                         <Insets left="25.0" right="25.0" />
@@ -53,6 +46,14 @@
                         <Font size="24.0" />
                      </font>
                   </TextField>
+                  <TextArea fx:id="txtCaseDescription" prefHeight="200.0" prefWidth="200.0" promptText="Case Description..." styleClass="CaseHomePageTextArea" wrapText="true">
+                     <VBox.margin>
+                        <Insets left="25.0" right="25.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextArea>
                   <Button fx:id="btnCreateNewCase" mnemonicParsing="false" onAction="#handleCreateNewCase" prefHeight="35.0" prefWidth="200.0" styleClass="orangeButtons" text="Create New Case" underline="true">
                      <VBox.margin>
                         <Insets left="25.0" />
@@ -113,7 +114,7 @@
                         <Insets top="-320.0" />
                      </VBox.margin>
                   </ComboBox>
-                  <Button fx:id="btnAddTechnician" mnemonicParsing="false" styleClass="orangeButtons" onAction="#handleAddTechnician" prefHeight="35.0" prefWidth="100.0" text="Add" underline="true">
+                  <Button fx:id="btnAddTechnician" mnemonicParsing="false" onAction="#handleAddTechnician" prefHeight="35.0" prefWidth="100.0" styleClass="orangeButtons" text="Add" underline="true">
                      <font>
                         <Font size="18.0" />
                      </font>

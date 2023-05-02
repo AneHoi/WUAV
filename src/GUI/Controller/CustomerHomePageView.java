@@ -8,6 +8,7 @@ import GUI.Model.Model;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,16 +16,23 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class CustomerHomePageView implements Initializable {
+    @FXML
+    private TextArea txtCaseDescription;
     @FXML
     private ComboBox cbTechnician;
     @FXML
@@ -36,7 +44,7 @@ public class CustomerHomePageView implements Initializable {
     @FXML
     private Button btnCreateNewCase, btnAddTechnician;
     @FXML
-    private TextField txtCaseName, txtCaseID, txtContactPerson, txtSearchBar;
+    private TextField txtCaseName, txtContactPerson, txtSearchBar;
     @FXML
     private Label lblCustomerName;
     private ControllerAssistant controllerAssistant;
@@ -44,6 +52,8 @@ public class CustomerHomePageView implements Initializable {
     private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private ObservableList<Case> caseObservableList;
     private ObservableList<Technician> technicianObservableList;
+
+    private String search = "data/Images/search.png";
 
 
     @Override
@@ -53,16 +63,18 @@ public class CustomerHomePageView implements Initializable {
         caseObservableList = FXCollections.observableArrayList();
         technicianObservableList = FXCollections.observableArrayList();
         lblCustomerName.setText(model.getCurrentCustomer().getCustomerName() + " Home Page");
+        imgSearch.setImage(loadImages(search));
         addListeners();
         btnCreateNewCase.setDisable(true);
-        addShadow(txtCaseName, txtCaseID, txtContactPerson);
+        addShadow(txtCaseName, txtCaseDescription, txtContactPerson);
         updateTableView();
         disableAddTechnicians();
         updateTechnicians();
+        searchBarFilter();
 
     }
 
-    private void updateTechnicians() { //TODO continue from here and make sure all Users are represented by Names only in the ComboBox
+    private void updateTechnicians() {
         try {
             technicianObservableList.addAll(model.getAllTechnicians());
         } catch (SQLException e) {
@@ -95,7 +107,7 @@ public class CustomerHomePageView implements Initializable {
 
     private void addListeners() {
         txtCaseName.textProperty().addListener(createNewCaseBtn);
-        txtCaseID.textProperty().addListener(createNewCaseBtn);
+        txtCaseDescription.textProperty().addListener(createNewCaseBtn);
         txtContactPerson.textProperty().addListener(createNewCaseBtn);
 
         tblViewExistingCases.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -125,8 +137,21 @@ public class CustomerHomePageView implements Initializable {
 
     }
 
+    private Image loadImages(String url) {
+        Image image = null;
+        try {
+            InputStream img = new FileInputStream(url);
+            image = new Image(img);
+        } catch (FileNotFoundException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load an image, following error occurred:\n" + e, ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+        return image;
+
+    }
+
     ChangeListener<String> createNewCaseBtn = (observable, oldValue, newValue) -> {
-        if (txtCaseName.getText().isEmpty() || txtCaseID.getText().isEmpty() || txtContactPerson.getText().isEmpty()) {
+        if (txtCaseName.getText().isEmpty() || txtCaseDescription.getText().isEmpty() || txtContactPerson.getText().isEmpty()) {
             btnCreateNewCase.setDisable(true);
             removeShadow(btnCreateNewCase);
         } else {
@@ -134,6 +159,38 @@ public class CustomerHomePageView implements Initializable {
             addShadow(btnCreateNewCase);
         }
     };
+
+    private void searchBarFilter() {
+        // Create a list to hold the original unfiltered items in the tblViewCustomers TableView
+        ObservableList<Case> originalList = FXCollections.observableArrayList(tblViewExistingCases.getItems());
+
+        // Add a listener to the txtSearchBar TextField to filter the tblViewCustomers TableView based on the user's input
+        txtSearchBar.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Create a filtered list that contains all items from the tblViewCustomers TableView
+            FilteredList<Case> filteredList = new FilteredList<>(originalList);
+
+            // Set a predicate to filter the items based on the user's input
+            if (newValue == null || newValue.isEmpty()) {
+                // If the user has not entered any input, display all items
+                tblViewExistingCases.setItems(originalList);
+            } else {
+                // Otherwise, filter the items based on the user's input
+                String lowerCaseFilter = newValue.toLowerCase();
+                filteredList.setPredicate(cases -> {
+                    String caseID = String.valueOf(cases.getCaseID());
+                    String caseDate = String.valueOf(cases.getCreatedDate());
+                    String assignedTechnician = Objects.toString(cases.getAssignedTechnician(), "");
+                    assignedTechnician = assignedTechnician.toLowerCase();
+                    return cases.getCaseName().toLowerCase().contains(lowerCaseFilter)
+                            || assignedTechnician.contains(lowerCaseFilter)
+                            || caseDate.contains(lowerCaseFilter)
+                            || caseID.contains(lowerCaseFilter);
+                });
+                tblViewExistingCases.setItems(filteredList);
+            }
+        });
+    }
+
 
 
     private void addShadow(Node... node) {
@@ -149,6 +206,17 @@ public class CustomerHomePageView implements Initializable {
     }
 
     public void handleCreateNewCase(ActionEvent actionEvent) {
+        String caseName = txtCaseName.getText();
+        String caseContact = txtCaseName.getText();
+        String caseDescription = txtCaseName.getText();
+        int customerID = model.getCurrentCustomer().getCustomerID();
+        try {
+            model.createNewCase(caseName, caseContact, caseDescription, customerID);
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not create New Case", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+        updateTableView();
     }
 
     public void search(MouseEvent mouseEvent) {

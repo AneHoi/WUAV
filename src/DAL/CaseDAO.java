@@ -1,13 +1,9 @@
 package DAL;
 
 import BE.Case;
-import BE.Report;
 import DAL.Interfaces.ICaseDAO;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +19,7 @@ public class CaseDAO implements ICaseDAO {
     public List<Case> getCasesForThisCustomer(int customerID) throws SQLException {
         List<Case> cases = new ArrayList<>();
         try (Connection conn = db.getConnection()) {
-            String sql = "SELECT * FROM Case_ JOIN User_ ON Case_.Case_Assigned_Tech_ID = User_.User_ID WHERE Case_Customer_ID = " + customerID + ";";
+            String sql = "SELECT * FROM Case_ LEFT JOIN User_ ON Case_.Case_Assigned_Tech_ID = User_.User_ID WHERE Case_Customer_ID = " + customerID + ";";
             Statement ps = conn.createStatement();
             ResultSet rs = ps.executeQuery(sql);
 
@@ -44,5 +40,21 @@ public class CaseDAO implements ICaseDAO {
         }
         return cases;
 
+    }
+
+    @Override
+    public void createNewCase(String caseName, String caseContact, String caseDescription, int customerID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "INSERT INTO Case_(Case_Name, Case_Description, Case_Contact_Person, Case_Customer_ID, Case_Created_Date) VALUES(?,?,?,?,?);";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, caseName);
+            ps.setString(2, caseDescription);
+            ps.setString(3,caseContact);
+            ps.setInt(4,customerID);
+            ps.setDate(5, Date.valueOf(LocalDate.now()));
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Could not create New Case");
+        }
     }
 }

@@ -45,4 +45,8 @@ public class Manager {
     public List<Technician> getAllTechnicians() throws SQLException {
         return usersDAO.getAllTechnicians();
     }
+
+    public void createNewCase(String caseName, String caseContact, String caseDescription, int customerID) throws SQLException {
+        caseDAO.createNewCase(caseName, caseContact, caseDescription, customerID);
+    }
 }

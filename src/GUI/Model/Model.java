@@ -5,7 +5,6 @@ import BE.Customer;
 import BE.Report;
 import BE.Technician;
 import BLL.Manager;
-import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -76,5 +75,9 @@ public class Model {
 
     public List<Technician> getAllTechnicians() throws SQLException {
         return manager.getAllTechnicians();
+    }
+
+    public void createNewCase(String caseName, String caseContact, String caseDescription, int customerID) throws SQLException {
+        manager.createNewCase(caseName,caseContact,caseDescription, customerID);
     }
 }

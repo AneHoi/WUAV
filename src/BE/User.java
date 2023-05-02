@@ -125,6 +125,7 @@ public abstract class User {
         this.activeCases = activeCases;
     }
 
+    /*
     @Override
     public String toString() {
         return "User{" +
@@ -138,5 +139,12 @@ public abstract class User {
                 ", recentlyViewedCases=" + Arrays.toString(recentlyViewedCases) +
                 ", activeCases=" + Arrays.toString(activeCases) +
                 '}';
+    }
+    */
+
+
+    @Override
+    public String toString() {
+        return fullName + ", ID: " + userID;
     }
 }
