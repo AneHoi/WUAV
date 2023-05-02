@@ -32,6 +32,11 @@ public abstract class User {
         this.activeCases = activeCases;
     }
 
+    public User(int techID, String techName) {
+        this.userID = techID;
+        this.fullName = techName;
+    }
+
     public int getUserID() {
         return userID;
     }

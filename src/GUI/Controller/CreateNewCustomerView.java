@@ -14,11 +14,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
@@ -40,10 +40,13 @@ public class CreateNewCustomerView implements Initializable {
     private ObservableList<Customer> customerObservableList;
 
     private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
-    private String search = "data/Images/saerch.png";
+    private String search = "data/Images/search.png";
+
+    private ControllerAssistant controllerAssistant;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        controllerAssistant = ControllerAssistant.getInstance();
         model = Model.getInstance();
         customerObservableList = FXCollections.observableArrayList();
         imgSearch.setImage(loadImages(search));
@@ -99,14 +102,32 @@ public class CreateNewCustomerView implements Initializable {
     }
 
     private void addListeners() {
-        txtCostumerName.textProperty().addListener(createNewCaseBtn);
-        txtAddress.textProperty().addListener(createNewCaseBtn);
-        txtEmail.textProperty().addListener(createNewCaseBtn);
-        txtTlfNumber.textProperty().addListener(createNewCaseBtn);
-        txtCVR.textProperty().addListener(createNewCaseBtn);
+        txtCostumerName.textProperty().addListener(createNewCustomerBtn);
+        txtAddress.textProperty().addListener(createNewCustomerBtn);
+        txtEmail.textProperty().addListener(createNewCustomerBtn);
+        txtTlfNumber.textProperty().addListener(createNewCustomerBtn);
+        txtCVR.textProperty().addListener(createNewCustomerBtn);
+
+        tblViewCustomers.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && tblViewCustomers.getSelectionModel().getSelectedItem() != null) {
+                Customer selectedItem = (Customer) tblViewCustomers.getSelectionModel().getSelectedItem();
+                try {
+                    model.setCurrentCustomer(selectedItem);
+                    controllerAssistant.loadCenter("CustomerHomePageView.fxml");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Customer Home Page", ButtonType.CANCEL);
+                    alert.showAndWait();
+                }
+
+            }
+        });
+
     }
 
-    ChangeListener<String> createNewCaseBtn = (observable, oldValue, newValue) -> {
+
+
+    ChangeListener<String> createNewCustomerBtn = (observable, oldValue, newValue) -> {
         if (txtCostumerName.getText().isEmpty() || txtAddress.getText().isEmpty() || txtTlfNumber.getText().isEmpty() || txtEmail.getText().isEmpty() || txtCVR.getText().isEmpty()) {
             btnCreateCostumer.setDisable(true);
             removeShadow(btnCreateCostumer);

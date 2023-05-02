@@ -3,7 +3,9 @@ package GUI.Model;
 import BE.Case;
 import BE.Customer;
 import BE.Report;
+import BE.Technician;
 import BLL.Manager;
+import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -66,5 +68,13 @@ public class Model {
 
     public Customer getCurrentCustomer() {
         return currentCustomer;
+    }
+
+    public List<Case> getCasesForThisCustomer(int customerID) throws SQLException {
+        return manager.getCasesForThisCustomer(customerID);
+    }
+
+    public List<Technician> getAllTechnicians() throws SQLException {
+        return manager.getAllTechnicians();
     }
 }

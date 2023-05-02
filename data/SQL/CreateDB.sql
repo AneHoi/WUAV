@@ -63,9 +63,10 @@ CREATE TABLE Case_(
     Case_ID                     INT IDENTITY(1,1)                       NOT NULL,
     Case_Name                   NVARCHAR(500)                           NOT NULL,
     Case_Description            NVARCHAR(750)                           NOT NULL,
-    Case_Conatact_Person        NVARCHAR(250)                           NOT NULL,
+    Case_Contact_Person         NVARCHAR(250)                           NOT NULL,
     Case_Customer_ID            INT                                     NOT NULL,
     Case_Assigned_Tech_ID       INT                                     NOT NULL,
+    Case_Created_Date           DATE                                    NOT NULL,
 
     CONSTRAINT PK_CASE_ID PRIMARY KEY(Case_ID),
 
