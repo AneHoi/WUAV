@@ -82,7 +82,7 @@
                         <Insets top="-40.0" />
                      </VBox.margin>
                   </HBox>
-                  <Label text="Search Through Existing Cases:" underline="true">
+                  <Label text="Search through existing cases:" underline="true">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
