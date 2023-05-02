@@ -34,7 +34,7 @@
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField fx:id="txtTlfNumber" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Telefonenumber..." styleClass="backgroundAndWhiteText">
+                  <TextField fx:id="txtTlfNumber" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Telephone Number..." styleClass="backgroundAndWhiteText">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -73,15 +73,17 @@
             </VBox>
             <VBox>
                <children>
-                  <HBox fx:id="hBoxSearch" alignment="BOTTOM_RIGHT" prefHeight="67.0" prefWidth="295.0">
+                  <HBox alignment="BOTTOM_RIGHT" prefHeight="67.0" prefWidth="295.0">
                      <children>
-                        <TextField fx:id="txtSearchBar" alignment="CENTER" prefHeight="29.0" prefWidth="200.0" promptText="Search for a Customer">
+                        <TextField fx:id="txtSearchBar" alignment="CENTER" prefHeight="40.0" prefWidth="200.0" promptText="Search for a Customer">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </TextField>
-                        <ImageView fx:id="imgSearch" fitHeight="39.0" fitWidth="35.0" onKeyPressed="#search" onMouseClicked="#search" pickOnBounds="true" preserveRatio="true">
-                        </ImageView>
+                        <ImageView fx:id="imgSearch" fitHeight="40.0" fitWidth="40.0" onKeyPressed="#search" onMouseClicked="#search" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets right="25.0" />
+                           </HBox.margin></ImageView>
                      </children>
                      <VBox.margin>
                         <Insets top="-40.0" />
@@ -95,12 +97,12 @@
                         <Insets />
                      </VBox.margin>
                   </Label>
-                  <TableView fx:id="tableviewCostumers" prefHeight="450.0" prefWidth="600.0">
+                  <TableView fx:id="tblViewCustomers" prefHeight="450.0" prefWidth="600.0">
                     <columns>
-                      <TableColumn fx:id="clmCostumerName" prefWidth="140.0" text="Costumer" />
+                      <TableColumn fx:id="clmCustomerName" prefWidth="140.0" text="Costumer" />
                       <TableColumn fx:id="clmAddress" text="Address" />
                         <TableColumn fx:id="clmCVR" prefWidth="85.0" text="CVR" />
-                        <TableColumn fx:id="clmCreatedDate" prefWidth="100.0" text="Created date" />
+                        <TableColumn fx:id="clmCustomerType" prefWidth="100.0" text="Type of Customer" />
                     </columns>
                      <VBox.margin>
                         <Insets right="25.0" />

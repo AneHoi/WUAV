@@ -37,9 +37,9 @@ GO
 CREATE TABLE Customer(
     Customer_ID                 INT IDENTITY(1,1)                       NOT NULL,
     Customer_Name               NVARCHAR(250)                           NOT NULL,
-    Customer_Adress             NVARCHAR(250)                           NOT NULL,
+    Customer_Address             NVARCHAR(250)                           NOT NULL,
     Customer_Mail               NVARCHAR(250)                           NOT NULL,
-    Customer_tlf                NVARCHAR(50)                            NOT NULL,
+    Customer_Tlf                NVARCHAR(50)                            NOT NULL,
     Customer_CVR                INT,
     Customer_Type               NVARCHAR(50)                            NOT NULL,
 

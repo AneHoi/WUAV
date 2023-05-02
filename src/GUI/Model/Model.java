@@ -26,7 +26,7 @@ public class Model {
         return model;
     }
 
-    public List<Customer> getAllCostumers() {
+    public List<Customer> getAllCostumers() throws SQLException {
         customers = manager.getAllCustomers();
         return customers;
     }

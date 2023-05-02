@@ -12,8 +12,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,6 +39,7 @@ public class CaseHomePageView implements Initializable {
     @FXML
     private TableColumn colReportName, colTechnician, colCreatedDate, colStatus;
 
+    private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private ControllerAssistant controllerAssistant;
 
     private Model model;
@@ -56,10 +60,22 @@ public class CaseHomePageView implements Initializable {
         updateTableView();
         disableAddendum();
         btnCreateNewReport.setDisable(true);
-        lblCaseName.setText(currentCase.getCaseName());
+        lblCaseName.setText("Case Name: " + currentCase.getCaseName());
         addListeners();
+        addShadow(txtReportDescription,txtReportName,txtSearchField);
 
+    }
 
+    private void addShadow(Node... node) {
+        for (Node nodes : node) {
+            nodes.setEffect(shadow);
+        }
+    }
+
+    private void removeShadow(Node... node) {
+        for (Node nodes : node) {
+            nodes.setEffect(null);
+        }
     }
 
     private void addListeners() {
@@ -98,16 +114,20 @@ public class CaseHomePageView implements Initializable {
     ChangeListener<String> createNewReportBtnListener = (observable, oldValue, newValue) -> {
         if (txtReportName.getText().isEmpty() || txtReportDescription.getText().isEmpty()) {
             btnCreateNewReport.setDisable(true);
+            removeShadow(btnCreateNewReport);
         } else {
             btnCreateNewReport.setDisable(false);
+            addShadow(btnCreateNewReport);
         }
     };
 
     ChangeListener<String> createNewAddendumBtnListener = (observable, oldValue, newValue) -> {
         if (txtAddendumName.getText().isEmpty() || txtAddendumDescription.getText().isEmpty()) {
             btnCreateNewAddendum.setDisable(true);
+            removeShadow(btnCreateNewAddendum);
         } else {
             btnCreateNewAddendum.setDisable(false);
+            addShadow(btnCreateNewAddendum);
         }
     };
 
@@ -116,20 +136,25 @@ public class CaseHomePageView implements Initializable {
             if (newValue.getIsActive().equals("Inactive")) {
                 txtAddendumName.setDisable(false);
                 txtAddendumDescription.setDisable(false);
+                addShadow(txtAddendumDescription,txtAddendumName);
             } else {
                 txtAddendumName.setDisable(true);
                 txtAddendumDescription.setDisable(true);
+                removeShadow(txtAddendumDescription,txtAddendumName);
             }
 
             if (!txtAddendumName.getText().isEmpty() && !txtAddendumDescription.getText().isEmpty()) {
                 btnCreateNewAddendum.setDisable(false);
+                addShadow(btnCreateNewAddendum);
             } else {
                 btnCreateNewAddendum.setDisable(true);
+                removeShadow(btnCreateNewAddendum);
             }
         } else {
             txtAddendumName.setDisable(true);
             txtAddendumDescription.setDisable(true);
             btnCreateNewAddendum.setDisable(true);
+            addShadow(txtAddendumDescription,txtAddendumName,btnCreateNewAddendum);
         }
     };
 

@@ -18,7 +18,7 @@ public class Manager {
         reportDAO = new ReportDAO();
     }
 
-    public List<Customer> getAllCustomers() {
+    public List<Customer> getAllCustomers() throws SQLException {
         return dao.getAllCostumers();
     }
 
