@@ -38,10 +38,8 @@ public class CaseHomePageView implements Initializable {
     private TableView tblViewExistingReports;
     @FXML
     private TableColumn colReportName, colTechnician, colCreatedDate, colStatus;
-
     private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private ControllerAssistant controllerAssistant;
-
     private Model model;
 
     private Customer currentCustomer;
@@ -53,10 +51,10 @@ public class CaseHomePageView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        currentCase = new Case(1, "Hej", "Hej", "ConBob", 1, "TechBob", LocalDate.now());
-        currentCustomer = new Customer(1, "Norlys", "Gade 1", "+45 75 12 00 00", "email@email.com", 12345678, "Corporate");
-        controllerAssistant = ControllerAssistant.getInstance();
         model = Model.getInstance();
+        controllerAssistant = ControllerAssistant.getInstance();
+        currentCase = model.getCurrentCase();
+        currentCustomer = model.getCurrentCustomer();
         updateTableView();
         disableAddendum();
         btnCreateNewReport.setDisable(true);

@@ -25,6 +25,7 @@ CREATE TABLE User_(
     User_Type                   INT                                     NOT NULL,
     User_Email                  NVARCHAR(250)                           NOT NULL,
     User_tlf                    NVARCHAR(50)                            NOT NULL,
+    User_Active                 BIT                                     NOT NULL,
     User_Img                    VARBINARY(MAX),
 
     CONSTRAINT PK_USER_ID PRIMARY KEY(User_ID),
@@ -37,7 +38,7 @@ GO
 CREATE TABLE Customer(
     Customer_ID                 INT IDENTITY(1,1)                       NOT NULL,
     Customer_Name               NVARCHAR(250)                           NOT NULL,
-    Customer_Address             NVARCHAR(250)                           NOT NULL,
+    Customer_Address            NVARCHAR(250)                           NOT NULL,
     Customer_Mail               NVARCHAR(250)                           NOT NULL,
     Customer_Tlf                NVARCHAR(50)                            NOT NULL,
     Customer_CVR                INT,

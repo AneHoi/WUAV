@@ -24,6 +24,7 @@ import javafx.scene.paint.Color;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
@@ -134,6 +135,21 @@ public class CustomerHomePageView implements Initializable {
                 removeShadow(btnAddTechnician);
             }
         });
+        tblViewExistingCases.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && tblViewExistingCases.getSelectionModel().getSelectedItem() != null) {
+                Case selectedItem = (Case) tblViewExistingCases.getSelectionModel().getSelectedItem();
+                try {
+                    model.setCurrentCase(selectedItem);
+                    controllerAssistant.loadCenter("CaseHomePageView.fxml");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Case Home Page", ButtonType.CANCEL);
+                    alert.showAndWait();
+                }
+
+            }
+        });
+
 
     }
 
@@ -217,15 +233,15 @@ public class CustomerHomePageView implements Initializable {
         updateTableView();
     }
 
-    public void handleAddTechnician(ActionEvent actionEvent) {
+    public void handleAddTechnician(ActionEvent actionEvent) { //TODO need to make a separate table in DB to hold all Technicians related to each case
         Case selectedCase = (Case) tblViewExistingCases.getSelectionModel().getSelectedItem();
         int caseID = selectedCase.getCaseID();
         Technician technician = (Technician) cbTechnician.getSelectionModel().getSelectedItem();
         int technicianID = technician.getUserID();
         try {
-            model.addTechnicianToCase(caseID,technicianID);
+            model.addTechnicianToCase(caseID, technicianID);
         } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR,"Could not add Technician to Case", ButtonType.CANCEL);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not add Technician to Case", ButtonType.CANCEL);
             alert.showAndWait();
         }
         updateTableView();

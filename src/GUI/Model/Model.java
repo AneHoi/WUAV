@@ -1,9 +1,6 @@
 package GUI.Model;
 
-import BE.Case;
-import BE.Customer;
-import BE.Report;
-import BE.Technician;
+import BE.*;
 import BLL.Manager;
 
 import java.sql.SQLException;
@@ -27,7 +24,7 @@ public class Model {
         return model;
     }
 
-    public List<Customer> getAllCostumers() throws SQLException {
+    public List<Customer> getAllCustomers() throws SQLException {
         customers = manager.getAllCustomers();
         return customers;
     }
@@ -78,10 +75,22 @@ public class Model {
     }
 
     public void createNewCase(String caseName, String caseContact, String caseDescription, int customerID) throws SQLException {
-        manager.createNewCase(caseName,caseContact,caseDescription, customerID);
+        manager.createNewCase(caseName, caseContact, caseDescription, customerID);
     }
 
     public void addTechnicianToCase(int caseID, int technicianID) throws SQLException {
         manager.addTechnicianToCase(caseID, technicianID);
+    }
+
+    public List<Case> getAllCases() throws SQLException {
+        return manager.getAllCases();
+    }
+
+    public List<User> getAllUsers() throws SQLException {
+        return manager.getAllUsers();
+    }
+
+    public void updateUser(int userID, String fullName, String userName, String userTlf, String userEmail, boolean userActive) throws SQLException {
+        manager.updateUser(userID, fullName, userName, userTlf, userEmail, userActive);
     }
 }

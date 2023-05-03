@@ -65,14 +65,23 @@
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>
                   </DatePicker>
-                  <Button fx:id="btnFilter" mnemonicParsing="false" onAction="#handleFilter" prefHeight="35.0" prefWidth="200.0" styleClass="orangeButtons" text="Filter" underline="true">
+                  <HBox spacing="50.0">
+                     <children>
+                        <Button fx:id="btnFilter" mnemonicParsing="false" onAction="#handleFilter" prefHeight="35.0" prefWidth="100.0" styleClass="orangeButtons" text="Filter" underline="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnClear" mnemonicParsing="false" onAction="#handleClear" prefHeight="35.0" prefWidth="100.0" styleClass="orangeButtons" text="Clear" underline="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+                     </children>
                      <VBox.margin>
-                        <Insets left="25.0" />
+                        <Insets left="25.0" right="25.0" />
                      </VBox.margin>
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Button>
+                  </HBox>
                </children>
                <HBox.margin>
                   <Insets />
@@ -93,11 +102,11 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                      <columns>
-                        <TableColumn prefWidth="75.0" text="Customer" />
-                        <TableColumn prefWidth="75.0" text="Customer Address" />
-                        <TableColumn prefWidth="75.0" text="Case Name" />
-                        <TableColumn prefWidth="75.0" text="Technician" />
-                        <TableColumn prefWidth="75.0" text="Date" />
+                        <TableColumn fx:id="colCustomer" prefWidth="75.0" text="Customer" />
+                        <TableColumn fx:id="colCustomerAddress" prefWidth="75.0" text="Customer Address" />
+                        <TableColumn fx:id="colCaseName" prefWidth="75.0" text="Case Name" />
+                        <TableColumn fx:id="colTechnician" prefWidth="75.0" text="Technician" />
+                        <TableColumn fx:id="colCreatedDate" prefWidth="75.0" text="Created Date" />
                      </columns>
                      <VBox.margin>
                         <Insets right="25.0" />

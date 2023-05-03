@@ -63,11 +63,38 @@ public class CaseDAO implements ICaseDAO {
     @Override
     public void addTechnicianToCase(int caseID, int technicianID) throws SQLException {
         try (Connection conn = db.getConnection()) {
-            String sql = "UPDATE Case_ SET Case_Assigned_Tech_ID = " + technicianID + " WHERE Case_ID = " + caseID+";";
+            String sql = "UPDATE Case_ SET Case_Assigned_Tech_ID = " + technicianID + " WHERE Case_ID = " + caseID + ";";
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
             throw new SQLException("Could not add Technician to Case");
         }
+    }
+
+    @Override
+    public List<Case> getAllCases() throws SQLException {
+        List<Case> cases = new ArrayList<>();
+        try (Connection conn = db.getConnection()) {
+            String sql = "SELECT * FROM Case_ LEFT JOIN User_ ON Case_.Case_Assigned_Tech_ID = User_.User_ID;";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                int caseID = rs.getInt("Case_ID");
+                String caseName = rs.getString("Case_Name");
+                String caseDescription = rs.getString("Case_Description");
+                String contactPerson = rs.getString("Case_Contact_Person");
+                int customerID = rs.getInt("Case_Customer_ID");
+                String techName = rs.getString("User_Full_Name");
+                LocalDate date = rs.getDate("Case_Created_Date").toLocalDate();
+
+                Case c = new Case(caseID, caseName, caseDescription, contactPerson, customerID, techName, date);
+                cases.add(c);
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException("Could not add Technician to Case");
+        }
+        return cases;
     }
 }

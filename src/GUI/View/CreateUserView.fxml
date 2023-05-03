@@ -137,7 +137,7 @@
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>
                   </TextField>
-                  <ComboBox fx:id="cbUserTypeUpdate" prefHeight="50.0" prefWidth="250.0" promptText="User type">
+                  <ComboBox fx:id="cbUserActive" prefHeight="50.0" prefWidth="250.0" promptText="User Active?">
                      <VBox.margin>
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>

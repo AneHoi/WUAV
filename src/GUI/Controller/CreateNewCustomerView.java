@@ -153,7 +153,7 @@ public class CreateNewCustomerView implements Initializable {
         clmCustomerType.setCellValueFactory(new PropertyValueFactory<>("customerType"));
         customerObservableList.clear();
         try {
-            customerObservableList.addAll(model.getAllCostumers());
+            customerObservableList.addAll(model.getAllCustomers());
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get customers from database", ButtonType.CANCEL);
             alert.showAndWait();

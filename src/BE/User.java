@@ -15,10 +15,11 @@ public abstract class User {
     private int userType;
     private String userStringType;
     private Image profilePicture;
+    private boolean isActive;
     private int[] recentlyViewedCases;
     private int[] activeCases;
 
-    public User(int userID, String fullName, String userName, String password, String telephone, String email, int userType, String userStringType, Image profilePicture, int[] recentlyViewedCases, int[] activeCases) {
+    public User(int userID, String fullName, String userName, String password, String telephone, String email, int userType, String userStringType, boolean isActive, Image profilePicture, int[] recentlyViewedCases, int[] activeCases) {
         this.userID = userID;
         this.fullName = fullName;
         this.userName = userName;
@@ -27,6 +28,7 @@ public abstract class User {
         this.email = email;
         this.userType = userType;
         this.userStringType = userStringType;
+        this.isActive = isActive;
         this.profilePicture = profilePicture;
         this.recentlyViewedCases = recentlyViewedCases;
         this.activeCases = activeCases;
@@ -36,6 +38,34 @@ public abstract class User {
         this.userID = techID;
         this.fullName = techName;
     }
+
+    public User(int userID, String fullName, String userName, String telephone, String email) {
+        this.userID = userID;
+        this.fullName = fullName;
+        this.userName = userName;
+        this.telephone = telephone;
+        this.email = email;
+    }
+
+    public User(int userID, String fullName, String userName, String userStringType, String telephone, String email, boolean userActive) {
+        this.userID = userID;
+        this.fullName = fullName;
+        this.userName = userName;
+        this.userStringType = userStringType;
+        this.telephone = telephone;
+        this.email = email;
+        this.isActive = userActive;
+    }
+
+    public User(int userID, int userType, String fullName, String userName, String telephone, String email) {
+        this.userID = userID;
+        this.userType = userType;
+        this.fullName = fullName;
+        this.userName = userName;
+        this.telephone = telephone;
+        this.email = email;
+    }
+
 
     public int getUserID() {
         return userID;
@@ -146,5 +176,14 @@ public abstract class User {
     @Override
     public String toString() {
         return fullName + ", ID: " + userID;
+    }
+
+    public String getIsActive() {
+        if (isActive) return "Active";
+        else return "Inactive";
+    }
+
+    public void setActive(String active) {
+        isActive = !active.contentEquals("Inactive");
     }
 }

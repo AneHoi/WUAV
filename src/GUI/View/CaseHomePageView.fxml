@@ -19,7 +19,7 @@
               <children>
                   <HBox>
                       <children>
-                          <Label fx:id="lblCaseName" prefHeight="80.0" text="Label" underline="true">
+                          <Label fx:id="lblCaseName" text="Label" underline="true">
                               <font>
                                   <Font name="System Bold" size="40.0" />
                               </font>
@@ -63,9 +63,9 @@
                         <Insets bottom="-35.0" left="100.0" right="20.0" top="20.0" />
                      </VBox.margin>
                   </TextField>
-                  <Label text="Search through existing reports:">
+                  <Label text="Search through existing reports:" underline="true"> 
                      <font>
-                        <Font size="24.0" />
+                        <Font name="System Bold" size="24.0" />
                      </font>
                      <VBox.margin>
                         <Insets bottom="-45.0" left="20.0" />

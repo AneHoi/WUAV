@@ -1,6 +1,9 @@
 package GUI.Controller;
 
+import BE.Admin;
+import BE.Technician;
 import BE.User;
+import DAL.UsersDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
@@ -22,6 +25,7 @@ public class ControllerAssistant {
      * Controller constructor, only used once in get instance
      */
     private ControllerAssistant() {
+        loggedInUser = new Admin(2, 1,"Michael Tonnesen", "A","11111111","mt@wuav.dk");
 
     }
 

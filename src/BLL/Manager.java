@@ -53,4 +53,16 @@ public class Manager {
     public void addTechnicianToCase(int caseID, int technicianID) throws SQLException {
         caseDAO.addTechnicianToCase(caseID, technicianID);
     }
+
+    public List<Case> getAllCases() throws SQLException {
+        return caseDAO.getAllCases();
+    }
+
+    public List<User> getAllUsers() throws SQLException {
+        return usersDAO.getAllUsers();
+    }
+
+    public void updateUser(int userID, String fullName, String userName, String userTlf, String userEmail, boolean userActive) throws SQLException {
+        usersDAO.updateUser(userID, fullName, userName, userTlf, userEmail, userActive);
+    }
 }
