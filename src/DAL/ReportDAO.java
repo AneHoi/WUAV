@@ -63,4 +63,26 @@ public class ReportDAO implements IReportDAO {
         }
         return reports;
     }
+
+    @Override
+    public void createNewAddendum(String addendumName, String addendumDescription, int caseID, int reportID, int userID) throws SQLException {
+        LocalDate date = LocalDate.now();
+        try (Connection conn = db.getConnection()) {
+            String sql = "INSERT INTO Addendum(Addendum_Name, Addendum_Description, Addendum_Assigned_Tech_ID, Addendum_Report_ID, Addendum_Case_ID, Addendum_Created_Date, Addendum_Log_ID, Addendum_Is_Active) VALUES(?,?,?,?,?,?,?,?);";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, addendumName);
+            ps.setString(2, addendumDescription);
+            ps.setInt(3,userID);
+            ps.setInt(4, reportID);
+            ps.setInt(5, caseID);
+            ps.setDate(6, Date.valueOf(date));
+            ps.setInt(7,1);
+            ps.setBoolean(8, true);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new SQLException("Could not create report");
+        }
+
+    }
 }

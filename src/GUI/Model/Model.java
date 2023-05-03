@@ -101,4 +101,8 @@ public class Model {
     public void createNewUser(String fullName, String userName, String userTlf, String userEmail, int userType) throws SQLException {
         manager.createNewUser(fullName,userName,userTlf,userEmail,userType);
     }
+
+    public void createNewAddendum(String addendumName, String addendumDescription, int caseID, int reportID, int userID) throws SQLException {
+        manager.createNewAddendum(addendumName, addendumDescription, caseID, reportID, userID);
+    }
 }

@@ -12,4 +12,5 @@ public interface IReportDAO {
 
     List<Report> getReports(int caseID) throws SQLException;
 
+    void createNewAddendum(String addendumName, String addendumDescription, int caseID, int reportID, int userID) throws SQLException;
 }

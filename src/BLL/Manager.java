@@ -70,4 +70,9 @@ public class Manager {
     public void createNewUser(String fullName, String userName, String userTlf, String userEmail, int userType) throws SQLException {
         usersDAO.createNewUser(fullName,userName,userTlf,userEmail,userType);
     }
+
+    public void createNewAddendum(String addendumName, String addendumDescription, int caseID, int reportID, int userID) throws SQLException {
+        reportDAO.createNewAddendum(addendumName, addendumDescription, caseID, reportID, userID);
+
+    }
 }

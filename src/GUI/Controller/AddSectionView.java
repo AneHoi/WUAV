@@ -95,7 +95,7 @@ public class AddSectionView implements Initializable {
     }
 
     public void handleSubmit(ActionEvent actionEvent) throws Exception {
-        Section section = new Section(this.section.getSectionID(), txtSectionTitle.getText(), imageSketch, txtSketchComment.getText(),imageImage, txtImageComment.getText(), txtDescription.getText(), this.technician.getFullName(), this.report.getReportID(), this.addendum.getAddendumID(), LocalDate.now(), LocalTime.now());
+        Section section = new Section(this.section.getSectionID(), txtSectionTitle.getText(), imageSketch, txtSketchComment.getText(),imageImage, txtImageComment.getText(), txtDescription.getText(), this.technician.getFullName(), this.report.getReportID(), this.addendum.getReportID(), LocalDate.now(), LocalTime.now());
         model.createSection(section);
     }
 }

@@ -208,8 +208,18 @@ public class CaseHomePageView implements Initializable {
     public void handleCreateNewAddendum(ActionEvent actionEvent) {
         String addendumName = txtAddendumName.getText();
         String addendumDescription = txtAddendumDescription.getText();
+        int caseID = currentCase.getCaseID();
+        Report selectedReport = (Report) tblViewExistingReports.getSelectionModel().getSelectedItem();
+        int reportID = selectedReport.getReportID();
+        try {
+            model.createNewAddendum(addendumName, addendumDescription, caseID,reportID, controllerAssistant.getLoggedInUser().getUserID()); //TODO UserID might not be right here, we need to fix this.
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not create a new Addendum", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+        updateTableView(); //TODO Maybe the addendum adding should be inside the ReportHomePage. Since it should not be mixed into the tableview with the rest of the reports. You should not be able to add an Addendum to an Addendum...
 
-        //TODO Finish this once Addendums are created in the DB
     }
 }
 
