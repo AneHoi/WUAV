@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Section {
     private int sectionID;
@@ -19,9 +20,9 @@ public class Section {
     private int reportID;
     private int addendumID;
     private LocalDate createdDate;
-    private Time time;
+    private LocalTime time;
 
-    public Section(int sectionID, String sectionTitle, Image sketch, String sketchComment, Image image, String imageComment, String description, String madeByTechnician, int reportID, int addendumID, LocalDate createdDate, Time time) {
+    public Section(int sectionID, String sectionTitle, Image sketch, String sketchComment, Image image, String imageComment, String description, String madeByTechnician, int reportID, int addendumID, LocalDate createdDate, LocalTime time) {
         this.sectionID = sectionID;
         this.sectionTitle = sectionTitle;
         this.sketch = sketch;
@@ -60,6 +61,14 @@ public class Section {
         this.sketch = sketch;
     }
 
+    public byte[] getSketchBytes() {
+        return sketchBytes;
+    }
+
+    public void setSketchBytes(byte[] sketchBytes) {
+        this.sketchBytes = sketchBytes;
+    }
+
     public String getSketchComment() {
         return sketchComment;
     }
@@ -74,6 +83,14 @@ public class Section {
 
     public void setImage(Image image) {
         this.image = image;
+    }
+
+    public byte[] getImageBytes() {
+        return imageBytes;
+    }
+
+    public void setImageBytes(byte[] imageBytes) {
+        this.imageBytes = imageBytes;
     }
 
     public String getImageComment() {
@@ -124,11 +141,11 @@ public class Section {
         this.createdDate = createdDate;
     }
 
-    public Time getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 }

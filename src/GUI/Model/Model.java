@@ -1,6 +1,7 @@
 package GUI.Model;
 
 import BE.Customer;
+import BE.Section;
 import BLL.Manager;
 
 import java.util.List;
@@ -19,7 +20,9 @@ public class Model {
         return customers;
     }
 
-
+    public void createSection(Section section) throws Exception {
+        manager.createSection(section);
+    }
     public void saveCustomer(Customer customer) {
         manager.saveCustomer(customer);
     }

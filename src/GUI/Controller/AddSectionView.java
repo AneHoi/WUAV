@@ -1,7 +1,10 @@
 package GUI.Controller;
 
+import BE.Addendum;
+import BE.Report;
 import BE.Section;
 import BE.Technician;
+import GUI.Model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +19,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class AddSectionView implements Initializable {
@@ -25,7 +31,15 @@ public class AddSectionView implements Initializable {
     public Button btnAddSketch;
     public TextField txtSectionTitle, txtSketchPath, txtSketchComment, txtImagePath, txtImageComment, txtDescription;
 
-    private byte[] data;
+    private byte[] dataSketch;
+    private byte[] dataImage;
+    private Image imageSketch;
+    private Image imageImage;
+    Section section;
+    Technician technician;
+    Report report;
+    Addendum addendum;
+    Model model = new Model();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -41,12 +55,12 @@ public class AddSectionView implements Initializable {
             File selectedFile = fileChooser.showOpenDialog(stage);
             if (selectedFile != null && selectedFile.getName().endsWith(".png") || selectedFile != null && selectedFile.getName().endsWith(".jpg")
                     || selectedFile != null && selectedFile.getName().endsWith(".gif")) {
-                Image image = new Image(selectedFile.toURI().toString());
-                txtSketchPath.setText(image.getUrl());
+                imageSketch = new Image(selectedFile.toURI().toString());
+                txtSketchPath.setText(imageSketch.getUrl());
 
             }
             try {
-                data = Files.readAllBytes(selectedFile.getAbsoluteFile().toPath());
+                dataSketch = Files.readAllBytes(selectedFile.getAbsoluteFile().toPath());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -65,9 +79,14 @@ public class AddSectionView implements Initializable {
             File selectedFile = fileChooser.showOpenDialog(stage);
             if (selectedFile != null && selectedFile.getName().endsWith(".png") || selectedFile != null && selectedFile.getName().endsWith(".jpg")
                     || selectedFile != null && selectedFile.getName().endsWith(".gif")) {
-                Image image = new Image(selectedFile.toURI().toString());
-                txtImagePath.setText(image.getUrl());
+                imageImage = new Image(selectedFile.toURI().toString());
+                txtImagePath.setText(imageImage.getUrl());
 
+            }
+            try {
+                dataImage = Files.readAllBytes(selectedFile.getAbsoluteFile().toPath());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
         catch (Exception e){
@@ -75,7 +94,8 @@ public class AddSectionView implements Initializable {
         }
     }
 
-    public void handleSubmit(ActionEvent actionEvent) {
-
+    public void handleSubmit(ActionEvent actionEvent) throws Exception {
+        Section section = new Section(this.section.getSectionID(), txtSectionTitle.getText(), imageSketch, txtSketchComment.getText(),imageImage, txtImageComment.getText(), txtDescription.getText(), this.technician.getFullName(), this.report.getReportID(), this.addendum.getAddendumID(), LocalDate.now(), LocalTime.now());
+        model.createSection(section);
     }
 }
