@@ -105,6 +105,7 @@ CREATE TABLE Addendum(
     Addendum_Description            NVARCHAR(750)                           NOT NULL,
     Addendum_Assigned_Tech_ID       INT                                     NOT NULL,
     Addendum_Report_ID              INT                                     NOT NULL,
+    Addendum_Case_ID                INT                                     NOT NULL,
     Addendum_Created_Date           DATE                                    NOT NULL,
     Addendum_Log_ID                 INT                                     NOT NULL,
     Addendum_Is_Active              BIT                                     NOT NULL,
@@ -112,6 +113,9 @@ CREATE TABLE Addendum(
     CONSTRAINT PK_ADDENDUM_ID PRIMARY KEY(Addendum_ID),
 
     CONSTRAINT FK_ADDENDUM_REPORT_ID FOREIGN KEY(Addendum_Report_ID)
+    REFERENCES Report(Report_ID),
+
+    CONSTRAINT FK_ADDENDUM_CASE_ID FOREIGN KEY(Addendum_Case_ID)
     REFERENCES Case_(Case_ID),
 
     CONSTRAINT FK_ADDENDUM_ASSIGNED_TECH_ID FOREIGN KEY(Addendum_Assigned_Tech_ID)
