@@ -3,6 +3,8 @@
 /.idea/misc.xml
 /.idea/modules.xml
 /.idea/uiDesigner.xml
+/.idea/.gitignore
+/.idea/compiler.xml
 /out/
 /.idea/workspace.xml
 
@@ -123,3 +125,5 @@ fabric.properties
 .idea/**/azureSettings.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij
+.idea/inspectionProfiles/Project_Default.xml
+/WUAV.iml

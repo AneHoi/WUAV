@@ -14,39 +14,37 @@ public class DAO {
     public DAO() {
         db = DBConnector.getInstance();
     }
-    public List<Customer> getAllCostumers() {
+
+    public List<Customer> getAllCostumers() throws SQLException {
         List<Customer> customers = new ArrayList<>();
-        try(Connection conn = db.getConnection()){
+        try (Connection conn = db.getConnection()) {
             String sql = "SELECT * FROM Customer;";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
-            while(rs.next()){
+            while (rs.next()) {
                 int id = rs.getInt("Customer_ID");
                 String name = rs.getString("Customer_Name");
                 String address = rs.getString("Customer_Address");
                 String mail = rs.getString("Customer_Mail");
-                String tlf = rs.getString("Customer_tlf");
+                String tlf = rs.getString("Customer_Tlf");
                 int cvr = rs.getInt("Customer_CVR");
                 String type = rs.getString("Customer_Type");
 
                 Customer customer = new Customer(id, name, address, tlf, mail, cvr, type);
                 customers.add(customer);
             }
-            return customers;
 
+        } catch (SQLException e) {
+            throw new SQLException(e);
         }
-        catch (Exception e) {
-
-        }
-
         return customers;
     }
 
     public void saveCustomer(Customer customer) {
-        try (Connection conn = db.getConnection()){
+        try (Connection conn = db.getConnection()) {
             String sql = "INSERT INTO Customer" +
-                    "(Customer_Name, Customer_Address, Customer_Mail, Customer_tlf, Customer_CVR, Customer_Type)" +
+                    "(Customer_Name, Customer_Address, Customer_Mail, Customer_Tlf, Customer_CVR, Customer_Type)" +
                     "VALUES(?,?,?,?,?,?);";
             PreparedStatement preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -57,20 +55,9 @@ public class DAO {
             preparedStatement.setInt(5, customer.getCVR());
             preparedStatement.setString(6, customer.getCustomerType());
 
-
-            //preparedStatement.setInt(1, customer.getCustomerID());
-            /*
-            preparedStatement.setString(2, customer.getCustomerName());
-            preparedStatement.setString(3, customer.getAddress());
-            preparedStatement.setString(4, customer.getPhoneNumber());
-            preparedStatement.setString(5, customer.getEmail());
-            preparedStatement.setInt(6, customer.getCVR());
-            preparedStatement.setString(7, customer.getCustomerType());
-             */
             preparedStatement.executeUpdate();
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -1,20 +1,24 @@
 package BE;
 
+import java.time.LocalDate;
+
 public class Case {
     private int caseID;
     private String caseName;
     private String caseDescription;
     private String contactPerson;
     private int customerID;
-    private int assignedTechnician;
+    private String assignedTechnician;
+    private LocalDate createdDate;
 
-    public Case(int caseID, String caseName, String caseDescription, String contactPerson, int customerID, int assignedTechnician) {
+    public Case(int caseID, String caseName, String caseDescription, String contactPerson, int customerID, String assignedTechnician, LocalDate createdDate) {
         this.caseID = caseID;
         this.caseName = caseName;
         this.caseDescription = caseDescription;
         this.contactPerson = contactPerson;
         this.customerID = customerID;
         this.assignedTechnician = assignedTechnician;
+        this.createdDate = createdDate;
     }
 
     public int getCaseID() {
@@ -57,11 +61,19 @@ public class Case {
         this.customerID = customerID;
     }
 
-    public int getAssignedTechnician() {
+    public String getAssignedTechnician() {
         return assignedTechnician;
     }
 
-    public void setAssignedTechnician(int assignedTechnician) {
+    public void setAssignedTechnician(String assignedTechnician) {
         this.assignedTechnician = assignedTechnician;
+    }
+
+    public LocalDate getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDate createdDate) {
+        this.createdDate = createdDate;
     }
 }

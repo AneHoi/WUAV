@@ -21,7 +21,6 @@ public class IndexController implements Initializable {
         controllerAssistant = ControllerAssistant.getInstance();
         controllerAssistant.setBorderPane(borderIndex);
         try {
-            Model model = new Model();
             controllerAssistant.loadCenter("UserHomePageView.fxml");
             controllerAssistant.loadLeft("BurgerBarView.fxml");
             controllerAssistant.loadTop("TopBarView.fxml");

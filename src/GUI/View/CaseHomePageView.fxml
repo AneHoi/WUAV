@@ -19,17 +19,9 @@
               <children>
                   <HBox>
                       <children>
-                          <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="80.0" text="Case Name: ">
+                          <Label fx:id="lblCaseName" prefHeight="80.0" text="Label" underline="true">
                               <font>
-                                  <Font size="40.0" />
-                              </font>
-                              <HBox.margin>
-                                  <Insets />
-                              </HBox.margin>
-                          </Label>
-                          <Label fx:id="lblCaseName" prefHeight="80.0" text="Label">
-                              <font>
-                                  <Font size="40.0" />
+                                  <Font name="System Bold" size="40.0" />
                               </font>
                           </Label>
                       </children>
@@ -55,7 +47,7 @@
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>
                   </TextArea>
-                  <Button fx:id="btnCreateNewReport" mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" styleClass="orangeButtons" text="Create New Report" underline="true">
+                  <Button fx:id="btnCreateNewReport" mnemonicParsing="false" onAction="#handleCreateNewReport" prefHeight="35.0" prefWidth="200.0" styleClass="orangeButtons" text="Create New Report" underline="true">
                      <VBox.margin>
                         <Insets left="25.0" />
                      </VBox.margin>
@@ -109,7 +101,7 @@
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>
                   </TextArea>
-                  <Button fx:id="btnCreateNewAddendum" mnemonicParsing="false" prefHeight="39.0" prefWidth="215.0" styleClass="orangeButtons" text="Create New Addendum" underline="true">
+                  <Button fx:id="btnCreateNewAddendum" mnemonicParsing="false" onAction="#handleCreateNewAddendum" prefHeight="39.0" prefWidth="215.0" styleClass="orangeButtons" text="Create New Addendum" underline="true">
                      <VBox.margin>
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>

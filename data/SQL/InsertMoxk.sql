@@ -18,12 +18,12 @@ INSERT INTO User_Passwords VALUES((SELECT DISTINCT User_ID FROM User_  WHERE Use
 INSERT INTO User_Passwords VALUES((SELECT DISTINCT User_ID FROM User_  WHERE User_Name = 'S'),'S', '1', '$2a$16$SQKnctQxB89dhg7qDpjUpO')
 GO
 
-INSERT INTO Customer VALUES('Need Help co', 'helpme street 1', 'needhelp@help.com', '91191191', '1234321', 'Buisness')
+INSERT INTO Customer VALUES('Need Help co', 'helpme street 1', 'needhelp@help.com', '91191191', '1234321', 'Business')
 
-INSERT INTO Case_ VALUES('Confrens room set up', 'They need to be able to...', (SELECT User_ID FROM User_ WHERE [User_Name] = 'PM'), 1, (SELECT User_ID FROM User_ Where [User_Name] = 'T1'))
+INSERT INTO Case_ VALUES('Conference room set up', 'They need to be able to...', (SELECT User_ID FROM User_ WHERE [User_Name] = 'PM'), 1, (SELECT User_ID FROM User_ Where [User_Name] = 'T1'), convert(date, '2023-9-14'))
 GO
 
-INSERT INTO Report VALUES('Conf room setup', 'Conf room need....', (SELECT DISTINCT User_ID FROM User_ WHERE [User_Name] = 'T1'), (SELECT DISTINCT Case_ID FROM Case_ WHERE Case_Name = 'Confrens room set up'), convert(date, '2023-9-18'), 1, 1)
+INSERT INTO Report VALUES('Conf room setup', 'Conf room need....', (SELECT DISTINCT User_ID FROM User_ WHERE [User_Name] = 'T1'), (SELECT DISTINCT Case_ID FROM Case_ WHERE Case_Name = 'Conference room set up'), convert(date, '2023-9-18'), 1, 1)
 GO
 
 INSERT INTO Section VALUES('TV and Intercom', null, null, null, null, 'TV set up........', (SELECT DISTINCT User_ID FROM User_ WHERE [User_Name] = 'T1'), (SELECT Report_ID FROM Report WHERE Report_Name = 'Conf room setup'), null)
