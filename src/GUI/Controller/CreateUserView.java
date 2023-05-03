@@ -179,7 +179,7 @@ public class CreateUserView implements Initializable {
                 userType = 4;
         }
         try {
-            model.createNewUser(fullName,userName,userTlf,userEmail,userType);
+            model.createNewUser(fullName, userName, userTlf, userEmail, userType);
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not create User", ButtonType.CANCEL);
@@ -198,7 +198,7 @@ public class CreateUserView implements Initializable {
         User user = (User) tblViewExistingUsers.getSelectionModel().getSelectedItem();
         int userID = user.getUserID();
         try {
-            model.updateUser(userID, fullName,userName,userTlf,userEmail,userActive);
+            model.updateUser(userID, fullName, userName, userTlf, userEmail, userActive);
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not update User", ButtonType.CANCEL);
