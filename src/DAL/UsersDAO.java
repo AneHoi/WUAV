@@ -92,4 +92,23 @@ public class UsersDAO implements IUsersDAO {
             throw new SQLException("Could not update the User");
         }
     }
+
+    @Override
+    public void createNewUser(String fullName, String userName, String userTlf, String userEmail, int userType) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "INSERT INTO User_(User_Full_Name, User_Name, User_Type, User_tlf, User_Email, User_Active) VALUES(?,?,?,?,?,?) ";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, fullName);
+            ps.setString(2, userName);
+            ps.setInt(3, userType);
+            ps.setString(4, userTlf);
+            ps.setString(5, userEmail);
+            ps.setBoolean(6, true);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Could not create the User");
+        }
+
+    }
 }

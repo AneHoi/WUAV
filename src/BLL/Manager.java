@@ -66,4 +66,8 @@ public class Manager {
     public void updateUser(int userID, String fullName, String userName, String userTlf, String userEmail, boolean userActive) throws SQLException {
         usersDAO.updateUser(userID, fullName, userName, userTlf, userEmail, userActive);
     }
+
+    public void createNewUser(String fullName, String userName, String userTlf, String userEmail, int userType) throws SQLException {
+        usersDAO.createNewUser(fullName,userName,userTlf,userEmail,userType);
+    }
 }

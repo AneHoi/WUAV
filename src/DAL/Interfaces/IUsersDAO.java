@@ -13,4 +13,6 @@ public interface IUsersDAO {
     List<User> getAllUsers() throws SQLException;
 
     void updateUser(int userID, String fullName, String userName, String userTlf, String userEmail, boolean userActive) throws SQLException;
+
+    void createNewUser(String fullName, String userName, String userTlf, String userEmail, int userType) throws SQLException;
 }

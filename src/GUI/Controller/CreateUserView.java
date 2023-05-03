@@ -87,6 +87,11 @@ public class CreateUserView implements Initializable {
         txtEmailCreate.textProperty().addListener(createNewCustomerBtn);
         cbUserTypeCreate.getSelectionModel().selectedItemProperty().addListener(createNewCustomerBtn);
         tblViewExistingUsers.getSelectionModel().selectedItemProperty().addListener(selectedUserListener);
+        txtFullNameUpdate.textProperty().addListener(updateUserBtn);
+        txtUserNameUpdate.textProperty().addListener(updateUserBtn);
+        txtTelephoneUpdate.textProperty().addListener(updateUserBtn);
+        txtEmailUpdate.textProperty().addListener(updateUserBtn);
+
 
     }
 
@@ -97,6 +102,16 @@ public class CreateUserView implements Initializable {
         } else {
             btnCreateNewUser.setDisable(false);
             addShadow(btnCreateNewUser);
+        }
+    };
+
+    ChangeListener<String> updateUserBtn = (observable, oldValue, newValue) -> {
+        if (txtFullNameUpdate.getText().isEmpty() || txtUserNameUpdate.getText().isEmpty() || txtTelephoneUpdate.getText().isEmpty() || txtEmailUpdate.getText().isEmpty() || cbUserActive.getSelectionModel().getSelectedItem() == null) {
+            btnUpdateUser.setDisable(true);
+            removeShadow(btnUpdateUser);
+        } else {
+            btnUpdateUser.setDisable(false);
+            addShadow(btnUpdateUser);
         }
     };
 
@@ -145,6 +160,33 @@ public class CreateUserView implements Initializable {
     }
 
     public void handleCreateNewUser(ActionEvent actionEvent) {
+        String fullName = txtFullNameCreate.getText();
+        String userName = txtUserNameCreate.getText();
+        String userTlf = txtTelephoneCreate.getText();
+        String userEmail = txtEmailCreate.getText();
+        int userType = 0;
+        switch ((String) cbUserTypeCreate.getSelectionModel().getSelectedItem()) {
+            case "Admin":
+                userType = 1;
+                break;
+            case "ProjectManager":
+                userType = 2;
+                break;
+            case "Technician":
+                userType = 3;
+                break;
+            case "SalesRepresentative":
+                userType = 4;
+        }
+        try {
+            model.createNewUser(fullName,userName,userTlf,userEmail,userType);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not create User", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+
+        updateTableView();
     }
 
     public void handleUpdateUser(ActionEvent actionEvent) {
@@ -152,8 +194,7 @@ public class CreateUserView implements Initializable {
         String userName = txtUserNameUpdate.getText();
         String userTlf = txtTelephoneUpdate.getText();
         String userEmail = txtEmailUpdate.getText();
-        boolean userActive;
-        userActive = cbUserActive.getSelectionModel().getSelectedItem().equals("Active");
+        boolean userActive = cbUserActive.getSelectionModel().getSelectedItem().equals("Active");
         User user = (User) tblViewExistingUsers.getSelectionModel().getSelectedItem();
         int userID = user.getUserID();
         try {

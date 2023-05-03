@@ -38,7 +38,7 @@ public class CaseDAO implements ICaseDAO {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            throw new SQLException("Could not get cases from Database");
+            throw new SQLException("Could not get Cases from Database");
         }
         return cases;
 
@@ -93,7 +93,7 @@ public class CaseDAO implements ICaseDAO {
             }
 
         } catch (SQLException e) {
-            throw new SQLException("Could not add Technician to Case");
+            throw new SQLException("Could not get Cases from Database");
         }
         return cases;
     }

@@ -97,4 +97,8 @@ public class Model {
     public void updateUser(int userID, String fullName, String userName, String userTlf, String userEmail, boolean userActive) throws SQLException {
         manager.updateUser(userID, fullName, userName, userTlf, userEmail, userActive);
     }
+
+    public void createNewUser(String fullName, String userName, String userTlf, String userEmail, int userType) throws SQLException {
+        manager.createNewUser(fullName,userName,userTlf,userEmail,userType);
+    }
 }
