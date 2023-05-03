@@ -1,6 +1,8 @@
 package DAL;
 
 import BE.Customer;
+import BE.Section;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -58,5 +60,36 @@ public class DAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public int createSection(Section section) throws SQLException {
+        int id = 0;
+        try(Connection conn = db.getConnection()) {
+            String sql = "INSERT INTO Section(Section_Title, Section_Sketch, Section_Sketch_Comment, Section_Image, Section_Image_Comment, Section_Description, Section_Made_By_Tech, Section_Report_ID, Section_Addendum_ID) VALUES(?,?,?,?,?,?,?,?,?);";
+
+            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            stmt.setString(1,section.getSectionTitle());
+            stmt.setBytes(2, section.getSketchBytes());
+            stmt.setString(3,section.getSketchComment());
+            stmt.setBytes(4,section.getImageBytes());
+            stmt.setString(5, section.getImageComment());
+            stmt.setString(6, section.getDescription());
+            stmt.setString(7, section.getMadeByTechnician());
+            stmt.setInt(8,section.getReportID());
+            stmt.setInt(9,section.getAddendumID());
+
+            stmt.executeUpdate();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+
+            if(rs.next()){
+                id = rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Could not create section "+e);
+        }
+        return id;
     }
 }

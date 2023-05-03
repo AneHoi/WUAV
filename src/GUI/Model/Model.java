@@ -1,6 +1,8 @@
 package GUI.Model;
 
+
 import BE.*;
+
 import BLL.Manager;
 
 import java.sql.SQLException;
@@ -29,7 +31,9 @@ public class Model {
         return customers;
     }
 
-
+    public void createSection(Section section) throws Exception {
+        manager.createSection(section);
+    }
     public void saveCustomer(Customer customer) {
         manager.saveCustomer(customer);
     }

@@ -1,5 +1,4 @@
 package BLL;
-
 import BE.*;
 import DAL.CaseDAO;
 import DAL.DAO;
@@ -29,7 +28,9 @@ public class Manager {
     public void saveCustomer(Customer customer) {
         dao.saveCustomer(customer);
     }
-
+    public int createSection(Section section) throws Exception {
+        return dao.createSection(section);
+    }
     public void createNewReport(String reportName, String reportDescription, int caseID, int userID) throws SQLException {
         reportDAO.createNewReport(reportName,reportDescription, caseID, userID);
     }
