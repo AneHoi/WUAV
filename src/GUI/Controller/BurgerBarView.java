@@ -1,14 +1,17 @@
 package GUI.Controller;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
@@ -39,23 +42,59 @@ public class BurgerBarView implements Initializable {
     private String casesOrange = "data/Images/Cases orange.png";
     private String usersOrange = "data/Images/Users orange.png";
 
-    private Image imgBurgerOrange;
-    private Image imgBurgerNormal;
-
+    private Image imgBurgerNormal, imgBurgerOrange, imgHomeNormal, imgHomeOrange, imgCustomerNormal, imgCustomerOrange, imgCasesNormal, imgCasesOrange, imgUsersNormal, imgUsersOrange;
     private ControllerAssistant controllerAssistant;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         controllerAssistant = ControllerAssistant.getInstance();
-        imgBurgerOrange = loadImages(burgerOrange);
-        imgBurgerNormal = loadImages(burger);
+        loadAllImages();
         loadIconsToBar();
         imgBurger.setOnMouseClicked(event -> expandMenuBar());
         imgCases.setOnMouseClicked(event -> loadSearchForCases());
         imgHome.setOnMouseClicked(event -> loadUserHomePage());
         imgCustomers.setOnMouseClicked(event -> loadCustomerView());
         imgUsers.setOnMouseClicked(event -> loadUserView());
+        listenerForClickedImages();
+    }
+
+    private void listenerForClickedImages() {
+        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
+                    ImageView clickedImage = (ImageView) e.getSource();
+                    setImagesToWhite();
+                    if (clickedImage.equals(imgHome)) {
+                        imgHome.setImage(imgHomeOrange);
+                    } else if (clickedImage.equals(imgCustomers)) {
+                        imgCustomers.setImage(imgCustomerOrange);
+                    } else if (clickedImage.equals(imgCases)) {
+                        imgCases.setImage(imgCasesOrange);
+                    } else if (clickedImage.equals(imgUsers)) {
+                        imgUsers.setImage(imgUsersOrange);
+                    }
+                }
+            }
+        };
+        imgHome.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+        imgCustomers.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+        imgCases.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+        imgUsers.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+    }
+
+    private void loadAllImages() {
+        imgBurgerOrange = loadImages(burgerOrange);
+        imgBurgerNormal = loadImages(burger);
+        imgHomeNormal = loadImages(home);
+        imgHomeOrange = loadImages(homeOrange);
+        imgCustomerNormal = loadImages(customers);
+        imgCustomerOrange = loadImages(customersOrange);
+        imgCasesNormal = loadImages(cases);
+        imgCasesOrange = loadImages(casesOrange);
+        imgUsersNormal = loadImages(users);
+        imgUsersOrange = loadImages(usersOrange);
     }
 
     private void loadUserView() {
@@ -90,34 +129,20 @@ public class BurgerBarView implements Initializable {
         }
     }
 
+    private void setImagesToWhite() {
+        imgHome.setImage(imgHomeNormal);
+        imgCustomers.setImage(imgCustomerNormal);
+        imgCases.setImage(imgCasesNormal);
+        imgUsers.setImage(imgUsersNormal);
+    }
+
+
     private void loadUserHomePage() {
         try {
             controllerAssistant.loadCenter("UserHomePageView.fxml");
         } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load Home Page", ButtonType.OK);
-            alert.showAndWait();
-
-        }
-    }
-
-    private void loadReportHomePage() {
-        try {
-            controllerAssistant.loadCenter("ReportHomePageView.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load Cases Home Page", ButtonType.OK);
-            alert.showAndWait();
-
-        }
-    }
-
-    private void loadCasesView() {
-        try {
-            controllerAssistant.loadCenter("CaseHomePageView.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load Cases Home Page", ButtonType.OK);
             alert.showAndWait();
 
         }
@@ -186,10 +211,10 @@ public class BurgerBarView implements Initializable {
 
     private void loadIconsToBar() {
         imgBurger.setImage(imgBurgerNormal);
-        imgHome.setImage(loadImages(home));
-        imgCustomers.setImage(loadImages(customers));
-        imgCases.setImage(loadImages(cases));
-        imgUsers.setImage(loadImages(users));
+        imgHome.setImage(imgHomeOrange);
+        imgCustomers.setImage(imgCustomerNormal);
+        imgCases.setImage(imgCasesNormal);
+        imgUsers.setImage(imgUsersNormal);
 
     }
 
