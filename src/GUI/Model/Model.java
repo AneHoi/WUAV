@@ -105,4 +105,8 @@ public class Model {
     public void createNewAddendum(String addendumName, String addendumDescription, int caseID, int reportID, int userID) throws SQLException {
         manager.createNewAddendum(addendumName, addendumDescription, caseID, reportID, userID);
     }
+
+    public List<Addendum> getAddendums(int caseID, int reportID) throws SQLException {
+        return manager.getAddendums(caseID, reportID);
+    }
 }

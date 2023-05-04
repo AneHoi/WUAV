@@ -75,4 +75,8 @@ public class Manager {
         reportDAO.createNewAddendum(addendumName, addendumDescription, caseID, reportID, userID);
 
     }
+
+    public List<Addendum> getAddendums(int caseID, int reportID) throws SQLException {
+        return reportDAO.getAddendums(caseID, reportID);
+    }
 }

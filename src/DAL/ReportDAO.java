@@ -1,5 +1,6 @@
 package DAL;
 
+import BE.Addendum;
 import BE.Report;
 import DAL.Interfaces.IReportDAO;
 import GUI.Controller.ControllerAssistant;
@@ -84,5 +85,31 @@ public class ReportDAO implements IReportDAO {
             throw new SQLException("Could not create report");
         }
 
+    }
+
+    @Override
+    public List<Addendum> getAddendums(int caseID, int reportID) throws SQLException {
+        List<Addendum> addendums = new ArrayList<>();
+        try (Connection conn = db.getConnection()) {
+            String sql = "SELECT * FROM Addendum JOIN User_ ON Addendum.Addendum_Assigned_Tech_ID = User_.User_ID WHERE Addendum_Case_ID = " + caseID + " AND Addendum_Report_ID =" + reportID +";";
+            Statement ps = conn.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+
+            while (rs.next()) {
+                int addendumID = rs.getInt("Addendum_ID");
+                String addendumName = rs.getString("Addendum_Name");
+                String addendumDescription = rs.getString("Addendum_Description");
+                String techName = rs.getString("User_Full_Name");
+                LocalDate createdDate = rs.getDate("Addendum_Created_Date").toLocalDate();
+                int logID = rs.getInt("Addendum_Log_ID");
+                boolean isActive = rs.getBoolean("Addendum_Is_Active");
+
+                Addendum a = new Addendum(addendumID, addendumName, addendumDescription, caseID, techName, createdDate, logID, isActive, reportID);
+                addendums.add(a);}
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new SQLException("Could not get reports from Database");
+        }
+        return addendums;
     }
 }
