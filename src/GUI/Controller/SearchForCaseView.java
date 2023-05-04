@@ -81,11 +81,6 @@ public class SearchForCaseView implements Initializable {
         }
     }
 
-    private void removeShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(null);
-        }
-    }
 
     public void handleFilter(ActionEvent actionEvent) {
         // Get the filter criteria from the text fields and date picker
@@ -118,6 +113,10 @@ public class SearchForCaseView implements Initializable {
         txtTechnician.clear();
         dpDate.setValue(null);
         updateTableView();
+    }
+
+    public void chooseCaseAndCustomer(){
+        //TODO needs implementation when you double click a case/customer it opens the Customer (or Case) Home Page and changes the currentCustomer and CurrentCase in the model;
     }
 
 }
