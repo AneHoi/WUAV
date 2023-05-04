@@ -60,7 +60,7 @@ public class SearchForCaseView implements Initializable {
         try {
             cases = model.getAllCases();
             customers = model.getAllCustomers();
-            for (int i = 0; i < cases.size(); i++) {
+            for (int i = 0; i < cases.size()-1; i++) {
                 Case caseObj = cases.get(i);
                 Customer customerObj = customers.get(i);
                 CaseAndCustomer caseAndCustomer = new CaseAndCustomer(caseObj, customerObj);
