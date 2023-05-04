@@ -8,20 +8,25 @@ import GUI.Model.Model;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class CaseHomePageView implements Initializable {
@@ -29,9 +34,9 @@ public class CaseHomePageView implements Initializable {
     @FXML
     private Label lblCaseName;
     @FXML
-    private TextField txtReportName, txtSearchField, txtAddendumName;
+    private TextField txtReportName, txtSearchField;
     @FXML
-    private TextArea txtReportDescription, txtAddendumDescription;
+    private TextArea txtReportDescription;
     @FXML
     private Button btnCreateNewReport, btnAddNewAddendum;
     @FXML
@@ -61,6 +66,7 @@ public class CaseHomePageView implements Initializable {
         lblCaseName.setText("Case Name: " + currentCase.getCaseName());
         addListeners();
         addShadow(txtReportDescription, txtReportName, txtSearchField);
+        searchBarFilter();
 
     }
 
@@ -103,6 +109,26 @@ public class CaseHomePageView implements Initializable {
             }
         });
 
+        tblViewAddendums.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && tblViewAddendums.getSelectionModel().getSelectedItem() != null) {
+                Report selectedItem = (Report) tblViewAddendums.getSelectionModel().getSelectedItem();
+                if (selectedItem.isActive()) {
+                    try {
+                        model.setCurrentReport(selectedItem);
+                        model.setCurrentCase(currentCase);
+                        model.setCurrentCustomer(currentCustomer);
+                        controllerAssistant.loadCenter("ReportHomePageView.fxml");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Addendum Home Page", ButtonType.CANCEL);
+                        alert.showAndWait();
+                    }
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Addendum is inactive, please make another Addendum instead", ButtonType.OK);
+                    alert.showAndWait();
+                }
+            }
+        });
     }
 
 
@@ -200,21 +226,52 @@ public class CaseHomePageView implements Initializable {
     }
 
     public void handleCreateNewAddendum(ActionEvent actionEvent) {
-        
-        String addendumName = txtAddendumName.getText();
-        String addendumDescription = txtAddendumDescription.getText();
-        int caseID = currentCase.getCaseID();
+        AddAddendumView addAddendumView = new AddAddendumView();
         Report selectedReport = (Report) tblViewExistingReports.getSelectionModel().getSelectedItem();
-        int reportID = selectedReport.getReportID();
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController(addAddendumView);
+        loader.setLocation(getClass().getResource("/GUI/View/AddAddendumView.fxml"));
+        addAddendumView.setCaseAndReport(currentCase, selectedReport);
         try {
-            model.createNewAddendum(addendumName, addendumDescription, caseID, reportID, controllerAssistant.getLoggedInUser().getUserID()); //TODO UserID might not be right here, we need to fix this.
-        } catch (SQLException e) {
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not create a new Addendum", ButtonType.CANCEL);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Addendum Window", ButtonType.CANCEL);
             alert.showAndWait();
         }
-        updateTableView(); //TODO Maybe the addendum adding should be inside the ReportHomePage. Since it should not be mixed into the tableview with the rest of the reports. You should not be able to add an Addendum to an Addendum...
+        updateTableViewAddendums();
+    }
 
+    private void searchBarFilter() {
+        // Create a list to hold the original unfiltered items in the tblViewCustomers TableView
+        ObservableList<Report> originalList = FXCollections.observableArrayList(tblViewExistingReports.getItems());
+
+        // Add a listener to the txtSearchBar TextField to filter the tblViewCustomers TableView based on the user's input
+        txtSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Create a filtered list that contains all items from the tblViewCustomers TableView
+            FilteredList<Report> filteredList = new FilteredList<>(originalList);
+
+            // Set a predicate to filter the items based on the user's input
+            if (newValue == null || newValue.isEmpty()) {
+                // If the user has not entered any input, display all items
+                tblViewExistingReports.setItems(originalList);
+            } else {
+                // Otherwise, filter the items based on the user's input
+                String lowerCaseFilter = newValue.toLowerCase();
+                filteredList.setPredicate(reports -> {
+                    String reportDate = String.valueOf(reports.getCreatedDate());
+                    String assignedTechnician = Objects.toString(reports.getAssignedTechnician(), "");
+                    assignedTechnician = assignedTechnician.toLowerCase();
+                    return reports.getReportName().toLowerCase().contains(lowerCaseFilter)
+                            || assignedTechnician.contains(lowerCaseFilter)
+                            || reportDate.contains(lowerCaseFilter);
+                });
+                tblViewExistingReports.setItems(filteredList);
+            }
+        });
     }
 }
 
