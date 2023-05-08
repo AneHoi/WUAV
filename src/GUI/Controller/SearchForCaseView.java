@@ -53,6 +53,7 @@ public class SearchForCaseView implements Initializable {
         colCaseName.setCellValueFactory(new PropertyValueFactory<>("caseName"));
         colTechnician.setCellValueFactory(new PropertyValueFactory<>("technicianName"));
         colCreatedDate.setCellValueFactory(new PropertyValueFactory<>("createdDate"));
+        tblViewFilteredCases.getColumns().addAll();
 
         ObservableList<CaseAndCustomer> data = FXCollections.observableArrayList();
         List<Case> cases;
@@ -60,18 +61,19 @@ public class SearchForCaseView implements Initializable {
         try {
             cases = model.getAllCases();
             customers = model.getAllCustomers();
-            for (int i = 0; i < cases.size()-1; i++) {
+            for (int i = 0; i < cases.size(); i++) {
                 Case caseObj = cases.get(i);
                 Customer customerObj = customers.get(i);
                 CaseAndCustomer caseAndCustomer = new CaseAndCustomer(caseObj, customerObj);
                 data.add(caseAndCustomer);
             }
-            tblViewFilteredCases.setItems(data);
+
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get Cases and Customers for list", ButtonType.CANCEL);
             alert.showAndWait();
         }
+        tblViewFilteredCases.setItems(data);
     }
 
 
