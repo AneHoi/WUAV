@@ -13,13 +13,18 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,6 +33,8 @@ import java.util.ResourceBundle;
 
 public class ReportHomePageView implements Initializable {
     public Button btnAddSection;
+    @FXML
+    private ImageView imgBack, imgForward;
     @FXML
     private Label lblCustomerName, lblReportName, lblCustomerAddress, lblCustomerEmail, lblCustomerTelephone, lblCaseName, lblCaseID, lblCaseCreated, lblCaseTechnicians, lblCaseContactPerson, lblReportDescription;
     @FXML
@@ -38,11 +45,20 @@ public class ReportHomePageView implements Initializable {
     private Addendum currentAddendum;
     private Section currentSection;
     private Model model;
+    private ControllerAssistant controllerAssistant;
+    private String back = "data/Images/Backward.png";
+    private String forward = "data/Images/Forward.png";
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        controllerAssistant = ControllerAssistant.getInstance();
         model = Model.getInstance();
         currentReport = model.getCurrentReport();
+        imgBack.setImage(loadImages(back));
+        imgBack.setOnMouseClicked(event -> goBack());
+        imgForward.setImage(loadImages(forward));
+        imgForward.setDisable(true);
         currentCase = model.getCurrentCase();
         currentCustomer = model.getCurrentCustomer();
         currentAddendum = model.getCurrentAddendum();
@@ -87,6 +103,7 @@ public class ReportHomePageView implements Initializable {
     }
 
     private void updateSectionInfo() {
+        vboxSectionAdding.getChildren().clear();
         List<Section> allSections = new ArrayList<>();
         try {
             allSections = model.getAllSections(currentReport.getReportID());
@@ -100,8 +117,14 @@ public class ReportHomePageView implements Initializable {
             VBox vb = new VBox();
             Label title = new Label(s.getSectionTitle());
             ImageView sketch = new ImageView();
+            sketch.setImage(s.getSketch());
+            sketch.setFitHeight(80);
+            sketch.setFitWidth(80);
             Label sketchComment = new Label(s.getSketchComment());
             ImageView image = new ImageView();
+            image.setImage(s.getImage());
+            image.setFitHeight(80);
+            image.setFitWidth(80);
             Label imageComment = new Label(s.getImageComment());
             Label description = new Label(s.getDescription());
             VBox vboxRight = new VBox();
@@ -125,19 +148,47 @@ public class ReportHomePageView implements Initializable {
             vboxRight.setAlignment(Pos.BOTTOM_RIGHT);
             vboxRight.setPrefWidth(Region.USE_COMPUTED_SIZE);
             vboxRight.setPrefHeight(Region.USE_COMPUTED_SIZE);
-
+            Button btnDeleteSection = new Button("Delete Section");
             Button btnEditSection = new Button("Edit Section");
+            HBox btnHBox = new HBox(btnEditSection, btnDeleteSection);
             btnEditSection.getStyleClass().add("AddAndEditSectionButtons");
             btnEditSection.setUnderline(true);
-            btnEditSection.setPrefHeight(50);
-            btnEditSection.setPrefWidth(220);
-            btnEditSection.setOnMouseClicked(event -> handleEditSection(s, btnEditSection,bp));
-            vboxSectionAdding.getChildren().add(0, btnEditSection);
+            btnEditSection.setPrefHeight(30);
+            btnEditSection.setPrefWidth(150);
+            btnEditSection.setOnMouseClicked(event -> handleEditSection(s, btnHBox, bp));
+            btnDeleteSection.getStyleClass().add("AddAndEditSectionButtons");
+            btnDeleteSection.setUnderline(true);
+            btnDeleteSection.setPrefHeight(30);
+            btnDeleteSection.setPrefWidth(150);
+            btnDeleteSection.setOnMouseClicked(event -> handleDeleteEvent(s, btnHBox, bp));
+            btnHBox.setSpacing(20);
+            vboxSectionAdding.getChildren().add(0, btnHBox);
             vboxSectionAdding.getChildren().add(0, bp);
+
+        }
+        vboxSectionAdding.getChildren().add(btnAddSection);
+    }
+
+    private void handleDeleteEvent(Section s, Node btnHBox, BorderPane bp) {
+        Alert alert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to delete this section?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.YES) {
+            vboxSectionAdding.getChildren().removeAll(bp, btnHBox);
+
+            try {
+                model.deleteSection(s.getSectionID());
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Alert exceptionAlert = new Alert(Alert.AlertType.ERROR, "Could not delete Section" + e, ButtonType.CANCEL);
+                exceptionAlert.showAndWait();
+            }
+        } else {
+            // Do nothing
         }
     }
 
-    private void handleEditSection(Section s, Node btn, Node section) {
+    private void handleEditSection(Section s, Node btnHBox, BorderPane bp) {
         AddSectionView sectionView = new AddSectionView();
         sectionView.setCurrentSection(s);
         Stage stage = new Stage();
@@ -153,7 +204,31 @@ public class ReportHomePageView implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Section Window", ButtonType.CANCEL);
             alert.showAndWait();
         }
-        vboxSectionAdding.getChildren().removeAll(btn,section);
         updateSectionInfo();
     }
+
+    private Image loadImages(String url) {
+        Image image = null;
+        try {
+            InputStream img = new FileInputStream(url);
+            image = new Image(img);
+        } catch (FileNotFoundException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load an image, following error occurred:\n" + e, ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+        return image;
+
+    }
+
+    private void goBack() {
+        try {
+            controllerAssistant.loadCenter("CaseHomePageView.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not go back", ButtonType.OK);
+            alert.showAndWait();
+        }
+    }
+
+
 }

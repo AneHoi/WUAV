@@ -4,6 +4,7 @@ import BE.Customer;
 import BE.Section;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -45,9 +46,7 @@ public class DAO {
 
     public void saveCustomer(Customer customer) {
         try (Connection conn = db.getConnection()) {
-            String sql = "INSERT INTO Customer" +
-                    "(Customer_Name, Customer_Address, Customer_Mail, Customer_Tlf, Customer_CVR, Customer_Type)" +
-                    "VALUES(?,?,?,?,?,?);";
+            String sql = "INSERT INTO Customer" + "(Customer_Name, Customer_Address, Customer_Mail, Customer_Tlf, Customer_CVR, Customer_Type)" + "VALUES(?,?,?,?,?,?);";
             PreparedStatement preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, customer.getCustomerName());
@@ -212,6 +211,17 @@ public class DAO {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new SQLException("Could not create section " + e);
+        }
+    }
+
+    public void deleteSection(int sectionID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "DELETE FROM Section WHERE Section_ID = " + sectionID + ";";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+
+        } catch (SQLException e) {
+            throw new SQLException(e);
         }
     }
 }

@@ -32,6 +32,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class CustomerHomePageView implements Initializable {
+
     @FXML
     private TextArea txtCaseDescription;
     @FXML
@@ -41,7 +42,7 @@ public class CustomerHomePageView implements Initializable {
     @FXML
     private TableView tblViewExistingCases;
     @FXML
-    private ImageView imgSearch;
+    private ImageView imgSearch, imgBack, imgForward;
     @FXML
     private Button btnCreateNewCase, btnAddTechnician;
     @FXML
@@ -55,6 +56,8 @@ public class CustomerHomePageView implements Initializable {
     private ObservableList<Technician> technicianObservableList;
 
     private String search = "data/Images/search.png";
+    private String back = "data/Images/Backward.png";
+    private String forward = "data/Images/Forward.png";
 
 
     @Override
@@ -65,6 +68,11 @@ public class CustomerHomePageView implements Initializable {
         technicianObservableList = FXCollections.observableArrayList();
         lblCustomerName.setText(model.getCurrentCustomer().getCustomerName() + " Home Page");
         imgSearch.setImage(loadImages(search));
+        imgBack.setImage(loadImages(back));
+        imgBack.setOnMouseClicked(event -> goBack());
+        imgForward.setImage(loadImages(forward));
+        imgForward.setDisable(true);
+        imgForward.setOnMouseClicked(event -> goForward());
         addListeners();
         btnCreateNewCase.setDisable(true);
         addShadow(txtCaseName, txtCaseDescription, txtContactPerson);
@@ -73,6 +81,25 @@ public class CustomerHomePageView implements Initializable {
         updateTechnicians();
         searchBarFilter();
 
+    }
+
+    private void goBack() {
+        try {
+            controllerAssistant.loadCenter("CreateNewCustomerView.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not go back", ButtonType.OK);
+            alert.showAndWait();
+        }
+    }
+    private void goForward() {
+        try {
+            controllerAssistant.loadCenter("CaseHomePageView.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not go back", ButtonType.OK);
+            alert.showAndWait();
+        }
     }
 
     private void updateTechnicians() {

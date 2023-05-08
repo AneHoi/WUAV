@@ -40,7 +40,7 @@
 .AddAndEditSectionButtons {
     -fx-text-fill: WHITE;
     -fx-background-color: rgba(232,73,16,1);
-    -fx-font-size: 32;
+    -fx-font-size: 18;
     -fx-border-radius: 15;
     -fx-background-radius: 15;
 }
@@ -75,9 +75,6 @@
     -fx-background-radius: 15;
 }
 
-.sectionComments {
-    -fx-font-weight: italic;
-}
 
 .sectionTitle {
     -fx-font-size: 18;

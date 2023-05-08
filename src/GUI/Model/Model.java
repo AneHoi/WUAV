@@ -132,4 +132,9 @@ public class Model {
     public void createSectionForAddendum(Section section) throws SQLException {
         manager.createSectionForAddendum(section);
     }
+
+    public void deleteSection(int sectionID) throws SQLException {
+        manager.deleteSection(sectionID);
+
+    }
 }

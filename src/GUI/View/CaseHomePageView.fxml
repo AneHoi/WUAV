@@ -7,30 +7,37 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxWidth="-Infinity" prefHeight="632.0" prefWidth="1155.0" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CaseHomePageView">
    <top>
-          <FlowPane BorderPane.alignment="CENTER">
-              <children>
-                  <HBox>
-                      <children>
-                          <Label fx:id="lblCaseName" text="Label" underline="true">
-                              <font>
-                                  <Font name="System Bold" size="40.0" />
-                              </font>
-                          </Label>
-                      </children>
-                      <padding>
-                          <Insets left="25.0" />
-                      </padding>
-                  </HBox>
-              </children>
-          </FlowPane>
+      <BorderPane>
+         <left>
+                    <Label fx:id="lblCaseName" text="Label" underline="true" BorderPane.alignment="CENTER">
+                        <font>
+                            <Font name="System Bold" size="40.0" />
+                        </font>
+               <BorderPane.margin>
+                  <Insets left="25.0" />
+               </BorderPane.margin>
+                    </Label>
+         </left>
+         <right>
+            <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fx:id="imgBack" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgForward" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="25.0" right="25.0" top="25.0" />
+               </BorderPane.margin>
+            </HBox>
+         </right>
+      </BorderPane>
    </top>
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">

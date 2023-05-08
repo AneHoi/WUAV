@@ -95,4 +95,8 @@ public class Manager {
     public void createSectionForAddendum(Section section) throws SQLException {
         dao.createSectionForAddendum(section);
     }
+
+    public void deleteSection(int sectionID) throws SQLException {
+        dao.deleteSection(sectionID);
+    }
 }

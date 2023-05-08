@@ -3,8 +3,8 @@ package GUI.Controller;
 import BE.Addendum;
 import BE.Report;
 import BE.Section;
-import BE.Technician;
 import GUI.Model.Model;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,12 +13,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import javax.swing.text.html.ImageView;
-import java.io.File;
-import java.io.IOException;
+
+import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.sql.SQLException;
@@ -28,25 +28,26 @@ import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class AddSectionView implements Initializable {
-    public javafx.scene.image.ImageView imgViewLogo;
-    public Button btnSubmitSection;
-    public Button btnAddImage;
-    public Button btnAddSketch;
-    public TextField txtSectionTitle, txtSketchPath, txtSketchComment, txtImagePath, txtImageComment, txtDescription;
-
-    private byte[] dataSketch;
-    private byte[] dataImage;
+    @FXML
+    private ImageView imgViewLogo;
+    @FXML
+    private Button btnSubmitSection, btnAddImage, btnAddSketch;
+    @FXML
+    private TextField txtSectionTitle, txtSketchPath, txtSketchComment, txtImagePath, txtImageComment, txtDescription;
+    private byte[] dataSketch, dataImage;
     private Image imageSketch;
     private Image imageImage;
     private Section currentSection;
     private ControllerAssistant controllerAssistant;
     private Report report;
     private Addendum addendum;
+    private String logo = "data/Images/WUAV Logo.png";
     Model model = new Model();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         controllerAssistant = ControllerAssistant.getInstance();
+        imgViewLogo.setImage(loadImages(logo));
         if (currentSection != null) {
             btnSubmitSection.setText("Update Section");
             txtDescription.setText(currentSection.getDescription());
@@ -55,6 +56,7 @@ public class AddSectionView implements Initializable {
             txtSketchComment.setText(currentSection.getSketchComment());
         }
     }
+
 
     public void handleAddSketch(ActionEvent actionEvent) {
         try {
@@ -123,6 +125,8 @@ public class AddSectionView implements Initializable {
             if (report != null) {
                 reportOrAddendumID = report.getReportID();
                 section = new Section(txtSectionTitle.getText(), txtSketchComment.getText(), txtImageComment.getText(), txtDescription.getText(), controllerAssistant.getLoggedInUser().getFullName(), reportOrAddendumID, LocalDate.now(), LocalTime.now());
+                section.setSketchBytes(dataSketch);
+                section.setImageBytes(dataImage);
                 try {
                     model.createSectionForReport(section);
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Created section successfully", ButtonType.OK);
@@ -137,6 +141,8 @@ public class AddSectionView implements Initializable {
             } else {
                 reportOrAddendumID = addendum.getReportID();
                 section = new Section(txtSectionTitle.getText(), txtSketchComment.getText(), txtImageComment.getText(), txtDescription.getText(), controllerAssistant.getLoggedInUser().getFullName(), reportOrAddendumID, LocalDate.now(), LocalTime.now());
+                section.setSketchBytes(dataSketch);
+                section.setImageBytes(dataImage);
                 try {
                     model.createSectionForAddendum(section);
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Created section successfully", ButtonType.OK);
@@ -149,8 +155,20 @@ public class AddSectionView implements Initializable {
                     e.printStackTrace();
                 }
             }
-
         }
+    }
+
+    private Image loadImages(String url) {
+        Image image = null;
+        try {
+            InputStream img = new FileInputStream(url);
+            image = new Image(img);
+        } catch (FileNotFoundException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load an image, following error occurred:\n" + e, ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+        return image;
+
     }
 
     public void setCurrentSection(Section s) {

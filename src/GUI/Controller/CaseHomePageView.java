@@ -18,10 +18,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -31,6 +36,8 @@ import java.util.ResourceBundle;
 
 public class CaseHomePageView implements Initializable {
 
+    @FXML
+    private ImageView imgBack, imgForward;
     @FXML
     private Label lblCaseName;
     @FXML
@@ -53,11 +60,18 @@ public class CaseHomePageView implements Initializable {
     private List<Report> reports;
 
     private ObservableList observableReports;
+    private String back = "data/Images/Backward.png";
+    private String forward = "data/Images/Forward.png";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = Model.getInstance();
         controllerAssistant = ControllerAssistant.getInstance();
+        imgBack.setImage(loadImages(back));
+        imgBack.setOnMouseClicked(event -> goBack());
+        imgForward.setImage(loadImages(forward));
+        imgForward.setDisable(true);
+        imgForward.setOnMouseClicked(event -> goForward());
         currentCase = model.getCurrentCase();
         currentCustomer = model.getCurrentCustomer();
         updateTableView();
@@ -79,6 +93,26 @@ public class CaseHomePageView implements Initializable {
     private void removeShadow(Node... node) {
         for (Node nodes : node) {
             nodes.setEffect(null);
+        }
+    }
+
+    private void goBack() {
+        try {
+            controllerAssistant.loadCenter("CustomerHomePageView.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not go back", ButtonType.OK);
+            alert.showAndWait();
+        }
+    }
+
+    private void goForward() {
+        try {
+            controllerAssistant.loadCenter("ReportHomePageView.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not go back", ButtonType.OK);
+            alert.showAndWait();
         }
     }
 
@@ -272,6 +306,19 @@ public class CaseHomePageView implements Initializable {
                 tblViewExistingReports.setItems(filteredList);
             }
         });
+    }
+
+    private Image loadImages(String url) {
+        Image image = null;
+        try {
+            InputStream img = new FileInputStream(url);
+            image = new Image(img);
+        } catch (FileNotFoundException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load an image, following error occurred:\n" + e, ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+        return image;
+
     }
 }
 

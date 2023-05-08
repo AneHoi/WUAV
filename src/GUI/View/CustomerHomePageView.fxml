@@ -16,14 +16,40 @@
 
 <BorderPane prefHeight="632.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CustomerHomePageView">
    <top>
-      <Label fx:id="lblCustomerName" text="Label" underline="true" BorderPane.alignment="TOP_LEFT">
-         <font>
-            <Font name="System Bold" size="40.0" />
-         </font>
+      <BorderPane BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
-            <Insets left="25.0" />
+            <Insets />
          </BorderPane.margin>
-      </Label>
+         <left>
+            <Label fx:id="lblCustomerName" text="Label" underline="true" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+               <BorderPane.margin>
+                  <Insets left="25.0" />
+               </BorderPane.margin>
+            </Label>
+         </left>
+         <right>
+            <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fx:id="imgBack" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ImageView>
+                  <ImageView fx:id="imgForward" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="25.0" right="25.0" top="25.0" />
+               </BorderPane.margin>
+            </HBox>
+         </right>
+      </BorderPane>
    </top>
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
