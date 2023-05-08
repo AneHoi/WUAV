@@ -172,9 +172,8 @@ public class ReportHomePageView implements Initializable {
     private void handleDeleteEvent(Section s, Node btnHBox, BorderPane bp) {
         Alert alert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to delete this section?", ButtonType.YES, ButtonType.NO);
         alert.showAndWait();
-
         if (alert.getResult() == ButtonType.YES) {
-             try {
+            try {
                 model.deleteSection(s.getSectionID());
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -71,9 +71,12 @@ public class AddSectionView implements Initializable {
 
             }
             try {
-                dataSketch = Files.readAllBytes(selectedFile.getAbsoluteFile().toPath());
+                if(selectedFile != null) {
+                    dataSketch = Files.readAllBytes(selectedFile.getAbsoluteFile().toPath());
+                }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load sketch", ButtonType.OK);
+                alert.showAndWait();
             }
 
         } catch (Exception ex) {
@@ -82,25 +85,24 @@ public class AddSectionView implements Initializable {
     }
 
     public void handleAddImage(ActionEvent actionEvent) {
-        try {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Select Image");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
-            Stage stage = (Stage) btnAddImage.getScene().getWindow();
-            File selectedFile = fileChooser.showOpenDialog(stage);
-            if (selectedFile != null && selectedFile.getName().endsWith(".png") || selectedFile != null && selectedFile.getName().endsWith(".jpg") || selectedFile != null && selectedFile.getName().endsWith(".gif")) {
-                imageImage = new Image(selectedFile.toURI().toString());
-                txtImagePath.setText(imageImage.getUrl());
-
-            }
-            try {
-                dataImage = Files.readAllBytes(selectedFile.getAbsoluteFile().toPath());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Image");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+        Stage stage = (Stage) btnAddImage.getScene().getWindow();
+        File selectedFile = fileChooser.showOpenDialog(stage);
+        if (selectedFile != null && selectedFile.getName().endsWith(".png") || selectedFile != null && selectedFile.getName().endsWith(".jpg") || selectedFile != null && selectedFile.getName().endsWith(".gif")) {
+            imageImage = new Image(selectedFile.toURI().toString());
+            txtImagePath.setText(imageImage.getUrl());
         }
+        try {
+            if(selectedFile != null) {
+                dataImage = Files.readAllBytes(selectedFile.getAbsoluteFile().toPath());
+            }
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load image", ButtonType.OK);
+            alert.showAndWait();
+        }
+
     }
 
     public void handleSubmit(ActionEvent actionEvent) {
@@ -117,6 +119,8 @@ public class AddSectionView implements Initializable {
                 model.updateCurrentSection(currentSection);
             } catch (SQLException e) {
                 e.printStackTrace();
+                Alert alert1 = new Alert(Alert.AlertType.ERROR, "Could not update Section", ButtonType.CANCEL);
+                alert1.showAndWait();
             }
 
         } else {
