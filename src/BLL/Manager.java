@@ -79,4 +79,20 @@ public class Manager {
     public List<Addendum> getAddendums(int caseID, int reportID) throws SQLException {
         return reportDAO.getAddendums(caseID, reportID);
     }
+
+    public List<Section> getAllSections(int currentReportID) throws SQLException {
+        return dao.getAllSections(currentReportID);
+    }
+
+    public void updateCurrentSection(Section currentSection) throws SQLException {
+        dao.updateCurrentSection(currentSection);
+    }
+
+    public void createSectionForReport(Section section) throws SQLException {
+        dao.createSectionForReport(section);
+    }
+
+    public void createSectionForAddendum(Section section) throws SQLException {
+        dao.createSectionForAddendum(section);
+    }
 }

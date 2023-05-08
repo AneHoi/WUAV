@@ -31,7 +31,7 @@ GO
 INSERT INTO Report VALUES('Meeting Room Setup', 'Meeting Room needs....', (SELECT DISTINCT User_ID FROM User_ WHERE [User_Name] = 'T1'), (SELECT DISTINCT Case_ID FROM Case_ WHERE Case_Name = 'Conference room set up'), convert(date, '2023-9-18'), 1, 0)
 GO
 
-INSERT INTO Section VALUES('TV and Intercom', null, null, null, null, 'TV set up........', (SELECT DISTINCT User_ID FROM User_ WHERE [User_Name] = 'T1'), (SELECT Report_ID FROM Report WHERE Report_Name = 'Conf room setup'), null)
+INSERT INTO Section VALUES('TV and Intercom', null, null, null, null, 'TV set up........', (SELECT DISTINCT User_ID FROM User_ WHERE [User_Name] = 'T1'), (SELECT Report_ID FROM Report WHERE Report_Name = 'Conf room setup'), null, convert(date, '2023-9-18'), convert(Time, '14:00'))
 
 SELECT * FROM User_Type;
 GO

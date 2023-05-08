@@ -2,6 +2,7 @@ package BE;
 
 import javafx.scene.image.Image;
 
+import java.io.ByteArrayInputStream;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -35,6 +36,30 @@ public class Section {
         this.addendumID = addendumID;
         this.createdDate = createdDate;
         this.time = time;
+    }
+
+    public Section(String sectionTitle, String sketchComment, String imageComment, String description, String madeByTechnician, int reportID, LocalDate createdDate, LocalTime time) {
+        this.sectionTitle = sectionTitle;
+        this.sketchComment = sketchComment;
+        this.imageComment = imageComment;
+        this.description = description;
+        this.madeByTechnician = madeByTechnician;
+        this.reportID = reportID;
+        this.createdDate = createdDate;
+        this.time = time;
+    }
+
+    public Section(int id, String title, String sketchComment, String imageComment, String description, String madeByTechnician, int reportID, int addendumID, LocalDate createdDate, LocalTime createdTime) {
+        this.sectionID = id;
+        this.sectionTitle = title;
+        this.sketchComment = sketchComment;
+        this.imageComment = imageComment;
+        this.description = description;
+        this.madeByTechnician = madeByTechnician;
+        this.reportID = reportID;
+        this.addendumID = addendumID;
+        this.createdDate = createdDate;
+        this.time = createdTime;
     }
 
     public int getSectionID() {
@@ -148,4 +173,13 @@ public class Section {
     public void setTime(LocalTime time) {
         this.time = time;
     }
+
+    public void setSketchWithByte(byte[] byteImage) {
+        sketch = new Image(new ByteArrayInputStream(byteImage));
+    }
+
+    public void setImageWithByte(byte[] byteImage) {
+        image = new Image(new ByteArrayInputStream(byteImage));
+    }
+
 }

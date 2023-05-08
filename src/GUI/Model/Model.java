@@ -14,6 +14,8 @@ public class Model {
     private Customer currentCustomer;
     private Case currentCase;
     private Report currentReport;
+    private Addendum currentAddendum;
+    private Section currentSection;
     private List<Customer> customers;
     private Manager manager;
 
@@ -31,9 +33,6 @@ public class Model {
         return customers;
     }
 
-    public void createSection(Section section) throws Exception {
-        manager.createSection(section);
-    }
     public void saveCustomer(Customer customer) {
         manager.saveCustomer(customer);
     }
@@ -108,5 +107,29 @@ public class Model {
 
     public List<Addendum> getAddendums(int caseID, int reportID) throws SQLException {
         return manager.getAddendums(caseID, reportID);
+    }
+
+    public Addendum getCurrentAddendum() {
+        return currentAddendum;
+    }
+
+    public void setCurrentSection(Section section) {
+        currentSection = section;
+    }
+
+    public List<Section> getAllSections(int currentReportID) throws SQLException {
+        return manager.getAllSections(currentReportID);
+    }
+
+    public void updateCurrentSection(Section currentSection) throws SQLException {
+        manager.updateCurrentSection(currentSection);
+    }
+
+    public void createSectionForReport(Section section) throws SQLException {
+        manager.createSectionForReport(section);
+    }
+
+    public void createSectionForAddendum(Section section) throws SQLException {
+        manager.createSectionForAddendum(section);
     }
 }

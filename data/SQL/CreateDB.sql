@@ -134,6 +134,8 @@ CREATE TABLE Section(
     Section_Made_By_Tech           INT                                     NOT NULL,
     Section_Report_ID              INT,
     Section_Addendum_ID            INT,
+    Section_Created_Date           DATE                                    NOT NULL,
+    Section_Created_Time           TIME                                    NOT NULL,
 
     CONSTRAINT PK_SECTION_ID PRIMARY KEY(Section_ID),
 
