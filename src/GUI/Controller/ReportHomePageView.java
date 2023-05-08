@@ -155,7 +155,7 @@ public class ReportHomePageView implements Initializable {
             btnEditSection.setUnderline(true);
             btnEditSection.setPrefHeight(30);
             btnEditSection.setPrefWidth(150);
-            btnEditSection.setOnMouseClicked(event -> handleEditSection(s, btnHBox, bp));
+            btnEditSection.setOnMouseClicked(event -> handleEditSection(s));
             btnDeleteSection.getStyleClass().add("AddAndEditSectionButtons");
             btnDeleteSection.setUnderline(true);
             btnDeleteSection.setPrefHeight(30);
@@ -174,9 +174,7 @@ public class ReportHomePageView implements Initializable {
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.YES) {
-            vboxSectionAdding.getChildren().removeAll(bp, btnHBox);
-
-            try {
+             try {
                 model.deleteSection(s.getSectionID());
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -186,9 +184,10 @@ public class ReportHomePageView implements Initializable {
         } else {
             // Do nothing
         }
+        updateSectionInfo();
     }
 
-    private void handleEditSection(Section s, Node btnHBox, BorderPane bp) {
+    private void handleEditSection(Section s) {
         AddSectionView sectionView = new AddSectionView();
         sectionView.setCurrentSection(s);
         Stage stage = new Stage();
