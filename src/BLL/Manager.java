@@ -99,4 +99,8 @@ public class Manager {
     public void deleteSection(int sectionID) throws SQLException {
         dao.deleteSection(sectionID);
     }
+
+    public void updateCase(int caseID, String caseName, String contactPerson, String caseDescription) throws SQLException {
+        caseDAO.updateCase(caseID, caseName,contactPerson,caseDescription);
+    }
 }

@@ -13,4 +13,6 @@ public interface ICaseDAO {
     void addTechnicianToCase(int caseID, int technicianID) throws SQLException;
 
     List<Case> getAllCases() throws SQLException;
+
+    void updateCase(int caseID, String caseName, String contactPerson, String caseDescription) throws SQLException;
 }

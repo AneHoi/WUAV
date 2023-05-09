@@ -97,4 +97,21 @@ public class CaseDAO implements ICaseDAO {
         }
         return cases;
     }
+
+    @Override
+    public void updateCase(int caseID, String caseName, String contactPerson, String caseDescription) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "UPDATE Case_ SET Case_Name = (?), Case_Description = (?), Case_Contact_Person = (?) WHERE Case_ID = (?);";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, caseName);
+            ps.setString(2, caseDescription);
+            ps.setString(3, contactPerson);
+            ps.setInt(4, caseID);
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Could not update Case in database");
+        }
+    }
 }

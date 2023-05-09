@@ -11,8 +11,10 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
@@ -21,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -33,20 +36,17 @@ import java.util.ResourceBundle;
 
 public class CustomerHomePageView implements Initializable {
 
+
     @FXML
-    private TextArea txtCaseDescription;
+    private TableColumn colCaseName, colCaseID, colCaseDescription, colCreatedDate, colTechAssigned;
     @FXML
-    private ComboBox cbTechnician;
-    @FXML
-    private TableColumn colCaseName, colCaseID, colTechnicians, colCreatedDate;
-    @FXML
-    private TableView tblViewExistingCases;
+    private TableView tblViewExistingCases, tblViewTechAssigned;
     @FXML
     private ImageView imgSearch, imgBack, imgForward;
     @FXML
-    private Button btnCreateNewCase, btnAddTechnician;
+    private Button btnCreateNewCase, btnManageTech, btnUpdateCase;
     @FXML
-    private TextField txtCaseName, txtContactPerson, txtSearchBar;
+    private TextField txtSearchBar;
     @FXML
     private Label lblCustomerName;
     private ControllerAssistant controllerAssistant;
@@ -74,12 +74,12 @@ public class CustomerHomePageView implements Initializable {
         imgForward.setDisable(true);
         imgForward.setOnMouseClicked(event -> goForward());
         addListeners();
-        btnCreateNewCase.setDisable(true);
-        addShadow(txtCaseName, txtCaseDescription, txtContactPerson);
+        addShadow(btnCreateNewCase);
         updateTableView();
-        disableAddTechnicians();
-        updateTechnicians();
         searchBarFilter();
+        btnManageTech.setDisable(true);
+        btnUpdateCase.setDisable(true);
+        tblViewTechAssigned.setDisable(true);
 
     }
 
@@ -92,6 +92,7 @@ public class CustomerHomePageView implements Initializable {
             alert.showAndWait();
         }
     }
+
     private void goForward() {
         try {
             controllerAssistant.loadCenter("CaseHomePageView.fxml");
@@ -102,25 +103,11 @@ public class CustomerHomePageView implements Initializable {
         }
     }
 
-    private void updateTechnicians() {
-        try {
-            technicianObservableList.addAll(model.getAllTechnicians());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        cbTechnician.setItems(technicianObservableList);
-
-    }
-
-    private void disableAddTechnicians() {
-        btnAddTechnician.setDisable(true);
-        cbTechnician.setDisable(true);
-    }
 
     private void updateTableView() {
         colCaseID.setCellValueFactory(new PropertyValueFactory<>("caseID"));
         colCaseName.setCellValueFactory(new PropertyValueFactory<>("caseName"));
-        colTechnicians.setCellValueFactory(new PropertyValueFactory<>("assignedTechnician"));
+        colCaseDescription.setCellValueFactory(new PropertyValueFactory<>("caseDescription"));
         colCreatedDate.setCellValueFactory(new PropertyValueFactory<>("createdDate"));
         caseObservableList.clear();
         try {
@@ -134,32 +121,21 @@ public class CustomerHomePageView implements Initializable {
     }
 
     private void addListeners() {
-        txtCaseName.textProperty().addListener(createNewCaseBtn);
-        txtCaseDescription.textProperty().addListener(createNewCaseBtn);
-        txtContactPerson.textProperty().addListener(createNewCaseBtn);
-
         tblViewExistingCases.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                // A case is selected, so enable the technician combobox
-                cbTechnician.setDisable(false);
-                // Add a listener to the technician combobox to enable the "Add Technician" button when a technician is chosen
-                cbTechnician.getSelectionModel().selectedItemProperty().addListener((obs2, oldTechnician, newTechnician) -> {
-                    if (newTechnician != null) {
-                        // A technician is selected, so enable the "Add Technician" button
-                        btnAddTechnician.setDisable(false);
-                        addShadow(btnAddTechnician);
-                    } else {
-                        // No technician is selected, so disable the "Add Technician" button
-                        btnAddTechnician.setDisable(true);
-                        removeShadow(btnAddTechnician);
-                    }
-                });
+                ObservableList techniciansAssigned = FXCollections.observableArrayList();
+                btnManageTech.setDisable(false);
+                btnUpdateCase.setDisable(false);
+                addShadow(btnManageTech,btnUpdateCase);
+                techniciansAssigned.add(newSelection);
+                tblViewTechAssigned.setDisable(false);
+                colTechAssigned.setCellValueFactory(new PropertyValueFactory<>("assignedTechnician"));
+                tblViewTechAssigned.setItems(techniciansAssigned);
             } else {
-                // No case is selected, so disable the technician combobox and "Add Technician" button
-                cbTechnician.setDisable(true);
-                cbTechnician.getSelectionModel().clearSelection();
-                btnAddTechnician.setDisable(true);
-                removeShadow(btnAddTechnician);
+                tblViewTechAssigned.setDisable(true);
+                tblViewTechAssigned.getItems().clear();
+                btnManageTech.setDisable(true);
+                removeShadow(btnManageTech);
             }
         });
         tblViewExistingCases.setOnMouseClicked(event -> {
@@ -177,7 +153,6 @@ public class CustomerHomePageView implements Initializable {
             }
         });
 
-
     }
 
     private Image loadImages(String url) {
@@ -193,15 +168,6 @@ public class CustomerHomePageView implements Initializable {
 
     }
 
-    ChangeListener<String> createNewCaseBtn = (observable, oldValue, newValue) -> {
-        if (txtCaseName.getText().isEmpty() || txtCaseDescription.getText().isEmpty() || txtContactPerson.getText().isEmpty()) {
-            btnCreateNewCase.setDisable(true);
-            removeShadow(btnCreateNewCase);
-        } else {
-            btnCreateNewCase.setDisable(false);
-            addShadow(btnCreateNewCase);
-        }
-    };
 
     private void searchBarFilter() {
         // Create a list to hold the original unfiltered items in the tblViewCustomers TableView
@@ -247,32 +213,46 @@ public class CustomerHomePageView implements Initializable {
     }
 
     public void handleCreateNewCase(ActionEvent actionEvent) {
-        String caseName = txtCaseName.getText();
-        String caseContact = txtCaseName.getText();
-        String caseDescription = txtCaseName.getText();
-        int customerID = model.getCurrentCustomer().getCustomerID();
-        try {
-            model.createNewCase(caseName, caseContact, caseDescription, customerID);
-        } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not create New Case", ButtonType.CANCEL);
-            alert.showAndWait();
-        }
-        updateTableView();
-    }
-
-    public void handleAddTechnician(ActionEvent actionEvent) { //TODO need to make a separate table in DB to hold all Technicians related to each case
+        CreateOrUpdateCaseView createOrUpdateCaseView = new CreateOrUpdateCaseView();
         Case selectedCase = (Case) tblViewExistingCases.getSelectionModel().getSelectedItem();
-        int caseID = selectedCase.getCaseID();
-        Technician technician = (Technician) cbTechnician.getSelectionModel().getSelectedItem();
-        int technicianID = technician.getUserID();
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController(createOrUpdateCaseView);
+        loader.setLocation(getClass().getResource("/GUI/View/CreateOrEditCaseView.fxml"));
+        createOrUpdateCaseView.setOnlyCustomer(model.getCurrentCustomer());
         try {
-            model.addTechnicianToCase(caseID, technicianID);
-        } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not add Technician to Case", ButtonType.CANCEL);
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Case Window", ButtonType.CANCEL);
             alert.showAndWait();
         }
         updateTableView();
-
     }
 
+
+    public void handleUpdateCase(ActionEvent actionEvent) {
+        CreateOrUpdateCaseView createOrUpdateCaseView = new CreateOrUpdateCaseView();
+        Case selectedCase = (Case) tblViewExistingCases.getSelectionModel().getSelectedItem();
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController(createOrUpdateCaseView);
+        loader.setLocation(getClass().getResource("/GUI/View/CreateOrEditCaseView.fxml"));
+        createOrUpdateCaseView.setCustomerAndCase(selectedCase, model.getCurrentCustomer());
+        try {
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Case Window", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+        updateTableView();
+    }
+
+    public void handleManageTech(ActionEvent actionEvent) {
+    }
 }

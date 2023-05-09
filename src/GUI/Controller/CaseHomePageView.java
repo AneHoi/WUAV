@@ -41,13 +41,13 @@ public class CaseHomePageView implements Initializable {
     @FXML
     private Label lblCaseName;
     @FXML
-    private TextField txtReportName, txtSearchField;
+    private TextField txtReportName, txtSearchField, txtUpdateReportName;
     @FXML
-    private TextArea txtReportDescription;
+    private TextArea txtReportDescription, txtUpdateReportDescription;
     @FXML
-    private Button btnCreateNewReport, btnAddNewAddendum;
+    private Button btnCreateNewReport, btnUpdateReport;
     @FXML
-    private TableView tblViewExistingReports, tblViewAddendums;
+    private TableView tblViewExistingReports;
     @FXML
     private TableColumn colReportName, colTechnician, colCreatedDate, colStatus, colAddendumName, colAddendumTechnician, colAddendumCreatedDate, colAddendumStatus;
     private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
@@ -75,7 +75,7 @@ public class CaseHomePageView implements Initializable {
         currentCase = model.getCurrentCase();
         currentCustomer = model.getCurrentCustomer();
         updateTableView();
-        disableAddendum();
+        disableUpdateReport();
         btnCreateNewReport.setDisable(true);
         lblCaseName.setText("Case Name: " + currentCase.getCaseName());
         addListeners();
@@ -137,32 +137,12 @@ public class CaseHomePageView implements Initializable {
                         alert.showAndWait();
                     }
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Report is inactive, please make a Addendum instead", ButtonType.OK);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Report is inactive, please make a new Report instead", ButtonType.OK);
                     alert.showAndWait();
                 }
             }
         });
 
-        tblViewAddendums.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2 && tblViewAddendums.getSelectionModel().getSelectedItem() != null) {
-                Report selectedItem = (Report) tblViewAddendums.getSelectionModel().getSelectedItem();
-                if (selectedItem.isActive()) {
-                    try {
-                        model.setCurrentReport(selectedItem);
-                        model.setCurrentCase(currentCase);
-                        model.setCurrentCustomer(currentCustomer);
-                        controllerAssistant.loadCenter("ReportHomePageView.fxml");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Addendum Home Page", ButtonType.CANCEL);
-                        alert.showAndWait();
-                    }
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Addendum is inactive, please make another Addendum instead", ButtonType.OK);
-                    alert.showAndWait();
-                }
-            }
-        });
     }
 
 
@@ -179,51 +159,29 @@ public class CaseHomePageView implements Initializable {
 
     ChangeListener<Report> selectedItemListener = (observable, oldValue, newValue) -> {
         if (newValue != null) {
-            if (newValue.getIsActive().equals("Inactive")) {
-                tblViewAddendums.setDisable(false);
-                btnAddNewAddendum.setDisable(false);
-                updateTableViewAddendums();
-                addShadow(btnAddNewAddendum);
+            if (newValue.getIsActive().equals("Active")) {
+                txtUpdateReportName.setDisable(false);
+                txtUpdateReportName.setText(newValue.getReportName());
+                txtUpdateReportDescription.setDisable(false);
+                txtUpdateReportDescription.setText(newValue.getReportDescription());
+                btnUpdateReport.setDisable(false);
+                addShadow(txtUpdateReportName, txtUpdateReportDescription, btnUpdateReport);
             } else {
-                tblViewAddendums.setDisable(true);
-                btnAddNewAddendum.setDisable(true);
-                tblViewAddendums.getItems().clear();
-                removeShadow(btnAddNewAddendum);
+                txtUpdateReportName.setDisable(true);
+                txtUpdateReportDescription.setDisable(true);
+                btnUpdateReport.setDisable(true);
+                removeShadow(txtUpdateReportName, txtUpdateReportDescription, btnUpdateReport);
             }
 
-        } else {
-            tblViewAddendums.setDisable(true);
-            tblViewAddendums.getItems().clear();
-            btnAddNewAddendum.setDisable(true);
-            addShadow(btnAddNewAddendum);
         }
     };
 
-    private void updateTableViewAddendums() {
-        ObservableList<Addendum> addendumObservableList = FXCollections.observableArrayList();
-        Case currentCase1 = model.getCurrentCase();
-        Report selectedReport = (Report) tblViewExistingReports.getSelectionModel().getSelectedItem();
-        int caseID = currentCase1.getCaseID();
-        int reportID = selectedReport.getReportID();
-        try {
-            addendumObservableList.addAll(model.getAddendums(caseID, reportID));
-        } catch (SQLException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get addendums from Database", ButtonType.CANCEL);
-            alert.showAndWait();
-        }
-        colAddendumName.setCellValueFactory(new PropertyValueFactory<>("reportName"));
-        colAddendumTechnician.setCellValueFactory(new PropertyValueFactory<>("assignedTechnician"));
-        colAddendumCreatedDate.setCellValueFactory(new PropertyValueFactory<>("createdDate"));
-        colAddendumStatus.setCellValueFactory(new PropertyValueFactory<>("isActive"));
-        tblViewAddendums.setItems(addendumObservableList);
-
-    }
 
 
-    private void disableAddendum() {
-        tblViewAddendums.setDisable(true);
-        btnAddNewAddendum.setDisable(true);
+    private void disableUpdateReport() {
+        txtUpdateReportName.setDisable(true);
+        txtUpdateReportDescription.setDisable(true);
+        btnUpdateReport.setDisable(true);
     }
 
     private void updateTableView() {
@@ -259,25 +217,6 @@ public class CaseHomePageView implements Initializable {
         updateTableView();
     }
 
-    public void handleCreateNewAddendum(ActionEvent actionEvent) {
-        AddAddendumView addAddendumView = new AddAddendumView();
-        Report selectedReport = (Report) tblViewExistingReports.getSelectionModel().getSelectedItem();
-        Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setController(addAddendumView);
-        loader.setLocation(getClass().getResource("/GUI/View/AddAddendumView.fxml"));
-        addAddendumView.setCaseAndReport(currentCase, selectedReport);
-        try {
-            Scene scene = new Scene(loader.load());
-            stage.setScene(scene);
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Addendum Window", ButtonType.CANCEL);
-            alert.showAndWait();
-        }
-        updateTableViewAddendums();
-    }
 
     private void searchBarFilter() {
         // Create a list to hold the original unfiltered items in the tblViewCustomers TableView
@@ -319,6 +258,9 @@ public class CaseHomePageView implements Initializable {
         }
         return image;
 
+    }
+
+    public void handleUpdateReport(ActionEvent actionEvent) {
     }
 }
 
