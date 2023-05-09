@@ -4,7 +4,9 @@ import BE.Addendum;
 import BE.Case;
 import BE.Customer;
 import BE.Report;
+import BLL.util.PDFGenerator;
 import GUI.Model.Model;
+import com.itextpdf.text.DocumentException;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -215,6 +217,29 @@ public class CaseHomePageView implements Initializable {
             alert.showAndWait();
         }
         updateTableView();
+    }
+
+
+    public void handleCreateNewAddendum(ActionEvent actionEvent) throws DocumentException {
+        PDFGenerator pdfGenerator = new PDFGenerator();
+        pdfGenerator.generateReport((Report) tblViewExistingReports.getSelectionModel().getSelectedItem(), currentCase,currentCustomer);
+        /**AddAddendumView addAddendumView = new AddAddendumView();
+        Report selectedReport = (Report) tblViewExistingReports.getSelectionModel().getSelectedItem();
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController(addAddendumView);
+        loader.setLocation(getClass().getResource("/GUI/View/AddAddendumView.fxml"));
+        addAddendumView.setCaseAndReport(currentCase, selectedReport);
+        try {
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Addendum Window", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+        updateTableViewAddendums();*/
     }
 
 
