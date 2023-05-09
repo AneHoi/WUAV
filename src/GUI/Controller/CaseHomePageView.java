@@ -4,7 +4,9 @@ import BE.Addendum;
 import BE.Case;
 import BE.Customer;
 import BE.Report;
+import BLL.util.PDFGenerator;
 import GUI.Model.Model;
+import com.itextpdf.text.DocumentException;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -259,8 +261,10 @@ public class CaseHomePageView implements Initializable {
         updateTableView();
     }
 
-    public void handleCreateNewAddendum(ActionEvent actionEvent) {
-        AddAddendumView addAddendumView = new AddAddendumView();
+    public void handleCreateNewAddendum(ActionEvent actionEvent) throws DocumentException {
+        PDFGenerator pdfGenerator = new PDFGenerator();
+        pdfGenerator.generateReport((Report) tblViewExistingReports.getSelectionModel().getSelectedItem(), currentCase,currentCustomer);
+        /**AddAddendumView addAddendumView = new AddAddendumView();
         Report selectedReport = (Report) tblViewExistingReports.getSelectionModel().getSelectedItem();
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
@@ -276,7 +280,7 @@ public class CaseHomePageView implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Addendum Window", ButtonType.CANCEL);
             alert.showAndWait();
         }
-        updateTableViewAddendums();
+        updateTableViewAddendums();*/
     }
 
     private void searchBarFilter() {
