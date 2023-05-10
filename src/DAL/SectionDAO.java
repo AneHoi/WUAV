@@ -1,7 +1,7 @@
 package DAL;
 
 import DAL.Interfaces.ISectionDAO;
-import com.itextpdf.text.Section;
+import BE.Section;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -149,3 +149,17 @@ CREATE TABLE Section(
     REFERENCES Addendum(Addendum_ID)
 )
 GO
+
+    CREATE TABLE Technicians_Assigned_To_Case(
+    Technician_ID                   INT                                     NOT NULL,
+    Case_ID                         INT                                     NOT NULL,
+
+    CONSTRAINT PK_TECH_ASSIGNED_ID PRIMARY KEY(Technician_ID,Case_ID),
+    CONSTRAINT FK_Tech_ID FOREIGN KEY(Technician_ID)
+    REFERENCES User_(User_ID),
+
+    CONSTRAINT FK_CASE_ASSIGNED_TO FOREIGN KEY(Case_ID)
+    REFERENCES Case_(Case_ID),
+
+)
+GO

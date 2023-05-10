@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane stylesheets="@Main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <Label text="Choose Technicians:" underline="true" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+   <center>
+      <HBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox fx:id="vboxAllTechnicians" alignment="CENTER" spacing="40.0" />
+            <VBox fx:id="vboxComboBoxes" alignment="CENTER" spacing="40.0">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <Button fx:id="btnConfirmChoices" mnemonicParsing="false" onAction="#handleConfirmChoices" text="Confirm Choices" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
+         </BorderPane.margin>
+      </Button>
+   </bottom>
+</BorderPane>

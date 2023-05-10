@@ -133,10 +133,6 @@ public class AddSectionView implements Initializable {
                 section.setImageBytes(dataImage);
                 try {
                     model.createSectionForReport(section);
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Created section successfully", ButtonType.OK);
-                    alert.showAndWait();
-                    Stage stage = (Stage) btnSubmitSection.getScene().getWindow();
-                    stage.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Could not create Section for Report", ButtonType.CANCEL);
@@ -149,16 +145,16 @@ public class AddSectionView implements Initializable {
                 section.setImageBytes(dataImage);
                 try {
                     model.createSectionForAddendum(section);
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Created section successfully", ButtonType.OK);
-                    alert.showAndWait();
-                    Stage stage = (Stage) btnSubmitSection.getScene().getWindow();
-                    stage.close();
                 } catch (SQLException e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Could not create Section for Addendum", ButtonType.CANCEL);
                     alert.showAndWait();
                     e.printStackTrace();
                 }
             }
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Created section successfully", ButtonType.OK);
+            alert.showAndWait();
+            Stage stage = (Stage) btnSubmitSection.getScene().getWindow();
+            stage.close();
         }
     }
 

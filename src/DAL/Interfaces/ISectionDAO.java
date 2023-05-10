@@ -1,6 +1,6 @@
 package DAL.Interfaces;
 
-import com.itextpdf.text.Section;
+import BE.Section;
 
 import java.sql.SQLException;
 import java.util.List;

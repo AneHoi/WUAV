@@ -61,11 +61,15 @@ public class CaseDAO implements ICaseDAO {
     }
 
     @Override
-    public void addTechnicianToCase(int caseID, int technicianID) throws SQLException {
+    public void addTechnicianToCase(int caseID, List<Technician> chosenTechnicians) throws SQLException {
         try (Connection conn = db.getConnection()) {
-            String sql = "UPDATE Case_ SET Case_Assigned_Tech_ID = " + technicianID + " WHERE Case_ID = " + caseID + ";";
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate(sql);
+            for (Technician t : chosenTechnicians) {
+                String sql = "UPDATE Case_ SET Case_Assigned_Tech_ID = " + t.getUserID() + " WHERE Case_ID = " + caseID + ";";
+                stmt.addBatch(sql);
+            }
+            stmt.executeBatch();
+
         } catch (SQLException e) {
             throw new SQLException("Could not add Technician to Case");
         }
@@ -113,5 +117,30 @@ public class CaseDAO implements ICaseDAO {
             e.printStackTrace();
             throw new SQLException("Could not update Case in database");
         }
+    }
+
+    @Override
+    public List<Technician> getAssignedTechnicians(int caseID) throws SQLException {
+        List<Technician> assignedTechs = new ArrayList<>();
+        try (Connection conn = db.getConnection()) {
+            String sql = "SELECT * FROM Technicians_Assigned_To_Case LEFT JOIN User_ ON Technicians_Assigned_To_Case.Technician_ID = User_.User_ID WHERE Case_ID = " + caseID + ";";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                int techID = rs.getInt("User_ID");
+                String techName = rs.getString("User_Full_Name");
+                boolean isActive = rs.getBoolean("User_Active");
+
+                Technician t = new Technician(techID, techName);
+                if (isActive) {
+                    assignedTechs.add(t);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Could not get assigned Technicians from database");
+        }
+        return assignedTechs;
     }
 }

@@ -51,8 +51,8 @@ public class Manager {
         caseDAO.createNewCase(caseName, caseContact, caseDescription, customerID);
     }
 
-    public void addTechnicianToCase(int caseID, int technicianID) throws SQLException {
-        caseDAO.addTechnicianToCase(caseID, technicianID);
+    public void addTechnicianToCase(int caseID, List<Technician> chosenTechnicians) throws SQLException {
+        caseDAO.addTechnicianToCase(caseID, chosenTechnicians);
     }
 
     public List<Case> getAllCases() throws SQLException {
@@ -102,5 +102,9 @@ public class Manager {
 
     public void updateCase(int caseID, String caseName, String contactPerson, String caseDescription) throws SQLException {
         caseDAO.updateCase(caseID, caseName,contactPerson,caseDescription);
+    }
+
+    public List<Technician> getAssignedTechnicians(int caseID) throws SQLException {
+        return caseDAO.getAssignedTechnicians(caseID);
     }
 }
