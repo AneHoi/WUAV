@@ -4,8 +4,10 @@ import BE.Case;
 import BE.Customer;
 import BE.Report;
 import BE.Section;
+import BLL.Manager;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.text.*;
@@ -15,16 +17,22 @@ import javafx.scene.control.Cell;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.sql.SQLException;
+import java.util.List;
 
 public class PDFGenerator {
+    private Manager manager;
     private Document document;
     private Customer customer;
     private Section section;
     private Case selectedCase;
     private PdfTextExtractor pdfTextExtractor;
 
-    public void generateReport(Report report, Case selectedCase, Customer customer) throws DocumentException {
+    public void generateReport(Report report, Case selectedCase, Customer customer) throws DocumentException, SQLException {
+        manager = new Manager();
+        List<Section> sections = manager.getSections(report.getReportID());
         try {
             document = new Document(PageSize.A4, 20, 20, 50, 25);
             PdfWriter writer = null;
@@ -59,27 +67,29 @@ public class PDFGenerator {
             document.add(paragraph1);
 
             document.add(paragraph2);
+            for (Section section : sections) {
 
-            if (section.getSectionTitle() != null && section.getSketch() != null && section.getSketchComment() != null && section.getImage() != null && section.getImageComment() != null && section.getDescription() != null) {
-            document.add(paragraph3);}
-            else {
-                if(section.getSectionTitle() != null){
-                    document.add(paragraph4);
-                }
-                if(section.getSketch() != null){
-                    document.add(paragraph5);
-                }
-                if(section.getSketchComment() != null){
-                    document.add(paragraph6);
-                }
-                if(section.getImage() != null){
-                    document.add(paragraph7);
-                }
-                if(section.getImageComment() != null){
-                    document.add(paragraph8);
-                }
-                if(section.getDescription() != null){
-                    document.add(paragraph9);
+                if (section.getSectionTitle() != null && section.getSketch() != null && section.getSketchComment() != null && section.getImage() != null && section.getImageComment() != null && section.getDescription() != null) {
+                    document.add(paragraph3);
+                } else {
+                    if (section.getSectionTitle() != null) {
+                        document.add(paragraph4);
+                    }
+                    if (section.getSketch() != null) {
+                        document.add(paragraph5);
+                    }
+                    if (section.getSketchComment() != null) {
+                        document.add(paragraph6);
+                    }
+                    if (section.getImage() != null) {
+                        document.add(paragraph7);
+                    }
+                    if (section.getImageComment() != null) {
+                        document.add(paragraph8);
+                    }
+                    if (section.getDescription() != null) {
+                        document.add(paragraph9);
+                    }
                 }
             }
             document.close();
@@ -93,11 +103,11 @@ public class PDFGenerator {
         }
     }
 
-    /**public void readPdfFile(Report report){
+    /*public void readPdfFile(Report report){
         try {
             PdfReader pdfReader = new PdfReader(report.getReportName() + ".PDF");
             PdfTextExtractor parser = new PdfTextExtractor(pdfReader);
-            int numberOfPages = pdfReader.getNumberOfPages();
+            int numberOfPages = pdfReader.getNumberOfPages;
 
             for (int i = 1; i < numberOfPages ; i++) {
                 parser.
@@ -105,23 +115,5 @@ public class PDFGenerator {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-    /**private Element addLogo(PdfWriter writer, Document document){
-        String img = "data/Images/WUAV Logo.png";
-        Image image = null;
-        try {
-            image = Image.getInstance(img);
-            image.setAlignment(Element.ALIGN_RIGHT);
-            image.setAbsolutePosition(20, 790);
-            image.scalePercent(7.5f, 7.5f);
-            writer.getDirectContent().addImage(image, true);
-        } catch (IOException | DocumentException e) {
-            e.printStackTrace();
-            Alert alert =  new Alert(Alert.AlertType.ERROR, "Image could not be added to pdf", ButtonType.CLOSE);
-        }
-        return image;
-    }
-    private Element addCustomerInfo(PdfWriter writer, Document document){
-
     }*/
 }

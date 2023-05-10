@@ -1,7 +1,7 @@
 package DAL;
 
 import DAL.Interfaces.ISectionDAO;
-import com.itextpdf.text.Section;
+import BE.Section;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class SectionDAO implements ISectionDAO {
     public SectionDAO(){db = DBConnector.getInstance();}
 
     @Override
-    public List<Section> getSections(int reportID) throws SQLException {
+    public List getSections(int reportID) throws SQLException {
         List<Section> sections = new ArrayList<>();
         try (Connection conn = db.getConnection()){
             String sql =  "SELECT * FROM Section JOIN User_ ON Section.Section_Made_By_Tech = User_.User_ID WHERE Section_Report_ID = " + reportID + ";";
