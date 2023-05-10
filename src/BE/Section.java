@@ -61,6 +61,15 @@ public class Section {
         this.createdDate = createdDate;
         this.time = createdTime;
     }
+    public Section(int id, String title, String sketchComment, String imageComment, String description, String madeByTechnician, int reportID) {
+        this.sectionID = id;
+        this.sectionTitle = title;
+        this.sketchComment = sketchComment;
+        this.imageComment = imageComment;
+        this.description = description;
+        this.madeByTechnician = madeByTechnician;
+        this.reportID = reportID;
+    }
 
     public int getSectionID() {
         return sectionID;
