@@ -63,17 +63,27 @@ public class CaseDAO implements ICaseDAO {
     @Override
     public void addTechnicianToCase(int caseID, List<Technician> chosenTechnicians) throws SQLException {
         try (Connection conn = db.getConnection()) {
-            Statement stmt = conn.createStatement();
-            for (Technician t : chosenTechnicians) {
-                String sql = "UPDATE Case_ SET Case_Assigned_Tech_ID = " + t.getUserID() + " WHERE Case_ID = " + caseID + ";";
-                stmt.addBatch(sql);
+            String sql1 = "DELETE FROM Technicians_Assigned_To_Case WHERE Case_ID = ?";
+            try (PreparedStatement stmt1 = conn.prepareStatement(sql1)) {
+                stmt1.setInt(1, caseID);
+                stmt1.executeUpdate();
             }
-            stmt.executeBatch();
 
+            String sql2 = "INSERT INTO Technicians_Assigned_To_Case(Technician_ID, Case_ID) VALUES (?, ?)";
+            try (PreparedStatement stmt2 = conn.prepareStatement(sql2)) {
+                for (Technician t : chosenTechnicians) {
+                    stmt2.setInt(1, t.getUserID());
+                    stmt2.setInt(2, caseID);
+                    stmt2.addBatch();
+                }
+                stmt2.executeBatch();
+            }
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new SQLException("Could not add Technician to Case");
         }
     }
+
 
     @Override
     public List<Case> getAllCases() throws SQLException {

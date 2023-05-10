@@ -55,8 +55,11 @@ public class ManageTechniciansView implements Initializable {
             Label technicianName = new Label(t.getFullName());
             technicianName.setStyle("-fx-font-size: 24");
             CheckBox cbChosenTech = new CheckBox();
-            if (alreadyAssignedTechs.contains(t)) {
-                cbChosenTech.setSelected(true);
+            for (Technician t1 : alreadyAssignedTechs) {
+                if(t1.getFullName().equals(t.getFullName())) {
+                    chosenTechnicians.add(t);
+                    cbChosenTech.setSelected(true);
+                }
             }
             cbChosenTech.setStyle("-fx-font-size: 24");
             vboxAllTechnicians.getChildren().add(technicianName);

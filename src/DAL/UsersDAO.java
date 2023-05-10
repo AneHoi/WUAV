@@ -27,9 +27,12 @@ public class UsersDAO implements IUsersDAO {
             while (rs.next()) {
                 int techID = rs.getInt("User_ID");
                 String techName = rs.getString("User_Full_Name");
+                boolean isActive = rs.getBoolean("User_Active");
+                if (isActive) {
+                    Technician t = new Technician(techID, techName);
+                    technicians.add(t);
+                }
 
-                Technician t = new Technician(techID, techName);
-                technicians.add(t);
             }
 
         } catch (SQLException e) {
