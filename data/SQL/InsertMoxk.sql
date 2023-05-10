@@ -4,10 +4,10 @@ INSERT INTO User_Type VALUES('ProjectManager')
 INSERT INTO User_Type VALUES('Technician')
 INSERT INTO User_Type VALUES('SalesRepresentative')
 
-INSERT INTO User_ VALUES('Per Julius','T1', (SELECT DISTINCT User_Type_ID FROM User_Type WHERE USER_TYPE_TYPE = 'Technician'), 'info@wuav.dk', '12345678', 1, null)
 INSERT INTO User_ VALUES('Michael Tonnesen','A', (SELECT DISTINCT User_Type_ID FROM User_Type WHERE USER_TYPE_TYPE = 'Admin'), 'mt@wuav.dk', '11111111', 1, null)
-INSERT INTO User_ VALUES('Jesper Jensen','T2', (SELECT DISTINCT User_Type_ID FROM User_Type WHERE USER_TYPE_TYPE = 'Technician'), 'info@wuav.dk', '87654321', 1, null)
 INSERT INTO User_ VALUES('Torben Juhl','PM', (SELECT DISTINCT User_Type_ID FROM User_Type WHERE USER_TYPE_TYPE = 'ProjectManager'), 'tj@wuav.dk', '22222222', 1, null)
+INSERT INTO User_ VALUES('Per Julius','T1', (SELECT DISTINCT User_Type_ID FROM User_Type WHERE USER_TYPE_TYPE = 'Technician'), 'info@wuav.dk', '12345678', 1, null)
+INSERT INTO User_ VALUES('Jesper Jensen','T2', (SELECT DISTINCT User_Type_ID FROM User_Type WHERE USER_TYPE_TYPE = 'Technician'), 'info@wuav.dk', '87654321', 1, null)
 INSERT INTO User_ VALUES('Bo Aggerholm','SR', (SELECT DISTINCT User_Type_ID FROM User_Type WHERE USER_TYPE_TYPE = 'SalesRepresentative'), 'boa@wuav.dk', '12341234', 1, null)
 GO
 
@@ -33,6 +33,8 @@ GO
 
 INSERT INTO Section VALUES('TV and Intercom', null, null, null, null, 'TV set up........', (SELECT DISTINCT User_ID FROM User_ WHERE [User_Name] = 'T1'), (SELECT Report_ID FROM Report WHERE Report_Name = 'Conf room setup'), null, convert(date, '2023-9-18'), convert(Time, '14:00'))
 
+INSERT INTO Technicians_Assigned_To_Case VALUES(4,1)
+
 SELECT * FROM User_Type;
 GO
 
@@ -46,4 +48,5 @@ SELECT * FROM Report;
 GO
 
 SELECT * FROM Section;
+
 GO

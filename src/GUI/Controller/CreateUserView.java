@@ -145,6 +145,7 @@ public class CreateUserView implements Initializable {
             alert.showAndWait();
         }
         tblViewExistingUsers.setItems(allUsers);
+        tblViewExistingUsers.getSortOrder().add(colStatus);
     }
 
     private void addShadow(Node... node) {

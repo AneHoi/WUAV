@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -118,13 +120,20 @@ public class CustomerHomePageView implements Initializable {
     private void addListeners() {
         tblViewExistingCases.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
+                Case selectedItem = (Case) newSelection;
                 ObservableList techniciansAssigned = FXCollections.observableArrayList();
                 btnManageTech.setDisable(false);
                 btnUpdateCase.setDisable(false);
-                addShadow(btnManageTech,btnUpdateCase);
-                techniciansAssigned.add(newSelection);
+                addShadow(btnManageTech, btnUpdateCase);
+                try {
+                    techniciansAssigned.addAll(model.getAssignedTechnicians(selectedItem.getCaseID()));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get Technicians from database", ButtonType.CANCEL);
+                    alert.showAndWait();
+                }
                 tblViewTechAssigned.setDisable(false);
-                colTechAssigned.setCellValueFactory(new PropertyValueFactory<>("assignedTechnician"));
+                colTechAssigned.setCellValueFactory(new PropertyValueFactory<>("fullName"));
                 tblViewTechAssigned.setItems(techniciansAssigned);
             } else {
                 tblViewTechAssigned.setDisable(true);
@@ -249,5 +258,31 @@ public class CustomerHomePageView implements Initializable {
     }
 
     public void handleManageTech(ActionEvent actionEvent) {
+        ManageTechniciansView manageTechniciansView = new ManageTechniciansView();
+        Case selectedCase = (Case) tblViewExistingCases.getSelectionModel().getSelectedItem();
+        List<Technician> alreadyAssignedTechs = new ArrayList<>();
+        try {
+            alreadyAssignedTechs = model.getAssignedTechnicians(selectedCase.getCaseID());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get assigned Technicians from the database", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+        manageTechniciansView.setSelectedCase(selectedCase, alreadyAssignedTechs);
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController(manageTechniciansView);
+        loader.setLocation(getClass().getResource("/GUI/View/ManageTechniciansView.fxml"));
+        try {
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Manage Technicians Window", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+        updateTableView();
     }
 }
+
