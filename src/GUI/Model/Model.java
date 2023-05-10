@@ -45,6 +45,9 @@ public class Model {
         return manager.getReports(caseID);
     }
 
+    public List<Section> getSections(int reportID) throws SQLException {
+        return manager.getSections(reportID);
+    }
     public void setCurrentReport(Report selectedItem) {
         currentReport = selectedItem;
     }

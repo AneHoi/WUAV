@@ -220,9 +220,7 @@ public class CaseHomePageView implements Initializable {
     }
 
 
-    public void handleCreateNewAddendum(ActionEvent actionEvent) throws DocumentException {
-        PDFGenerator pdfGenerator = new PDFGenerator();
-        pdfGenerator.generateReport((Report) tblViewExistingReports.getSelectionModel().getSelectedItem(), currentCase,currentCustomer);
+    public void handleCreateNewAddendum(ActionEvent actionEvent)  {
         /**AddAddendumView addAddendumView = new AddAddendumView();
         Report selectedReport = (Report) tblViewExistingReports.getSelectionModel().getSelectedItem();
         Stage stage = new Stage();
@@ -285,7 +283,9 @@ public class CaseHomePageView implements Initializable {
 
     }
 
-    public void handleUpdateReport(ActionEvent actionEvent) {
+    public void handleUpdateReport(ActionEvent actionEvent) throws SQLException, DocumentException {
+        PDFGenerator pdfGenerator = new PDFGenerator();
+        pdfGenerator.generateReport((Report) tblViewExistingReports.getSelectionModel().getSelectedItem(), currentCase,currentCustomer);
     }
 }
 

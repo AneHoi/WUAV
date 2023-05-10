@@ -1,9 +1,6 @@
 package BLL;
 import BE.*;
-import DAL.CaseDAO;
-import DAL.DAO;
-import DAL.ReportDAO;
-import DAL.UsersDAO;
+import DAL.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -12,6 +9,7 @@ public class Manager {
     private UsersDAO usersDAO;
     private CaseDAO caseDAO;
     private ReportDAO reportDAO;
+    private SectionDAO sectionDAO;
     private DAO dao;
 
     public Manager() {
@@ -19,6 +17,7 @@ public class Manager {
         reportDAO = new ReportDAO();
         caseDAO = new CaseDAO();
         usersDAO = new UsersDAO();
+        sectionDAO = new SectionDAO();
     }
 
     public List<Customer> getAllCustomers() throws SQLException {
@@ -37,6 +36,9 @@ public class Manager {
 
     public List<Report> getReports(int caseID) throws SQLException {
         return reportDAO.getReports(caseID);
+    }
+    public List<Section> getSections(int reportID) throws SQLException {
+        return sectionDAO.getSections(reportID);
     }
 
     public List<Case> getCasesForThisCustomer(int customerID) throws SQLException {
