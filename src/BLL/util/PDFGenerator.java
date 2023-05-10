@@ -8,12 +8,13 @@ import BLL.Manager;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.IBlockElement;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
-import javafx.scene.control.Cell;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -26,7 +27,6 @@ public class PDFGenerator {
     private Manager manager;
     private Document document;
     private Customer customer;
-    private Section section;
     private Case selectedCase;
     private PdfTextExtractor pdfTextExtractor;
 
@@ -43,54 +43,45 @@ public class PDFGenerator {
             ImageData imgData = ImageDataFactory.create(imageFile);
             Image logoImage = new Image(imgData);
             logoImage.setFixedPosition(20, 790);
-            Table table = new Table(2);
-            Cell cell1 = new Cell();
+            //Table table = new Table(2);
             var normal = new Font(Font.FontFamily.HELVETICA, 20, Font.NORMAL);
             var paragraph1 = new Paragraph("Costumer name: " + customer.getCustomerName() + "\n" + "Address: " + customer.getAddress() + "\n" + "Email: " + customer.getEmail() + "\n" + "Telefon: " + customer.getPhoneNumber());
             var paragraph2 = new Paragraph("Case name: " + selectedCase.getCaseName() + "\n" + "Case ID: " + selectedCase.getCaseID() + "\n" + "Case created; " + selectedCase.getCreatedDate() + "\n" + "Technician: " + selectedCase.getAssignedTechnician() + "\n" + "ContactPerson: " + selectedCase.getContactPerson() + "\n" + "Report description: " + report.getReportDescription());
-            var paragraph3 = new Paragraph(this.section.getSectionTitle() + "\n" + this.section.getSketch() + "\n" + this.section.getSketchComment() + "\n" + this.section.getImage() + "\n" + this.section.getImageComment() + "\n" + this.section.getDescription() + "\n");
-            var paragraph4 = new Paragraph(""+this.section.getSectionTitle());
-            var paragraph5 = new Paragraph(""+this.section.getSketch());
-            var paragraph6 = new Paragraph(""+this.section.getSketchComment());
-            var paragraph7 = new Paragraph(""+this.section.getImage());
-            var paragraph8 = new Paragraph(""+this.section.getImageComment());
-            var paragraph9 = new Paragraph(""+this.section.getDescription());
-            table.addCell(String.valueOf(paragraph1));
-            table.addCell(String.valueOf(paragraph2));
 
-            document.add((Element) logoImage);
 
-            document.add((Element) table);
+            //document.add(logoImage);
 
-            //document.add(addLogo(writer, this.document));
+            //document.add();
+
 
             document.add(paragraph1);
 
             document.add(paragraph2);
             for (Section section : sections) {
-
-                if (section.getSectionTitle() != null && section.getSketch() != null && section.getSketchComment() != null && section.getImage() != null && section.getImageComment() != null && section.getDescription() != null) {
-                    document.add(paragraph3);
-                } else {
                     if (section.getSectionTitle() != null) {
+                        var paragraph4 = new Paragraph(section.getSectionTitle());
                         document.add(paragraph4);
                     }
                     if (section.getSketch() != null) {
+                        var paragraph5 = new Paragraph(""+section.getSketch());
                         document.add(paragraph5);
                     }
                     if (section.getSketchComment() != null) {
+                        var paragraph6 = new Paragraph(section.getSketchComment());
                         document.add(paragraph6);
                     }
                     if (section.getImage() != null) {
+                        var paragraph7 = new Paragraph(""+section.getImage());
                         document.add(paragraph7);
                     }
                     if (section.getImageComment() != null) {
+                        var paragraph8 = new Paragraph(section.getImageComment());
                         document.add(paragraph8);
                     }
                     if (section.getDescription() != null) {
+                        var paragraph9 = new Paragraph(section.getDescription());
                         document.add(paragraph9);
                     }
-                }
             }
             document.close();
         } catch (DocumentException e) {
