@@ -1,11 +1,8 @@
 package GUI.Controller;
 
 import BE.Case;
-import BE.Customer;
-import BE.Report;
 import BE.Technician;
 import GUI.Model.Model;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -20,8 +17,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -51,13 +46,13 @@ public class CustomerHomePageView implements Initializable {
     private Label lblCustomerName;
     private ControllerAssistant controllerAssistant;
     private Model model;
-    private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
+    private final DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private ObservableList<Case> caseObservableList;
     private ObservableList<Technician> technicianObservableList;
 
-    private String search = "data/Images/search.png";
-    private String back = "data/Images/Backward.png";
-    private String forward = "data/Images/Forward.png";
+    private final String search = "data/Images/search.png";
+    private final String back = "data/Images/Backward.png";
+    private final String forward = "data/Images/Forward.png";
 
 
     @Override
@@ -85,7 +80,7 @@ public class CustomerHomePageView implements Initializable {
 
     private void goBack() {
         try {
-            controllerAssistant.loadCenter("CreateNewCustomerView.fxml");
+            controllerAssistant.loadCenter("CustomerView.fxml");
         } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not go back", ButtonType.OK);

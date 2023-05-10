@@ -144,4 +144,8 @@ public class Model {
     public void updateCase(int caseID, String caseName, String contactPerson, String caseDescription) throws SQLException {
         manager.updateCase(caseID, caseName, contactPerson, caseDescription);
     }
+
+    public void updateCustomer(Customer customer) throws SQLException {
+        manager.updateCustomer(customer);
+    }
 }

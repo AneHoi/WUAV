@@ -109,7 +109,7 @@ public class BurgerBarView implements Initializable {
 
     private void loadCustomerView() {
         try {
-            controllerAssistant.loadCenter("CreateNewCustomerView.fxml");
+            controllerAssistant.loadCenter("CustomerView.fxml");
         } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load Create New Customer Page", ButtonType.OK);

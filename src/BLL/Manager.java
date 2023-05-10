@@ -105,4 +105,8 @@ public class Manager {
     public void updateCase(int caseID, String caseName, String contactPerson, String caseDescription) throws SQLException {
         caseDAO.updateCase(caseID, caseName,contactPerson,caseDescription);
     }
+
+    public void updateCustomer(Customer customer) throws SQLException {
+        dao.updateCustomer(customer);
+    }
 }

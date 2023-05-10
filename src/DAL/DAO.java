@@ -34,8 +34,8 @@ public class DAO {
                 int cvr = rs.getInt("Customer_CVR");
                 String type = rs.getString("Customer_Type");
 
-                Customer customer = new Customer(id, name, address, tlf, mail, cvr, type);
-                customers.add(customer);
+                Customer customerVar = new Customer(id, name, address, tlf, mail, cvr, type);
+                customers.add(customerVar);
             }
 
         } catch (SQLException e) {
@@ -44,17 +44,17 @@ public class DAO {
         return customers;
     }
 
-    public void saveCustomer(Customer customer) {
+    public void saveCustomer(Customer customerVar) {
         try (Connection conn = db.getConnection()) {
             String sql = "INSERT INTO Customer" + "(Customer_Name, Customer_Address, Customer_Mail, Customer_Tlf, Customer_CVR, Customer_Type)" + "VALUES(?,?,?,?,?,?);";
             PreparedStatement preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            preparedStatement.setString(1, customer.getCustomerName());
-            preparedStatement.setString(2, customer.getAddress());
-            preparedStatement.setString(3, customer.getPhoneNumber());
-            preparedStatement.setString(4, customer.getEmail());
-            preparedStatement.setInt(5, customer.getCVR());
-            preparedStatement.setString(6, customer.getCustomerType());
+            preparedStatement.setString(1, customerVar.getCustomerName());
+            preparedStatement.setString(2, customerVar.getAddress());
+            preparedStatement.setString(3, customerVar.getPhoneNumber());
+            preparedStatement.setString(4, customerVar.getEmail());
+            preparedStatement.setInt(5, customerVar.getCVR());
+            preparedStatement.setString(6, customerVar.getCustomerType());
 
             preparedStatement.executeUpdate();
 
@@ -220,6 +220,30 @@ public class DAO {
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql);
 
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+    }
+
+    public void updateCustomer(Customer customerVar) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = """
+                    UPDATE Customer SET Customer_Name = (?), 
+                    Customer_Address = (?), 
+                    Customer_Mail = (?), 
+                    Customer_Tlf = (?), 
+                    Customer_CVR = (?),
+                    Customer_Type = (?)
+                    WHERE Customer_ID = """ + customerVar.getCustomerID() + ";";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, customerVar.getCustomerName());
+            ps.setString(2, customerVar.getAddress());
+            ps.setString(3, customerVar.getEmail());
+            ps.setString(4, customerVar.getPhoneNumber());
+            ps.setInt(5, customerVar.getCVR());
+            ps.setString(6, customerVar.getCustomerType());
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException(e);
         }
