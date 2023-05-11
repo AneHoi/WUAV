@@ -2,6 +2,7 @@ package DAL.Interfaces;
 
 import BE.Addendum;
 import BE.Report;
+import BE.ReportCaseAndCustomer;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -12,6 +13,7 @@ public interface IReportDAO {
 
 
     List<Report> getReports(int caseID) throws SQLException;
+    List<ReportCaseAndCustomer> getAllReports() throws SQLException;
 
     void createNewAddendum(String addendumName, String addendumDescription, int caseID, int reportID, int userID) throws SQLException;
 

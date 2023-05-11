@@ -47,16 +47,16 @@ public class DAO {
     public void saveCustomer(Customer customer) {
         try (Connection conn = db.getConnection()) {
             String sql = "INSERT INTO Customer" + "(Customer_Name, Customer_Address, Customer_Mail, Customer_Tlf, Customer_CVR, Customer_Type)" + "VALUES(?,?,?,?,?,?);";
-            PreparedStatement preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            preparedStatement.setString(1, customer.getCustomerName());
-            preparedStatement.setString(2, customer.getAddress());
-            preparedStatement.setString(3, customer.getPhoneNumber());
-            preparedStatement.setString(4, customer.getEmail());
-            preparedStatement.setInt(5, customer.getCVR());
-            preparedStatement.setString(6, customer.getCustomerType());
+            stmt.setString(1, customer.getCustomerName());
+            stmt.setString(2, customer.getAddress());
+            stmt.setString(3, customer.getPhoneNumber());
+            stmt.setString(4, customer.getEmail());
+            stmt.setInt(5, customer.getCVR());
+            stmt.setString(6, customer.getCustomerType());
 
-            preparedStatement.executeUpdate();
+            stmt.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -149,14 +149,14 @@ public class DAO {
                     Section_Description = (?)
                     WHERE Section_ID = """ + currentSection.getSectionID() + ";";
 
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, currentSection.getSectionTitle());
-            ps.setBytes(2, currentSection.getSketchBytes());
-            ps.setString(3, currentSection.getSketchComment());
-            ps.setBytes(4, currentSection.getImageBytes());
-            ps.setString(5, currentSection.getImageComment());
-            ps.setString(6, currentSection.getDescription());
-            ps.executeUpdate();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, currentSection.getSectionTitle());
+            stmt.setBytes(2, currentSection.getSketchBytes());
+            stmt.setString(3, currentSection.getSketchComment());
+            stmt.setBytes(4, currentSection.getImageBytes());
+            stmt.setString(5, currentSection.getImageComment());
+            stmt.setString(6, currentSection.getDescription());
+            stmt.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException(e);
         }
@@ -166,20 +166,20 @@ public class DAO {
         try (Connection conn = db.getConnection()) {
             String sql = "INSERT INTO Section(Section_Title, Section_Sketch, Section_Sketch_Comment, Section_Image, Section_Image_Comment, Section_Description, Section_Made_By_Tech, Section_Report_ID, Section_Created_Date, Section_Created_Time) VALUES(?,?,?,?,?,?,?,?,?,?);";
 
-            PreparedStatement ps = conn.prepareStatement(sql);
+            PreparedStatement stmt = conn.prepareStatement(sql);
 
-            ps.setString(1, section.getSectionTitle());
-            ps.setBytes(2, section.getSketchBytes());
-            ps.setString(3, section.getSketchComment());
-            ps.setBytes(4, section.getImageBytes());
-            ps.setString(5, section.getImageComment());
-            ps.setString(6, section.getDescription());
-            ps.setInt(7, 1);
-            ps.setInt(8, section.getReportID());
-            ps.setDate(9, Date.valueOf(LocalDate.now()));
-            ps.setTime(10, Time.valueOf(LocalTime.now()));
+            stmt.setString(1, section.getSectionTitle());
+            stmt.setBytes(2, section.getSketchBytes());
+            stmt.setString(3, section.getSketchComment());
+            stmt.setBytes(4, section.getImageBytes());
+            stmt.setString(5, section.getImageComment());
+            stmt.setString(6, section.getDescription());
+            stmt.setInt(7, 1);
+            stmt.setInt(8, section.getReportID());
+            stmt.setDate(9, Date.valueOf(LocalDate.now()));
+            stmt.setTime(10, Time.valueOf(LocalTime.now()));
 
-            ps.executeUpdate();
+            stmt.executeUpdate();
 
 
         } catch (SQLException e) {
@@ -192,20 +192,20 @@ public class DAO {
         try (Connection conn = db.getConnection()) {
             String sql = "INSERT INTO Section(Section_Title, Section_Sketch, Section_Sketch_Comment, Section_Image, Section_Image_Comment, Section_Description, Section_Made_By_Tech, Section_Addendum_ID, Section_Created_Date, Section_Created_Time) VALUES(?,?,?,?,?,?,?,?,?,?);";
 
-            PreparedStatement ps = conn.prepareStatement(sql);
+            PreparedStatement stmt = conn.prepareStatement(sql);
 
-            ps.setString(1, section.getSectionTitle());
-            ps.setBytes(2, section.getSketchBytes());
-            ps.setString(3, section.getSketchComment());
-            ps.setBytes(4, section.getImageBytes());
-            ps.setString(5, section.getImageComment());
-            ps.setString(6, section.getDescription());
-            ps.setInt(7, 1);
-            ps.setInt(8, section.getAddendumID());
-            ps.setDate(9, Date.valueOf(LocalDate.now()));
-            ps.setTime(10, Time.valueOf(LocalTime.now()));
+            stmt.setString(1, section.getSectionTitle());
+            stmt.setBytes(2, section.getSketchBytes());
+            stmt.setString(3, section.getSketchComment());
+            stmt.setBytes(4, section.getImageBytes());
+            stmt.setString(5, section.getImageComment());
+            stmt.setString(6, section.getDescription());
+            stmt.setInt(7, 1);
+            stmt.setInt(8, section.getAddendumID());
+            stmt.setDate(9, Date.valueOf(LocalDate.now()));
+            stmt.setTime(10, Time.valueOf(LocalTime.now()));
 
-            ps.executeUpdate();
+            stmt.executeUpdate();
 
 
         } catch (SQLException e) {

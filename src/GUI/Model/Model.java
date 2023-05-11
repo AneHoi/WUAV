@@ -6,6 +6,9 @@ import BE.*;
 import BLL.Manager;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Model {
@@ -44,7 +47,12 @@ public class Model {
     public List<Report> getReports(int caseID) throws SQLException {
         return manager.getReports(caseID);
     }
-
+    public  List<ReportCaseAndCustomer> getAllReports() throws SQLException {
+        return manager.getAllReports();
+    }
+    public void createNewSection(String sectionTitle, byte[] sketch, String sketchComment, byte[] image, String imageComment, String description, int madeByTech, int reportID) throws Exception {
+        manager.createNewSection(sectionTitle,sketch,sketchComment,image,imageComment,description,madeByTech,reportID);
+    }
     public List<Section> getSections(int reportID) throws SQLException {
         return manager.getSections(reportID);
     }

@@ -1,7 +1,8 @@
 package GUI.Controller;
 
 import BE.Case;
-import BE.CaseAndCustomer;
+import BE.Report;
+import BE.ReportCaseAndCustomer;
 import BE.Customer;
 import GUI.Model.Model;
 import javafx.collections.FXCollections;
@@ -26,15 +27,15 @@ import java.util.function.Predicate;
 
 public class SearchForCaseView implements Initializable {
     @FXML
-    private TextField txtCustomer, txtCustomerAddress, txtCaseName, txtTechnician;
+    private TextField txtReportName, txtCustomer, txtCustomerAddress, txtCaseName, txtTechnician;
     @FXML
     private DatePicker dpDate;
     @FXML
     private Button btnFilter, btnClear;
     @FXML
-    private TableView<CaseAndCustomer> tblViewFilteredCases;
+    private TableView<ReportCaseAndCustomer> tblViewFilteredCases;
     @FXML
-    private TableColumn colCustomer, colCustomerAddress, colCaseName, colTechnician, colCreatedDate;
+    private TableColumn colReportName, colCustomer, colCustomerAddress, colCaseName, colTechnician, colCreatedDate;
     private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private ControllerAssistant controllerAssistant;
     private Model model;
@@ -48,6 +49,7 @@ public class SearchForCaseView implements Initializable {
     }
 
     private void updateTableView() {
+        colReportName.setCellValueFactory(new PropertyValueFactory<>("reportName"));
         colCustomer.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         colCustomerAddress.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
         colCaseName.setCellValueFactory(new PropertyValueFactory<>("caseName"));
@@ -55,19 +57,13 @@ public class SearchForCaseView implements Initializable {
         colCreatedDate.setCellValueFactory(new PropertyValueFactory<>("createdDate"));
         tblViewFilteredCases.getColumns().addAll();
 
-        ObservableList<CaseAndCustomer> data = FXCollections.observableArrayList();
-        List<Case> cases;
-        List<Customer> customers;
+        ObservableList<ReportCaseAndCustomer> data = FXCollections.observableArrayList();
+        List<ReportCaseAndCustomer> reportCaseAndCustomers;
         try {
-            cases = model.getAllCases();
-            customers = model.getAllCustomers();
-            for (int i = 0; i < cases.size(); i++) {
-                Case caseObj = cases.get(i);
-                Customer customerObj = customers.get(i);
-                CaseAndCustomer caseAndCustomer = new CaseAndCustomer(caseObj, customerObj);
-                data.add(caseAndCustomer);
+            reportCaseAndCustomers = model.getAllReports();
+            for (ReportCaseAndCustomer rCC: reportCaseAndCustomers) {
+                data.add(rCC);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get Cases and Customers for list", ButtonType.CANCEL);
@@ -86,6 +82,7 @@ public class SearchForCaseView implements Initializable {
 
     public void handleFilter(ActionEvent actionEvent) {
         // Get the filter criteria from the text fields and date picker
+        String reportName = txtReportName.getText().trim();
         String customerName = txtCustomer.getText().trim();
         String customerAddress = txtCustomerAddress.getText().trim();
         String caseName = txtCaseName.getText().trim();
@@ -93,14 +90,14 @@ public class SearchForCaseView implements Initializable {
         LocalDate createdDate = dpDate.getValue();
 
         // Create a filtered list that contains only the rows that match the filter criteria
-        ObservableList<CaseAndCustomer> filteredList = FXCollections.observableArrayList();
-        for (CaseAndCustomer caseAndCustomer : tblViewFilteredCases.getItems()) {
-            if (caseAndCustomer.getCustomerName().toLowerCase().contains(customerName.toLowerCase())
-                    && caseAndCustomer.getCustomerAddress().toLowerCase().contains(customerAddress.toLowerCase())
-                    && caseAndCustomer.getCaseName().toLowerCase().contains(caseName.toLowerCase())
-                    && caseAndCustomer.getTechnicianName().toLowerCase().contains(technicianName.toLowerCase())
-                    && (createdDate == null || caseAndCustomer.getCreatedDate().isEqual(createdDate))) {
-                filteredList.add(caseAndCustomer);
+        ObservableList<ReportCaseAndCustomer> filteredList = FXCollections.observableArrayList();
+        for (ReportCaseAndCustomer reportCaseAndCustomer : tblViewFilteredCases.getItems()) {
+            if (reportCaseAndCustomer.getReportName().toLowerCase().contains(reportName.toLowerCase()) && reportCaseAndCustomer.getCustomerName().toLowerCase().contains(customerName.toLowerCase())
+                    && reportCaseAndCustomer.getCustomerAddress().toLowerCase().contains(customerAddress.toLowerCase())
+                    && reportCaseAndCustomer.getCaseName().toLowerCase().contains(caseName.toLowerCase())
+                    && reportCaseAndCustomer.getTechnicianName().toLowerCase().contains(technicianName.toLowerCase())
+                    && (createdDate == null || reportCaseAndCustomer.getCreatedDate().isEqual(createdDate))) {
+                filteredList.add(reportCaseAndCustomer);
             }
         }
 
@@ -109,6 +106,7 @@ public class SearchForCaseView implements Initializable {
     }
 
     public void handleClear(ActionEvent actionEvent) {
+        txtReportName.clear();
         txtCustomer.clear();
         txtCustomerAddress.clear();
         txtCaseName.clear();
