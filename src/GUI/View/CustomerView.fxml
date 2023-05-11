@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -12,9 +13,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="1155.0" style="-fx-background-color: FFFFFF;" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CustomerViewController">
+<BorderPane prefHeight="600.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CustomerViewController">
    <top>
-      <Label prefHeight="58.0" prefWidth="414.0" text="Customerpage" underline="true" wrapText="true" BorderPane.alignment="TOP_LEFT">
+      <Label prefHeight="58.0" prefWidth="414.0" style="-fx-text-fill: black;" text="Customerpage" underline="true" wrapText="true" BorderPane.alignment="TOP_LEFT">
          <font>
             <Font name="System Bold" size="40.0" />
          </font>
@@ -26,24 +27,7 @@
    <center>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="BOTTOM_RIGHT" prefHeight="67.0" prefWidth="295.0">
-               <children>
-                  <TextField fx:id="txtSearchBar" alignment="CENTER" prefHeight="40.0" prefWidth="200.0" promptText="Search for a Customer">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </TextField>
-                  <ImageView fx:id="imgSearch" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <HBox.margin>
-                        <Insets right="25.0" />
-                     </HBox.margin>
-                  </ImageView>
-               </children>
-               <VBox.margin>
-                  <Insets left="25.0" right="25.0" top="-40.0" />
-               </VBox.margin>
-            </HBox>
-            <Label text="Search through existing customers:" underline="true" wrapText="true">
+            <Label style="-fx-text-fill: black;" text="Search through existing customers:" underline="true" wrapText="true">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -51,12 +35,32 @@
                   <Insets left="25.0" />
                </VBox.margin>
             </Label>
+            <HBox alignment="BOTTOM_RIGHT" prefHeight="67.0" prefWidth="295.0">
+               <children>
+                  <TextField fx:id="txtSearchBar" alignment="CENTER" prefHeight="40.0" prefWidth="200.0" promptText="Search for a Customer">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="25.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <ImageView fx:id="imgSearch" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets bottom="25.0" right="25.0" />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+               <VBox.margin>
+                  <Insets left="25.0" right="25.0" top="-40.0" />
+               </VBox.margin>
+            </HBox>
             <TableView fx:id="tblViewCustomers" prefHeight="450.0" prefWidth="600.0">
               <columns>
-                <TableColumn fx:id="clmCustomerName" prefWidth="140.0" text="Customer" />
-                <TableColumn fx:id="clmAddress" text="Address" />
-                  <TableColumn fx:id="clmCVR" prefWidth="85.0" text="CVR" />
-                  <TableColumn fx:id="clmCustomerType" prefWidth="100.0" text="Type of Customer" />
+                <TableColumn fx:id="clmCustomerName" prefWidth="140.0" style="-fx-alignment: center; -fx-text-fill: white;" text="Customer" />
+                <TableColumn fx:id="clmAddress" style="-fx-alignment: center;" text="Address" />
+                  <TableColumn fx:id="clmCVR" prefWidth="85.0" style="-fx-alignment: center;" text="CVR" />
+                  <TableColumn fx:id="clmCustomerType" prefWidth="100.0" style="-fx-alignment: center;" text="Type of Customer" />
               </columns>
                <VBox.margin>
                   <Insets left="25.0" right="25.0" />
@@ -71,7 +75,7 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnInvisible" disable="true" mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" visible="false">
+            <Button fx:id="btnInvisible" disable="true" mnemonicParsing="false" onAction="#openNewCustomerPopUp" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: E84910;" styleClass="roundedEdges" text="Create New Customer" textFill="WHITE" underline="true" visible="false">
                <font>
                   <Font size="18.0" />
                </font>
@@ -92,4 +96,8 @@
          </BorderPane.margin>
       </HBox>
    </bottom>
+   <stylesheets>
+      <URL value="@Main.css" />
+      <URL value="@css/tableview.css" />
+   </stylesheets>
 </BorderPane>

@@ -1,0 +1,44 @@
+.table-view{
+    -fx-background-color: #17263A;
+    -fx-background-radius: 14 14 0 0;
+    -fx-text-background-color: white;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: #17263A;
+}
+/*The upper part of the table*/
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+/*The little line surrounding each cell
+  The padding is: top, right, left, bottom
+*/
+.table-view .table-cell{
+    -fx-border-color: #ffffff;
+    -fx-padding: 30 0 20;
+}
+/*When hovering over a colum, it changes*/
+.table-row-cell:hover {
+    -fx-font-weight: bold;
+    -fx-font-size: 23;
+}
+
+/*color every other cell differently*/
+.table-row-cell:odd{
+    -fx-background-color: #93f9b911;
+}
+.table-row-cell:even{
+    -fx-background-color: #1dbbdd11;
+}
