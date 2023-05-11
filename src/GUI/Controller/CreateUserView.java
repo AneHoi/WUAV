@@ -8,13 +8,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -27,9 +31,9 @@ public class CreateUserView implements Initializable {
     @FXML
     private Button btnCreateNewUser, btnUpdateUser;
     @FXML
-    private ComboBox cbUserTypeCreate, cbUserActive;
+    private ComboBox cbUserActive;
     @FXML
-    private TextField txtFullNameCreate, txtUserNameCreate, txtTelephoneCreate, txtEmailCreate, txtFullNameUpdate, txtUserNameUpdate, txtTelephoneUpdate, txtEmailUpdate;
+    private TextField txtFullNameUpdate, txtUserNameUpdate, txtTelephoneUpdate, txtEmailUpdate;
     private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private Model model;
     private ControllerAssistant controllerAssistant;
@@ -42,14 +46,14 @@ public class CreateUserView implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         model = Model.getInstance();
         controllerAssistant = ControllerAssistant.getInstance();
-        disableButtons(btnCreateNewUser, btnUpdateUser, txtFullNameUpdate, txtUserNameUpdate, txtTelephoneUpdate, txtEmailUpdate, cbUserActive);
-        addShadow(txtFullNameCreate, txtUserNameCreate, txtTelephoneCreate, txtEmailCreate, cbUserTypeCreate);
+        disableButtons(btnUpdateUser, txtFullNameUpdate, txtUserNameUpdate, txtTelephoneUpdate, txtEmailUpdate, cbUserActive);
         updateTableView();
         addListeners();
         userTypes = FXCollections.observableArrayList();
         activeOrInactive = FXCollections.observableArrayList();
         checkLoggedInUser();
-        cbUserTypeCreate.setItems(userTypes);
+        addShadow(btnCreateNewUser);
+
         activeOrInactive.add("Active");
         activeOrInactive.add("Inactive");
     }
@@ -81,11 +85,6 @@ public class CreateUserView implements Initializable {
     }
 
     private void addListeners() {
-        txtFullNameCreate.textProperty().addListener(createNewCustomerBtn);
-        txtUserNameCreate.textProperty().addListener(createNewCustomerBtn);
-        txtTelephoneCreate.textProperty().addListener(createNewCustomerBtn);
-        txtEmailCreate.textProperty().addListener(createNewCustomerBtn);
-        cbUserTypeCreate.getSelectionModel().selectedItemProperty().addListener(createNewCustomerBtn);
         tblViewExistingUsers.getSelectionModel().selectedItemProperty().addListener(selectedUserListener);
         txtFullNameUpdate.textProperty().addListener(updateUserBtn);
         txtUserNameUpdate.textProperty().addListener(updateUserBtn);
@@ -94,16 +93,6 @@ public class CreateUserView implements Initializable {
 
 
     }
-
-    ChangeListener<String> createNewCustomerBtn = (observable, oldValue, newValue) -> {
-        if (txtFullNameCreate.getText().isEmpty() || txtUserNameCreate.getText().isEmpty() || txtTelephoneCreate.getText().isEmpty() || txtEmailCreate.getText().isEmpty() || cbUserTypeCreate.getSelectionModel().getSelectedItem() == null) {
-            btnCreateNewUser.setDisable(true);
-            removeShadow(btnCreateNewUser);
-        } else {
-            btnCreateNewUser.setDisable(false);
-            addShadow(btnCreateNewUser);
-        }
-    };
 
     ChangeListener<String> updateUserBtn = (observable, oldValue, newValue) -> {
         if (txtFullNameUpdate.getText().isEmpty() || txtUserNameUpdate.getText().isEmpty() || txtTelephoneUpdate.getText().isEmpty() || txtEmailUpdate.getText().isEmpty() || cbUserActive.getSelectionModel().getSelectedItem() == null) {
@@ -161,29 +150,20 @@ public class CreateUserView implements Initializable {
     }
 
     public void handleCreateNewUser(ActionEvent actionEvent) {
-        String fullName = txtFullNameCreate.getText();
-        String userName = txtUserNameCreate.getText();
-        String userTlf = txtTelephoneCreate.getText();
-        String userEmail = txtEmailCreate.getText();
-        int userType = 0;
-        switch ((String) cbUserTypeCreate.getSelectionModel().getSelectedItem()) {
-            case "Admin":
-                userType = 1;
-                break;
-            case "ProjectManager":
-                userType = 2;
-                break;
-            case "Technician":
-                userType = 3;
-                break;
-            case "SalesRepresentative":
-                userType = 4;
-        }
+        PopUpCreateUserController popUpCreateUserController = new PopUpCreateUserController();
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController(popUpCreateUserController);
+
+        loader.setLocation(getClass().getResource("/GUI/View/PopUpCreateUserView.fxml"));
+        stage.setTitle("Create new user");
         try {
-            model.createNewUser(fullName, userName, userTlf, userEmail, userType);
-        } catch (SQLException e) {
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not create User", ButtonType.CANCEL);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Section Window", ButtonType.CANCEL);
             alert.showAndWait();
         }
 
