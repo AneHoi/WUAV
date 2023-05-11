@@ -29,15 +29,18 @@ public class Manager {
     public void saveCustomer(Customer customer) {
         dao.saveCustomer(customer);
     }
-    public int createSection(Section section) throws Exception {
-        return dao.createSection(section);
-    }
     public void createNewReport(String reportName, String reportDescription, int caseID, int userID) throws SQLException {
         reportDAO.createNewReport(reportName,reportDescription, caseID, userID);
     }
 
     public List<Report> getReports(int caseID) throws SQLException {
         return reportDAO.getReports(caseID);
+    }
+    public List<ReportCaseAndCustomer> getAllReports() throws SQLException {
+        return reportDAO.getAllReports();
+    }
+    public void  createNewSection(String sectionTitle, byte[] sketch, String sketchComment, byte[] image, String imageComment, String description, int madeByTech, int reportID) throws SQLException {
+        sectionDAO.createNewSection(sectionTitle,sketch,sketchComment,image,imageComment,description,madeByTech,reportID);
     }
     public List<Section> getSections(int reportID) throws SQLException {
         return sectionDAO.getSections(reportID);
@@ -129,5 +132,10 @@ public class Manager {
 
     public List<ImageOnReport> getAllImagesForReport(int currentReportID) throws SQLException {
         return reportDAO.getAllImagesForReport(currentReportID);
+    }
+
+    public void deleteCustomer(Customer customer) throws SQLException {
+        dao.deleteCustomer(customer);
+
     }
 }

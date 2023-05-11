@@ -66,6 +66,49 @@ public class ReportDAO implements IReportDAO {
     }
 
     @Override
+    public List<ReportCaseAndCustomer> getAllReports() throws SQLException {
+        List<ReportCaseAndCustomer> reportCaseAndCustomers = new ArrayList<>();
+        try (Connection conn = db.getConnection()) {
+            String sql = "SELECT * FROM Report JOIN User_ ON Report.Report_Assigned_Tech_ID = User_.User_ID JOIN Case_ ON Report.Report_Case_ID = Case_.Case_ID JOIN Customer ON Case_.Case_Customer_ID = Customer.Customer_ID;";
+            Statement ps = conn.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+
+            while (rs.next()) {
+                int reportID = rs.getInt("Report_ID");
+                String reportName = rs.getString("Report_Name");
+                String reportDescription = rs.getString("Report_Description");
+                String techName = rs.getString("User_Full_Name");
+                LocalDate createdDate = rs.getDate("Report_Created_Date").toLocalDate();
+                int logID = rs.getInt("Report_Log_ID");
+                boolean isActive = rs.getBoolean("Report_Is_Active");
+                int caseID = rs.getInt("Case_ID");
+                String caseName = rs.getString("Case_Name");
+                String caseDescription = rs.getString("Case_Description");
+                String contactPerson = rs.getString("Case_Contact_Person");
+                int caseCustomerID = rs.getInt("Case_Customer_ID");
+                LocalDate caseCreatedDate = rs.getDate("Case_Created_Date").toLocalDate();
+                int customerID = rs.getInt("Customer_ID");
+                String customerName = rs.getString("Customer_Name");
+                String address = rs.getString("Customer_Address");
+                String phoneNumber = rs.getString("Customer_Tlf");
+                String email = rs.getString("Customer_Mail");
+                int cvr = rs.getInt("Customer_CVR");
+                String customerType = rs.getString("Customer_Type");
+
+                Report reportObj = new Report(reportID, reportName, reportDescription,techName,createdDate,logID,isActive);
+                Case caseObj = new Case(caseID,caseName, caseDescription, contactPerson, caseCustomerID, techName, caseCreatedDate);
+                Customer customerObj = new Customer(customerID, customerName, address, phoneNumber, email, cvr, customerType);
+                ReportCaseAndCustomer rCC = new ReportCaseAndCustomer(reportObj, caseObj, customerObj);
+                reportCaseAndCustomers.add(rCC);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new SQLException("Could not get reports from Database");
+        }
+        return reportCaseAndCustomers;
+    }
+
+    @Override
     public void createNewAddendum(String addendumName, String addendumDescription, int caseID, int reportID, int userID) throws SQLException {
         LocalDate date = LocalDate.now();
         try (Connection conn = db.getConnection()) {

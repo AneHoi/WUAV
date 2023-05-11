@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="632.0" prefWidth="1155.0" style="-fx-background-color: FFFFFF;" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CustomerViewController">
+<BorderPane prefHeight="600.0" prefWidth="1155.0" style="-fx-background-color: FFFFFF;" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CustomerViewController">
    <top>
-      <Label prefHeight="58.0" prefWidth="414.0" text="Costumerpage" underline="true" wrapText="true" BorderPane.alignment="TOP_LEFT">
+      <Label prefHeight="58.0" prefWidth="414.0" text="Customerpage" underline="true" wrapText="true" BorderPane.alignment="TOP_LEFT">
          <font>
             <Font name="System Bold" size="40.0" />
          </font>
@@ -53,7 +53,7 @@
             </Label>
             <TableView fx:id="tblViewCustomers" prefHeight="450.0" prefWidth="600.0">
               <columns>
-                <TableColumn fx:id="clmCustomerName" prefWidth="140.0" text="Costumer" />
+                <TableColumn fx:id="clmCustomerName" prefWidth="140.0" text="Customer" />
                 <TableColumn fx:id="clmAddress" text="Address" />
                   <TableColumn fx:id="clmCVR" prefWidth="85.0" text="CVR" />
                   <TableColumn fx:id="clmCustomerType" prefWidth="100.0" text="Type of Customer" />
@@ -69,13 +69,27 @@
       </VBox>
    </center>
    <bottom>
-      <Button fx:id="btnCreateCostumer" mnemonicParsing="false" onAction="#openNewCustomerPopUp" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: E84910;" styleClass="roundedEdges" text="Create New Customer" textFill="WHITE" underline="true" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnInvisible" disable="true" mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" visible="false">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnCreateCustomer" mnemonicParsing="false" onAction="#openNewCustomerPopUp" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: E84910;" styleClass="roundedEdges" text="Create New Customer" textFill="WHITE" underline="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnDeleteCustomer" mnemonicParsing="false" onAction="#deleteCustomer" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: E84910;" styleClass="roundedEdges" text="Delete Customer" textFill="WHITE" underline="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
          <BorderPane.margin>
-            <Insets bottom="25.0" top="25.0" />
+            <Insets />
          </BorderPane.margin>
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
+      </HBox>
    </bottom>
 </BorderPane>

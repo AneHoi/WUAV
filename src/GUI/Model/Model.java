@@ -2,7 +2,6 @@ package GUI.Model;
 
 
 import BE.*;
-
 import BLL.Manager;
 
 import java.sql.SQLException;
@@ -46,7 +45,12 @@ public class Model {
     public List<Report> getReports(int caseID) throws SQLException {
         return manager.getReports(caseID);
     }
-
+    public  List<ReportCaseAndCustomer> getAllReports() throws SQLException {
+        return manager.getAllReports();
+    }
+    public void createNewSection(String sectionTitle, byte[] sketch, String sketchComment, byte[] image, String imageComment, String description, int madeByTech, int reportID) throws Exception {
+        manager.createNewSection(sectionTitle,sketch,sketchComment,image,imageComment,description,madeByTech,reportID);
+    }
     public List<Section> getSections(int reportID) throws SQLException {
         return manager.getSections(reportID);
     }
@@ -170,5 +174,9 @@ public class Model {
 
     public List<TextOnReport> getAllTextFieldsForReport(int currentReportID) throws SQLException {
         return manager.getAllTextFieldsForReport(currentReportID);
+    }
+    public void deleteCustomer(Customer customer) throws SQLException {
+        manager.deleteCustomer(customer);
+
     }
 }

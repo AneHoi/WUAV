@@ -22,6 +22,15 @@ public class Report {
         this.logID = logID;
         this.isActive = isActive;
     }
+    public Report(int reportID, String reportName, String reportDescription, String assignedTechnician, LocalDate createdDate, int logID, boolean isActive){
+        this.reportID = reportID;
+        this.reportName = reportName;
+        this.reportDescription = reportDescription;
+        this.assignedTechnician = assignedTechnician;
+        this.createdDate = createdDate;
+        this.logID = logID;
+        this.isActive = isActive;
+    }
 
     public int getReportID() {
         return reportID;
