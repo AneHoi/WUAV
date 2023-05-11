@@ -92,8 +92,8 @@ public class Model {
         manager.createNewCase(caseName, caseContact, caseDescription, customerID);
     }
 
-    public void addTechnicianToCase(int caseID, int technicianID) throws SQLException {
-        manager.addTechnicianToCase(caseID, technicianID);
+    public void addTechnicianToCase(int caseID, List<Technician> chosenTechnicians) throws SQLException {
+        manager.addTechnicianToCase(caseID, chosenTechnicians);
     }
 
     public List<Case> getAllCases() throws SQLException {
@@ -151,5 +151,16 @@ public class Model {
 
     public void updateCase(int caseID, String caseName, String contactPerson, String caseDescription) throws SQLException {
         manager.updateCase(caseID, caseName, contactPerson, caseDescription);
+    }
+
+    public void updateCustomer(Customer customer) throws SQLException {
+        manager.updateCustomer(customer);
+    }
+    public List<Technician> getAssignedTechnicians(int caseID) throws SQLException {
+        return manager.getAssignedTechnicians(caseID);
+    }
+
+    public void deleteCustomer(Customer customer) throws SQLException {
+        manager.deleteCustomer(customer);
     }
 }

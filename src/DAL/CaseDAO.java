@@ -61,15 +61,29 @@ public class CaseDAO implements ICaseDAO {
     }
 
     @Override
-    public void addTechnicianToCase(int caseID, int technicianID) throws SQLException {
+    public void addTechnicianToCase(int caseID, List<Technician> chosenTechnicians) throws SQLException {
         try (Connection conn = db.getConnection()) {
-            String sql = "UPDATE Case_ SET Case_Assigned_Tech_ID = " + technicianID + " WHERE Case_ID = " + caseID + ";";
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate(sql);
+            String sql1 = "DELETE FROM Technicians_Assigned_To_Case WHERE Case_ID = ?";
+            try (PreparedStatement stmt1 = conn.prepareStatement(sql1)) {
+                stmt1.setInt(1, caseID);
+                stmt1.executeUpdate();
+            }
+
+            String sql2 = "INSERT INTO Technicians_Assigned_To_Case(Technician_ID, Case_ID) VALUES (?, ?)";
+            try (PreparedStatement stmt2 = conn.prepareStatement(sql2)) {
+                for (Technician t : chosenTechnicians) {
+                    stmt2.setInt(1, t.getUserID());
+                    stmt2.setInt(2, caseID);
+                    stmt2.addBatch();
+                }
+                stmt2.executeBatch();
+            }
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new SQLException("Could not add Technician to Case");
         }
     }
+
 
     @Override
     public List<Case> getAllCases() throws SQLException {
@@ -113,5 +127,30 @@ public class CaseDAO implements ICaseDAO {
             e.printStackTrace();
             throw new SQLException("Could not update Case in database");
         }
+    }
+
+    @Override
+    public List<Technician> getAssignedTechnicians(int caseID) throws SQLException {
+        List<Technician> assignedTechs = new ArrayList<>();
+        try (Connection conn = db.getConnection()) {
+            String sql = "SELECT * FROM Technicians_Assigned_To_Case LEFT JOIN User_ ON Technicians_Assigned_To_Case.Technician_ID = User_.User_ID WHERE Case_ID = " + caseID + ";";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                int techID = rs.getInt("User_ID");
+                String techName = rs.getString("User_Full_Name");
+                boolean isActive = rs.getBoolean("User_Active");
+
+                Technician t = new Technician(techID, techName);
+                if (isActive) {
+                    assignedTechs.add(t);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Could not get assigned Technicians from database");
+        }
+        return assignedTechs;
     }
 }

@@ -3,18 +3,23 @@ package GUI.Controller;
 import BE.Customer;
 import GUI.Model.Model;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -23,18 +28,19 @@ import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class CreateNewCustomerView implements Initializable {
+public class CustomerViewController implements Initializable {
+    @FXML
+    private Button btnCreateCustomer, btnDeleteCustomer;
     private Model model;
     @FXML
     private TableColumn clmCustomerName, clmAddress, clmCVR, clmCustomerType;
     @FXML
     private TableView tblViewCustomers;
     @FXML
-    private TextField txtCostumerName, txtAddress, txtTlfNumber, txtEmail, txtCVR, txtSearchBar;
-    @FXML
-    private Button btnCreateCostumer;
+    private TextField txtSearchBar;
     @FXML
     private ImageView imgSearch;
 
@@ -47,20 +53,56 @@ public class CreateNewCustomerView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        addListeners();
         controllerAssistant = ControllerAssistant.getInstance();
         model = Model.getInstance();
         customerObservableList = FXCollections.observableArrayList();
         imgSearch.setImage(loadImages(search));
-        addShadow(txtCostumerName, txtAddress, txtTlfNumber, txtEmail, txtCVR);
-        addListeners();
         updateCostumerView();
-        btnCreateCostumer.setDisable(true);
-        checkCVRTextField();
         searchBarFilter();
-
-
+        btnDeleteCustomer.setVisible(false);
+        btnDeleteCustomer.setDisable(true);
     }
 
+
+    private void addListeners() {
+        tblViewCustomers.focusedProperty().addListener(new ChangeListener<Boolean>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+            {
+                if (!newPropertyValue)
+                {
+                    btnCreateCustomer.setText("Create new customer");
+                }
+            }
+        });
+
+        tblViewCustomers.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1 && tblViewCustomers.getSelectionModel().getSelectedItem() != null){
+                btnCreateCustomer.setText("Edit customer");
+                btnDeleteCustomer.setVisible(true);
+                btnDeleteCustomer.setDisable(false);
+            }else {
+                btnCreateCustomer.setText("Create new customer");
+                btnDeleteCustomer.setVisible(false);
+                btnDeleteCustomer.setDisable(true);
+            }
+            if (event.getClickCount() == 2 && tblViewCustomers.getSelectionModel().getSelectedItem() != null) {
+                Customer selectedItem = (Customer) tblViewCustomers.getSelectionModel().getSelectedItem();
+                try {
+                    model.setCurrentCustomer(selectedItem);
+                    controllerAssistant.loadCenter("CustomerHomePageView.fxml");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Customer Home Page", ButtonType.CANCEL);
+                    alert.showAndWait();
+                }
+
+            }
+        });
+
+    }
     private void searchBarFilter() {  //TODO understand this...
         // Create a list to hold the original unfiltered items in the tblViewCustomers TableView
         ObservableList<Customer> originalList = FXCollections.observableArrayList(tblViewCustomers.getItems());
@@ -90,62 +132,6 @@ public class CreateNewCustomerView implements Initializable {
             }
         });
     }
-
-    private void checkCVRTextField() {
-        txtCVR.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                txtCVR.setText(oldValue);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Invalid Character");
-                alert.setHeaderText(null);
-                alert.setContentText("Please use only numbers");
-                alert.showAndWait();
-            }
-        });
-    }
-
-    private void addListeners() {
-        txtCostumerName.textProperty().addListener(createNewCustomerBtn);
-        txtAddress.textProperty().addListener(createNewCustomerBtn);
-        txtEmail.textProperty().addListener(createNewCustomerBtn);
-        txtTlfNumber.textProperty().addListener(createNewCustomerBtn);
-        txtCVR.textProperty().addListener(createNewCustomerBtn);
-
-        tblViewCustomers.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2 && tblViewCustomers.getSelectionModel().getSelectedItem() != null) {
-                Customer selectedItem = (Customer) tblViewCustomers.getSelectionModel().getSelectedItem();
-                try {
-                    model.setCurrentCustomer(selectedItem);
-                    controllerAssistant.loadCenter("CustomerHomePageView.fxml");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Customer Home Page", ButtonType.CANCEL);
-                    alert.showAndWait();
-                }
-
-            }
-        });
-
-    }
-
-
-
-    ChangeListener<String> createNewCustomerBtn = (observable, oldValue, newValue) -> {
-        if (txtCostumerName.getText().isEmpty() || txtAddress.getText().isEmpty() || txtTlfNumber.getText().isEmpty() || txtEmail.getText().isEmpty() || txtCVR.getText().isEmpty()) {
-            btnCreateCostumer.setDisable(true);
-            removeShadow(btnCreateCostumer);
-        } else {
-            btnCreateCostumer.setDisable(false);
-            addShadow(btnCreateCostumer);
-        }
-    };
-
-    private void removeShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(null);
-        }
-    }
-
     private void updateCostumerView() {
         clmCustomerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         clmAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -181,17 +167,54 @@ public class CreateNewCustomerView implements Initializable {
 
     }
 
-    public void saveCostumer() {
-        //Generated a random id for the customer to be saved.
-        int id = (int) (Math.random() * (100 - 1 + 1) + 1);
-        String name = txtCostumerName.getText();
-        String address = txtAddress.getText();
-        String email = txtEmail.getText();
-        int cvr = Integer.parseInt(txtCVR.getText());
-        String tlf = txtTlfNumber.getText();
-        Customer customer = new Customer(id, name, address, tlf, email, cvr, "");
-        model.saveCustomer(customer);
+
+    public void openNewCustomerPopUp(ActionEvent event) {
+        PopUpCreateNewCostumerController popUpCreateNewCostumerController = new PopUpCreateNewCostumerController();
+        if(tblViewCustomers.getSelectionModel().getSelectedItem() != null){
+            Customer customer = (Customer) tblViewCustomers.getSelectionModel().getSelectedItem();
+            popUpCreateNewCostumerController.setCustomerVar(customer);
+        }
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController(popUpCreateNewCostumerController);
+        loader.setLocation(getClass().getResource("/GUI/View/PopUpCreateNewCostumer.fxml"));
+        stage.setTitle("Edit or create new customer");
+        try {
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Section Window", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
         updateCostumerView();
     }
-}
 
+    public void deleteCustomer(ActionEvent event) {
+        Customer customer = (Customer) tblViewCustomers.getSelectionModel().getSelectedItem();
+        Alert alertAreyousyre = new Alert(Alert.AlertType.CONFIRMATION);
+        alertAreyousyre.setTitle("Deleting a customer");
+        alertAreyousyre.setHeaderText("Are you sure you want to delete this customer:\n" + customer.getCustomerName());
+
+        ButtonType deleteCustomer = new ButtonType("Delete customer");
+        ButtonType cancel = new ButtonType("Cancel");
+
+        alertAreyousyre.getButtonTypes().clear();
+        alertAreyousyre.getButtonTypes().addAll(deleteCustomer, cancel);
+
+        Optional <ButtonType> option = alertAreyousyre.showAndWait();
+        if (option.get()==deleteCustomer){
+            try {
+                model.deleteCustomer(customer);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Could not delete a customer from the program", ButtonType.CANCEL);
+                alert.showAndWait();
+            }
+        }
+        updateCostumerView();
+        btnDeleteCustomer.setVisible(false);
+        btnDeleteCustomer.setDisable(true);
+    }
+}
