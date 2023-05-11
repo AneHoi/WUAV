@@ -28,9 +28,12 @@ import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CustomerViewController implements Initializable {
+    @FXML
+    private Button btnCreateCustomer, btnDeleteCustomer;
     private Model model;
     @FXML
     private TableColumn clmCustomerName, clmAddress, clmCVR, clmCustomerType;
@@ -38,8 +41,6 @@ public class CustomerViewController implements Initializable {
     private TableView tblViewCustomers;
     @FXML
     private TextField txtSearchBar;
-    @FXML
-    private Button btnCreateCostumer;
     @FXML
     private ImageView imgSearch;
 
@@ -59,8 +60,8 @@ public class CustomerViewController implements Initializable {
         imgSearch.setImage(loadImages(search));
         updateCostumerView();
         searchBarFilter();
-
-
+        btnDeleteCustomer.setVisible(false);
+        btnDeleteCustomer.setDisable(true);
     }
 
 
@@ -72,16 +73,20 @@ public class CustomerViewController implements Initializable {
             {
                 if (!newPropertyValue)
                 {
-                    btnCreateCostumer.setText("Create new customer");
+                    btnCreateCustomer.setText("Create new customer");
                 }
             }
         });
 
         tblViewCustomers.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1 && tblViewCustomers.getSelectionModel().getSelectedItem() != null){
-                btnCreateCostumer.setText("Edit customer");
+                btnCreateCustomer.setText("Edit customer");
+                btnDeleteCustomer.setVisible(true);
+                btnDeleteCustomer.setDisable(false);
             }else {
-                btnCreateCostumer.setText("Create new customer");
+                btnCreateCustomer.setText("Create new customer");
+                btnDeleteCustomer.setVisible(false);
+                btnDeleteCustomer.setDisable(true);
             }
             if (event.getClickCount() == 2 && tblViewCustomers.getSelectionModel().getSelectedItem() != null) {
                 Customer selectedItem = (Customer) tblViewCustomers.getSelectionModel().getSelectedItem();
@@ -173,7 +178,7 @@ public class CustomerViewController implements Initializable {
         FXMLLoader loader = new FXMLLoader();
         loader.setController(popUpCreateNewCostumerController);
         loader.setLocation(getClass().getResource("/GUI/View/PopUpCreateNewCostumer.fxml"));
-
+        stage.setTitle("Edit or create new customer");
         try {
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
@@ -184,5 +189,32 @@ public class CustomerViewController implements Initializable {
             alert.showAndWait();
         }
         updateCostumerView();
+    }
+
+    public void deleteCustomer(ActionEvent event) {
+        Customer customer = (Customer) tblViewCustomers.getSelectionModel().getSelectedItem();
+        Alert alertAreyousyre = new Alert(Alert.AlertType.CONFIRMATION);
+        alertAreyousyre.setTitle("Deleting a customer");
+        alertAreyousyre.setHeaderText("Are you sure you want to delete this customer:\n" + customer.getCustomerName());
+
+        ButtonType deleteCustomer = new ButtonType("Delete customer");
+        ButtonType cancel = new ButtonType("Cancel");
+
+        alertAreyousyre.getButtonTypes().clear();
+        alertAreyousyre.getButtonTypes().addAll(deleteCustomer, cancel);
+
+        Optional <ButtonType> option = alertAreyousyre.showAndWait();
+        if (option.get()==deleteCustomer){
+            try {
+                model.deleteCustomer(customer);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Could not delete a customer from the program", ButtonType.CANCEL);
+                alert.showAndWait();
+            }
+        }
+        updateCostumerView();
+        btnDeleteCustomer.setVisible(false);
+        btnDeleteCustomer.setDisable(true);
     }
 }

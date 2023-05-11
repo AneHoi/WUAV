@@ -112,4 +112,8 @@ public class Manager {
     public List<Technician> getAssignedTechnicians(int caseID) throws SQLException {
         return caseDAO.getAssignedTechnicians(caseID);
     }
+
+    public void deleteCustomer(Customer customer) throws SQLException {
+        dao.deleteCustomer(customer);
+    }
 }

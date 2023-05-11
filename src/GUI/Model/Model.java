@@ -151,4 +151,8 @@ public class Model {
     public List<Technician> getAssignedTechnicians(int caseID) throws SQLException {
         return manager.getAssignedTechnicians(caseID);
     }
+
+    public void deleteCustomer(Customer customer) throws SQLException {
+        manager.deleteCustomer(customer);
+    }
 }

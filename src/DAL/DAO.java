@@ -248,4 +248,15 @@ public class DAO {
             throw new SQLException(e);
         }
     }
+
+    public void deleteCustomer(Customer customer) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "DELETE FROM Customer WHERE Customer_ID = " + customer.getCustomerID() + ";";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+    }
 }
