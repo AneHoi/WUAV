@@ -184,6 +184,9 @@ public class BurgerBarView implements Initializable {
         lUsers = new Label("Users");
 
         setStylingAndPaddingLabels(lHome, lCustomers, lCases, lUsers);
+        //color orange because the user starts on home-page
+        lHome.getStyleClass().clear();
+        lHome.getStyleClass().add("burgerBarMenuLabelsOrange");
 
         flowHome.getChildren().add(lHome);
         flowCustomers.getChildren().add(lCustomers);
