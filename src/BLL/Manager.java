@@ -3,6 +3,8 @@ import BE.*;
 import DAL.*;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class Manager {
@@ -111,5 +113,13 @@ public class Manager {
     }
     public List<Technician> getAssignedTechnicians(int caseID) throws SQLException {
         return caseDAO.getAssignedTechnicians(caseID);
+    }
+
+    public void SaveTextToReport(int position, int reportID, String txt, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
+        reportDAO.SaveTextToReport(position, reportID, txt, userID, createdDate, createdTime);
+    }
+
+    public void SaveImageToReport(int position, int reportID, byte[] dataImage, String comment, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
+        reportDAO.SaveImageToReport(position, reportID, dataImage, comment, userID, createdDate, createdTime);
     }
 }

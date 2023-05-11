@@ -6,6 +6,8 @@ import BE.*;
 import BLL.Manager;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class Model {
@@ -48,6 +50,7 @@ public class Model {
     public List<Section> getSections(int reportID) throws SQLException {
         return manager.getSections(reportID);
     }
+
     public void setCurrentReport(Report selectedItem) {
         currentReport = selectedItem;
     }
@@ -148,7 +151,16 @@ public class Model {
     public void updateCustomer(Customer customer) throws SQLException {
         manager.updateCustomer(customer);
     }
+
     public List<Technician> getAssignedTechnicians(int caseID) throws SQLException {
         return manager.getAssignedTechnicians(caseID);
+    }
+
+    public void SaveTextToReport(int position, int reportID, String txt, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
+        manager.SaveTextToReport(position, reportID, txt, userID, createdDate, createdTime);
+    }
+
+    public void SaveImageToReport(int position, int reportID, byte[] dataImage, String comment, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
+        manager.SaveImageToReport(position, reportID, dataImage, comment, userID, createdDate, createdTime);
     }
 }
