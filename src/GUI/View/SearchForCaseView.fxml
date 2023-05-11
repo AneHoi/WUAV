@@ -12,7 +12,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="632.0" prefWidth="1155.0" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.SearchForCaseView">
+<?import java.net.URL?>
+<BorderPane prefHeight="632.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.SearchForCaseView">
    <top>
       <Label text="Search For Case" underline="true">
          <font>
@@ -120,4 +121,9 @@
          </BorderPane.margin>
       </HBox>
    </center>
+
+   <stylesheets>
+      <URL value="@css/Main.css" />
+      <URL value="@css/tableview.css" />
+   </stylesheets>
 </BorderPane>

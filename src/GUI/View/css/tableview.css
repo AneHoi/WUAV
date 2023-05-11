@@ -2,6 +2,12 @@
     -fx-background-color: #17263A;
     -fx-background-radius: 14 14 0 0;
     -fx-text-background-color: white;
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+}
+
+.table-view:focused .table-row-cell:selected .table-cell {
+    -fx-text-fill: #76f5d5;
     -fx-font-size: 20;
     -fx-font-weight: bold;
 
@@ -16,6 +22,7 @@
 
 .table-view .column-header-background{
     -fx-background-color: #17263A;
+    -fx-background-radius: 14 14 0 0;
 }
 /*The upper part of the table*/
 .table-view .column-header {
@@ -27,12 +34,12 @@
 */
 .table-view .table-cell{
     -fx-border-color: #ffffff;
-    -fx-padding: 30 0 20;
+    -fx-padding: 20 0 10;
 }
 /*When hovering over a colum, it changes*/
 .table-row-cell:hover {
     -fx-font-weight: bold;
-    -fx-font-size: 23;
+    -fx-font-size: 20;
 }
 
 /*color every other cell differently*/
@@ -40,5 +47,27 @@
     -fx-background-color: #93f9b911;
 }
 .table-row-cell:even{
-    -fx-background-color: #1dbbdd11;
+    -fx-background-color: rgba(29, 187, 221, 0.36);
 }
+
+/*Java will try to make a vertical and horizontal scroll bar, this will modify the scrollbars as we want them*/
+.table-view .virtual-flow .scroll-bar:vertical,
+.table-view .virtual-flow .scroll-bar:vertical .track,
+.table-view .virtual-flow .scroll-bar:vertical .track-background,
+.table-view .virtual-flow .scroll-bar:horizontal,
+.table-view .virtual-flow .scroll-bar:horizontal .track,
+.table-view .virtual-flow .scroll-bar:horizontal .track-background {
+    -fx-background-color: transparent;
+}
+
+/*Setting the opacity of the up-and down buttons to make it cleaner*/
+.table-view .virtual-flow .scroll-bar .increment-button,
+.table-view .virtual-flow .scroll-bar .decrement-button {
+    -fx-opacity: 0;
+    -fx-padding: 2;
+}
+
+.table-view .virtual-flow .scroll-bar:vertical .thumb{
+    -fx-background-color:  white;
+}
+

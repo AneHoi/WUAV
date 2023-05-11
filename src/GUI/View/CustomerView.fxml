@@ -57,7 +57,7 @@
             </HBox>
             <TableView fx:id="tblViewCustomers" prefHeight="450.0" prefWidth="600.0">
               <columns>
-                <TableColumn fx:id="clmCustomerName" prefWidth="140.0" style="-fx-alignment: center; -fx-text-fill: white;" text="Customer" />
+                <TableColumn fx:id="clmCustomerName" prefWidth="140.0" style="-fx-alignment: center;" text="Customer" />
                 <TableColumn fx:id="clmAddress" style="-fx-alignment: center;" text="Address" />
                   <TableColumn fx:id="clmCVR" prefWidth="85.0" style="-fx-alignment: center;" text="CVR" />
                   <TableColumn fx:id="clmCustomerType" prefWidth="100.0" style="-fx-alignment: center;" text="Type of Customer" />
@@ -97,7 +97,7 @@
       </HBox>
    </bottom>
    <stylesheets>
-      <URL value="@Main.css" />
+      <URL value="@css/Main.css" />
       <URL value="@css/tableview.css" />
    </stylesheets>
 </BorderPane>
