@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane stylesheets="@Main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <VBox alignment="CENTER" spacing="10.0">
+            <Label text="Add Text:" underline="true">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Label>
+        </VBox>
+    </top>
+    <center>
+        <VBox alignment="CENTER" spacing="25.0" BorderPane.alignment="CENTER">
+            <TextArea fx:id="txtAddText" prefHeight="300.0" prefWidth="300.0" style="-fx-: Black;" styleClass="CaseHomePageTextArea" wrapText="true">
+            </TextArea>
+            <Button fx:id="btnSave" mnemonicParsing="false" onAction="#handleSave" prefHeight="35.0" prefWidth="200.0" styleClass="orangeButtons" text="Save" underline="true">
+            </Button>
+            <BorderPane.margin>
+                <Insets bottom="10.0" left="25.0" right="25.0" top="10.0" />
+            </BorderPane.margin>
+        </VBox>
+    </center>
+</BorderPane>

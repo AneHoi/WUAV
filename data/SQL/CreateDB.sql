@@ -99,58 +99,63 @@ CREATE TABLE Report(
 )
 GO
 
-CREATE TABLE Addendum(
-    Addendum_ID                     INT IDENTITY(1,1)                       NOT NULL,
-    Addendum_Name                   NVARCHAR(500)                           NOT NULL,
-    Addendum_Description            NVARCHAR(750)                           NOT NULL,
-    Addendum_Assigned_Tech_ID       INT                                     NOT NULL,
-    Addendum_Report_ID              INT                                     NOT NULL,
-    Addendum_Case_ID                INT                                     NOT NULL,
-    Addendum_Created_Date           DATE                                    NOT NULL,
-    Addendum_Log_ID                 INT                                     NOT NULL,
-    Addendum_Is_Active              BIT                                     NOT NULL,
+CREATE TABLE Text_On_Report(
+    Text_On_Report_ID                   INT IDENTITY(1,1)                       NOT NULL,
+    Text_On_Report_Text                 NVARCHAR(750)                           NOT NULL,
+    Text_On_Report_Made_By_Tech         INT                                     NOT NULL,
+    Text_On_Report_Created_Date         DATE                                    NOT NULL,
+    Text_On_Report_Created_Time         TIME                                    NOT NULL,
+    Text_On_Report_Log_ID               INT,
 
-    CONSTRAINT PK_ADDENDUM_ID PRIMARY KEY(Addendum_ID),
+    CONSTRAINT PK_TEXT_ON_REPORT_ID PRIMARY KEY(Text_On_Report_ID),
 
-    CONSTRAINT FK_ADDENDUM_REPORT_ID FOREIGN KEY(Addendum_Report_ID)
+    CONSTRAINT FK_TEXT_REPORT_ID FOREIGN KEY(Text_On_Report_ID)
     REFERENCES Report(Report_ID),
 
-    CONSTRAINT FK_ADDENDUM_CASE_ID FOREIGN KEY(Addendum_Case_ID)
-    REFERENCES Case_(Case_ID),
-
-    CONSTRAINT FK_ADDENDUM_ASSIGNED_TECH_ID FOREIGN KEY(Addendum_Assigned_Tech_ID)
+    CONSTRAINT FK_TEXT_TECH_ID FOREIGN KEY(Text_On_Report_Made_By_Tech)
     REFERENCES User_(User_ID)
 )
 GO
 
-CREATE TABLE Section(
-    Section_ID                     INT IDENTITY(1,1)                       NOT NULL,
-    Section_Title                  NVARCHAR(250)                           NOT NULL,
-    Section_Sketch                 NVARCHAR(MAX),
-    Section_Sketch_Comment         NVARCHAR(500),
-    Section_Image                  NVARCHAR(MAX),
-    Section_Image_Comment          NVARCHAR(500),
-    Section_Description            NVARCHAR(MAX),
-    Section_Made_By_Tech           INT                                     NOT NULL,
-    Section_Report_ID              INT,
-    Section_Addendum_ID            INT,
-    Section_Created_Date           DATE                                    NOT NULL,
-    Section_Created_Time           TIME                                    NOT NULL,
+CREATE TABLE Image_On_Report(
+    Image_On_Report_ID                  INT IDENTITY(1,1)                       NOT NULL,
+    Image_On_Report_Image               VARBINARY(MAX)                          NOT NULL,
+    Image_On_Report_Comment             NVARCHAR(150),
+    Image_On_Report_Made_By_Tech        INT                                     NOT NULL,
+    Image_On_Report_Created_Date        DATE                                    NOT NULL,
+    Image_On_Report_Created_Time        TIME                                    NOT NULL,
+    Image_On_Report_Log_ID              INT,
 
-    CONSTRAINT PK_SECTION_ID PRIMARY KEY(Section_ID),
+    CONSTRAINT PK_IMAGE_ON_REPORT_ID PRIMARY KEY(Image_On_Report_ID),
 
-    CONSTRAINT FK_SECTION_MADE_BY_TECH FOREIGN KEY(Section_Made_By_Tech)
-    REFERENCES User_(User_ID),
-
-    CONSTRAINT FK_SECTION_REPORT_ID FOREIGN KEY(Section_Report_ID)
+    CONSTRAINT FK_IMAGE_REPORT_ID FOREIGN KEY(Image_On_Report_ID)
     REFERENCES Report(Report_ID),
 
-    CONSTRAINT FK_SECTION_ADDENDUM_ID FOREIGN KEY(Section_Addendum_ID)
-    REFERENCES Addendum(Addendum_ID)
+    CONSTRAINT FK_IMAGE_TECH_ID FOREIGN KEY(Image_On_Report_Made_By_Tech)
+    REFERENCES User_(User_ID)
 )
 GO
 
-    CREATE TABLE Technicians_Assigned_To_Case(
+CREATE TABLE Text_And_Image_Report_Link(
+    Link_ID                       INT IDENTITY(1,1)                         NOT NULL,
+    Report_ID                     INT                                       NOT NULL,
+    Text_Or_Image                 NVARCHAR(5)                               NOT NULL,
+    Image_On_Report_ID            INT,
+    Text_On_Report_ID             INT,
+    Position_In_Report            INT                                       NOT NULL,
+
+    CONSTRAINT PK_LINK_ID PRIMARY KEY(Link_ID),
+
+    CONSTRAINT FK_REPORT_IMAGE_ID FOREIGN KEY(Report_ID)
+    REFERENCES Report(Report_ID),
+    CONSTRAINT FK_TEXT_REPORT_LINK_ID FOREIGN KEY(Text_On_Report_ID)
+    REFERENCES Text_On_Report(Text_On_Report_ID),
+    CONSTRAINT FK_IMAGE_REPORT_LINK_ID FOREIGN KEY(Image_On_Report_ID)
+    REFERENCES Image_On_Report(Image_On_Report_ID),
+)
+GO
+
+CREATE TABLE Technicians_Assigned_To_Case(
     Technician_ID                   INT                                     NOT NULL,
     Case_ID                         INT                                     NOT NULL,
 

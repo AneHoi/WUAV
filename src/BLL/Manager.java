@@ -3,6 +3,8 @@ import BE.*;
 import DAL.*;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class Manager {
@@ -27,15 +29,18 @@ public class Manager {
     public void saveCustomer(Customer customer) {
         dao.saveCustomer(customer);
     }
-    public int createSection(Section section) throws Exception {
-        return dao.createSection(section);
-    }
     public void createNewReport(String reportName, String reportDescription, int caseID, int userID) throws SQLException {
         reportDAO.createNewReport(reportName,reportDescription, caseID, userID);
     }
 
     public List<Report> getReports(int caseID) throws SQLException {
         return reportDAO.getReports(caseID);
+    }
+    public List<ReportCaseAndCustomer> getAllReports() throws SQLException {
+        return reportDAO.getAllReports();
+    }
+    public void  createNewSection(String sectionTitle, byte[] sketch, String sketchComment, byte[] image, String imageComment, String description, int madeByTech, int reportID) throws SQLException {
+        sectionDAO.createNewSection(sectionTitle,sketch,sketchComment,image,imageComment,description,madeByTech,reportID);
     }
     public List<Section> getSections(int reportID) throws SQLException {
         return sectionDAO.getSections(reportID);
@@ -113,7 +118,24 @@ public class Manager {
         return caseDAO.getAssignedTechnicians(caseID);
     }
 
+    public void SaveTextToReport(int position, int reportID, String txt, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
+        reportDAO.SaveTextToReport(position, reportID, txt, userID, createdDate, createdTime);
+    }
+
+    public void SaveImageToReport(int position, int reportID, byte[] dataImage, String comment, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
+        reportDAO.SaveImageToReport(position, reportID, dataImage, comment, userID, createdDate, createdTime);
+    }
+
+    public List<TextOnReport> getAllTextFieldsForReport(int currentReportID) throws SQLException {
+        return reportDAO.getAllTextFieldsForReport(currentReportID);
+    }
+
+    public List<ImageOnReport> getAllImagesForReport(int currentReportID) throws SQLException {
+        return reportDAO.getAllImagesForReport(currentReportID);
+    }
+
     public void deleteCustomer(Customer customer) throws SQLException {
         dao.deleteCustomer(customer);
+
     }
 }

@@ -178,14 +178,32 @@ public class CreateUserView implements Initializable {
         boolean userActive = cbUserActive.getSelectionModel().getSelectedItem().equals("Active");
         User user = (User) tblViewExistingUsers.getSelectionModel().getSelectedItem();
         int userID = user.getUserID();
-        try {
-            model.updateUser(userID, fullName, userName, userTlf, userEmail, userActive);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not update User", ButtonType.CANCEL);
-            alert.showAndWait();
-        }
-        updateTableView();
 
+            if(cbUserActive.getSelectionModel().getSelectedItem().equals("Inactive")){
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to make:" + user.getFullName() + " Inactive", ButtonType.YES, ButtonType.NO);
+                alert.getDialogPane().getStylesheets().add("/gui/view/Main.css");
+                alert.getDialogPane().getStyleClass().add("alertPane");
+                alert.showAndWait();
+                if (alert.getResult() == ButtonType.YES) {
+                    try {
+                        model.updateUser(userID, fullName, userName, userTlf, userEmail, userActive);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        Alert alert1 = new Alert(Alert.AlertType.ERROR, "Could not update User", ButtonType.CANCEL);
+                        alert1.showAndWait();
+                    }
+                }
+            }
+            else {
+                try {
+                    model.updateUser(userID, fullName, userName, userTlf, userEmail, userActive);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    Alert alert1 = new Alert(Alert.AlertType.ERROR, "Could not update User", ButtonType.CANCEL);
+                    alert1.showAndWait();
+                }
+            }
+
+        updateTableView();
     }
 }

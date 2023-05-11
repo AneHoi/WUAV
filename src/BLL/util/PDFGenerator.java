@@ -32,7 +32,7 @@ public class PDFGenerator {
 
     public void generateReport(Report report, Case selectedCase, Customer customer) throws DocumentException, SQLException {
         manager = new Manager();
-        List<Section> sections = manager.getSections(report.getReportID());
+        List<Section> sections = manager.getAllSections(report.getReportID());
         try {
             document = new Document(PageSize.A4, 20, 20, 50, 25);
             PdfWriter writer = null;
