@@ -6,15 +6,15 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class ImageOnReport {
-    private Image image;
+    private byte[] imageData;
     private String imageComment;
     private int positionOnReport;
     private User addedByTech;
     private LocalDate createdDate;
     private LocalTime createdTime;
 
-    public ImageOnReport(Image image, String imageComment, int positionOnReport, User addedByTech, LocalDate createdDate, LocalTime createdTime) {
-        this.image = image;
+    public ImageOnReport(byte[] imageData, String imageComment, int positionOnReport, User addedByTech, LocalDate createdDate, LocalTime createdTime) {
+        this.imageData = imageData;
         this.imageComment = imageComment;
         this.positionOnReport = positionOnReport;
         this.addedByTech = addedByTech;
@@ -22,12 +22,12 @@ public class ImageOnReport {
         this.createdTime = createdTime;
     }
 
-    public Image getImage() {
-        return image;
+    public byte[] getImageData() {
+        return imageData;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
     }
 
     public String getImageComment() {

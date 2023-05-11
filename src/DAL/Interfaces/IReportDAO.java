@@ -1,7 +1,9 @@
 package DAL.Interfaces;
 
 import BE.Addendum;
+import BE.ImageOnReport;
 import BE.Report;
+import BE.TextOnReport;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -22,4 +24,8 @@ public interface IReportDAO {
     void SaveTextToReport(int position, int reportID, String txt, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException;
 
     void SaveImageToReport(int position, int reportID, byte[] dataImage, String comment, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException;
+
+    List<TextOnReport> getAllTextFieldsForReport(int currentReportID) throws SQLException;
+
+    List<ImageOnReport> getAllImagesForReport(int currentReportID) throws SQLException;
 }

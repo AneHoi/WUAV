@@ -26,6 +26,7 @@ public class AddTextFieldView implements Initializable {
     private Report currentReport;
     private ControllerAssistant controllerAssistant;
     private Model model;
+    private int nextPosition;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -34,7 +35,7 @@ public class AddTextFieldView implements Initializable {
     }
 
     public void handleSave(ActionEvent actionEvent) {
-        int position = 0;
+        int position = nextPosition;
         int reportID = currentReport.getReportID();
         String txt = txtAddText.getText();
         int userID = controllerAssistant.getLoggedInUser().getUserID();
@@ -53,8 +54,12 @@ public class AddTextFieldView implements Initializable {
         Stage stage = (Stage) btnSave.getScene().getWindow();
         stage.close();
     }
+
     public void setCurrentReport(Report currentReport) {
         this.currentReport = currentReport;
     }
 
+    public void setNextAvailablePosition(int nextPosition) {
+        this.nextPosition = nextPosition;
+    }
 }

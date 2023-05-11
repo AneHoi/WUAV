@@ -117,20 +117,6 @@ CREATE TABLE Text_On_Report(
 )
 GO
 
-CREATE TABLE Text_Report_Link(
-    Report_ID                     INT                                       NOT NULL,
-    Text_On_Report_ID             INT                                       NOT NULL,
-    Position_In_Report            INT                                       NOT NULL,
-
-    CONSTRAINT PK_REPORT_TEXT_ID PRIMARY KEY(Report_ID,Text_On_Report_ID),
-    CONSTRAINT FK_REPORT_ID FOREIGN KEY(Report_ID)
-    REFERENCES Report(Report_ID),
-
-    CONSTRAINT FK_TEXT_REPORT_LINK_ID FOREIGN KEY(Text_On_Report_ID)
-    REFERENCES Text_On_Report(Text_On_Report_ID),
-)
-GO
-
 CREATE TABLE Image_On_Report(
     Image_On_Report_ID                  INT IDENTITY(1,1)                       NOT NULL,
     Image_On_Report_Image               VARBINARY(MAX)                          NOT NULL,
@@ -150,15 +136,20 @@ CREATE TABLE Image_On_Report(
 )
 GO
 
-CREATE TABLE Image_Report_Link(
+CREATE TABLE Text_And_Image_Report_Link(
+    Link_ID                       INT IDENTITY(1,1)                         NOT NULL,
     Report_ID                     INT                                       NOT NULL,
-    Image_On_Report_ID            INT                                       NOT NULL,
+    Text_Or_Image                 NVARCHAR(5)                               NOT NULL,
+    Image_On_Report_ID            INT,
+    Text_On_Report_ID             INT,
     Position_In_Report            INT                                       NOT NULL,
 
-    CONSTRAINT PK_REPORT_IMAGE_ID PRIMARY KEY(Report_ID,Image_On_Report_ID),
+    CONSTRAINT PK_LINK_ID PRIMARY KEY(Link_ID),
+
     CONSTRAINT FK_REPORT_IMAGE_ID FOREIGN KEY(Report_ID)
     REFERENCES Report(Report_ID),
-
+    CONSTRAINT FK_TEXT_REPORT_LINK_ID FOREIGN KEY(Text_On_Report_ID)
+    REFERENCES Text_On_Report(Text_On_Report_ID),
     CONSTRAINT FK_IMAGE_REPORT_LINK_ID FOREIGN KEY(Image_On_Report_ID)
     REFERENCES Image_On_Report(Image_On_Report_ID),
 )

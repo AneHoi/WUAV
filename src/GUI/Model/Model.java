@@ -163,4 +163,12 @@ public class Model {
     public void SaveImageToReport(int position, int reportID, byte[] dataImage, String comment, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
         manager.SaveImageToReport(position, reportID, dataImage, comment, userID, createdDate, createdTime);
     }
+
+    public List<ImageOnReport> getAllImagesForReport(int currentReportID) throws SQLException {
+        return manager.getAllImagesForReport(currentReportID);
+    }
+
+    public List<TextOnReport> getAllTextFieldsForReport(int currentReportID) throws SQLException {
+        return manager.getAllTextFieldsForReport(currentReportID);
+    }
 }

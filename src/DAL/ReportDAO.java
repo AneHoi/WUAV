@@ -1,7 +1,6 @@
 package DAL;
 
-import BE.Addendum;
-import BE.Report;
+import BE.*;
 import DAL.Interfaces.IReportDAO;
 
 import java.sql.*;
@@ -120,11 +119,10 @@ public class ReportDAO implements IReportDAO {
         try (Connection conn = db.getConnection()) {
             String sql = "INSERT INTO Text_On_Report(Text_On_Report_Text, Text_On_Report_Made_By_Tech, Text_On_Report_Created_Date, Text_On_Report_Created_Time) VALUES (?, ?, ?, ?)";
             PreparedStatement ps1 = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps1.setInt(1, position);
-            ps1.setString(2, txt);
-            ps1.setInt(3, userID);
-            ps1.setDate(4, Date.valueOf(createdDate));
-            ps1.setTime(5, Time.valueOf(createdTime));
+            ps1.setString(1, txt);
+            ps1.setInt(2, userID);
+            ps1.setDate(3, Date.valueOf(createdDate));
+            ps1.setTime(4, Time.valueOf(createdTime));
 
 
             int Text_On_Report_ID;
@@ -140,14 +138,16 @@ public class ReportDAO implements IReportDAO {
             } else {
                 throw new SQLException("No rows affected. Failed to insert Image_On_Report.");
             }
-            String sql2 = "INSERT INTO Text_Report_Link(Report_ID, Text_On_Report_ID, Position_In_Report) VALUES(?,?,?);";
+            String sql2 = "INSERT INTO Text_And_Image_Report_Link(Report_ID, Text_Or_Image, Text_On_Report_ID, Position_In_Report) VALUES(?,?,?,?);";
             PreparedStatement ps2 = conn.prepareStatement(sql2);
             ps2.setInt(1, reportID);
-            ps2.setInt(2, Text_On_Report_ID);
-            ps2.setInt(3, position);
+            ps2.setString(2,"Text");
+            ps2.setInt(3, Text_On_Report_ID);
+            ps2.setInt(4, position);
             ps2.executeUpdate();
 
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new SQLException(e);
         }
     }
@@ -177,17 +177,73 @@ public class ReportDAO implements IReportDAO {
                 throw new SQLException("No rows affected. Failed to insert Image_On_Report.");
             }
 
-            String sql2 = "INSERT INTO Image_Report_Link(Report_ID, Image_On_Report_ID, Position_In_Report) VALUES(?,?,?);";
+            String sql2 = "INSERT INTO Text_And_Image_Report_Link(Report_ID, Text_Or_Image, Image_On_Report_ID, Position_In_Report) VALUES(?,?,?,?);";
             PreparedStatement ps2 = conn.prepareStatement(sql2);
             ps2.setInt(1, reportID);
-            ps2.setInt(2, Image_On_Report_ID);
-            ps2.setInt(3, position);
+            ps2.setString(2,"Image");
+            ps2.setInt(3, Image_On_Report_ID);
+            ps2.setInt(4, position);
             ps2.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
             throw new SQLException(e);
         }
+    }
+
+    @Override
+    public List<TextOnReport> getAllTextFieldsForReport(int currentReportID) throws SQLException {
+        List<TextOnReport> textsOnReport = new ArrayList<>();
+        try (Connection conn = db.getConnection()) {
+            String sql = "SELECT * FROM Text_And_Image_Report_Link JOIN Text_On_Report ON Text_And_Image_Report_Link.Text_On_Report_ID = Text_On_Report.Text_On_Report_ID JOIN User_ ON Text_On_Report.Text_On_Report_Made_By_Tech = User_.User_ID WHERE Report_ID =" + currentReportID + " AND Text_Or_Image = 'Text';";
+
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                int userID = rs.getInt("User_ID");
+                String fullName = rs.getString("User_Full_Name");
+                Technician t = new Technician(userID, fullName);
+                String text = rs.getString("Text_On_Report_Text");
+                LocalDate date = rs.getDate("Text_On_Report_Created_Date").toLocalDate();
+                LocalTime time = rs.getTime("Text_On_Report_Created_Time").toLocalTime();
+                int positionInReport = rs.getInt("Position_In_Report");
+                TextOnReport tOR = new TextOnReport(text, positionInReport, t, date, time);
+                textsOnReport.add(tOR);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(e);
+        }
+
+        return textsOnReport;
+    }
+
+    @Override
+    public List<ImageOnReport> getAllImagesForReport(int currentReportID) throws SQLException {
+        List<ImageOnReport> imagesOnReport = new ArrayList<>();
+        try (Connection conn = db.getConnection()) {
+            String sql = "SELECT * FROM Text_And_Image_Report_Link JOIN Image_On_Report ON Text_And_Image_Report_Link.Image_On_Report_ID = Image_On_Report.Image_On_Report_ID JOIN User_ ON Image_On_Report.Image_On_Report_Made_By_Tech = User_.User_ID WHERE Report_ID =" + currentReportID + " AND Text_Or_Image = 'Image';";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                int userID = rs.getInt("User_ID");
+                String fullName = rs.getString("User_Full_Name");
+                Technician t = new Technician(userID, fullName);
+                byte[] imageBytes = rs.getBytes("Image_On_Report_Image");
+                String imageComment = rs.getString("Image_On_Report_Comment");
+                LocalDate date = rs.getDate("Image_On_Report_Created_Date").toLocalDate();
+                LocalTime time = rs.getTime("Image_On_Report_Created_Date").toLocalTime();
+                int positionInReport = rs.getInt("Position_In_Report");
+
+                ImageOnReport iOR = new ImageOnReport(imageBytes,imageComment,positionInReport,t,date,time);
+                imagesOnReport.add(iOR);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(e);
+        }
+
+        return imagesOnReport;
     }
 
 }

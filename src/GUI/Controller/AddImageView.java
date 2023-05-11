@@ -36,6 +36,7 @@ public class AddImageView implements Initializable {
     private Report currentReport;
     private ControllerAssistant controllerAssistant;
     private Model model;
+    private int nextPosition;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -81,7 +82,7 @@ public class AddImageView implements Initializable {
     }
 
     public void handleSave(ActionEvent actionEvent) {
-        int position = 0;
+        int position = nextPosition;
         int reportID = currentReport.getReportID();
         String comment = txtAddComment.getText();
         int userID = controllerAssistant.getLoggedInUser().getUserID();
@@ -99,5 +100,9 @@ public class AddImageView implements Initializable {
         alert.showAndWait();
         Stage stage = (Stage) btnSave.getScene().getWindow();
         stage.close();
+    }
+
+    public void setNextAvailablePosition(int nextPosition) {
+        this.nextPosition = nextPosition;
     }
 }

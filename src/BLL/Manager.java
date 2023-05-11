@@ -122,4 +122,12 @@ public class Manager {
     public void SaveImageToReport(int position, int reportID, byte[] dataImage, String comment, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
         reportDAO.SaveImageToReport(position, reportID, dataImage, comment, userID, createdDate, createdTime);
     }
+
+    public List<TextOnReport> getAllTextFieldsForReport(int currentReportID) throws SQLException {
+        return reportDAO.getAllTextFieldsForReport(currentReportID);
+    }
+
+    public List<ImageOnReport> getAllImagesForReport(int currentReportID) throws SQLException {
+        return reportDAO.getAllImagesForReport(currentReportID);
+    }
 }
