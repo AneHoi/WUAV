@@ -12,7 +12,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("GUI/view/Index.fxml"));
         primaryStage.setTitle("WUAV");
-
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(true);
         primaryStage.setOnCloseRequest(event -> System.exit(0));
