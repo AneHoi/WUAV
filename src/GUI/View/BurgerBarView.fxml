@@ -5,7 +5,8 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="vboxBurgerMenu" minHeight="632.0" minWidth="125.0" styleClass="burgerBarView" stylesheets="@css/Main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.BurgerBarController">
+<?import java.net.URL?>
+<VBox fx:id="vboxBurgerMenu" minHeight="632.0" minWidth="125.0" styleClass="burgerBarView" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.BurgerBarController">
    <children>
       <FlowPane fx:id="flowHome" alignment="CENTER" minWidth="125.0" prefWidth="125.0">
          <children>
@@ -40,4 +41,8 @@
          </padding>
       </FlowPane>
    </children>
+   <stylesheets>
+      <URL value="@css/Main.css" />
+      <URL value="@css/fonts.css" />
+   </stylesheets>
 </VBox>

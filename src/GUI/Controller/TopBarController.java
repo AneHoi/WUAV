@@ -41,7 +41,7 @@ public class TopBarController implements Initializable {
         controllerAssistant = ControllerAssistant.getInstance();
         loggedInUser = controllerAssistant.getLoggedInUser();
         loadUserInfo();
-
+        lblLogOut.getStyleClass().add("burgerFont");
 
     }
 
