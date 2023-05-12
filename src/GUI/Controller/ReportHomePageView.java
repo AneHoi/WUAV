@@ -96,7 +96,7 @@ public class ReportHomePageView implements Initializable {
         }
         for (ImageOnReport image : allImagesOnReport) {
             BorderPane bp = new BorderPane();
-            bp.setPrefWidth(1050);
+            bp.setPrefWidth(700);
             bp.setStyle("-fx-border-width: 3");
             bp.setStyle("-fx-border-color: BLACK");
             VBox vbCenter = new VBox();
