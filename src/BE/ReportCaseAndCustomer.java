@@ -3,6 +3,7 @@ package BE;
 import java.time.LocalDate;
 
 public class ReportCaseAndCustomer {
+    private int reportId;
     private String reportName;
     private String customerName;
     private String customerAddress;
@@ -11,6 +12,7 @@ public class ReportCaseAndCustomer {
     private LocalDate createdDate;
 
     public ReportCaseAndCustomer(Report reportObj, Case caseObj, Customer customerObj) {
+        this.reportId = reportObj.getReportID();
         this.reportName = reportObj.getReportName();
         this.createdDate = reportObj.getCreatedDate();
         this.customerName = customerObj.getCustomerName();
