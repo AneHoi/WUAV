@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -24,26 +23,24 @@ import java.util.ResourceBundle;
 
 public class BurgerBarView implements Initializable {
     @FXML
-    private ImageView imgBurger, imgHome, imgCustomers, imgCases, imgUsers;
+    private ImageView imgHome, imgCustomers, imgCases, imgUsers;
     @FXML
     private VBox vboxBurgerMenu;
     @FXML
-    private FlowPane flowBurger, flowHome, flowCustomers, flowCases, flowUsers;
+    private FlowPane flowHome, flowCustomers, flowCases, flowUsers;
 
-    private String burger = "data/Images/Burger menu.png";
     private String home = "data/Images/Home.png";
     private String customers = "data/Images/Customers.png";
     private String cases = "data/Images/Cases.png";
     private String users = "data/Images/Users.png";
-
-    private String burgerOrange = "data/Images/Burger menu orange.png";
     private String homeOrange = "data/Images/Home orange.png";
     private String customersOrange = "data/Images/Customers orange.png";
     private String casesOrange = "data/Images/Cases orange.png";
     private String usersOrange = "data/Images/Users orange.png";
 
-    private Image imgBurgerNormal, imgBurgerOrange, imgHomeNormal, imgHomeOrange, imgCustomerNormal, imgCustomerOrange, imgCasesNormal, imgCasesOrange, imgUsersNormal, imgUsersOrange;
+    private Image imgHomeNormal, imgHomeOrange, imgCustomerNormal, imgCustomerOrange, imgCasesNormal, imgCasesOrange, imgUsersNormal, imgUsersOrange;
     private ControllerAssistant controllerAssistant;
+    private Label lHome, lCustomers, lCases, lUsers;
 
 
     @Override
@@ -51,7 +48,7 @@ public class BurgerBarView implements Initializable {
         controllerAssistant = ControllerAssistant.getInstance();
         loadAllImages();
         loadIconsToBar();
-        imgBurger.setOnMouseClicked(event -> expandMenuBar());
+        expandMenuBar();
         imgCases.setOnMouseClicked(event -> loadSearchForCases());
         imgHome.setOnMouseClicked(event -> loadUserHomePage());
         imgCustomers.setOnMouseClicked(event -> loadCustomerView());
@@ -66,14 +63,26 @@ public class BurgerBarView implements Initializable {
                 if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
                     ImageView clickedImage = (ImageView) e.getSource();
                     setImagesToWhite();
+                    setLabelsToWhite();
                     if (clickedImage.equals(imgHome)) {
                         imgHome.setImage(imgHomeOrange);
+                        lHome.getStyleClass().clear();
+                        lHome.getStyleClass().add("burgerBarMenuLabelsOrange");
+
                     } else if (clickedImage.equals(imgCustomers)) {
                         imgCustomers.setImage(imgCustomerOrange);
+                        lCustomers.getStyleClass().clear();
+                        lCustomers.getStyleClass().add("burgerBarMenuLabelsOrange");
+
                     } else if (clickedImage.equals(imgCases)) {
                         imgCases.setImage(imgCasesOrange);
+                        lCases.getStyleClass().clear();
+                        lCases.getStyleClass().add("burgerBarMenuLabelsOrange");
+
                     } else if (clickedImage.equals(imgUsers)) {
                         imgUsers.setImage(imgUsersOrange);
+                        lUsers.getStyleClass().clear();
+                        lUsers.getStyleClass().add("burgerBarMenuLabelsOrange");
                     }
                 }
             }
@@ -84,9 +93,10 @@ public class BurgerBarView implements Initializable {
         imgUsers.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
     }
 
+    /**
+     * loads all the different images into image-variables
+     */
     private void loadAllImages() {
-        imgBurgerOrange = loadImages(burgerOrange);
-        imgBurgerNormal = loadImages(burger);
         imgHomeNormal = loadImages(home);
         imgHomeOrange = loadImages(homeOrange);
         imgCustomerNormal = loadImages(customers);
@@ -95,6 +105,26 @@ public class BurgerBarView implements Initializable {
         imgCasesOrange = loadImages(casesOrange);
         imgUsersNormal = loadImages(users);
         imgUsersOrange = loadImages(usersOrange);
+    }
+
+    private void setImagesToWhite() {
+        imgHome.setImage(imgHomeNormal);
+        imgCustomers.setImage(imgCustomerNormal);
+        imgCases.setImage(imgCasesNormal);
+        imgUsers.setImage(imgUsersNormal);
+    }
+    private void setLabelsToWhite(){
+        lHome.getStyleClass().clear();
+        lHome.getStyleClass().add("burgerBarMenuLabels");
+
+        lCustomers.getStyleClass().clear();
+        lCustomers.getStyleClass().add("burgerBarMenuLabels");
+
+        lCases.getStyleClass().clear();
+        lCases.getStyleClass().add("burgerBarMenuLabels");
+
+        lUsers.getStyleClass().clear();
+        lUsers.getStyleClass().add("burgerBarMenuLabels");
     }
 
     private void loadUserView() {
@@ -129,14 +159,6 @@ public class BurgerBarView implements Initializable {
         }
     }
 
-    private void setImagesToWhite() {
-        imgHome.setImage(imgHomeNormal);
-        imgCustomers.setImage(imgCustomerNormal);
-        imgCases.setImage(imgCasesNormal);
-        imgUsers.setImage(imgUsersNormal);
-    }
-
-
     private void loadUserHomePage() {
         try {
             controllerAssistant.loadCenter("UserHomePageView.fxml");
@@ -149,68 +171,50 @@ public class BurgerBarView implements Initializable {
     }
 
     private void expandMenuBar() {
-        if (imgBurger.getImage().equals(imgBurgerNormal)) {
-            imgBurger.setImage(imgBurgerOrange);
-            vboxBurgerMenu.setMinWidth(250);
-            loadLabelsForIcons();
-            vboxBurgerMenu.getStyleClass().add("vboxBorderOrange");
-        } else {
-            imgBurger.setImage(imgBurgerNormal);
-            vboxBurgerMenu.setMinWidth(125);
-            removeLabelsFromIcons();
-            vboxBurgerMenu.getStyleClass().remove(1);
-        }
-
-    }
-
-    private void removeLabelsFromIcons() {
-        flowHome.getChildren().remove(1);
-        flowCustomers.getChildren().remove(1);
-        flowCases.getChildren().remove(1);
-        flowUsers.getChildren().remove(1);
-        flowBurger.setAlignment(Pos.CENTER);
-        flowHome.setAlignment(Pos.CENTER);
-        flowCustomers.setAlignment(Pos.CENTER);
-        flowCases.setAlignment(Pos.CENTER);
-        flowUsers.setAlignment(Pos.CENTER);
-        flowBurger.setPadding(new Insets(20, 0, 0, 0));
-        flowHome.setPadding(new Insets(20, 0, 0, 0));
-        flowCustomers.setPadding(new Insets(20, 0, 0, 0));
-        flowCases.setPadding(new Insets(20, 0, 0, 0));
-        flowUsers.setPadding(new Insets(20, 0, 0, 0));
+        vboxBurgerMenu.setMinWidth(250);
+        loadLabelsForIcons();
+        //Border in orange for menu
+        vboxBurgerMenu.getStyleClass().add("vboxBorderOrange");
     }
 
     private void loadLabelsForIcons() {
-        Label home = new Label("Home");
-        home.getStyleClass().add("burgerBarMenuLabels");
-        home.setPadding(new Insets(0, 0, 20, 0));
-        Label customers = new Label("Customers");
-        customers.getStyleClass().add("burgerBarMenuLabels");
-        customers.setPadding(new Insets(0, 0, 20, 0));
-        Label cases = new Label("Cases");
-        cases.getStyleClass().add("burgerBarMenuLabels");
-        cases.setPadding(new Insets(0, 0, 20, 0));
-        Label users = new Label("Users");
-        users.getStyleClass().add("burgerBarMenuLabels");
-        users.setPadding(new Insets(0, 0, 20, 0));
-        flowHome.getChildren().add(home);
-        flowCustomers.getChildren().add(customers);
-        flowCases.getChildren().add(cases);
-        flowUsers.getChildren().add(users);
-        flowBurger.setAlignment(Pos.CENTER_LEFT);
-        flowHome.setAlignment(Pos.CENTER_LEFT);
-        flowCustomers.setAlignment(Pos.CENTER_LEFT);
-        flowCases.setAlignment(Pos.CENTER_LEFT);
-        flowUsers.setAlignment(Pos.CENTER_LEFT);
-        flowBurger.setPadding(new Insets(20, 0, 0, 13));
-        flowHome.setPadding(new Insets(20, 0, 0, 13));
-        flowCustomers.setPadding(new Insets(20, 0, 0, 13));
-        flowCases.setPadding(new Insets(20, 0, 0, 13));
-        flowUsers.setPadding(new Insets(20, 0, 0, 13));
+        lHome = new Label("Home");
+        lCustomers = new Label("Customers");
+        lCases = new Label("Cases");
+        lUsers = new Label("Users");
+
+        setStylingAndPaddingLabels(lHome, lCustomers, lCases, lUsers);
+        //color orange because the user starts on home-page
+        lHome.getStyleClass().clear();
+        lHome.getStyleClass().add("burgerBarMenuLabelsOrange");
+
+        flowHome.getChildren().add(lHome);
+        flowCustomers.getChildren().add(lCustomers);
+        flowCases.getChildren().add(lCases);
+        flowUsers.getChildren().add(lUsers);
+
+        setPosAndPaddingFlowPanes(flowHome, flowCustomers, flowCases, flowUsers);
     }
 
+    private void setPosAndPaddingFlowPanes(FlowPane... flowpanes) {
+        for (FlowPane flowpane: flowpanes) {
+            flowpane.setAlignment(Pos.CENTER_LEFT);
+            flowpane.setPadding(new Insets(20, 0, 0, 13));
+        }
+    }
+
+    private void setStylingAndPaddingLabels(Label...labels) {
+        for (Label label: labels) {
+            label.getStyleClass().add("burgerBarMenuLabels");
+            label.setPadding(new Insets(0, 0, 20, 0));
+        }
+    }
+
+
+    /**
+     * load the not-orange images into the burger bar
+     */
     private void loadIconsToBar() {
-        imgBurger.setImage(imgBurgerNormal);
         imgHome.setImage(imgHomeOrange);
         imgCustomers.setImage(imgCustomerNormal);
         imgCases.setImage(imgCasesNormal);

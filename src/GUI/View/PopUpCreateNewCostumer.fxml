@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" spacing="45.0" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" spacing="45.0" style="-fx-background-color: white;" stylesheets="@css/Main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField fx:id="txtCostumerName" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Customer Name..." styleClass="backgroundAndWhiteText">
          <font>
@@ -68,6 +68,9 @@
          <font>
             <Font size="18.0" />
          </font>
+         <VBox.margin>
+            <Insets bottom="25.0" />
+         </VBox.margin>
       </Button>
    </children>
 </VBox>

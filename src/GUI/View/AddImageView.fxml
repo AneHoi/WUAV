@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox alignment="CENTER" spacing="25.0" stylesheets="@css/Main.css">
+          <Button fx:id="btnChooseImage" mnemonicParsing="false" onAction="#handleChooseImage" styleClass="orangeButtons" text="Choose Image" />
+         <VBox fx:id="vBox" alignment="CENTER">
+            <children>
+               <ImageView fx:id="imgView" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS" />
+               <Label fx:id="lblImage" minHeight="0.0" VBox.vgrow="ALWAYS" />
+            </children>
+         </VBox>
+          <TextField fx:id="txtAddComment" prefHeight="50.0" prefWidth="200.0" promptText="Add Comment..." styleClass="textFields">
+              <VBox.margin>
+                  <Insets left="25.0" right="25.0" />
+              </VBox.margin>
+          </TextField>
+          <Button fx:id="btnSave" mnemonicParsing="false" onAction="#handleSave" prefHeight="35.0" prefWidth="200.0" styleClass="orangeButtons" text="Save" underline="true">
+              <VBox.margin>
+                  <Insets bottom="25.0" left="25.0" right="25.0" />
+              </VBox.margin>
+          </Button>
+          <padding>
+              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+          </padding>
+      </VBox>
+   </center>
+   <top>
+       <Label text="Add Image:" BorderPane.alignment="CENTER">
+           <font>
+               <Font name="System Bold" size="24.0" />
+           </font>
+       </Label>
+   </top>
+</BorderPane>

@@ -36,6 +36,11 @@
     -fx-font-size: 26;
     -fx-text-fill: WHITE;
 }
+.burgerBarMenuLabelsOrange  {
+    -fx-font-size: 26;
+    -fx-text-fill: rgba(232,73,16,1);
+    -fx-underline: true;
+}
 
 .AddAndEditSectionButtons {
     -fx-text-fill: WHITE;

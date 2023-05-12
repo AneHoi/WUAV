@@ -62,6 +62,7 @@ public class CustomerViewController implements Initializable {
         searchBarFilter();
         btnDeleteCustomer.setVisible(false);
         btnDeleteCustomer.setDisable(true);
+        addShadow(btnCreateCustomer, btnDeleteCustomer, txtSearchBar, imgSearch);
     }
 
 
@@ -189,6 +190,9 @@ public class CustomerViewController implements Initializable {
             alert.showAndWait();
         }
         updateCostumerView();
+        btnDeleteCustomer.setVisible(false);
+        btnDeleteCustomer.setDisable(true);
+
     }
 
     public void deleteCustomer(ActionEvent event) {
