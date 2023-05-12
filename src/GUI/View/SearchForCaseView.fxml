@@ -59,6 +59,9 @@
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <tooltip>
+                        <Tooltip text="Customer address" />
+                     </tooltip>
                   </TextField>
                   <TextField fx:id="txtCaseName" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Case Name..." styleClass="textFields">
                      <VBox.margin>
@@ -67,6 +70,9 @@
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <tooltip>
+                        <Tooltip text="Case name" />
+                     </tooltip>
                   </TextField>
                   <TextField fx:id="txtTechnician" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Technician..." styleClass="textFields">
                      <VBox.margin>
@@ -75,6 +81,9 @@
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <tooltip>
+                        <Tooltip text="Technician" />
+                     </tooltip>
                   </TextField>
                   <DatePicker fx:id="dpDate" prefHeight="50.0" prefWidth="250.0" promptText="Date..." showWeekNumbers="true" style="-fx-font-size: 24;" styleClass="textFields">
                      <VBox.margin>
