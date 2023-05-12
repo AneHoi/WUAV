@@ -55,10 +55,8 @@ public class CaseHomePageView implements Initializable {
     private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private ControllerAssistant controllerAssistant;
     private Model model;
-
     private Customer currentCustomer;
     private Case currentCase;
-
     private List<Report> reports;
 
     private ObservableList observableReports;
@@ -217,27 +215,6 @@ public class CaseHomePageView implements Initializable {
             alert.showAndWait();
         }
         updateTableView();
-    }
-
-
-    public void handleCreateNewAddendum(ActionEvent actionEvent)  {
-        /**AddAddendumView addAddendumView = new AddAddendumView();
-        Report selectedReport = (Report) tblViewExistingReports.getSelectionModel().getSelectedItem();
-        Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setController(addAddendumView);
-        loader.setLocation(getClass().getResource("/GUI/View/AddAddendumView.fxml"));
-        addAddendumView.setCaseAndReport(currentCase, selectedReport);
-        try {
-            Scene scene = new Scene(loader.load());
-            stage.setScene(scene);
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Addendum Window", ButtonType.CANCEL);
-            alert.showAndWait();
-        }
-        updateTableViewAddendums();*/
     }
 
 
