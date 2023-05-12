@@ -22,7 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
-public class AddImageView implements Initializable {
+public class AddImageController implements Initializable {
     @FXML
     private Button btnSave, btnChooseImage;
     @FXML

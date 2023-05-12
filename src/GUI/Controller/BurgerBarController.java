@@ -21,7 +21,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class BurgerBarView implements Initializable {
+public class BurgerBarController implements Initializable {
     @FXML
     private ImageView imgHome, imgCustomers, imgCases, imgUsers;
     @FXML

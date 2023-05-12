@@ -2,7 +2,7 @@ package GUI.Model;
 
 
 import BE.*;
-import BLL.Manager;
+import BLL.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -15,13 +15,18 @@ public class Model {
     private Customer currentCustomer;
     private Case currentCase;
     private Report currentReport;
-    private Addendum currentAddendum;
-    private Section currentSection;
     private List<Customer> customers;
-    private Manager manager;
+    private CustomerManager customerManager;
+    private ReportManager reportManager;
+    private UserManager userManager;
+
+    private CaseManager caseManager;
 
     public Model() {
-        manager = new Manager();
+        customerManager = new CustomerManager();
+        reportManager = new ReportManager();
+        userManager = new UserManager();
+        caseManager = new CaseManager();
     }
 
     public static Model getInstance() {
@@ -30,34 +35,80 @@ public class Model {
     }
 
     public List<Customer> getAllCustomers() throws SQLException {
-        customers = manager.getAllCustomers();
+        customers = customerManager.getAllCustomers();
         return customers;
     }
 
     public void saveCustomer(Customer customer) {
-        manager.saveCustomer(customer);
+        customerManager.saveCustomer(customer);
     }
 
     public void createNewReport(String reportName, String reportDescription, int caseID, int userID) throws SQLException {
-        manager.createNewReport(reportName, reportDescription, caseID, userID);
+        reportManager.createNewReport(reportName, reportDescription, caseID, userID);
     }
 
     public List<Report> getReports(int caseID) throws SQLException {
-        return manager.getReports(caseID);
+        return reportManager.getReports(caseID);
     }
 
-    public List<ReportCaseAndCustomer> getAllReports() throws SQLException {
-        return manager.getAllReports();
+
+    public  List<ReportCaseAndCustomer> getAllReports() throws SQLException {
+        return reportManager.getAllReports();
     }
 
-    public void createNewSection(String sectionTitle, byte[] sketch, String sketchComment, byte[] image, String imageComment, String description, int madeByTech, int reportID) throws Exception {
-        manager.createNewSection(sectionTitle, sketch, sketchComment, image, imageComment, description, madeByTech, reportID);
+    public List<Technician> getAllTechnicians() throws SQLException {
+        return userManager.getAllTechnicians();
     }
 
-    public List<Section> getSections(int reportID) throws SQLException {
-        return manager.getSections(reportID);
+    public void createNewCase(String caseName, String caseContact, String caseDescription, int customerID) throws SQLException {
+        caseManager.createNewCase(caseName, caseContact, caseDescription, customerID);
     }
 
+    public void addTechnicianToCase(int caseID, List<Technician> chosenTechnicians) throws SQLException {
+        caseManager.addTechnicianToCase(caseID, chosenTechnicians);
+    }
+
+    public List<Case> getAllCases() throws SQLException {
+        return caseManager.getAllCases();
+    }
+
+    public List<User> getAllUsers() throws SQLException {
+        return userManager.getAllUsers();
+    }
+
+    public void updateUser(int userID, String fullName, String userName, String userTlf, String userEmail, boolean userActive) throws SQLException {
+        userManager.updateUser(userID, fullName, userName, userTlf, userEmail, userActive);
+    }
+
+    public void createNewUser(String fullName, String userName, String userTlf, String userEmail, int userType) throws SQLException {
+        userManager.createNewUser(fullName, userName, userTlf, userEmail, userType);
+    }
+
+
+    public void updateCase(int caseID, String caseName, String contactPerson, String caseDescription) throws SQLException {
+        caseManager.updateCase(caseID, caseName, contactPerson, caseDescription);
+    }
+
+    public void updateCustomer(Customer customer) throws SQLException {
+        customerManager.updateCustomer(customer);
+    }
+
+    public List<Technician> getAssignedTechnicians(int caseID) throws SQLException {
+        return caseManager.getAssignedTechnicians(caseID);
+    }
+
+    public void SaveTextToReport(int position, int reportID, String txt, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
+        reportManager.SaveTextToReport(position, reportID, txt, userID, createdDate, createdTime);
+    }
+
+    public void SaveImageToReport(int position, int reportID, byte[] dataImage, String comment, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
+        reportManager.SaveImageToReport(position, reportID, dataImage, comment, userID, createdDate, createdTime);
+    }
+
+    public void deleteCustomer(Customer customer) throws SQLException {
+        customerManager.deleteCustomer(customer);
+
+    }
     public void setCurrentReport(Report selectedItem) {
         currentReport = selectedItem;
     }
@@ -83,102 +134,23 @@ public class Model {
     }
 
     public List<Case> getCasesForThisCustomer(int customerID) throws SQLException {
-        return manager.getCasesForThisCustomer(customerID);
-    }
-
-    public List<Technician> getAllTechnicians() throws SQLException {
-        return manager.getAllTechnicians();
-    }
-
-    public void createNewCase(String caseName, String caseContact, String caseDescription, int customerID) throws SQLException {
-        manager.createNewCase(caseName, caseContact, caseDescription, customerID);
-    }
-
-    public void addTechnicianToCase(int caseID, List<Technician> chosenTechnicians) throws SQLException {
-        manager.addTechnicianToCase(caseID, chosenTechnicians);
-    }
-
-    public List<Case> getAllCases() throws SQLException {
-        return manager.getAllCases();
-    }
-
-    public List<User> getAllUsers() throws SQLException {
-        return manager.getAllUsers();
-    }
-
-    public void updateUser(int userID, String fullName, String userName, String userTlf, String userEmail, boolean userActive) throws SQLException {
-        manager.updateUser(userID, fullName, userName, userTlf, userEmail, userActive);
-    }
-
-    public void createNewUser(String fullName, String userName, String userTlf, String userEmail, int userType) throws SQLException {
-        manager.createNewUser(fullName, userName, userTlf, userEmail, userType);
-    }
-
-    public void setCurrentSection(Section section) {
-        currentSection = section;
-    }
-
-    public List<Section> getAllSections(int currentReportID) throws SQLException {
-        return manager.getAllSections(currentReportID);
-    }
-
-    public void updateCurrentSection(Section currentSection) throws SQLException {
-        manager.updateCurrentSection(currentSection);
-    }
-
-    public void createSectionForReport(Section section) throws SQLException {
-        manager.createSectionForReport(section);
-    }
-
-    public void createSectionForAddendum(Section section) throws SQLException {
-        manager.createSectionForAddendum(section);
-    }
-
-    public void deleteSection(int sectionID) throws SQLException {
-        manager.deleteSection(sectionID);
-
-    }
-
-    public void updateCase(int caseID, String caseName, String contactPerson, String caseDescription) throws SQLException {
-        manager.updateCase(caseID, caseName, contactPerson, caseDescription);
-    }
-
-    public void updateCustomer(Customer customer) throws SQLException {
-        manager.updateCustomer(customer);
-    }
-
-    public List<Technician> getAssignedTechnicians(int caseID) throws SQLException {
-        return manager.getAssignedTechnicians(caseID);
-    }
-
-    public void SaveTextToReport(int position, int reportID, String txt, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
-        manager.SaveTextToReport(position, reportID, txt, userID, createdDate, createdTime);
-    }
-
-    public void SaveImageToReport(int position, int reportID, byte[] dataImage, String comment, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
-        manager.SaveImageToReport(position, reportID, dataImage, comment, userID, createdDate, createdTime);
+        return caseManager.getCasesForThisCustomer(customerID);
     }
 
     public List<TextsAndImagesOnReport> getImagesAndTextsForReport(int currentReportID) throws SQLException {
-        return manager.getImagesAndTextsForReport(currentReportID);
-    }
-
-    public void deleteCustomer(Customer customer) throws SQLException {
-        manager.deleteCustomer(customer);
-
+        return reportManager.getImagesAndTextsForReport(currentReportID);
     }
 
     public void updateImageInReport(int imageID, byte[] dataImage, String comment, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
-        manager.updateImageInReport(imageID, dataImage, comment, userID, createdDate, createdTime);
+        reportManager.updateImageInReport(imageID, dataImage, comment, userID, createdDate, createdTime);
     }
 
     public void deletePartOfReport(TextsAndImagesOnReport textOrImage) throws SQLException {
-        manager.deletePartOfReport(textOrImage);
+        reportManager.deletePartOfReport(textOrImage);
     }
 
     public void updateTextInReport(int textID, String txt, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
-        manager.updateTextInReport(textID, txt, userID, createdDate, createdTime);
+        reportManager.updateTextInReport(textID, txt, userID, createdDate, createdTime);
     }
-
 
 }

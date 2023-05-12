@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
-public class AddTextFieldView implements Initializable {
+public class AddTextFieldController implements Initializable {
 
     @FXML
     private Button btnSave;

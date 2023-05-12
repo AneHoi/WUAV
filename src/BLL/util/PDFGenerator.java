@@ -4,35 +4,30 @@ import BE.Case;
 import BE.Customer;
 import BE.Report;
 import BE.Section;
-import BLL.Manager;
+import BLL.SectionManager;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.pdf.PdfReader;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.IBlockElement;
 import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.element.Table;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.util.List;
 
 public class PDFGenerator {
-    private Manager manager;
+    private SectionManager sectionManager;
     private Document document;
     private Customer customer;
     private Case selectedCase;
     private PdfTextExtractor pdfTextExtractor;
 
     public void generateReport(Report report, Case selectedCase, Customer customer) throws DocumentException, SQLException {
-        manager = new Manager();
-        List<Section> sections = manager.getAllSections(report.getReportID());
+        sectionManager = new SectionManager();
+        List<Section> sections = sectionManager.getAllSections(report.getReportID());
         try {
             document = new Document(PageSize.A4, 20, 20, 50, 25);
             PdfWriter writer = null;

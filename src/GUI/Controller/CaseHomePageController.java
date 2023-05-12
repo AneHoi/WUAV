@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class CaseHomePageView implements Initializable {
+public class CaseHomePageController implements Initializable {
 
     @FXML
     private ImageView imgBack, imgForward;

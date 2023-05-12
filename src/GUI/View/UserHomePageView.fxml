@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="632.0" prefWidth="1155.0" stylesheets="@css/tableview.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.UserHomePageView">
+<BorderPane prefHeight="632.0" prefWidth="1155.0" stylesheets="@css/tableview.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.UserHomePageController">
    <top>
       <Label fx:id="lblWelcomeUser" alignment="TOP_LEFT" text="Welcome User" underline="true" BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>

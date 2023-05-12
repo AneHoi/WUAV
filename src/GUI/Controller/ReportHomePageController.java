@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ReportHomePageView implements Initializable {
+public class ReportHomePageController implements Initializable {
 
     @FXML
     private Button btnAddSketch, btnAddImage, btnAddTextField;
@@ -226,13 +226,13 @@ public class ReportHomePageView implements Initializable {
 
 
     public void handleAddTextField(ActionEvent actionEvent) {
-        AddTextFieldView addTextFieldView = new AddTextFieldView();
-        addTextFieldView.setCurrentReport(currentReport);
-        addTextFieldView.setNextAvailablePosition(nextPosition);
+        AddTextFieldController addTextFieldController = new AddTextFieldController();
+        addTextFieldController.setCurrentReport(currentReport);
+        addTextFieldController.setNextAvailablePosition(nextPosition);
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/AddTextFieldView.fxml"));
-        loader.setController(addTextFieldView);
+        loader.setController(addTextFieldController);
         try {
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
@@ -246,13 +246,13 @@ public class ReportHomePageView implements Initializable {
     }
 
     public void handleAddImage(ActionEvent actionEvent) {
-        AddImageView addImageView = new AddImageView();
-        addImageView.setCurrentReport(currentReport);
-        addImageView.setNextAvailablePosition(nextPosition);
+        AddImageController addImageController = new AddImageController();
+        addImageController.setCurrentReport(currentReport);
+        addImageController.setNextAvailablePosition(nextPosition);
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/AddImageView.fxml"));
-        loader.setController(addImageView);
+        loader.setController(addImageController);
         try {
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
