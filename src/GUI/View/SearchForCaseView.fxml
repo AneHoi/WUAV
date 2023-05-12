@@ -27,7 +27,7 @@
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="150.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox spacing="40.0">
+            <VBox spacing="30.0">
                <children>
                   <TextField fx:id="txtReportName" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Report Name..." styleClass="textFields">
                      <font>

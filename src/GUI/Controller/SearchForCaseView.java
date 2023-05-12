@@ -5,6 +5,7 @@ import BE.Report;
 import BE.ReportCaseAndCustomer;
 import BE.Customer;
 import GUI.Model.Model;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -45,6 +46,7 @@ public class SearchForCaseView implements Initializable {
         model = Model.getInstance();
         controllerAssistant = ControllerAssistant.getInstance();
         addShadow(txtCustomer, txtCustomerAddress, txtCaseName, txtTechnician, dpDate, btnFilter, btnClear);
+        addListeners();
         updateTableView();
     }
 
@@ -104,6 +106,42 @@ public class SearchForCaseView implements Initializable {
         // Update the TableView to display the filtered list
         tblViewFilteredCases.setItems(filteredList);
     }
+    private void addListeners() {
+        txtReportName.textProperty().addListener(tableViewUpdate);
+        txtCustomer.textProperty().addListener(tableViewUpdate);
+        txtCustomerAddress.textProperty().addListener(tableViewUpdate);
+        txtCaseName.textProperty().addListener(tableViewUpdate);
+        txtTechnician.textProperty().addListener(tableViewUpdate);
+        dpDate.editorProperty().addListener((ChangeListener) tableViewUpdate );
+    }
+    ChangeListener<String> tableViewUpdate = (observable, oldValue, newValue) -> {
+        String reportName = txtReportName.getText().trim();
+        String customerName = txtCustomer.getText().trim();
+        String customerAddress = txtCustomerAddress.getText().trim();
+        String caseName = txtCaseName.getText().trim();
+        String technicianName = txtTechnician.getText().trim();
+        LocalDate createdDate = dpDate.getValue();
+
+        ObservableList<ReportCaseAndCustomer> filteredList = FXCollections.observableArrayList();
+        if (!txtReportName.getText().isEmpty() || !txtCustomer.getText().isEmpty() || !txtCustomerAddress.getText().isEmpty() || !txtCaseName.getText().isEmpty() || !txtTechnician.getText().isEmpty() || !dpDate.getValue().equals(null)) {
+            for (ReportCaseAndCustomer reportCaseAndCustomer : tblViewFilteredCases.getItems()) {
+                if (reportCaseAndCustomer.getReportName().toLowerCase().contains(reportName.toLowerCase()) && reportCaseAndCustomer.getCustomerName().toLowerCase().contains(customerName.toLowerCase())
+                        && reportCaseAndCustomer.getCustomerAddress().toLowerCase().contains(customerAddress.toLowerCase())
+                        && reportCaseAndCustomer.getCaseName().toLowerCase().contains(caseName.toLowerCase())
+                        && reportCaseAndCustomer.getTechnicianName().toLowerCase().contains(technicianName.toLowerCase())
+                        && (createdDate == null || reportCaseAndCustomer.getCreatedDate().isEqual(createdDate))) {
+                    filteredList.add(reportCaseAndCustomer);
+                }
+            }
+            tblViewFilteredCases.setItems(filteredList);
+        } /**else if (txtReportName.getText().isEmpty() && txtCustomer.getText().isEmpty() && txtCustomerAddress.getText().isEmpty() && txtCaseName.getText().isEmpty() && txtTechnician.getText().isEmpty() && dpDate.getValue().equals(null)) {
+            try {
+                tblViewFilteredCases.setItems((ObservableList<ReportCaseAndCustomer>) model.getAllReports());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }*/
+    };
 
     public void handleClear(ActionEvent actionEvent) {
         txtReportName.clear();
