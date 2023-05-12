@@ -17,7 +17,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class CreateOrUpdateCaseView implements Initializable {
+public class CreateOrUpdateCaseController implements Initializable {
 
     @FXML
     private Label lblCreateOrUpdate, lblCaseName;

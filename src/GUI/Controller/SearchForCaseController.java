@@ -1,14 +1,10 @@
 package GUI.Controller;
 
-import BE.Case;
-import BE.Report;
 import BE.ReportCaseAndCustomer;
-import BE.Customer;
 import GUI.Model.Model;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,12 +17,10 @@ import javafx.scene.paint.Color;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
 
-public class SearchForCaseView implements Initializable {
+public class SearchForCaseController implements Initializable {
     @FXML
     private TextField txtReportName, txtCustomer, txtCustomerAddress, txtCaseName, txtTechnician;
     @FXML

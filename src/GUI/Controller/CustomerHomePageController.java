@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class CustomerHomePageView implements Initializable {
+public class CustomerHomePageController implements Initializable {
 
 
     @FXML
@@ -217,13 +217,13 @@ public class CustomerHomePageView implements Initializable {
     }
 
     public void handleCreateNewCase(ActionEvent actionEvent) {
-        CreateOrUpdateCaseView createOrUpdateCaseView = new CreateOrUpdateCaseView();
+        CreateOrUpdateCaseController createOrUpdateCaseController = new CreateOrUpdateCaseController();
         Case selectedCase = (Case) tblViewExistingCases.getSelectionModel().getSelectedItem();
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
-        loader.setController(createOrUpdateCaseView);
+        loader.setController(createOrUpdateCaseController);
         loader.setLocation(getClass().getResource("/GUI/View/CreateOrEditCaseView.fxml"));
-        createOrUpdateCaseView.setOnlyCustomer(model.getCurrentCustomer());
+        createOrUpdateCaseController.setOnlyCustomer(model.getCurrentCustomer());
         try {
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
@@ -238,13 +238,13 @@ public class CustomerHomePageView implements Initializable {
 
 
     public void handleUpdateCase(ActionEvent actionEvent) {
-        CreateOrUpdateCaseView createOrUpdateCaseView = new CreateOrUpdateCaseView();
+        CreateOrUpdateCaseController createOrUpdateCaseController = new CreateOrUpdateCaseController();
         Case selectedCase = (Case) tblViewExistingCases.getSelectionModel().getSelectedItem();
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
-        loader.setController(createOrUpdateCaseView);
+        loader.setController(createOrUpdateCaseController);
         loader.setLocation(getClass().getResource("/GUI/View/CreateOrEditCaseView.fxml"));
-        createOrUpdateCaseView.setCustomerAndCase(selectedCase, model.getCurrentCustomer());
+        createOrUpdateCaseController.setCustomerAndCase(selectedCase, model.getCurrentCustomer());
         try {
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
@@ -258,7 +258,7 @@ public class CustomerHomePageView implements Initializable {
     }
 
     public void handleManageTech(ActionEvent actionEvent) {
-        ManageTechniciansView manageTechniciansView = new ManageTechniciansView();
+        ManageTechniciansController manageTechniciansController = new ManageTechniciansController();
         Case selectedCase = (Case) tblViewExistingCases.getSelectionModel().getSelectedItem();
         List<Technician> alreadyAssignedTechs = new ArrayList<>();
         try {
@@ -268,10 +268,10 @@ public class CustomerHomePageView implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get assigned Technicians from the database", ButtonType.CANCEL);
             alert.showAndWait();
         }
-        manageTechniciansView.setSelectedCase(selectedCase, alreadyAssignedTechs);
+        manageTechniciansController.setSelectedCase(selectedCase, alreadyAssignedTechs);
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
-        loader.setController(manageTechniciansView);
+        loader.setController(manageTechniciansController);
         loader.setLocation(getClass().getResource("/GUI/View/ManageTechniciansView.fxml"));
         try {
             Scene scene = new Scene(loader.load());

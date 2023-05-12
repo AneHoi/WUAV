@@ -1,9 +1,6 @@
 package GUI.Controller;
 
 import BE.User;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -21,7 +18,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class TopBarView implements Initializable {
+public class TopBarController implements Initializable {
 
     public Rectangle rectangle;
     @FXML

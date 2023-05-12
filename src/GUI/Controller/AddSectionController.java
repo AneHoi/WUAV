@@ -4,7 +4,6 @@ import BE.Addendum;
 import BE.Report;
 import BE.Section;
 import GUI.Model.Model;
-import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,12 +21,11 @@ import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
-public class AddSectionView implements Initializable {
+public class AddSectionController implements Initializable {
     @FXML
     private ImageView imgViewLogo;
     @FXML
