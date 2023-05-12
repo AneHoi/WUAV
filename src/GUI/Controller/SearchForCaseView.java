@@ -134,13 +134,7 @@ public class SearchForCaseView implements Initializable {
                 }
             }
             tblViewFilteredCases.setItems(filteredList);
-        } /**else if (txtReportName.getText().isEmpty() && txtCustomer.getText().isEmpty() && txtCustomerAddress.getText().isEmpty() && txtCaseName.getText().isEmpty() && txtTechnician.getText().isEmpty() && dpDate.getValue().equals(null)) {
-            try {
-                tblViewFilteredCases.setItems((ObservableList<ReportCaseAndCustomer>) model.getAllReports());
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }*/
+        }
     };
 
     public void handleClear(ActionEvent actionEvent) {
@@ -151,10 +145,6 @@ public class SearchForCaseView implements Initializable {
         txtTechnician.clear();
         dpDate.setValue(null);
         updateTableView();
-    }
-
-    public void chooseCaseAndCustomer(){
-        //TODO needs implementation when you double click a case/customer it opens the Customer (or Case) Home Page and changes the currentCustomer and CurrentCase in the model;
     }
 
 }
