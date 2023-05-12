@@ -296,14 +296,14 @@ public class ReportHomePageController implements Initializable {
     }
 
     private void editImage(TextsAndImagesOnReport textOrImage) {
-        AddImageView addImageView = new AddImageView();
-        addImageView.setCurrentReport(currentReport);
-        addImageView.setNextAvailablePosition(nextPosition);
-        addImageView.setCurrentImage(textOrImage);
+        AddImageController addImageController = new AddImageController();
+        addImageController.setCurrentReport(currentReport);
+        addImageController.setNextAvailablePosition(nextPosition);
+        addImageController.setCurrentImage(textOrImage);
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/AddImageView.fxml"));
-        loader.setController(addImageView);
+        loader.setController(addImageController);
         try {
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
@@ -317,14 +317,14 @@ public class ReportHomePageController implements Initializable {
     }
 
     private void editText(TextsAndImagesOnReport textOrImage) {
-        AddTextFieldView addTextFieldView = new AddTextFieldView();
-        addTextFieldView.setCurrentReport(currentReport);
-        addTextFieldView.setNextAvailablePosition(nextPosition);
-        addTextFieldView.setCurrentText(textOrImage);
+        AddTextFieldController addTextFieldController = new AddTextFieldController();
+        addTextFieldController.setCurrentReport(currentReport);
+        addTextFieldController.setNextAvailablePosition(nextPosition);
+        addTextFieldController.setCurrentText(textOrImage);
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/AddTextFieldView.fxml"));
-        loader.setController(addTextFieldView);
+        loader.setController(addTextFieldController);
         try {
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
