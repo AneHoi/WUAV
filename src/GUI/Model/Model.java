@@ -52,7 +52,7 @@ public class Model {
     }
 
 
-    public  List<ReportCaseAndCustomer> getAllReports() throws SQLException {
+    public List<ReportCaseAndCustomer> getAllReports() throws SQLException {
         return reportManager.getAllReports();
     }
 
@@ -109,6 +109,7 @@ public class Model {
         customerManager.deleteCustomer(customer);
 
     }
+
     public void setCurrentReport(Report selectedItem) {
         currentReport = selectedItem;
     }
@@ -153,4 +154,11 @@ public class Model {
         reportManager.updateTextInReport(textID, txt, userID, createdDate, createdTime);
     }
 
+    public void moveItemUp(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException {
+        reportManager.moveItemUp(textOrImageID, positionOnReport);
+    }
+
+    public void moveItemDown(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException{
+        reportManager.moveItemDown(textOrImageID, positionOnReport);
+    }
 }

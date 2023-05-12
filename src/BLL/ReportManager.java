@@ -53,4 +53,12 @@ public class ReportManager {
     public void updateTextInReport(int textID, String txt, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
         reportDAO.updateTextInReport(textID, txt, userID, createdDate, createdTime);
     }
+
+    public void moveItemUp(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException {
+        reportDAO.moveItemUp(textOrImageID, positionOnReport);
+    }
+
+    public void moveItemDown(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException {
+        reportDAO.moveItemDown(textOrImageID, positionOnReport);
+    }
 }

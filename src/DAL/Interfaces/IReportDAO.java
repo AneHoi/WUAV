@@ -30,4 +30,7 @@ public interface IReportDAO {
 
     void updateTextInReport(int textID, String txt, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException;
 
+    void moveItemUp(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException;
+
+    void moveItemDown(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException;
 }

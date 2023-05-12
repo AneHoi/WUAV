@@ -18,7 +18,6 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -101,11 +100,31 @@ public class ReportHomePageController implements Initializable {
             alert.showAndWait();
         }
         BorderPane bp = new BorderPane();
+        VBox vbLeft = new VBox();
         VBox vbRight = new VBox();
+        Button btnUp = new Button();
+        Button btnDown = new Button();
         Button btnEdit = new Button();
         Button btnDelete = new Button();
         ImageView imgViewEdit = new ImageView();
         ImageView imgViewDelete = new ImageView();
+        ImageView imgUp = new ImageView();
+        ImageView imgDown = new ImageView();
+        imgUp.setImage(loadImages("data/Images/Up Arrow.png"));
+        imgDown.setImage(loadImages("data/Images/Down Arrow.png"));
+        imgUp.setFitWidth(40);
+        imgUp.setFitHeight(40);
+        imgDown.setFitWidth(40);
+        imgDown.setFitHeight(40);
+        btnUp.setGraphic(imgUp);
+        btnDown.setGraphic(imgDown);
+        btnUp.getStyleClass().add("orangeButtons");
+        btnDown.getStyleClass().add("orangeButtons");
+        btnUp.setOnAction(event -> moveUp(textOrImage));
+        btnDown.setOnAction(event -> moveDown(textOrImage));
+        vbLeft.getChildren().addAll(btnUp, btnDown);
+        vbLeft.setSpacing(10);
+        vbLeft.setPadding(new Insets(10));
         imgViewEdit.setImage(loadImages("data/Images/Edit.png"));
         imgViewDelete.setImage(loadImages("data/Images/Trash Can.png"));
         imgViewDelete.setFitHeight(40);
@@ -120,11 +139,12 @@ public class ReportHomePageController implements Initializable {
         btnDelete.getStyleClass().add("orangeButtons");
         btnEdit.setText(null);
         btnDelete.setText(null);
-        addShadow(btnDelete, btnEdit);
+        addShadow(btnDelete, btnEdit, btnUp, btnDown);
         vbRight.getChildren().addAll(btnEdit, btnDelete);
         vbRight.setSpacing(10);
         vbRight.setPadding(new Insets(10));
         bp.setRight(vbRight);
+        bp.setLeft(vbLeft);
         bp.setPrefWidth(700);
         bp.setStyle("-fx-border-width: 3");
         bp.setStyle("-fx-border-color: BLACK");
@@ -147,11 +167,31 @@ public class ReportHomePageController implements Initializable {
 
     private void setUpTextField(TextsAndImagesOnReport textOrImage) {
         BorderPane bp = new BorderPane();
+        VBox vbLeft = new VBox();
         VBox vbRight = new VBox();
+        Button btnUp = new Button();
+        Button btnDown = new Button();
         Button btnEdit = new Button();
         Button btnDelete = new Button();
+        ImageView imgUp = new ImageView();
+        ImageView imgDown = new ImageView();
         ImageView imgViewEdit = new ImageView();
         ImageView imgViewDelete = new ImageView();
+        imgUp.setImage(loadImages("data/Images/Up Arrow.png"));
+        imgDown.setImage(loadImages("data/Images/Down Arrow.png"));
+        imgUp.setFitWidth(40);
+        imgUp.setFitHeight(40);
+        imgDown.setFitWidth(40);
+        imgDown.setFitHeight(40);
+        btnUp.setGraphic(imgUp);
+        btnDown.setGraphic(imgDown);
+        btnUp.getStyleClass().add("orangeButtons");
+        btnDown.getStyleClass().add("orangeButtons");
+        btnUp.setOnAction(event -> moveUp(textOrImage));
+        btnDown.setOnAction(event -> moveDown(textOrImage));
+        vbLeft.getChildren().addAll(btnUp, btnDown);
+        vbLeft.setSpacing(10);
+        vbLeft.setPadding(new Insets(10));
         imgViewEdit.setImage(loadImages("data/Images/Edit.png"));
         imgViewDelete.setImage(loadImages("data/Images/Trash Can.png"));
         imgViewDelete.setFitHeight(40);
@@ -166,10 +206,11 @@ public class ReportHomePageController implements Initializable {
         btnDelete.getStyleClass().add("orangeButtons");
         btnEdit.setText(null);
         btnDelete.setText(null);
-        addShadow(btnDelete, btnEdit);
+        addShadow(btnDelete, btnEdit, btnUp, btnDown);
         vbRight.getChildren().addAll(btnEdit, btnDelete);
         vbRight.setSpacing(10);
         vbRight.setPadding(new Insets(10));
+        bp.setLeft(vbLeft);
         bp.setRight(vbRight);
         bp.setPrefWidth(700);
         bp.setStyle("-fx-border-width: 3");
@@ -183,6 +224,39 @@ public class ReportHomePageController implements Initializable {
         vbBottom.setAlignment(Pos.BOTTOM_RIGHT);
         bp.setBottom(vbBottom);
         vboxSectionAdding.getChildren().add(bp);
+    }
+
+    private void moveUp(TextsAndImagesOnReport textOrImage) {
+        int textOrImageID = textOrImage.getTextOrImageID();
+        int positionOnReport = textOrImage.getPositionOnReport();
+        try {
+            model.moveItemUp(textOrImageID, positionOnReport);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not move item up", ButtonType.OK);
+            alert.showAndWait();
+        } catch (IllegalStateException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
+            alert.showAndWait();
+        }
+        updateImagesTextsAndSketches();
+    }
+
+
+    private void moveDown(TextsAndImagesOnReport textOrImage) {
+        int positionOnReport = textOrImage.getPositionOnReport();
+        int textOrImageID = textOrImage.getTextOrImageID();
+        try {
+            model.moveItemDown(textOrImageID, positionOnReport);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not move item down", ButtonType.OK);
+            alert.showAndWait();
+        } catch (IllegalStateException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
+            alert.showAndWait();
+        }
+        updateImagesTextsAndSketches();
     }
 
 

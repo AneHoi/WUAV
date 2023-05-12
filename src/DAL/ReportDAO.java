@@ -293,5 +293,79 @@ public class ReportDAO implements IReportDAO {
         }
     }
 
+    public void moveItemUp(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException {
+        try (Connection conn = db.getConnection()) {
+
+            conn.setAutoCommit(false);
+
+            int itemAboveId;
+            String getItemAboveIdQuery = "SELECT Text_Or_Image_On_Report_ID FROM Text_And_Image_Report_Link WHERE Position_In_Report = ?";
+            try (PreparedStatement getItemAboveIdStatement = conn.prepareStatement(getItemAboveIdQuery)) {
+                getItemAboveIdStatement.setInt(1, positionOnReport - 1);
+                try (ResultSet resultSet = getItemAboveIdStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        itemAboveId = resultSet.getInt("Text_Or_Image_On_Report_ID");
+                    } else {
+                        throw new IllegalStateException("The item is already at the top and cannot be moved up.");
+                    }
+                }
+            }
+
+
+            String updatePositionsQuery = "UPDATE Text_And_Image_Report_Link SET Position_In_Report = ? WHERE Text_Or_Image_On_Report_ID = ?";
+            try (PreparedStatement updatePositionsStatement = conn.prepareStatement(updatePositionsQuery)) {
+
+                updatePositionsStatement.setInt(1, positionOnReport - 1);
+                updatePositionsStatement.setInt(2, textOrImageID);
+                updatePositionsStatement.executeUpdate();
+
+                updatePositionsStatement.setInt(1, positionOnReport);
+                updatePositionsStatement.setInt(2, itemAboveId);
+                updatePositionsStatement.executeUpdate();
+            }
+
+
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException();
+        }
+    }
+
+
+    public void moveItemDown(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException {
+        try (Connection conn = db.getConnection()) {
+            conn.setAutoCommit(false);
+            int itemBelowId;
+            String getItemBelowIdQuery = "SELECT Text_Or_Image_On_Report_ID FROM Text_And_Image_Report_Link WHERE Position_In_Report = ?";
+            try (PreparedStatement getItemBelowIdStatement = db.getConnection().prepareStatement(getItemBelowIdQuery)) {
+                getItemBelowIdStatement.setInt(1, positionOnReport + 1);
+                try (ResultSet resultSet = getItemBelowIdStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        itemBelowId = resultSet.getInt("Text_Or_Image_On_Report_ID");
+                    } else {
+                        throw new IllegalStateException("The item is already at the top and cannot be moved up.");
+                    }
+                }
+            }
+            String updatePositionsQuery = "UPDATE Text_And_Image_Report_Link SET Position_In_Report = ? WHERE Text_Or_Image_On_Report_ID = ?";
+            try (PreparedStatement updatePositionsStatement = conn.prepareStatement(updatePositionsQuery)) {
+
+                updatePositionsStatement.setInt(1, positionOnReport + 1);
+                updatePositionsStatement.setInt(2, textOrImageID);
+                updatePositionsStatement.executeUpdate();
+
+                updatePositionsStatement.setInt(1, positionOnReport);
+                updatePositionsStatement.setInt(2, itemBelowId);
+                updatePositionsStatement.executeUpdate();
+            }
+
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException();
+        }
+    }
 }
+
 
