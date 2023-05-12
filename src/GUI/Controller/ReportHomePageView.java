@@ -80,7 +80,7 @@ public class ReportHomePageView implements Initializable {
         }
         for (TextOnReport text : allTextFields) {
             BorderPane bp = new BorderPane();
-            bp.setPrefWidth(800);
+            bp.setPrefWidth(700);
             bp.setStyle("-fx-border-width: 3");
             bp.setStyle("-fx-border-color: BLACK");
             Label lblText = new Label(text.getText());

@@ -275,7 +275,7 @@ public class ReportDAO implements IReportDAO {
                 byte[] imageBytes = rs.getBytes("Image_On_Report_Image");
                 String imageComment = rs.getString("Image_On_Report_Comment");
                 LocalDate date = rs.getDate("Image_On_Report_Created_Date").toLocalDate();
-                LocalTime time = rs.getTime("Image_On_Report_Created_Date").toLocalTime();
+                LocalTime time = rs.getTime("Image_On_Report_Created_Time").toLocalTime();
                 int positionInReport = rs.getInt("Position_In_Report");
 
                 ImageOnReport iOR = new ImageOnReport(imageBytes,imageComment,positionInReport,t,date,time);
