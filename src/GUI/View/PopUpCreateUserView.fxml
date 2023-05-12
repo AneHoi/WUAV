@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -25,6 +26,9 @@
          <VBox.margin>
             <Insets left="25.0" right="25.0" top="25.0" />
          </VBox.margin>
+         <tooltip>
+            <Tooltip text="Full name" />
+         </tooltip>
       </TextField>
       <TextField fx:id="txtUserNameCreate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="User Name..." styleClass="textFields">
          <font>
@@ -33,6 +37,9 @@
          <VBox.margin>
             <Insets left="25.0" right="25.0" />
          </VBox.margin>
+         <tooltip>
+            <Tooltip text="User name" />
+         </tooltip>
       </TextField>
       <TextField fx:id="txtTelephoneCreate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Telephone Number..." styleClass="textFields">
          <font>
@@ -41,6 +48,9 @@
          <VBox.margin>
             <Insets left="25.0" right="25.0" />
          </VBox.margin>
+         <tooltip>
+            <Tooltip text="Telephone number" />
+         </tooltip>
       </TextField>
       <TextField fx:id="txtEmailCreate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Email..." styleClass="textFields">
          <font>
@@ -49,6 +59,9 @@
          <VBox.margin>
             <Insets left="25.0" right="25.0" />
          </VBox.margin>
+         <tooltip>
+            <Tooltip text="Email" />
+         </tooltip>
       </TextField>
       <ComboBox fx:id="cbUserTypeCreate" prefHeight="50.0" prefWidth="250.0" promptText="User type">
          <VBox.margin>

@@ -1,6 +1,5 @@
 package GUI.Controller;
 
-import BE.Addendum;
 import BE.Case;
 import BE.Customer;
 import BE.Report;
@@ -31,7 +30,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -43,15 +41,15 @@ public class CaseHomePageView implements Initializable {
     @FXML
     private Label lblCaseName;
     @FXML
-    private TextField txtReportName, txtSearchField, txtUpdateReportName;
+    private TextField txtSearchField, txtUpdateReportName;
     @FXML
-    private TextArea txtReportDescription, txtUpdateReportDescription;
+    private TextArea txtUpdateReportDescription;
     @FXML
     private Button btnCreateNewReport, btnUpdateReport;
     @FXML
     private TableView tblViewExistingReports;
     @FXML
-    private TableColumn colReportName, colTechnician, colCreatedDate, colStatus, colAddendumName, colAddendumTechnician, colAddendumCreatedDate, colAddendumStatus;
+    private TableColumn colReportName, colTechnician, colCreatedDate, colStatus;
     private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private ControllerAssistant controllerAssistant;
     private Model model;
@@ -81,7 +79,7 @@ public class CaseHomePageView implements Initializable {
         btnCreateNewReport.setDisable(true);
         lblCaseName.setText("Case Name: " + currentCase.getCaseName());
         addListeners();
-        addShadow(txtReportDescription, txtReportName, txtSearchField);
+        addShadow(txtSearchField, btnCreateNewReport);
         searchBarFilter();
 
     }
@@ -119,10 +117,7 @@ public class CaseHomePageView implements Initializable {
     }
 
     private void addListeners() {
-        txtReportName.textProperty().addListener(createNewReportBtnListener);
-        txtReportDescription.textProperty().addListener(createNewReportBtnListener);
         tblViewExistingReports.getSelectionModel().selectedItemProperty().addListener(selectedItemListener);
-
 
         tblViewExistingReports.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && tblViewExistingReports.getSelectionModel().getSelectedItem() != null) {
@@ -146,18 +141,6 @@ public class CaseHomePageView implements Initializable {
         });
 
     }
-
-
-    ChangeListener<String> createNewReportBtnListener = (observable, oldValue, newValue) -> {
-        if (txtReportName.getText().isEmpty() || txtReportDescription.getText().isEmpty()) {
-            btnCreateNewReport.setDisable(true);
-            removeShadow(btnCreateNewReport);
-        } else {
-            btnCreateNewReport.setDisable(false);
-            addShadow(btnCreateNewReport);
-        }
-    };
-
 
     ChangeListener<Report> selectedItemListener = (observable, oldValue, newValue) -> {
         if (newValue != null) {
@@ -205,15 +188,22 @@ public class CaseHomePageView implements Initializable {
 
     }
 
-    public void handleCreateNewReport(ActionEvent actionEvent) {
-        String reportName = txtReportName.getText();
-        String reportDescription = txtReportDescription.getText();
-        int caseID = currentCase.getCaseID();
+    public void handleCreateNewReportPopUp(ActionEvent actionEvent) {
+
+        PopUpCreateNewReportController popUpCreateNewReportController = new PopUpCreateNewReportController();
+        popUpCreateNewReportController.setCurrentCase(currentCase);
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController(popUpCreateNewReportController);
+        loader.setLocation(getClass().getResource("/GUI/View/PopUpCreateNewReport.fxml"));
+        stage.setTitle("Create a new report");
         try {
-            model.createNewReport(reportName, reportDescription, caseID, controllerAssistant.getLoggedInUser().getUserID()); //TODO UserID might not be right here, we need to fix this.
-        } catch (SQLException e) {
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not create a new report", ButtonType.CANCEL);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open page for creating a new report", ButtonType.CANCEL);
             alert.showAndWait();
         }
         updateTableView();

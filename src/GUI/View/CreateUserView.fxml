@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -70,6 +71,9 @@
                      <VBox.margin>
                         <Insets left="25.0" right="25.0" top="25.0" />
                      </VBox.margin>
+                     <tooltip>
+                        <Tooltip text="Full name" />
+                     </tooltip>
                   </TextField>
                   <TextField fx:id="txtUserNameUpdate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="User Name..." styleClass="textFields">
                      <font>
@@ -78,6 +82,9 @@
                      <VBox.margin>
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>
+                     <tooltip>
+                        <Tooltip text="User name" />
+                     </tooltip>
                   </TextField>
                   <TextField fx:id="txtTelephoneUpdate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Telephone Number..." styleClass="textFields">
                      <font>
@@ -86,6 +93,9 @@
                      <VBox.margin>
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>
+                     <tooltip>
+                        <Tooltip text="Telefon number" />
+                     </tooltip>
                   </TextField>
                   <TextField fx:id="txtEmailUpdate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Email..." styleClass="textFields">
                      <font>
@@ -94,6 +104,9 @@
                      <VBox.margin>
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>
+                     <tooltip>
+                        <Tooltip text="Email" />
+                     </tooltip>
                   </TextField>
                   <ComboBox fx:id="cbUserActive" prefHeight="50.0" prefWidth="250.0" promptText="User Active?">
                      <VBox.margin>
