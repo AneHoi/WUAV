@@ -99,39 +99,20 @@ CREATE TABLE Report(
 )
 GO
 
-CREATE TABLE Text_On_Report(
-    Text_On_Report_ID                   INT IDENTITY(1,1)                       NOT NULL,
-    Text_On_Report_Text                 NVARCHAR(750)                           NOT NULL,
-    Text_On_Report_Made_By_Tech         INT                                     NOT NULL,
-    Text_On_Report_Created_Date         DATE                                    NOT NULL,
-    Text_On_Report_Created_Time         TIME                                    NOT NULL,
-    Text_On_Report_Log_ID               INT,
 
-    CONSTRAINT PK_TEXT_ON_REPORT_ID PRIMARY KEY(Text_On_Report_ID),
-
-    CONSTRAINT FK_TEXT_REPORT_ID FOREIGN KEY(Text_On_Report_ID)
-    REFERENCES Report(Report_ID),
-
-    CONSTRAINT FK_TEXT_TECH_ID FOREIGN KEY(Text_On_Report_Made_By_Tech)
-    REFERENCES User_(User_ID)
-)
-GO
-
-CREATE TABLE Image_On_Report(
-    Image_On_Report_ID                  INT IDENTITY(1,1)                       NOT NULL,
-    Image_On_Report_Image               VARBINARY(MAX)                          NOT NULL,
+CREATE TABLE Text_Or_Image_On_Report(
+    Text_Or_Image_On_Report_ID          INT IDENTITY(1,1)                       NOT NULL,
+    Text_On_Report                      NVARCHAR(500),
+    Image_On_Report_Image               VARBINARY(MAX),
     Image_On_Report_Comment             NVARCHAR(150),
-    Image_On_Report_Made_By_Tech        INT                                     NOT NULL,
-    Image_On_Report_Created_Date        DATE                                    NOT NULL,
-    Image_On_Report_Created_Time        TIME                                    NOT NULL,
-    Image_On_Report_Log_ID              INT,
+    Added_By_Tech                       INT                                     NOT NULL,
+    Added_Date                          DATE                                    NOT NULL,
+    Added_Time                          TIME                                    NOT NULL,
+    Log_ID                              INT,
 
-    CONSTRAINT PK_IMAGE_ON_REPORT_ID PRIMARY KEY(Image_On_Report_ID),
+    CONSTRAINT PK_IMAGE_ON_REPORT_ID PRIMARY KEY(Text_Or_Image_On_Report_ID),
 
-    CONSTRAINT FK_IMAGE_REPORT_ID FOREIGN KEY(Image_On_Report_ID)
-    REFERENCES Report(Report_ID),
-
-    CONSTRAINT FK_IMAGE_TECH_ID FOREIGN KEY(Image_On_Report_Made_By_Tech)
+    CONSTRAINT FK_ADDED_BY_ID FOREIGN KEY(Added_By_Tech)
     REFERENCES User_(User_ID)
 )
 GO
@@ -139,19 +120,16 @@ GO
 CREATE TABLE Text_And_Image_Report_Link(
     Link_ID                       INT IDENTITY(1,1)                         NOT NULL,
     Report_ID                     INT                                       NOT NULL,
+    Text_Or_Image_On_Report_ID    INT                                       NOT NULL,
     Text_Or_Image                 NVARCHAR(5)                               NOT NULL,
-    Image_On_Report_ID            INT,
-    Text_On_Report_ID             INT,
     Position_In_Report            INT                                       NOT NULL,
 
     CONSTRAINT PK_LINK_ID PRIMARY KEY(Link_ID),
 
     CONSTRAINT FK_REPORT_IMAGE_ID FOREIGN KEY(Report_ID)
     REFERENCES Report(Report_ID),
-    CONSTRAINT FK_TEXT_REPORT_LINK_ID FOREIGN KEY(Text_On_Report_ID)
-    REFERENCES Text_On_Report(Text_On_Report_ID),
-    CONSTRAINT FK_IMAGE_REPORT_LINK_ID FOREIGN KEY(Image_On_Report_ID)
-    REFERENCES Image_On_Report(Image_On_Report_ID),
+    CONSTRAINT FK_TEXT_OR_IMAGE_REPORT_LINK_ID FOREIGN KEY(Text_Or_Image_On_Report_ID)
+    REFERENCES Text_Or_Image_On_Report(Text_Or_Image_On_Report_ID) ON DELETE CASCADE,
 )
 GO
 

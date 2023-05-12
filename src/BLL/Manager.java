@@ -78,15 +78,6 @@ public class Manager {
         usersDAO.createNewUser(fullName,userName,userTlf,userEmail,userType);
     }
 
-    public void createNewAddendum(String addendumName, String addendumDescription, int caseID, int reportID, int userID) throws SQLException {
-        reportDAO.createNewAddendum(addendumName, addendumDescription, caseID, reportID, userID);
-
-    }
-
-    public List<Addendum> getAddendums(int caseID, int reportID) throws SQLException {
-        return reportDAO.getAddendums(caseID, reportID);
-    }
-
     public List<Section> getAllSections(int currentReportID) throws SQLException {
         return dao.getAllSections(currentReportID);
     }
@@ -126,16 +117,26 @@ public class Manager {
         reportDAO.SaveImageToReport(position, reportID, dataImage, comment, userID, createdDate, createdTime);
     }
 
-    public List<TextOnReport> getAllTextFieldsForReport(int currentReportID) throws SQLException {
-        return reportDAO.getAllTextFieldsForReport(currentReportID);
-    }
 
-    public List<ImageOnReport> getAllImagesForReport(int currentReportID) throws SQLException {
-        return reportDAO.getAllImagesForReport(currentReportID);
+    public List<TextsAndImagesOnReport> getImagesAndTextsForReport(int currentReportID) throws SQLException {
+        return reportDAO.getImagesAndTextsForReport(currentReportID);
     }
 
     public void deleteCustomer(Customer customer) throws SQLException {
         dao.deleteCustomer(customer);
 
     }
+
+    public void updateImageInReport(int imageID,  byte[] dataImage, String comment, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
+        reportDAO.updateImageInReport(imageID, dataImage, comment, userID, createdDate, createdTime);
+    }
+
+    public void deletePartOfReport(TextsAndImagesOnReport textOrImage) throws SQLException {
+        reportDAO.deletePartOfReport(textOrImage);
+    }
+
+    public void updateTextInReport(int textID, String txt, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
+        reportDAO.updateTextInReport(textID, txt, userID, createdDate, createdTime);
+    }
+
 }

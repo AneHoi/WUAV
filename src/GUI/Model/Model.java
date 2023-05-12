@@ -45,12 +45,15 @@ public class Model {
     public List<Report> getReports(int caseID) throws SQLException {
         return manager.getReports(caseID);
     }
-    public  List<ReportCaseAndCustomer> getAllReports() throws SQLException {
+
+    public List<ReportCaseAndCustomer> getAllReports() throws SQLException {
         return manager.getAllReports();
     }
+
     public void createNewSection(String sectionTitle, byte[] sketch, String sketchComment, byte[] image, String imageComment, String description, int madeByTech, int reportID) throws Exception {
-        manager.createNewSection(sectionTitle,sketch,sketchComment,image,imageComment,description,madeByTech,reportID);
+        manager.createNewSection(sectionTitle, sketch, sketchComment, image, imageComment, description, madeByTech, reportID);
     }
+
     public List<Section> getSections(int reportID) throws SQLException {
         return manager.getSections(reportID);
     }
@@ -111,18 +114,6 @@ public class Model {
         manager.createNewUser(fullName, userName, userTlf, userEmail, userType);
     }
 
-    public void createNewAddendum(String addendumName, String addendumDescription, int caseID, int reportID, int userID) throws SQLException {
-        manager.createNewAddendum(addendumName, addendumDescription, caseID, reportID, userID);
-    }
-
-    public List<Addendum> getAddendums(int caseID, int reportID) throws SQLException {
-        return manager.getAddendums(caseID, reportID);
-    }
-
-    public Addendum getCurrentAddendum() {
-        return currentAddendum;
-    }
-
     public void setCurrentSection(Section section) {
         currentSection = section;
     }
@@ -168,15 +159,26 @@ public class Model {
         manager.SaveImageToReport(position, reportID, dataImage, comment, userID, createdDate, createdTime);
     }
 
-    public List<ImageOnReport> getAllImagesForReport(int currentReportID) throws SQLException {
-        return manager.getAllImagesForReport(currentReportID);
+    public List<TextsAndImagesOnReport> getImagesAndTextsForReport(int currentReportID) throws SQLException {
+        return manager.getImagesAndTextsForReport(currentReportID);
     }
 
-    public List<TextOnReport> getAllTextFieldsForReport(int currentReportID) throws SQLException {
-        return manager.getAllTextFieldsForReport(currentReportID);
-    }
     public void deleteCustomer(Customer customer) throws SQLException {
         manager.deleteCustomer(customer);
 
     }
+
+    public void updateImageInReport(int imageID, byte[] dataImage, String comment, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
+        manager.updateImageInReport(imageID, dataImage, comment, userID, createdDate, createdTime);
+    }
+
+    public void deletePartOfReport(TextsAndImagesOnReport textOrImage) throws SQLException {
+        manager.deletePartOfReport(textOrImage);
+    }
+
+    public void updateTextInReport(int textID, String txt, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
+        manager.updateTextInReport(textID, txt, userID, createdDate, createdTime);
+    }
+
+
 }
