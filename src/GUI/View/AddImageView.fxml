@@ -9,22 +9,23 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import java.net.URL?>
 <BorderPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <VBox alignment="CENTER" spacing="25.0" stylesheets="@css/Main.css">
-          <Button fx:id="btnChooseImage" mnemonicParsing="false" onAction="#handleChooseImage" styleClass="orangeButtons" text="Choose Image" />
+      <VBox alignment="CENTER" spacing="25.0">
+          <Button fx:id="btnChooseImage" mnemonicParsing="false" onAction="#handleChooseImage" text="Choose Image" />
          <VBox fx:id="vBox" alignment="CENTER">
             <children>
                <ImageView fx:id="imgView" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS" />
                <Label fx:id="lblImage" minHeight="0.0" VBox.vgrow="ALWAYS" />
             </children>
          </VBox>
-          <TextField fx:id="txtAddComment" prefHeight="50.0" prefWidth="200.0" promptText="Add Comment..." styleClass="textFields">
+          <TextField fx:id="txtAddComment" prefHeight="50.0" prefWidth="200.0" promptText="Add Comment...">
               <VBox.margin>
                   <Insets left="25.0" right="25.0" />
               </VBox.margin>
           </TextField>
-          <Button fx:id="btnSave" mnemonicParsing="false" onAction="#handleSave" prefHeight="35.0" prefWidth="200.0" styleClass="orangeButtons" text="Save" underline="true">
+          <Button fx:id="btnSave" mnemonicParsing="false" onAction="#handleSave" prefWidth="200.0" text="Save">
               <VBox.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" />
               </VBox.margin>
@@ -41,4 +42,9 @@
            </font>
        </Label>
    </top>
+    <stylesheets>
+        <URL value="@css/tableview.css" />
+        <URL value="@css/Main.css" />
+        <URL value="@css/fonts.css" />
+    </stylesheets>
 </BorderPane>

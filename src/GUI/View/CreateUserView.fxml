@@ -127,5 +127,6 @@
    <stylesheets>
       <URL value="@css/tableview.css" />
       <URL value="@css/Main.css" />
+      <URL value="@css/fonts.css" />
    </stylesheets>
 </BorderPane>

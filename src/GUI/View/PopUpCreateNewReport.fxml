@@ -12,9 +12,6 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxWidth="-Infinity" prefHeight="632.0" prefWidth="645.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
-    <stylesheets>
-        <URL value="@css/Main.css" />
-    </stylesheets>
    <center>
           <VBox spacing="45.0" BorderPane.alignment="CENTER">
               <children>
@@ -52,4 +49,9 @@
               </BorderPane.margin>
           </Label>
    </top>
+    <stylesheets>
+        <URL value="@css/tableview.css" />
+        <URL value="@css/Main.css" />
+        <URL value="@css/fonts.css" />
+    </stylesheets>
 </BorderPane>

@@ -9,7 +9,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="647.0" prefWidth="373.0" spacing="45.0" stylesheets="@css/Main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<?import java.net.URL?>
+<VBox alignment="TOP_CENTER" prefHeight="647.0" prefWidth="373.0" spacing="45.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label text="Create New User" underline="true">
          <font>
@@ -77,4 +78,9 @@
          </VBox.margin>
       </Button>
    </children>
+   <stylesheets>
+      <URL value="@css/tableview.css" />
+      <URL value="@css/Main.css" />
+      <URL value="@css/fonts.css" />
+   </stylesheets>
 </VBox>

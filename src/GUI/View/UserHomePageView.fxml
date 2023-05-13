@@ -9,7 +9,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxWidth="1.7976931348623157E308" prefHeight="466.0" prefWidth="800.0" stylesheets="@css/tableview.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.UserHomePageController">
+<?import java.net.URL?>
+<BorderPane maxWidth="1.7976931348623157E308" prefHeight="466.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.UserHomePageController">
     <top>
         <Label fx:id="lblWelcomeUser" alignment="TOP_LEFT" text="Welcome User" underline="true" BorderPane.alignment="TOP_LEFT">
             <BorderPane.margin>
@@ -81,4 +82,9 @@
             </BorderPane.margin>
         </HBox>
     </center>
+    <stylesheets>
+        <URL value="@css/tableview.css" />
+        <URL value="@css/Main.css" />
+        <URL value="@css/fonts.css" />
+    </stylesheets>
 </BorderPane>

@@ -3,6 +3,9 @@
 .label{
     -fx-font-family: 'Assistant', sans-serif;
 }
+.assistantFont{
+    -fx-font-family: 'Assistant', sans-serif;
+}
 
 .topBarSize{
     -fx-font-size: 32;

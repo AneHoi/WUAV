@@ -75,17 +75,17 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnInvisible" disable="true" mnemonicParsing="false" onAction="#openNewCustomerPopUp" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: E84910;" styleClass="roundedEdges" text="Create New Customer" textFill="WHITE" underline="true" visible="false">
+            <Button fx:id="btnInvisible" disable="true" mnemonicParsing="false" onAction="#openNewCustomerPopUp" prefHeight="35.0" prefWidth="200.0" text="Create New Customer" textFill="WHITE" underline="true" visible="false">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="btnCreateCustomer" mnemonicParsing="false" onAction="#openNewCustomerPopUp" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: E84910;" styleClass="roundedEdges" text="Create New Customer" textFill="WHITE" underline="true">
+            <Button fx:id="btnCreateCustomer" mnemonicParsing="false" onAction="#openNewCustomerPopUp" prefHeight="35.0" prefWidth="200.0" text="Create New Customer" textFill="WHITE" underline="true">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="btnDeleteCustomer" mnemonicParsing="false" onAction="#deleteCustomer" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: E84910;" styleClass="roundedEdges" text="Delete Customer" textFill="WHITE" underline="true">
+            <Button fx:id="btnDeleteCustomer" mnemonicParsing="false" onAction="#deleteCustomer" prefHeight="35.0" prefWidth="200.0" text="Delete Customer" textFill="WHITE" underline="true">
                <font>
                   <Font size="18.0" />
                </font>
@@ -97,7 +97,8 @@
       </HBox>
    </bottom>
    <stylesheets>
-      <URL value="@css/Main.css" />
       <URL value="@css/tableview.css" />
+      <URL value="@css/Main.css" />
+      <URL value="@css/fonts.css" />
    </stylesheets>
 </BorderPane>

@@ -12,7 +12,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="632.0" prefWidth="1155.0" stylesheets="@css/tableview.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CustomerHomePageController">
+<?import java.net.URL?>
+<BorderPane prefHeight="632.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CustomerHomePageController">
    <top>
       <BorderPane BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
@@ -58,11 +59,7 @@
                <children>
                   <HBox alignment="BOTTOM_RIGHT" prefHeight="67.0" prefWidth="295.0">
                      <children>
-                        <TextField fx:id="txtSearchBar" alignment="CENTER" prefHeight="40.0" prefWidth="200.0" promptText="Search for a Case">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </TextField>
+                        <TextField fx:id="txtSearchBar" alignment="CENTER" prefHeight="40.0" prefWidth="200.0" promptText="Search for a Case" />
                         <ImageView fx:id="imgSearch" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <HBox.margin>
                               <Insets right="25.0" />
@@ -113,17 +110,17 @@
                         <Insets />
                      </VBox.margin>
                   </TableView>
-                  <Button fx:id="btnManageTech" mnemonicParsing="false" onAction="#handleManageTech" prefWidth="200.0" styleClass="orangeButtons" text="Manage Technicians" underline="true">
+                  <Button fx:id="btnManageTech" mnemonicParsing="false" onAction="#handleManageTech" prefWidth="200.0" text="Manage Technicians" underline="true">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnUpdateCase" mnemonicParsing="false" onAction="#handleUpdateCase" prefHeight="35.0" prefWidth="200.0" styleClass="orangeButtons" text="Update Case" underline="true">
+                  <Button fx:id="btnUpdateCase" mnemonicParsing="false" onAction="#handleUpdateCase" prefHeight="35.0" prefWidth="200.0" text="Update Case" underline="true">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnCreateNewCase" mnemonicParsing="false" onAction="#handleCreateNewCase" prefHeight="35.0" prefWidth="200.0" styleClass="orangeButtons" text="Create New Case" underline="true">
+                  <Button fx:id="btnCreateNewCase" mnemonicParsing="false" onAction="#handleCreateNewCase" prefHeight="35.0" prefWidth="200.0" text="Create New Case" underline="true">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -142,4 +139,9 @@
          </BorderPane.margin>
       </HBox>
    </center>
+   <stylesheets>
+      <URL value="@css/tableview.css" />
+      <URL value="@css/Main.css" />
+      <URL value="@css/fonts.css" />
+   </stylesheets>
 </BorderPane>

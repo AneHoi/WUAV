@@ -9,7 +9,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="400.0" prefWidth="640.0" style="-fx-background-color: FFFFFF;" stylesheets="@css/Main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.LoginController">
+<?import java.net.URL?>
+<BorderPane prefHeight="400.0" prefWidth="640.0" style="-fx-background-color: FFFFFF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.LoginController">
    <top>
       <ImageView fx:id="imgWUAVLogo" fitHeight="75.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_RIGHT">
          <BorderPane.margin>
@@ -46,4 +47,9 @@
          </BorderPane.margin>
       </VBox>
    </center>
+   <stylesheets>
+      <URL value="@css/tableview.css" />
+      <URL value="@css/Main.css" />
+      <URL value="@css/fonts.css" />
+   </stylesheets>
 </BorderPane>

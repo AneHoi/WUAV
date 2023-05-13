@@ -7,7 +7,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" spacing="45.0" style="-fx-background-color: white;" stylesheets="@css/Main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<?import java.net.URL?>
+<VBox alignment="TOP_CENTER" spacing="45.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField fx:id="txtCostumerName" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Customer Name..." styleClass="backgroundAndWhiteText">
          <font>
@@ -64,7 +65,7 @@
             <Tooltip text="CVR" />
          </tooltip>
       </TextField>
-      <Button fx:id="btnCreateCostumer" mnemonicParsing="false" onAction="#saveCostumer" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: E84910;" styleClass="roundedEdges" text="Create New Customer" textFill="WHITE" underline="true">
+      <Button fx:id="btnCreateCostumer" mnemonicParsing="false" onAction="#saveCostumer" prefHeight="35.0" prefWidth="200.0" text="Create New Customer" textFill="WHITE" >
          <font>
             <Font size="18.0" />
          </font>
@@ -73,4 +74,9 @@
          </VBox.margin>
       </Button>
    </children>
+   <stylesheets>
+      <URL value="@css/tableview.css" />
+      <URL value="@css/Main.css" />
+      <URL value="@css/fonts.css" />
+   </stylesheets>
 </VBox>
