@@ -3,8 +3,15 @@
 .label{
     -fx-font-family: 'Assistant', sans-serif;
 }
+.table-view{
+    -fx-font-family: 'Assistant', sans-serif;
+}
+.text-field{
+    -fx-font-family: 'Assistant', sans-serif;
+}
 .assistantFont{
     -fx-font-family: 'Assistant', sans-serif;
+    -fx-font-weight: 200;
 }
 
 .topBarSize{
