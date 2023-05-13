@@ -15,20 +15,17 @@ public class Model {
     private Customer currentCustomer;
     private Case currentCase;
     private Report currentReport;
-    private Addendum currentAddendum;
-    private Section currentSection;
     private List<Customer> customers;
     private CustomerManager customerManager;
     private ReportManager reportManager;
     private UserManager userManager;
-    private SectionManager sectionManager;
+
     private CaseManager caseManager;
 
     public Model() {
         customerManager = new CustomerManager();
         reportManager = new ReportManager();
         userManager = new UserManager();
-        sectionManager = new SectionManager();
         caseManager = new CaseManager();
     }
 
@@ -53,14 +50,10 @@ public class Model {
     public List<Report> getReports(int caseID) throws SQLException {
         return reportManager.getReports(caseID);
     }
-    public  List<ReportCaseAndCustomer> getAllReports() throws SQLException {
+
+
+    public List<ReportCaseAndCustomer> getAllReports() throws SQLException {
         return reportManager.getAllReports();
-    }
-    public void createNewSection(String sectionTitle, byte[] sketch, String sketchComment, byte[] image, String imageComment, String description, int madeByTech, int reportID) throws Exception {
-        sectionManager.createNewSection(sectionTitle,sketch,sketchComment,image,imageComment,description,madeByTech,reportID);
-    }
-    public List<Section> getSections(int reportID) throws SQLException {
-        return sectionManager.getSections(reportID);
     }
 
     public List<Technician> getAllTechnicians() throws SQLException {
@@ -91,42 +84,6 @@ public class Model {
         userManager.createNewUser(fullName, userName, userTlf, userEmail, userType);
     }
 
-    public void createNewAddendum(String addendumName, String addendumDescription, int caseID, int reportID, int userID) throws SQLException {
-        reportManager.createNewAddendum(addendumName, addendumDescription, caseID, reportID, userID);
-    }
-
-    public List<Addendum> getAddendums(int caseID, int reportID) throws SQLException {
-        return reportManager.getAddendums(caseID, reportID);
-    }
-
-    public Addendum getCurrentAddendum() {
-        return currentAddendum;
-    }
-
-    public void setCurrentSection(Section section) {
-        currentSection = section;
-    }
-
-    public List<Section> getAllSections(int currentReportID) throws SQLException {
-        return sectionManager.getAllSections(currentReportID);
-    }
-
-    public void updateCurrentSection(Section currentSection) throws SQLException {
-        sectionManager.updateCurrentSection(currentSection);
-    }
-
-    public void createSectionForReport(Section section) throws SQLException {
-        sectionManager.createSectionForReport(section);
-    }
-
-    public void createSectionForAddendum(Section section) throws SQLException {
-        sectionManager.createSectionForAddendum(section);
-    }
-
-    public void deleteSection(int sectionID) throws SQLException {
-        sectionManager.deleteSection(sectionID);
-
-    }
 
     public void updateCase(int caseID, String caseName, String contactPerson, String caseDescription) throws SQLException {
         caseManager.updateCase(caseID, caseName, contactPerson, caseDescription);
@@ -148,18 +105,10 @@ public class Model {
         reportManager.SaveImageToReport(position, reportID, dataImage, comment, userID, createdDate, createdTime);
     }
 
-    public List<ImageOnReport> getAllImagesForReport(int currentReportID) throws SQLException {
-        return reportManager.getAllImagesForReport(currentReportID);
-    }
-
-    public List<TextOnReport> getAllTextFieldsForReport(int currentReportID) throws SQLException {
-        return reportManager.getAllTextFieldsForReport(currentReportID);
-    }
     public void deleteCustomer(Customer customer) throws SQLException {
         customerManager.deleteCustomer(customer);
 
     }
-
 
     public void setCurrentReport(Report selectedItem) {
         currentReport = selectedItem;
@@ -189,4 +138,27 @@ public class Model {
         return caseManager.getCasesForThisCustomer(customerID);
     }
 
+    public List<TextsAndImagesOnReport> getImagesAndTextsForReport(int currentReportID) throws SQLException {
+        return reportManager.getImagesAndTextsForReport(currentReportID);
+    }
+
+    public void updateImageInReport(int imageID, byte[] dataImage, String comment, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
+        reportManager.updateImageInReport(imageID, dataImage, comment, userID, createdDate, createdTime);
+    }
+
+    public void deletePartOfReport(TextsAndImagesOnReport textOrImage) throws SQLException {
+        reportManager.deletePartOfReport(textOrImage);
+    }
+
+    public void updateTextInReport(int textID, String txt, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
+        reportManager.updateTextInReport(textID, txt, userID, createdDate, createdTime);
+    }
+
+    public void moveItemUp(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException {
+        reportManager.moveItemUp(textOrImageID, positionOnReport);
+    }
+
+    public void moveItemDown(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException{
+        reportManager.moveItemDown(textOrImageID, positionOnReport);
+    }
 }

@@ -3,8 +3,6 @@ package BLL.util;
 import BE.Case;
 import BE.Customer;
 import BE.Report;
-import BE.Section;
-import BLL.SectionManager;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.layout.element.Image;
@@ -19,15 +17,14 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class PDFGenerator {
-    private SectionManager sectionManager;
     private Document document;
     private Customer customer;
     private Case selectedCase;
     private PdfTextExtractor pdfTextExtractor;
 
     public void generateReport(Report report, Case selectedCase, Customer customer) throws DocumentException, SQLException {
-        sectionManager = new SectionManager();
-        List<Section> sections = sectionManager.getAllSections(report.getReportID());
+
+
         try {
             document = new Document(PageSize.A4, 20, 20, 50, 25);
             PdfWriter writer = null;
@@ -52,32 +49,32 @@ public class PDFGenerator {
             document.add(paragraph1);
 
             document.add(paragraph2);
-            for (Section section : sections) {
-                    if (section.getSectionTitle() != null) {
-                        var paragraph4 = new Paragraph(section.getSectionTitle());
-                        document.add(paragraph4);
-                    }
-                    if (section.getSketch() != null) {
-                        var paragraph5 = new Paragraph(""+section.getSketch());
-                        document.add(paragraph5);
-                    }
-                    if (section.getSketchComment() != null) {
-                        var paragraph6 = new Paragraph(section.getSketchComment());
-                        document.add(paragraph6);
-                    }
-                    if (section.getImage() != null) {
-                        var paragraph7 = new Paragraph(""+section.getImage());
-                        document.add(paragraph7);
-                    }
-                    if (section.getImageComment() != null) {
-                        var paragraph8 = new Paragraph(section.getImageComment());
-                        document.add(paragraph8);
-                    }
-                    if (section.getDescription() != null) {
-                        var paragraph9 = new Paragraph(section.getDescription());
-                        document.add(paragraph9);
-                    }
-            }
+//            for (Section section : sections) {
+//                    if (section.getSectionTitle() != null) {
+//                        var paragraph4 = new Paragraph(section.getSectionTitle());
+//                        document.add(paragraph4);
+//                    }
+//                    if (section.getSketch() != null) {
+//                        var paragraph5 = new Paragraph(""+section.getSketch());
+//                        document.add(paragraph5);
+//                    }
+//                    if (section.getSketchComment() != null) {
+//                        var paragraph6 = new Paragraph(section.getSketchComment());
+//                        document.add(paragraph6);
+//                    }
+//                    if (section.getImage() != null) {
+//                        var paragraph7 = new Paragraph(""+section.getImage());
+//                        document.add(paragraph7);
+//                    }
+//                    if (section.getImageComment() != null) {
+//                        var paragraph8 = new Paragraph(section.getImageComment());
+//                        document.add(paragraph8);
+//                    }
+//                    if (section.getDescription() != null) {
+//                        var paragraph9 = new Paragraph(section.getDescription());
+//                        document.add(paragraph9);
+//                    }
+//            }
             document.close();
         } catch (DocumentException e) {
             document.close();

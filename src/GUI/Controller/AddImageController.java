@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 import BE.Report;
+import BE.TextsAndImagesOnReport;
 import GUI.Model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,23 +30,32 @@ public class AddImageController implements Initializable {
     private byte[] dataImage;
     @FXML
     private VBox vBox;
-    private Label lblImage;
+    @FXML
+    private Label lblImage, lblTitle;
+    @FXML
     private ImageView imgView;
     private Image image;
     private Report currentReport;
+    private TextsAndImagesOnReport textOrImage;
     private ControllerAssistant controllerAssistant;
     private Model model;
     private int nextPosition;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        model = Model.getInstance();
-        controllerAssistant = ControllerAssistant.getInstance();
-        lblImage = new Label();
-        imgView = new ImageView();
         imgView.setFitWidth(200);
         imgView.setFitHeight(200);
+        model = Model.getInstance();
+        controllerAssistant = ControllerAssistant.getInstance();
         btnSave.setDisable(true);
+        if (textOrImage != null) {
+            lblTitle.setText("Edit Image:");
+            btnChooseImage.setText("Change Image");
+            imgView.setImage(textOrImage.getImage());
+            txtAddComment.setText(textOrImage.getImageComment());
+            btnSave.setDisable(false);
+        }
+
     }
 
     public void setCurrentReport(Report currentReport) {
@@ -64,8 +74,8 @@ public class AddImageController implements Initializable {
         if (selectedFile != null && selectedFile.getName().endsWith(".png") || selectedFile != null && selectedFile.getName().endsWith(".jpg") || selectedFile != null && selectedFile.getName().endsWith(".gif")) {
             image = new Image(selectedFile.toURI().toString());
             imgView.setImage(image);
-            vBox.getChildren().add(1, imgView);
-            vBox.getChildren().add(2, lblImage);
+            vBox.getChildren().add(0, imgView);
+            vBox.getChildren().add(1, lblImage);
             lblImage.setText(image.getUrl());
             btnChooseImage.setText("Change Image");
             btnSave.setDisable(false);
@@ -81,6 +91,13 @@ public class AddImageController implements Initializable {
     }
 
     public void handleSave(ActionEvent actionEvent) {
+        if (textOrImage != null) {
+            editImage();
+        } else addImage();
+
+    }
+
+    private void addImage() {
         int position = nextPosition;
         int reportID = currentReport.getReportID();
         String comment = txtAddComment.getText();
@@ -101,7 +118,31 @@ public class AddImageController implements Initializable {
         stage.close();
     }
 
+    private void editImage() {
+        int imageID = textOrImage.getTextOrImageID();
+        String comment = txtAddComment.getText();
+        int userID = controllerAssistant.getLoggedInUser().getUserID();
+        LocalDate createdDate = LocalDate.now();
+        LocalTime createdTime = LocalTime.now();
+
+        try {
+            model.updateImageInReport(imageID, dataImage, comment, userID, createdDate, createdTime);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not update image and comment in the Database", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Image updated successfully", ButtonType.OK);
+        alert.showAndWait();
+        Stage stage = (Stage) btnSave.getScene().getWindow();
+        stage.close();
+    }
+
     public void setNextAvailablePosition(int nextPosition) {
         this.nextPosition = nextPosition;
+    }
+
+    public void setCurrentImage(TextsAndImagesOnReport textOrImage) {
+        this.textOrImage = textOrImage;
     }
 }
