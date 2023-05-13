@@ -19,7 +19,7 @@
       </Rectangle>
       <VBox prefHeight="0.0">
          <children>
-            <FlowPane alignment="TOP_CENTER" prefWidth="200.0" styleClass="transparent">
+            <FlowPane alignment="TOP_CENTER" prefWidth="200.0">
                <children>
                   <Label fx:id="lblFirstName" text="Label" textFill="WHITE" styleClass="topBarSize">
                      <FlowPane.margin>

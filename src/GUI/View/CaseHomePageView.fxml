@@ -48,7 +48,7 @@
         <VBox spacing="45.0" BorderPane.alignment="CENTER">
             <children>
                 <TextField fx:id="txtSearchField" maxWidth="300.0" prefHeight="51.0"
-                           promptText="Search..." styleClass="textFields">
+                           promptText="Search...">
                     <VBox.margin>
                         <Insets bottom="-35.0" left="500.0" right="20.0"/>
                     </VBox.margin>
@@ -87,7 +87,7 @@
     <right>
         <VBox spacing="45.0" BorderPane.alignment="CENTER">
             <children>
-                <TextField fx:id="txtUpdateReportName" prefWidth="300.0" promptText="Update Report Name..." styleClass="textFields">
+                <TextField fx:id="txtUpdateReportName" prefWidth="300.0" promptText="Update Report Name...">
                     <VBox.margin>
                         <Insets left="25.0" right="25.0" top="20.0"/>
                     </VBox.margin>

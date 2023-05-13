@@ -15,7 +15,7 @@
    <center>
           <VBox spacing="45.0" BorderPane.alignment="CENTER">
               <children>
-                  <TextField fx:id="txtReportName" prefHeight="50.0" prefWidth="300.0" promptText="Report Name..." styleClass="textFields">
+                  <TextField fx:id="txtReportName" prefHeight="50.0" prefWidth="300.0" promptText="Report Name...">
                       <VBox.margin>
                           <Insets left="25.0" right="25.0" top="20.0" />
                       </VBox.margin>
@@ -31,7 +31,7 @@
                   <Tooltip text="Report description" />
                </tooltip>
                   </TextArea>
-                  <Button fx:id="btnCreateNewReport" mnemonicParsing="false" onAction="#handleCreateNewReport" prefHeight="35.0" prefWidth="200.0" styleClass="orangeButtons" text="Create New Report" underline="true">
+                  <Button fx:id="btnCreateNewReport" mnemonicParsing="false" onAction="#handleCreateNewReport" prefWidth="200.0" text="Create New Report">
                       <VBox.margin>
                           <Insets left="25.0" />
                       </VBox.margin>

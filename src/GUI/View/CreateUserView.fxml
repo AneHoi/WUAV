@@ -55,7 +55,7 @@
                         <Insets left="25.0" right="25.0" />
                      </VBox.margin>
                   </TableView>
-                  <Button fx:id="btnCreateNewUser" mnemonicParsing="false" onAction="#handleCreateNewUser" prefHeight="35.0" prefWidth="200.0" styleClass="orangeButtons" text="Create New User" underline="true">
+                  <Button fx:id="btnCreateNewUser" mnemonicParsing="false" onAction="#handleCreateNewUser" prefWidth="200.0" text="Create New User">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -78,7 +78,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextField fx:id="txtFullNameUpdate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Full Name..." styleClass="textFields">
+                  <TextField fx:id="txtFullNameUpdate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Full Name...">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -86,7 +86,7 @@
                         <Tooltip text="Full name" />
                      </tooltip>
                   </TextField>
-                  <TextField fx:id="txtUserNameUpdate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="User Name..." styleClass="textFields" GridPane.rowIndex="1">
+                  <TextField fx:id="txtUserNameUpdate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="User Name..." GridPane.rowIndex="1">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -94,7 +94,7 @@
                         <Tooltip text="User name" />
                      </tooltip>
                   </TextField>
-                  <TextField fx:id="txtTelephoneUpdate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Telephone Number..." styleClass="textFields" GridPane.rowIndex="2">
+                  <TextField fx:id="txtTelephoneUpdate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Telephone Number..." GridPane.rowIndex="2">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -102,7 +102,7 @@
                         <Tooltip text="Telefon number" />
                      </tooltip>
                   </TextField>
-                  <TextField fx:id="txtEmailUpdate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Email..." styleClass="textFields" GridPane.rowIndex="3">
+                  <TextField fx:id="txtEmailUpdate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Email..." GridPane.rowIndex="3">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -111,7 +111,7 @@
                      </tooltip>
                   </TextField>
                   <ComboBox fx:id="cbUserActive" prefHeight="50.0" prefWidth="250.0" promptText="User Active?" GridPane.rowIndex="4" />
-                  <Button fx:id="btnUpdateUser" mnemonicParsing="false" onAction="#handleUpdateUser" prefHeight="35.0" prefWidth="200.0" styleClass="orangeButtons" text="Update User Info" underline="true" GridPane.rowIndex="5">
+                  <Button fx:id="btnUpdateUser" mnemonicParsing="false" onAction="#handleUpdateUser" prefHeight="35.0" prefWidth="200.0" text="Update User Info" GridPane.rowIndex="5">
                      <font>
                         <Font size="18.0" />
                      </font>

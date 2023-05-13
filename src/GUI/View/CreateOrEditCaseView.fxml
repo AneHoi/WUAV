@@ -27,13 +27,13 @@
     </top>
     <center>
         <VBox alignment="CENTER" spacing="25.0" BorderPane.alignment="CENTER">
-            <TextField fx:id="txtCaseName" prefHeight="50.0" prefWidth="300.0" promptText="Case Name..." styleClass="textFields">
+            <TextField fx:id="txtCaseName" prefHeight="50.0" prefWidth="300.0" promptText="Case Name...">
             </TextField>
-            <TextField fx:id="txtContactPerson" prefHeight="50.0" prefWidth="300.0" promptText="Contact Person..." styleClass="textFields">
+            <TextField fx:id="txtContactPerson" prefHeight="50.0" prefWidth="300.0" promptText="Contact Person...">
             </TextField>
             <TextArea fx:id="txtCaseDescription" prefHeight="300.0" prefWidth="300.0" promptText="Case Description" style="-fx-: Black;" styleClass="CaseHomePageTextArea" wrapText="true">
             </TextArea>
-            <Button fx:id="btnCreateOrUpdateCase" mnemonicParsing="false" onAction="#handleCreateOrUpdateCase" prefHeight="35.0" prefWidth="200.0" styleClass="orangeButtons" text="Case" underline="true">
+            <Button fx:id="btnCreateOrUpdateCase" mnemonicParsing="false" onAction="#handleCreateOrUpdateCase" prefWidth="200.0" text="Case">
             </Button>
          <BorderPane.margin>
             <Insets bottom="10.0" left="25.0" right="25.0" top="10.0" />

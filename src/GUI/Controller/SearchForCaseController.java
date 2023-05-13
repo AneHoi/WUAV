@@ -40,6 +40,7 @@ public class SearchForCaseController implements Initializable {
         model = Model.getInstance();
         controllerAssistant = ControllerAssistant.getInstance();
         addShadow(txtCustomer, txtCustomerAddress, txtCaseName, txtTechnician, dpDate, btnFilter, btnClear);
+        dpDate.setPrefWidth(600);
         addListeners();
         updateTableView();
     }
