@@ -120,12 +120,12 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                      <columns>
-                        <TableColumn fx:id="colReportName" prefWidth="75.0" text="ReportName" />
-                        <TableColumn fx:id="colCustomer" prefWidth="75.0" text="Customer" />
-                        <TableColumn fx:id="colCustomerAddress" prefWidth="75.0" text="Customer Address" />
-                        <TableColumn fx:id="colCaseName" prefWidth="75.0" text="Case Name" />
-                        <TableColumn fx:id="colTechnician" prefWidth="75.0" text="Technician" />
-                        <TableColumn fx:id="colCreatedDate" prefWidth="75.0" text="Created Date" />
+                        <TableColumn fx:id="colReportName" prefWidth="75.0" style="-fx-alignment: center;" text="ReportName" />
+                        <TableColumn fx:id="colCustomer" prefWidth="75.0" style="-fx-alignment: center;" text="Customer" />
+                        <TableColumn fx:id="colCustomerAddress" prefWidth="75.0" style="-fx-alignment: center;" text="Customer Address" />
+                        <TableColumn fx:id="colCaseName" prefWidth="75.0" style="-fx-alignment: center;" text="Case Name" />
+                        <TableColumn fx:id="colTechnician" prefWidth="75.0" style="-fx-alignment: center;" text="Technician" />
+                        <TableColumn fx:id="colCreatedDate" prefWidth="75.0" style="-fx-alignment: center;" text="Created Date" />
                      </columns>
                      <VBox.margin>
                         <Insets bottom="25.0" right="25.0" />
