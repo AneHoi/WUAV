@@ -39,6 +39,33 @@ public class ReportDAO implements IReportDAO {
     }
 
     @Override
+    public List<Report> getChosenReport(int reportID) throws SQLException {
+        List<Report> reports = new ArrayList<>();
+        try (Connection conn = db.getConnection()) {
+            String sql = "SELECT * FROM Report JOIN User_ ON Report.Report_Assigned_Tech_ID = User_.User_ID WHERE Report_ID = " + reportID + ";";
+            Statement ps = conn.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+
+            while (rs.next()) {
+                int reportId = rs.getInt("Report_ID");
+                String reportName = rs.getString("Report_Name");
+                String reportDescription = rs.getString("Report_Description");
+                String techName = rs.getString("User_Full_Name");
+                LocalDate createdDate = rs.getDate("Report_Created_Date").toLocalDate();
+                int logID = rs.getInt("Report_Log_ID");
+                boolean isActive = rs.getBoolean("Report_Is_Active");
+
+                Report r = new Report(reportId, reportName, reportDescription, techName, createdDate, logID, isActive);
+                reports.add(r);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new SQLException("Could not get reports from Database");
+        }
+        return reports;
+    }
+
+    @Override
     public List<Report> getReports(int caseID) throws SQLException {
         List<Report> reports = new ArrayList<>();
         try (Connection conn = db.getConnection()) {

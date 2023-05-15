@@ -84,6 +84,33 @@ public class CaseDAO implements ICaseDAO {
         }
     }
 
+    @Override
+    public List<Case> getChosenCase(int chosenCase) throws SQLException {
+        List<Case> cases = new ArrayList<>();
+        try (Connection conn = db.getConnection()) {
+            String sql = "SELECT * FROM Case_ WHERE Case_.Case_Name ='"+chosenCase+"';";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                int caseID = rs.getInt("Case_ID");
+                String caseName = rs.getString("Case_Name");
+                String caseDescription = rs.getString("Case_Description");
+                String contactPerson = rs.getString("Case_Contact_Person");
+                int customerID = rs.getInt("Case_Customer_ID");
+                String techName = rs.getString("User_Full_Name");
+                LocalDate date = rs.getDate("Case_Created_Date").toLocalDate();
+
+                Case c = new Case(caseID, caseName, caseDescription, contactPerson, customerID, techName, date);
+                cases.add(c);
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException("Could not get Cases from Database");
+        }
+        return cases;
+    }
+
 
     @Override
     public List<Case> getAllCases() throws SQLException {

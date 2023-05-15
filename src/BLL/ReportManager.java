@@ -23,6 +23,9 @@ public class ReportManager {
     public List<Report> getReports(int caseID) throws SQLException {
         return reportDAO.getReports(caseID);
     }
+    public List<Report> getChosenReport(int reportID) throws SQLException {
+        return reportDAO.getChosenReport(reportID);
+    }
 
     public List<ReportCaseAndCustomer> getAllReports() throws SQLException {
         return reportDAO.getAllReports();

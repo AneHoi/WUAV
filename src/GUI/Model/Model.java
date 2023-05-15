@@ -34,6 +34,9 @@ public class Model {
         return model;
     }
 
+    public List<Customer> getChosenCustomer(int chosenCustomer) throws SQLException {
+        return customerManager.getChosenCustomer(chosenCustomer);
+    }
     public List<Customer> getAllCustomers() throws SQLException {
         customers = customerManager.getAllCustomers();
         return customers;
@@ -46,7 +49,9 @@ public class Model {
     public void createNewReport(String reportName, String reportDescription, int caseID, int userID) throws SQLException {
         reportManager.createNewReport(reportName, reportDescription, caseID, userID);
     }
-
+    public List<Report> getChosenReport(int reportID) throws SQLException {
+        return reportManager.getChosenReport(reportID);
+    }
     public List<Report> getReports(int caseID) throws SQLException {
         return reportManager.getReports(caseID);
     }
@@ -148,6 +153,9 @@ public class Model {
 
     public void deletePartOfReport(TextsAndImagesOnReport textOrImage) throws SQLException {
         reportManager.deletePartOfReport(textOrImage);
+    }
+    public List<Case> getChosenCase(int chosenCase) throws SQLException {
+        return caseManager.getChosenCase(chosenCase);
     }
 
     public void updateTextInReport(int textID, String txt, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {

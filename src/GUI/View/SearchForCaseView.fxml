@@ -115,7 +115,7 @@
                         <Insets top="25.0" />
                      </VBox.margin>
                   </Label>
-                  <TableView fx:id="tblViewFilteredCases" prefHeight="1000.0" prefWidth="1000.0">
+                  <TableView fx:id="tblViewFilteredReports" prefHeight="1000.0" prefWidth="1000.0">
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>

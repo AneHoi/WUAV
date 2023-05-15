@@ -1,5 +1,8 @@
 package GUI.Controller;
 
+import BE.Case;
+import BE.Customer;
+import BE.Report;
 import BE.ReportCaseAndCustomer;
 import GUI.Model.Model;
 import javafx.beans.value.ChangeListener;
@@ -14,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -28,12 +32,15 @@ public class SearchForCaseController implements Initializable {
     @FXML
     private Button btnFilter, btnClear;
     @FXML
-    private TableView<ReportCaseAndCustomer> tblViewFilteredCases;
+    private TableView<ReportCaseAndCustomer> tblViewFilteredReports;
     @FXML
     private TableColumn colReportName, colCustomer, colCustomerAddress, colCaseName, colTechnician, colCreatedDate;
     private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private ControllerAssistant controllerAssistant;
     private Model model;
+    private Report selectedReport;
+    private Case selectedCase;
+    private Customer selectedCustomer;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -52,7 +59,7 @@ public class SearchForCaseController implements Initializable {
         colCaseName.setCellValueFactory(new PropertyValueFactory<>("caseName"));
         colTechnician.setCellValueFactory(new PropertyValueFactory<>("technicianName"));
         colCreatedDate.setCellValueFactory(new PropertyValueFactory<>("createdDate"));
-        tblViewFilteredCases.getColumns().addAll();
+        tblViewFilteredReports.getColumns().addAll();
 
         ObservableList<ReportCaseAndCustomer> data = FXCollections.observableArrayList();
         List<ReportCaseAndCustomer> reportCaseAndCustomers;
@@ -66,7 +73,7 @@ public class SearchForCaseController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get Cases and Customers for list", ButtonType.CANCEL);
             alert.showAndWait();
         }
-        tblViewFilteredCases.setItems(data);
+        tblViewFilteredReports.setItems(data);
     }
 
 
@@ -88,7 +95,7 @@ public class SearchForCaseController implements Initializable {
 
         // Create a filtered list that contains only the rows that match the filter criteria
         ObservableList<ReportCaseAndCustomer> filteredList = FXCollections.observableArrayList();
-        for (ReportCaseAndCustomer reportCaseAndCustomer : tblViewFilteredCases.getItems()) {
+        for (ReportCaseAndCustomer reportCaseAndCustomer : tblViewFilteredReports.getItems()) {
             if (reportCaseAndCustomer.getReportName().toLowerCase().contains(reportName.toLowerCase()) && reportCaseAndCustomer.getCustomerName().toLowerCase().contains(customerName.toLowerCase())
                     && reportCaseAndCustomer.getCustomerAddress().toLowerCase().contains(customerAddress.toLowerCase())
                     && reportCaseAndCustomer.getCaseName().toLowerCase().contains(caseName.toLowerCase())
@@ -99,9 +106,31 @@ public class SearchForCaseController implements Initializable {
         }
 
         // Update the TableView to display the filtered list
-        tblViewFilteredCases.setItems(filteredList);
+        tblViewFilteredReports.setItems(filteredList);
     }
     private void addListeners() {
+        tblViewFilteredReports.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && tblViewFilteredReports.getSelectionModel().getSelectedItem() != null) {
+                int reportID = tblViewFilteredReports.getSelectionModel().getSelectedItem().getReportId();
+                int caseId = tblViewFilteredReports.getSelectionModel().getSelectedItem().getCaseId();
+                int customerId = tblViewFilteredReports.getSelectionModel().getSelectedItem().getCustomerId();
+                try {
+                    Report chosenReport = model.getChosenReport(reportID).get(0);
+                    Case chosenCase =  model.getChosenCase(caseId).get(0);
+                    Customer chosenCustomer = model.getChosenCustomer(customerId).get(0);
+                    model.setCurrentReport(chosenReport);
+                    model.setCurrentCase(chosenCase);
+                    model.setCurrentCustomer(chosenCustomer);
+                    controllerAssistant.loadCenter("ReportHomePageView.fxml");
+
+                } catch (SQLException | IOException e) {
+                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Report Home Page", ButtonType.CANCEL);
+                    alert.showAndWait();
+                }
+
+            }
+        });
         txtReportName.textProperty().addListener(tableViewUpdate);
         txtCustomer.textProperty().addListener(tableViewUpdate);
         txtCustomerAddress.textProperty().addListener(tableViewUpdate);
@@ -119,7 +148,7 @@ public class SearchForCaseController implements Initializable {
 
         ObservableList<ReportCaseAndCustomer> filteredList = FXCollections.observableArrayList();
         if (!txtReportName.getText().isEmpty() || !txtCustomer.getText().isEmpty() || !txtCustomerAddress.getText().isEmpty() || !txtCaseName.getText().isEmpty() || !txtTechnician.getText().isEmpty() || !dpDate.getValue().equals(null)) {
-            for (ReportCaseAndCustomer reportCaseAndCustomer : tblViewFilteredCases.getItems()) {
+            for (ReportCaseAndCustomer reportCaseAndCustomer : tblViewFilteredReports.getItems()) {
                 if (reportCaseAndCustomer.getReportName().toLowerCase().contains(reportName.toLowerCase()) && reportCaseAndCustomer.getCustomerName().toLowerCase().contains(customerName.toLowerCase())
                         && reportCaseAndCustomer.getCustomerAddress().toLowerCase().contains(customerAddress.toLowerCase())
                         && reportCaseAndCustomer.getCaseName().toLowerCase().contains(caseName.toLowerCase())
@@ -128,9 +157,10 @@ public class SearchForCaseController implements Initializable {
                     filteredList.add(reportCaseAndCustomer);
                 }
             }
-            tblViewFilteredCases.setItems(filteredList);
+            tblViewFilteredReports.setItems(filteredList);
         }
     };
+
 
     public void handleClear(ActionEvent actionEvent) {
         txtReportName.clear();
