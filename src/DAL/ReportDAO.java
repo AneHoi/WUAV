@@ -39,8 +39,8 @@ public class ReportDAO implements IReportDAO {
     }
 
     @Override
-    public List<Report> getChosenReport(int reportID) throws SQLException {
-        List<Report> reports = new ArrayList<>();
+    public Report getChosenReport(int reportID) throws SQLException {
+        Report report = null;
         try (Connection conn = db.getConnection()) {
             String sql = "SELECT * FROM Report JOIN User_ ON Report.Report_Assigned_Tech_ID = User_.User_ID WHERE Report_ID = " + reportID + ";";
             Statement ps = conn.createStatement();
@@ -55,14 +55,13 @@ public class ReportDAO implements IReportDAO {
                 int logID = rs.getInt("Report_Log_ID");
                 boolean isActive = rs.getBoolean("Report_Is_Active");
 
-                Report r = new Report(reportId, reportName, reportDescription, techName, createdDate, logID, isActive);
-                reports.add(r);
+                report = new Report(reportId, reportName, reportDescription, techName, createdDate, logID, isActive);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
             throw new SQLException("Could not get reports from Database");
         }
-        return reports;
+        return report;
     }
 
     @Override

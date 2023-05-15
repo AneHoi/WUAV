@@ -6,6 +6,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ICustomerDAO {
-    List<Customer> getChosenCustomer(int chosenCustomer) throws SQLException;
+    Customer getChosenCustomer(int chosenCustomer) throws SQLException;
 
 }

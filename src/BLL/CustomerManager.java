@@ -17,7 +17,7 @@ public class CustomerManager {
     public List<Customer> getAllCustomers() throws SQLException {
         return customerDAO.getAllCostumers();
     }
-    public List<Customer> getChosenCustomer(int chosenCustomer) throws SQLException {
+    public Customer getChosenCustomer(int chosenCustomer) throws SQLException {
         return customerDAO.getChosenCustomer(chosenCustomer);
     }
 
