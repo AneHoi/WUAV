@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 import BE.*;
+import BLL.util.PDFGenerator;
 import GUI.Model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -464,7 +465,13 @@ public class ReportHomePageController implements Initializable {
     }
 
     private void generatePDF() {
+        PDFGenerator pdfGenerator = new PDFGenerator();
+
+        pdfGenerator.generateReport(currentReport, currentCase, currentCustomer);
+
+
     }
+
 
     private void closeReport() {
         Alert areYouSureAlert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to submit your report for review?", ButtonType.YES, ButtonType.NO);
@@ -474,7 +481,7 @@ public class ReportHomePageController implements Initializable {
                 model.closeReport(currentReport.getReportID());
                 disableEditing();
                 btnSubmitReportForReview.setText("Generate PDF");
-                Alert success = new Alert(Alert.AlertType.INFORMATION,"Report is now closed", ButtonType.OK);
+                Alert success = new Alert(Alert.AlertType.INFORMATION, "Report is now closed", ButtonType.OK);
                 success.showAndWait();
                 currentReport.setIsActive("Closed");
                 lblReportStatus.setText(currentReport.getIsActive());
@@ -493,7 +500,7 @@ public class ReportHomePageController implements Initializable {
             try {
                 model.submitReportForReview(currentReport.getReportID());
                 disableEditing();
-                Alert success = new Alert(Alert.AlertType.INFORMATION,"Report submitted successfully", ButtonType.OK);
+                Alert success = new Alert(Alert.AlertType.INFORMATION, "Report submitted successfully", ButtonType.OK);
                 success.showAndWait();
                 currentReport.setIsActive("Submitted For Review");
                 lblReportStatus.setText(currentReport.getIsActive());

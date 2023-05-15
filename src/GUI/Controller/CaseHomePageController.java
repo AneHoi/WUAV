@@ -5,7 +5,6 @@ import BE.Customer;
 import BE.Report;
 import BLL.util.PDFGenerator;
 import GUI.Model.Model;
-import com.itextpdf.text.DocumentException;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -245,9 +244,8 @@ public class CaseHomePageController implements Initializable {
 
     }
 
-    public void handleUpdateReport(ActionEvent actionEvent) throws SQLException, DocumentException {
-        PDFGenerator pdfGenerator = new PDFGenerator();
-        pdfGenerator.generateReport((Report) tblViewExistingReports.getSelectionModel().getSelectedItem(), currentCase, currentCustomer);
+    public void handleUpdateReport(ActionEvent actionEvent) throws SQLException {
     }
 }
+
 
