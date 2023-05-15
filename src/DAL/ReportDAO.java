@@ -3,6 +3,7 @@ package DAL;
 import BE.*;
 import DAL.Interfaces.IReportDAO;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -53,7 +54,7 @@ public class ReportDAO implements IReportDAO {
                 String techName = rs.getString("User_Full_Name");
                 LocalDate createdDate = rs.getDate("Report_Created_Date").toLocalDate();
                 int logID = rs.getInt("Report_Log_ID");
-                boolean isActive = rs.getBoolean("Report_Is_Active");
+                String isActive = rs.getString("Report_Is_Active");
 
                 report = new Report(reportId, reportName, reportDescription, techName, createdDate, logID, isActive);
             }
@@ -79,7 +80,7 @@ public class ReportDAO implements IReportDAO {
                 String techName = rs.getString("User_Full_Name");
                 LocalDate createdDate = rs.getDate("Report_Created_Date").toLocalDate();
                 int logID = rs.getInt("Report_Log_ID");
-                boolean isActive = rs.getBoolean("Report_Is_Active");
+                String isActive = rs.getString("Report_Is_Active");
 
                 Report r = new Report(reportID, reportName, reportDescription, caseID, techName, createdDate, logID, isActive);
                 reports.add(r);
@@ -106,7 +107,7 @@ public class ReportDAO implements IReportDAO {
                 String techName = rs.getString("User_Full_Name");
                 LocalDate createdDate = rs.getDate("Report_Created_Date").toLocalDate();
                 int logID = rs.getInt("Report_Log_ID");
-                boolean isActive = rs.getBoolean("Report_Is_Active");
+                String isActive = rs.getString("Report_Is_Active");
                 int caseID = rs.getInt("Case_ID");
                 String caseName = rs.getString("Case_Name");
                 String caseDescription = rs.getString("Case_Description");
@@ -392,6 +393,33 @@ public class ReportDAO implements IReportDAO {
             throw new SQLException();
         }
     }
+
+    @Override
+    public void submitReportForReview(int reportID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "UPDATE Report SET Report_Is_Active = 'Submitted For Review' WHERE Report_ID = " + reportID + ";";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(e);
+        }
+    }
+
+    @Override
+    public void closeReport(int reportID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "UPDATE Report SET Report_Is_Active = 'Closed' WHERE Report_ID = " + reportID + ";";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(e);
+        }
+    }
+
 }
 
 

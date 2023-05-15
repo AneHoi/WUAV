@@ -10,9 +10,9 @@ public class Report {
     private String assignedTechnician;
     private LocalDate createdDate;
     private int logID;
-    private boolean isActive;
+    private String isActive;
 
-    public Report(int reportID, String reportName, String reportDescription, int caseID, String assignedTechnician, LocalDate createdDate, int logID, boolean isActive) {
+    public Report(int reportID, String reportName, String reportDescription, int caseID, String assignedTechnician, LocalDate createdDate, int logID, String isActive) {
         this.reportID = reportID;
         this.reportName = reportName;
         this.reportDescription = reportDescription;
@@ -22,7 +22,8 @@ public class Report {
         this.logID = logID;
         this.isActive = isActive;
     }
-    public Report(int reportID, String reportName, String reportDescription, String assignedTechnician, LocalDate createdDate, int logID, boolean isActive){
+
+    public Report(int reportID, String reportName, String reportDescription, String assignedTechnician, LocalDate createdDate, int logID, String isActive) {
         this.reportID = reportID;
         this.reportName = reportName;
         this.reportDescription = reportDescription;
@@ -88,18 +89,11 @@ public class Report {
         this.logID = logID;
     }
 
-    public boolean isActive() { return this.isActive;}
-
-    public void setActive(boolean active) {
-        isActive = active;
+    public String getIsActive() {
+        return isActive;
     }
 
-    public String getIsActive() {
-        String yesOrNO = "";
-        if (isActive) {
-            yesOrNO = "Active";
-        } else
-            yesOrNO = "Inactive";
-        return yesOrNO;
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
     }
 }

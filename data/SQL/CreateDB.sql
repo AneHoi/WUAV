@@ -87,7 +87,7 @@ CREATE TABLE Report(
     Report_Case_ID                INT                                     NOT NULL,
     Report_Created_Date           DATE                                    NOT NULL,
     Report_Log_ID                 INT,
-    Report_Is_Active              BIT                                     NOT NULL,
+    Report_Is_Active              NVARCHAR(21)                            NOT NULL,
 
     CONSTRAINT PK_REPORT_ID PRIMARY KEY(Report_ID),
 

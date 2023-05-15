@@ -176,7 +176,10 @@
                               <Font size="21.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblReportStatus" text="Label" />
+                        <Label fx:id="lblReportStatus" text="Label">
+                           <font>
+                              <Font size="21.0" />
+                           </font></Label>
                      </children>
                   </HBox>
                   <ImageView fx:id="imgBack" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
@@ -220,7 +223,7 @@
    <bottom>
       <FlowPane alignment="BOTTOM_RIGHT" BorderPane.alignment="CENTER">
          <children>
-            <Button alignment="CENTER" mnemonicParsing="false" prefWidth="140.0" text="Submit Report">
+            <Button fx:id="btnSubmitReportForReview" alignment="CENTER" mnemonicParsing="false" onAction="#handleSubmitReport" prefWidth="140.0" text="Submit Report">
                <FlowPane.margin>
                   <Insets bottom="25.0" right="25.0" />
                </FlowPane.margin>

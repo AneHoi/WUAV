@@ -64,4 +64,12 @@ public class ReportManager {
     public void moveItemDown(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException {
         reportDAO.moveItemDown(textOrImageID, positionOnReport);
     }
+
+    public void submitReportForReview(int reportID) throws SQLException {
+        reportDAO.submitReportForReview(reportID);
+    }
+
+    public void closeReport(int reportID) throws SQLException {
+        reportDAO.closeReport(reportID);
+    }
 }

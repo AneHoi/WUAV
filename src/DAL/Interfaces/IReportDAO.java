@@ -33,4 +33,8 @@ public interface IReportDAO {
     void moveItemUp(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException;
 
     void moveItemDown(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException;
+
+    void submitReportForReview(int reportID) throws SQLException;
+
+    void closeReport(int reportID) throws SQLException;
 }
