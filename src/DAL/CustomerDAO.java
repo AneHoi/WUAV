@@ -40,11 +40,10 @@ public class CustomerDAO implements ICustomerDAO {
         }
         return customers;
     }
-    public List<Customer> getChosenCustomer(int chosenCustomer) throws SQLException {
-
-        List<Customer> customers = new ArrayList<>();
+    public Customer getChosenCustomer(int chosenCustomer) throws SQLException {
+        Customer customerVar = null;
         try (Connection conn = db.getConnection()) {
-            String sql = "SELECT * FROM Customer WHERE Customer.Customer_Name = "+ "'" + chosenCustomer +"';";
+            String sql = "SELECT * FROM Customer WHERE Customer.Customer_ID = " + chosenCustomer + ";";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
@@ -57,14 +56,13 @@ public class CustomerDAO implements ICustomerDAO {
                 int cvr = rs.getInt("Customer_CVR");
                 String type = rs.getString("Customer_Type");
 
-                Customer customerVar = new Customer(id, name, address, tlf, mail, cvr, type);
-                customers.add(customerVar);
+                customerVar = new Customer(id, name, address, tlf, mail, cvr, type);
             }
 
         } catch (SQLException e) {
             throw new SQLException(e);
         }
-        return customers;
+        return customerVar;
     }
     public void saveCustomer(Customer customerVar) {
         try (Connection conn = db.getConnection()) {

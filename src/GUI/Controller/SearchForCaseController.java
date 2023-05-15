@@ -115,9 +115,10 @@ public class SearchForCaseController implements Initializable {
                 int caseId = tblViewFilteredReports.getSelectionModel().getSelectedItem().getCaseId();
                 int customerId = tblViewFilteredReports.getSelectionModel().getSelectedItem().getCustomerId();
                 try {
-                    Report chosenReport = model.getChosenReport(reportID).get(0);
-                    Case chosenCase =  model.getChosenCase(caseId).get(0);
-                    Customer chosenCustomer = model.getChosenCustomer(customerId).get(0);
+                    Report chosenReport = model.getChosenReport(reportID);
+                    Case chosenCase =  model.getChosenCase(caseId);
+                    Customer chosenCustomer = model.getChosenCustomer(customerId);
+                    System.out.println(chosenReport.getReportID() + chosenCase.getCaseID() + chosenCustomer.getCustomerID());
                     model.setCurrentReport(chosenReport);
                     model.setCurrentCase(chosenCase);
                     model.setCurrentCustomer(chosenCustomer);

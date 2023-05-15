@@ -13,7 +13,7 @@ public interface IReportDAO {
 
     void createNewReport(String reportName, String reportDescription, int caseID, int userID) throws SQLException;
 
-    List<Report> getChosenReport(int reportID) throws SQLException;
+    Report getChosenReport(int reportID) throws SQLException;
     List<Report> getReports(int caseID) throws SQLException;
 
     List<ReportCaseAndCustomer> getAllReports() throws SQLException;
