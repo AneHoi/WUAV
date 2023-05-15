@@ -4,8 +4,9 @@
     -fx-text-background-color: white;
     -fx-font-size: 18;
     -fx-font-weight: bold;
+    -fx-column-halignment: center;
 }
-/*when an item is in focus*/
+/*When an item is in focus*/
 .table-view:focused .table-row-cell:selected .table-cell {
     -fx-text-fill: rgba(232,73,16,1);
     -fx-font-size: 20;

@@ -1,14 +1,13 @@
 package GUI.Controller;
 
 import BE.Case;
+import BE.Customer;
 import BE.Report;
 import BE.ReportCaseAndCustomer;
-import BE.Customer;
 import GUI.Model.Model;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,12 +21,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
 
-public class SearchForCaseView implements Initializable {
+public class SearchForCaseController implements Initializable {
     @FXML
     private TextField txtReportName, txtCustomer, txtCustomerAddress, txtCaseName, txtTechnician;
     @FXML
@@ -50,6 +47,7 @@ public class SearchForCaseView implements Initializable {
         model = Model.getInstance();
         controllerAssistant = ControllerAssistant.getInstance();
         addShadow(txtCustomer, txtCustomerAddress, txtCaseName, txtTechnician, dpDate, btnFilter, btnClear);
+        dpDate.setPrefWidth(600);
         addListeners();
         updateTableView();
     }
@@ -114,12 +112,12 @@ public class SearchForCaseView implements Initializable {
         tblViewFilteredReports.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && tblViewFilteredReports.getSelectionModel().getSelectedItem() != null) {
                 int reportID = tblViewFilteredReports.getSelectionModel().getSelectedItem().getReportId();
-                String caseName = tblViewFilteredReports.getSelectionModel().getSelectedItem().getCaseName();
-                String customerName = tblViewFilteredReports.getSelectionModel().getSelectedItem().getCustomerName();
+                int caseId = tblViewFilteredReports.getSelectionModel().getSelectedItem().getCaseId();
+                int customerId = tblViewFilteredReports.getSelectionModel().getSelectedItem().getCustomerId();
                 try {
                     Report chosenReport = model.getChosenReport(reportID).get(0);
-                    Case chosenCase =  model.getChosenCase(caseName).get(0);
-                    Customer chosenCustomer = model.getChosenCustomer(customerName).get(0);
+                    Case chosenCase =  model.getChosenCase(caseId).get(0);
+                    Customer chosenCustomer = model.getChosenCustomer(customerId).get(0);
                     model.setCurrentReport(chosenReport);
                     model.setCurrentCase(chosenCase);
                     model.setCurrentCustomer(chosenCustomer);

@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&display=swap');
+/*The fonts from Google*/
+.label{
+    -fx-font-family: 'Assistant', sans-serif;
+}
+.table-view{
+    -fx-font-family: 'Assistant', sans-serif;
+}
+.text-field{
+    -fx-font-family: 'Assistant', sans-serif;
+}
+.assistantFont{
+    -fx-font-family: 'Assistant', sans-serif;
+    -fx-font-weight: 200;
+}
+
+.topBarSize{
+    -fx-font-size: 32;
+}
+.bold{
+    -fx-font-weight: 800;
+}

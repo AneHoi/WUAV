@@ -85,7 +85,7 @@ public class CaseDAO implements ICaseDAO {
     }
 
     @Override
-    public List<Case> getChosenCase(String chosenCase) throws SQLException {
+    public List<Case> getChosenCase(int chosenCase) throws SQLException {
         List<Case> cases = new ArrayList<>();
         try (Connection conn = db.getConnection()) {
             String sql = "SELECT * FROM Case_ WHERE Case_.Case_Name ='"+chosenCase+"';";

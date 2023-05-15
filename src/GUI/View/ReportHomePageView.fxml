@@ -11,7 +11,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane stylesheets="@css/tableview.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ReportHomePageView">
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ReportHomePageController">
     <center>
       <HBox BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -159,9 +160,9 @@
               </VBox>
             <VBox alignment="TOP_CENTER" spacing="35.0">
                <children>
-                  <Button fx:id="btnAddTextField" styleClass="orangeButtons" mnemonicParsing="false" onAction="#handleAddTextField" text="Add Textfield" />
-                  <Button fx:id="btnAddImage" styleClass="orangeButtons" mnemonicParsing="false" onAction="#handleAddImage" text="Add Image" />
-                  <Button fx:id="btnAddSketch" styleClass="orangeButtons" mnemonicParsing="false" onAction="#handleAddSketch" text="Add Sketch" />
+                  <Button fx:id="btnAddTextField" mnemonicParsing="false" onAction="#handleAddTextField" text="Add Textfield" />
+                  <Button fx:id="btnAddImage" mnemonicParsing="false" onAction="#handleAddImage" text="Add Image" />
+                  <Button fx:id="btnAddSketch" mnemonicParsing="false" onAction="#handleAddSketch" text="Add Sketch" />
                </children>
                <padding>
                   <Insets left="25.0" />
@@ -211,4 +212,9 @@
          </right>
         </BorderPane>
     </top>
+    <stylesheets>
+        <URL value="@css/tableview.css" />
+        <URL value="@css/Main.css" />
+        <URL value="@css/fonts.css" />
+    </stylesheets>
 </BorderPane>

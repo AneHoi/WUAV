@@ -10,6 +10,8 @@ public class ReportCaseAndCustomer {
     private String caseName;
     private String technicianName;
     private LocalDate createdDate;
+    private int caseId;
+    private int customerId;
 
     public ReportCaseAndCustomer(Report reportObj, Case caseObj, Customer customerObj) {
         this.reportId = reportObj.getReportID();
@@ -19,6 +21,8 @@ public class ReportCaseAndCustomer {
         this.customerAddress = customerObj.getAddress();
         this.caseName = caseObj.getCaseName();
         this.technicianName = caseObj.getAssignedTechnician();
+        this.caseId = caseObj.getCaseID();
+        this.customerId = customerObj.getCustomerID();
     }
 
     // Getters for all properties
@@ -44,6 +48,8 @@ public class ReportCaseAndCustomer {
     public String getTechnicianName() {
         return technicianName;
     }
+    public int getCaseId(){return caseId;}
+    public int getCustomerId(){return customerId;}
 
 }
 

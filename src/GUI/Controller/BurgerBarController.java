@@ -21,7 +21,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class BurgerBarView implements Initializable {
+public class BurgerBarController implements Initializable {
     @FXML
     private ImageView imgHome, imgCustomers, imgCases, imgUsers;
     @FXML
@@ -29,14 +29,18 @@ public class BurgerBarView implements Initializable {
     @FXML
     private FlowPane flowHome, flowCustomers, flowCases, flowUsers;
 
-    private String home = "data/Images/Home.png";
-    private String customers = "data/Images/Customers.png";
-    private String cases = "data/Images/Cases.png";
-    private String users = "data/Images/Users.png";
-    private String homeOrange = "data/Images/Home orange.png";
-    private String customersOrange = "data/Images/Customers orange.png";
-    private String casesOrange = "data/Images/Cases orange.png";
-    private String usersOrange = "data/Images/Users orange.png";
+    private final String home = "data/Images/Home.png";
+    private final String customers = "data/Images/Customers.png";
+    private final String cases = "data/Images/Cases.png";
+    private final String users = "data/Images/Users.png";
+    private final String homeOrange = "data/Images/Home orange.png";
+    private final String customersOrange = "data/Images/Customers orange.png";
+    private final String casesOrange = "data/Images/Cases orange.png";
+    private final String usersOrange = "data/Images/Users orange.png";
+
+    private final String labelStyleWhite = "burgerBarMenuLabels";
+    private final String labelStyleOrange = "burgerBarMenuLabelsOrange";
+
 
     private Image imgHomeNormal, imgHomeOrange, imgCustomerNormal, imgCustomerOrange, imgCasesNormal, imgCasesOrange, imgUsersNormal, imgUsersOrange;
     private ControllerAssistant controllerAssistant;
@@ -50,47 +54,21 @@ public class BurgerBarView implements Initializable {
         loadIconsToBar();
         expandMenuBar();
         imgCases.setOnMouseClicked(event -> loadSearchForCases());
+        lCases.setOnMouseClicked(event -> loadSearchForCases());
+
         imgHome.setOnMouseClicked(event -> loadUserHomePage());
+        lHome.setOnMouseClicked(event -> loadUserHomePage());
+
         imgCustomers.setOnMouseClicked(event -> loadCustomerView());
+        lCustomers.setOnMouseClicked(event -> loadCustomerView());
+
         imgUsers.setOnMouseClicked(event -> loadUserView());
-        listenerForClickedImages();
+        lUsers.setOnMouseClicked(event -> loadUserView());
     }
 
-    private void listenerForClickedImages() {
-        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
-                    ImageView clickedImage = (ImageView) e.getSource();
-                    setImagesToWhite();
-                    setLabelsToWhite();
-                    if (clickedImage.equals(imgHome)) {
-                        imgHome.setImage(imgHomeOrange);
-                        lHome.getStyleClass().clear();
-                        lHome.getStyleClass().add("burgerBarMenuLabelsOrange");
-
-                    } else if (clickedImage.equals(imgCustomers)) {
-                        imgCustomers.setImage(imgCustomerOrange);
-                        lCustomers.getStyleClass().clear();
-                        lCustomers.getStyleClass().add("burgerBarMenuLabelsOrange");
-
-                    } else if (clickedImage.equals(imgCases)) {
-                        imgCases.setImage(imgCasesOrange);
-                        lCases.getStyleClass().clear();
-                        lCases.getStyleClass().add("burgerBarMenuLabelsOrange");
-
-                    } else if (clickedImage.equals(imgUsers)) {
-                        imgUsers.setImage(imgUsersOrange);
-                        lUsers.getStyleClass().clear();
-                        lUsers.getStyleClass().add("burgerBarMenuLabelsOrange");
-                    }
-                }
-            }
-        };
-        imgHome.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
-        imgCustomers.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
-        imgCases.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
-        imgUsers.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+    private void changeLblStyleToOrange(Label label) {
+        label.getStyleClass().remove(labelStyleWhite);
+        label.getStyleClass().add(labelStyleOrange);
     }
 
     /**
@@ -113,21 +91,19 @@ public class BurgerBarView implements Initializable {
         imgCases.setImage(imgCasesNormal);
         imgUsers.setImage(imgUsersNormal);
     }
-    private void setLabelsToWhite(){
-        lHome.getStyleClass().clear();
-        lHome.getStyleClass().add("burgerBarMenuLabels");
 
-        lCustomers.getStyleClass().clear();
-        lCustomers.getStyleClass().add("burgerBarMenuLabels");
-
-        lCases.getStyleClass().clear();
-        lCases.getStyleClass().add("burgerBarMenuLabels");
-
-        lUsers.getStyleClass().clear();
-        lUsers.getStyleClass().add("burgerBarMenuLabels");
+    private void changeLblStyleToWhite(Label...labels){
+        for (Label label: labels){
+            label.getStyleClass().remove("burgerBarMenuLabelsOrange");
+            label.getStyleClass().add("burgerBarMenuLabels");
+        }
     }
 
     private void loadUserView() {
+        setImagesToWhite();
+        changeLblStyleToWhite(lHome, lCustomers, lCases, lUsers);
+        imgUsers.setImage(imgUsersOrange);
+        changeLblStyleToOrange(lUsers);
         try {
             controllerAssistant.loadCenter("CreateUserView.fxml");
         } catch (IOException e) {
@@ -138,6 +114,10 @@ public class BurgerBarView implements Initializable {
     }
 
     private void loadCustomerView() {
+        setImagesToWhite();
+        changeLblStyleToWhite(lHome, lCustomers, lCases, lUsers);
+        imgCustomers.setImage(imgCustomerOrange);
+        changeLblStyleToOrange(lCustomers);
         try {
             controllerAssistant.loadCenter("CustomerView.fxml");
         } catch (IOException e) {
@@ -149,6 +129,10 @@ public class BurgerBarView implements Initializable {
     }
 
     private void loadSearchForCases() {
+        setImagesToWhite();
+        changeLblStyleToWhite(lHome, lCustomers, lCases, lUsers);
+        imgCases.setImage(imgCasesOrange);
+        changeLblStyleToOrange(lCases);
         try {
             controllerAssistant.loadCenter("SearchForCaseView.fxml");
         } catch (IOException e) {
@@ -160,6 +144,10 @@ public class BurgerBarView implements Initializable {
     }
 
     private void loadUserHomePage() {
+        setImagesToWhite();
+        changeLblStyleToWhite(lHome, lCustomers, lCases, lUsers);
+        imgHome.setImage(imgHomeOrange);
+        changeLblStyleToOrange(lHome);
         try {
             controllerAssistant.loadCenter("UserHomePageView.fxml");
         } catch (IOException e) {
@@ -185,7 +173,7 @@ public class BurgerBarView implements Initializable {
 
         setStylingAndPaddingLabels(lHome, lCustomers, lCases, lUsers);
         //color orange because the user starts on home-page
-        lHome.getStyleClass().clear();
+        lHome.getStyleClass().remove("burgerBarMenuLabels");
         lHome.getStyleClass().add("burgerBarMenuLabelsOrange");
 
         flowHome.getChildren().add(lHome);

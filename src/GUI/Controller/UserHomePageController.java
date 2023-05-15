@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class UserHomePageView implements Initializable {
+public class UserHomePageController implements Initializable {
     @FXML
     private Label lblWelcomeUser;
     @FXML

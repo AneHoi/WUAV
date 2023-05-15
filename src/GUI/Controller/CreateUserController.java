@@ -1,6 +1,5 @@
 package GUI.Controller;
 
-import BE.Report;
 import BE.User;
 import GUI.Model.Model;
 import javafx.beans.value.ChangeListener;
@@ -23,7 +22,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class CreateUserView implements Initializable {
+public class CreateUserController implements Initializable {
     @FXML
     private TableColumn colName, colUserName, colUserType, colStatus;
     @FXML

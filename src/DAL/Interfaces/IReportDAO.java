@@ -1,10 +1,9 @@
 package DAL.Interfaces;
 
-import BE.Addendum;
-import BE.ImageOnReport;
 import BE.Report;
-import BE.TextOnReport;
 import BE.ReportCaseAndCustomer;
+import BE.TextsAndImagesOnReport;
+
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,17 +15,22 @@ public interface IReportDAO {
 
     List<Report> getChosenReport(int reportID) throws SQLException;
     List<Report> getReports(int caseID) throws SQLException;
+
     List<ReportCaseAndCustomer> getAllReports() throws SQLException;
-
-    void createNewAddendum(String addendumName, String addendumDescription, int caseID, int reportID, int userID) throws SQLException;
-
-    List<Addendum> getAddendums(int caseID, int reportID) throws SQLException;
 
     void SaveTextToReport(int position, int reportID, String txt, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException;
 
     void SaveImageToReport(int position, int reportID, byte[] dataImage, String comment, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException;
 
-    List<TextOnReport> getAllTextFieldsForReport(int currentReportID) throws SQLException;
+    List<TextsAndImagesOnReport> getImagesAndTextsForReport(int currentReportID) throws SQLException;
 
-    List<ImageOnReport> getAllImagesForReport(int currentReportID) throws SQLException;
+    void updateImageInReport(int reportID, byte[] dataImage, String comment, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException;
+
+    void deletePartOfReport(TextsAndImagesOnReport textOrImage) throws SQLException;
+
+    void updateTextInReport(int textID, String txt, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException;
+
+    void moveItemUp(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException;
+
+    void moveItemDown(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException;
 }
