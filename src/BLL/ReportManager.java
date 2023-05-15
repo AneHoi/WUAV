@@ -23,6 +23,7 @@ public class ReportManager {
     public List<Report> getReports(int caseID) throws SQLException {
         return reportDAO.getReports(caseID);
     }
+
     public Report getChosenReport(int reportID) throws SQLException {
         return reportDAO.getChosenReport(reportID);
     }

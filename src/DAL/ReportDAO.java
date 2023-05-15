@@ -30,7 +30,7 @@ public class ReportDAO implements IReportDAO {
             ps.setInt(4, caseID);
             ps.setDate(5, Date.valueOf(date));
             ps.setInt(6, 1);
-            ps.setBoolean(7, true);
+            ps.setString(7, "Open");
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

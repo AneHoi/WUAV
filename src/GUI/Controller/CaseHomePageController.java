@@ -74,7 +74,6 @@ public class CaseHomePageController implements Initializable {
         currentCustomer = model.getCurrentCustomer();
         updateTableView();
         disableUpdateReport();
-        btnCreateNewReport.setDisable(true);
         lblCaseName.setText("Case Name: " + currentCase.getCaseName());
         addListeners();
         addShadow(txtSearchField, btnCreateNewReport);
@@ -120,7 +119,6 @@ public class CaseHomePageController implements Initializable {
         tblViewExistingReports.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && tblViewExistingReports.getSelectionModel().getSelectedItem() != null) {
                 Report selectedItem = (Report) tblViewExistingReports.getSelectionModel().getSelectedItem();
-
                 try {
                     model.setCurrentReport(selectedItem);
                     model.setCurrentCase(currentCase);
