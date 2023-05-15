@@ -22,6 +22,7 @@ public class ReportCaseAndCustomer {
     }
 
     // Getters for all properties
+    public int getReportId(){return reportId;}
     public String getReportName(){return reportName;}
 
     public LocalDate getCreatedDate() {

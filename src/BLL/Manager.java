@@ -21,7 +21,9 @@ public class Manager {
         usersDAO = new UsersDAO();
         sectionDAO = new SectionDAO();
     }
-
+    public List<Customer> getChosenCustomer(String chosenCustomer) throws SQLException {
+        return dao.getChosenCustomer(chosenCustomer);
+    }
     public List<Customer> getAllCustomers() throws SQLException {
         return dao.getAllCostumers();
     }
@@ -32,7 +34,9 @@ public class Manager {
     public void createNewReport(String reportName, String reportDescription, int caseID, int userID) throws SQLException {
         reportDAO.createNewReport(reportName,reportDescription, caseID, userID);
     }
-
+    public List<Report> getChosenReport(int reportID) throws SQLException {
+        return reportDAO.getChosenReport(reportID);
+    }
     public List<Report> getReports(int caseID) throws SQLException {
         return reportDAO.getReports(caseID);
     }
@@ -61,7 +65,9 @@ public class Manager {
     public void addTechnicianToCase(int caseID, List<Technician> chosenTechnicians) throws SQLException {
         caseDAO.addTechnicianToCase(caseID, chosenTechnicians);
     }
-
+    public List<Case> getChosenCase(String chosenCase) throws SQLException {
+        return caseDAO.getChosenCase(chosenCase);
+    }
     public List<Case> getAllCases() throws SQLException {
         return caseDAO.getAllCases();
     }

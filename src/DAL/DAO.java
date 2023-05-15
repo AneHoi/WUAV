@@ -17,6 +17,32 @@ public class DAO {
     public DAO() {
         db = DBConnector.getInstance();
     }
+    public List<Customer> getChosenCustomer(String chosenCustomer) throws SQLException {
+
+        List<Customer> customers = new ArrayList<>();
+        try (Connection conn = db.getConnection()) {
+            String sql = "SELECT * FROM Customer WHERE Customer.Customer_Name = "+ "'" + chosenCustomer +"';";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                int id = rs.getInt("Customer_ID");
+                String name = rs.getString("Customer_Name");
+                String address = rs.getString("Customer_Address");
+                String mail = rs.getString("Customer_Mail");
+                String tlf = rs.getString("Customer_Tlf");
+                int cvr = rs.getInt("Customer_CVR");
+                String type = rs.getString("Customer_Type");
+
+                Customer customerVar = new Customer(id, name, address, tlf, mail, cvr, type);
+                customers.add(customerVar);
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+        return customers;
+    }
 
     public List<Customer> getAllCostumers() throws SQLException {
         List<Customer> customers = new ArrayList<>();
