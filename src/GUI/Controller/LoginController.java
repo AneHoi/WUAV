@@ -21,6 +21,8 @@ public class LoginController implements Initializable {
     @FXML private Button btnLogin;
     @FXML private PasswordField pswPassword;
     @FXML private TextField txtUsername;
+    private String username;
+    private String password;
     @FXML
     private ImageView imgWUAVLogo;
 
@@ -28,6 +30,8 @@ public class LoginController implements Initializable {
     private String logo = "data/Images/logoWhite.png";
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        txtUsername.setText(username);
+        pswPassword.setText(password);
         SetImg();
         setEffect(pswPassword, txtUsername, btnLogin, imgWUAVLogo);
     }
@@ -54,9 +58,19 @@ public class LoginController implements Initializable {
         return image;
 
     }
+    public void setTxtUsername(String username){
+        this.username = username;
+    }
+    public void setPswPassword(String password){
+        this.password = password;
+    }
 
     public void login(ActionEvent event) {
         //TODO Make an accout that can enter
 
+        //This closes the window
+        ((Node)(event.getSource())).getScene().getWindow().hide();
+
     }
+
 }
