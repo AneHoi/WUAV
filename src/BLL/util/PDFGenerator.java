@@ -40,7 +40,7 @@ public class PDFGenerator {
             var paragraph2 = new Paragraph("Case name: " + selectedCase.getCaseName() + "\n" + "Case ID: " + selectedCase.getCaseID() + "\n" + "Case created; " + selectedCase.getCreatedDate() + "\n" + "Technician: " + selectedCase.getAssignedTechnician() + "\n" + "ContactPerson: " + selectedCase.getContactPerson() + "\n" + "Report description: " + report.getReportDescription());
             //var paragraph3 = new Paragraph(textsAndImagesOnReport.getTextOrImage());
 
-            document.add(logoImage);
+            //document.add(logoImage);
 
             document.add(paragraph1);
 

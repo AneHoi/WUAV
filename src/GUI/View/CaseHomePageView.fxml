@@ -103,7 +103,6 @@
                         <Insets bottom="25.0" left="25.0" />
                     </VBox.margin>
                 </Button>
-            <Button fx:id="btnGetPDF" mnemonicParsing="false" onAction="#handleGetPDF" prefWidth="200.0" text="Get PDF" />
             </children>
         </VBox>
     </right>
