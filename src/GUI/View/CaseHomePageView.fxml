@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxWidth="-Infinity" prefHeight="632.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CaseHomePageController">
+<BorderPane maxWidth="-Infinity" prefHeight="632.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CaseHomePageController">
     <top>
         <BorderPane>
             <left>
@@ -103,6 +103,7 @@
                         <Insets bottom="25.0" left="25.0" />
                     </VBox.margin>
                 </Button>
+            <Button fx:id="btnGetPDF" mnemonicParsing="false" onAction="#handleGetPDF" prefWidth="200.0" text="Get PDF" />
             </children>
         </VBox>
     </right>

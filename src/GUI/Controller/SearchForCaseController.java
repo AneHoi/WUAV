@@ -46,7 +46,7 @@ public class SearchForCaseController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         model = Model.getInstance();
         controllerAssistant = ControllerAssistant.getInstance();
-        addShadow(txtCustomer, txtCustomerAddress, txtCaseName, txtTechnician, dpDate, btnFilter, btnClear);
+        addShadow(txtCustomer, txtCustomerAddress, txtCaseName, txtTechnician, dpDate, btnClear);
         dpDate.setPrefWidth(600);
         addListeners();
         updateTableView();
@@ -148,7 +148,7 @@ public class SearchForCaseController implements Initializable {
         LocalDate createdDate = dpDate.getValue();
 
         ObservableList<ReportCaseAndCustomer> filteredList = FXCollections.observableArrayList();
-        if (!txtReportName.getText().isEmpty() || !txtCustomer.getText().isEmpty() || !txtCustomerAddress.getText().isEmpty() || !txtCaseName.getText().isEmpty() || !txtTechnician.getText().isEmpty() || !dpDate.getValue().equals(null)) {
+        if (!txtReportName.getText().isEmpty() || !txtCustomer.getText().isEmpty() || !txtCustomerAddress.getText().isEmpty() || !txtCaseName.getText().isEmpty() || !txtTechnician.getText().isEmpty() || dpDate.getValue() != null) {
             for (ReportCaseAndCustomer reportCaseAndCustomer : tblViewFilteredReports.getItems()) {
                 if (reportCaseAndCustomer.getReportName().toLowerCase().contains(reportName.toLowerCase()) && reportCaseAndCustomer.getCustomerName().toLowerCase().contains(customerName.toLowerCase())
                         && reportCaseAndCustomer.getCustomerAddress().toLowerCase().contains(customerAddress.toLowerCase())
@@ -159,6 +159,9 @@ public class SearchForCaseController implements Initializable {
                 }
             }
             tblViewFilteredReports.setItems(filteredList);
+        }
+        else {
+            updateTableView();
         }
     };
 

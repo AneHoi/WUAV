@@ -36,6 +36,7 @@ import java.util.ResourceBundle;
 
 public class CaseHomePageController implements Initializable {
 
+    public Button btnGetPDF;
     @FXML
     private ImageView imgBack, imgForward;
     @FXML
@@ -253,6 +254,13 @@ public class CaseHomePageController implements Initializable {
     public void handleUpdateReport(ActionEvent actionEvent) throws SQLException, DocumentException {
         PDFGenerator pdfGenerator = new PDFGenerator();
         pdfGenerator.generateReport((Report) tblViewExistingReports.getSelectionModel().getSelectedItem(), currentCase,currentCustomer);
+    }
+
+    public void handleGetPDF(ActionEvent actionEvent) throws SQLException, DocumentException {
+        if (tblViewExistingReports.getSelectionModel().getSelectedItem() != null) {
+            PDFGenerator pdfGenerator = new PDFGenerator();
+            pdfGenerator.generateReport((Report) tblViewExistingReports.getSelectionModel().getSelectedItem(), currentCase, currentCustomer);
+        }
     }
 }
 

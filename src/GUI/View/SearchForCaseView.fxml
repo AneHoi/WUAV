@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="678.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.SearchForCaseController">
+<BorderPane prefHeight="678.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.SearchForCaseController">
    <top>
       <Label text="Search For Report" underline="true">
          <font>
@@ -88,12 +88,7 @@
                   <DatePicker fx:id="dpDate" prefHeight="50.0" prefWidth="700.0" promptText="Date..." showWeekNumbers="true" style="-fx-font-size: 24;" styleClass="text-field" GridPane.rowIndex="5" />
                   <HBox spacing="50.0" GridPane.rowIndex="6">
                      <children>
-                        <Button fx:id="btnFilter" mnemonicParsing="false" onAction="#handleFilter" prefWidth="100.0" text="Filter">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnClear" mnemonicParsing="false" onAction="#handleClear" prefWidth="100.0" text="Clear">
+                        <Button fx:id="btnClear" mnemonicParsing="false" onAction="#handleClear" prefWidth="250.0" text="Clear">
                            <font>
                               <Font size="18.0" />
                            </font>
