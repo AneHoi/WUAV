@@ -169,4 +169,12 @@ public class Model {
     public void moveItemDown(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException{
         reportManager.moveItemDown(textOrImageID, positionOnReport);
     }
+
+    public void submitReportForReview(int reportID) throws SQLException {
+        reportManager.submitReportForReview(reportID);
+    }
+
+    public void closeReport(int reportID) throws SQLException {
+        reportManager.closeReport(reportID);
+    }
 }

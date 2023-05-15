@@ -14,6 +14,7 @@ public interface IReportDAO {
     void createNewReport(String reportName, String reportDescription, int caseID, int userID) throws SQLException;
 
     Report getChosenReport(int reportID) throws SQLException;
+
     List<Report> getReports(int caseID) throws SQLException;
 
     List<ReportCaseAndCustomer> getAllReports() throws SQLException;
@@ -33,4 +34,9 @@ public interface IReportDAO {
     void moveItemUp(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException;
 
     void moveItemDown(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException;
+
+    void submitReportForReview(int reportID) throws SQLException;
+
+    void closeReport(int reportID) throws SQLException;
+
 }

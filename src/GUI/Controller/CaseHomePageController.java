@@ -75,7 +75,6 @@ public class CaseHomePageController implements Initializable {
         currentCustomer = model.getCurrentCustomer();
         updateTableView();
         disableUpdateReport();
-        btnCreateNewReport.setDisable(true);
         lblCaseName.setText("Case Name: " + currentCase.getCaseName());
         addListeners();
         addShadow(txtSearchField, btnCreateNewReport);
@@ -121,21 +120,17 @@ public class CaseHomePageController implements Initializable {
         tblViewExistingReports.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && tblViewExistingReports.getSelectionModel().getSelectedItem() != null) {
                 Report selectedItem = (Report) tblViewExistingReports.getSelectionModel().getSelectedItem();
-                if (selectedItem.isActive()) {
-                    try {
-                        model.setCurrentReport(selectedItem);
-                        model.setCurrentCase(currentCase);
-                        model.setCurrentCustomer(currentCustomer);
-                        controllerAssistant.loadCenter("ReportHomePageView.fxml");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Report Home Page", ButtonType.CANCEL);
-                        alert.showAndWait();
-                    }
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Report is inactive, please make a new Report instead", ButtonType.OK);
+                try {
+                    model.setCurrentReport(selectedItem);
+                    model.setCurrentCase(currentCase);
+                    model.setCurrentCustomer(currentCustomer);
+                    controllerAssistant.loadCenter("ReportHomePageView.fxml");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Report Home Page", ButtonType.CANCEL);
                     alert.showAndWait();
                 }
+
             }
         });
 
@@ -159,7 +154,6 @@ public class CaseHomePageController implements Initializable {
 
         }
     };
-
 
 
     private void disableUpdateReport() {
@@ -253,7 +247,7 @@ public class CaseHomePageController implements Initializable {
 
     public void handleUpdateReport(ActionEvent actionEvent) throws SQLException, DocumentException {
         PDFGenerator pdfGenerator = new PDFGenerator();
-        pdfGenerator.generateReport((Report) tblViewExistingReports.getSelectionModel().getSelectedItem(), currentCase,currentCustomer);
+        pdfGenerator.generateReport((Report) tblViewExistingReports.getSelectionModel().getSelectedItem(), currentCase, currentCustomer);
     }
 
     public void handleGetPDF(ActionEvent actionEvent) throws SQLException, DocumentException {

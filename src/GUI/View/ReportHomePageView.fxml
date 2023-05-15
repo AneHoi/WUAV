@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -11,8 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import java.net.URL?>
-<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ReportHomePageController">
+<BorderPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ReportHomePageController">
     <center>
       <HBox BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -21,129 +21,128 @@
          <children>
               <VBox>
                   <children>
-                      <FlowPane columnHalignment="CENTER" prefHeight="208.0" prefWidth="531.0" prefWrapLength="1045.0" style="-fx-border-width: 4; -fx-border-color: Black;">
+                      <FlowPane columnHalignment="CENTER" prefWrapLength="1045.0" style="-fx-border-width: 4; -fx-border-color: Black;">
                           <children>
                               <BorderPane>
-                                  <left>
-                                      <VBox prefHeight="200.0" prefWidth="300.0">
-                                          <children>
-                                              <HBox alignment="BOTTOM_LEFT">
-                                                  <children>
-                                                      <Label text="Customer Name: " wrapText="true">
-                                                          <font>
-                                                              <Font name="System Bold" size="12.0" />
-                                                          </font>
-                                                          <HBox.margin>
-                                                              <Insets top="2.0" />
-                                                          </HBox.margin>
-                                                      </Label>
-                                                      <Label fx:id="lblCustomerName" text="LABEL CUSTOMER" wrapText="true" />
-                                                  </children>
-                                              </HBox>
-                                              <HBox alignment="BOTTOM_LEFT">
-                                                  <children>
-                                                      <Label text="Address: ">
-                                                          <font>
-                                                              <Font name="System Bold" size="12.0" />
-                                                          </font>
-                                                      </Label>
-                                                      <Label fx:id="lblCustomerAddress" text="Label" />
-                                                  </children>
-                                              </HBox>
-                                              <HBox alignment="BOTTOM_LEFT">
-                                                  <children>
-                                                      <Label text="Email: ">
-                                                          <font>
-                                                              <Font name="System Bold" size="12.0" />
-                                                          </font>
-                                                      </Label>
-                                                      <Label fx:id="lblCustomerEmail" text="Label" />
-                                                  </children>
-                                              </HBox>
-                                              <HBox alignment="BOTTOM_LEFT">
-                                                  <children>
-                                                      <Label text="Label: ">
-                                                          <font>
-                                                              <Font name="System Bold" size="12.0" />
-                                                          </font>
-                                                      </Label>
-                                                      <Label fx:id="lblCustomerTelephone" text="Label" />
-                                                  </children>
-                                              </HBox>
-                                          </children>
-                                          <padding>
-                                              <Insets left="25.0" top="25.0" />
-                                          </padding>
-                                      </VBox>
-                                  </left>
-                                  <right>
-                                      <VBox prefHeight="200.0" prefWidth="300.0">
-                                          <children>
-                                              <HBox alignment="BOTTOM_LEFT">
-                                                  <children>
-                                                      <Label text="Case Name: ">
-                                                          <font>
-                                                              <Font name="System Bold" size="12.0" />
-                                                          </font>
-                                                      </Label>
-                                                      <Label fx:id="lblCaseName" text="Label" />
-                                                  </children>
-                                              </HBox>
-                                              <HBox alignment="BOTTOM_LEFT">
-                                                  <children>
-                                                      <Label text="Case ID: ">
-                                                          <font>
-                                                              <Font name="System Bold" size="12.0" />
-                                                          </font>
-                                                      </Label>
-                                                      <Label fx:id="lblCaseID" text="Label" />
-                                                  </children>
-                                              </HBox>
-                                              <HBox alignment="BOTTOM_LEFT">
-                                                  <children>
-                                                      <Label text="Case Created: ">
-                                                          <font>
-                                                              <Font name="System Bold" size="12.0" />
-                                                          </font>
-                                                      </Label>
-                                                      <Label fx:id="lblCaseCreated" text="Label" />
-                                                  </children>
-                                              </HBox>
-                                              <HBox alignment="BOTTOM_LEFT">
-                                                  <children>
-                                                      <Label text="Technicians: ">
-                                                          <font>
-                                                              <Font name="System Bold" size="12.0" />
-                                                          </font>
-                                                      </Label>
-                                                      <Label fx:id="lblCaseTechnicians" text="Label" />
-                                                  </children>
-                                              </HBox>
-                                              <HBox alignment="BOTTOM_LEFT">
-                                                  <children>
-                                                      <Label text="Contact Person: ">
-                                                          <font>
-                                                              <Font name="System Bold" size="12.0" />
-                                                          </font>
-                                                      </Label>
-                                                      <Label fx:id="lblCaseContactPerson" text="Label" />
-                                                  </children>
-                                              </HBox>
-                                              <Label text="Report Description: ">
-                                                  <font>
-                                                      <Font name="System Bold" size="12.0" />
-                                                  </font>
-                                              </Label>
-                                              <Label fx:id="lblReportDescription" maxWidth="400.0" text="label" wrapText="true" />
-                                          </children>
-                                          <padding>
-                                              <Insets left="25.0" top="25.0" />
-                                          </padding>
-                                      </VBox>
-                                  </right>
-                                  <center>
-                                      <FlowPane prefWrapLength="200.0" BorderPane.alignment="CENTER" />
-                                  </center>
+                           <center>
+                              <HBox spacing="50.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                            <VBox prefHeight="200.0" prefWidth="300.0">
+                                                <children>
+                                                    <HBox alignment="BOTTOM_LEFT">
+                                                        <children>
+                                                            <Label text="Customer Name: " wrapText="true">
+                                                                <font>
+                                                                    <Font name="System Bold" size="12.0" />
+                                                                </font>
+                                                                <HBox.margin>
+                                                                    <Insets top="2.0" />
+                                                                </HBox.margin>
+                                                            </Label>
+                                                            <Label fx:id="lblCustomerName" text="LABEL CUSTOMER" wrapText="true" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="BOTTOM_LEFT">
+                                                        <children>
+                                                            <Label text="Address: ">
+                                                                <font>
+                                                                    <Font name="System Bold" size="12.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Label fx:id="lblCustomerAddress" text="Label" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="BOTTOM_LEFT">
+                                                        <children>
+                                                            <Label text="Email: ">
+                                                                <font>
+                                                                    <Font name="System Bold" size="12.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Label fx:id="lblCustomerEmail" text="Label" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="BOTTOM_LEFT">
+                                                        <children>
+                                                            <Label text="Label: ">
+                                                                <font>
+                                                                    <Font name="System Bold" size="12.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Label fx:id="lblCustomerTelephone" text="Label" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                                <padding>
+                                                    <Insets left="25.0" top="25.0" />
+                                                </padding>
+                                            </VBox>
+                                            <VBox prefHeight="200.0" prefWidth="300.0">
+                                                <children>
+                                                    <HBox alignment="BOTTOM_LEFT">
+                                                        <children>
+                                                            <Label text="Case Name: ">
+                                                                <font>
+                                                                    <Font name="System Bold" size="12.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Label fx:id="lblCaseName" text="Label" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="BOTTOM_LEFT">
+                                                        <children>
+                                                            <Label text="Case ID: ">
+                                                                <font>
+                                                                    <Font name="System Bold" size="12.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Label fx:id="lblCaseID" text="Label" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="BOTTOM_LEFT">
+                                                        <children>
+                                                            <Label text="Case Created: ">
+                                                                <font>
+                                                                    <Font name="System Bold" size="12.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Label fx:id="lblCaseCreated" text="Label" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="BOTTOM_LEFT">
+                                                        <children>
+                                                            <Label text="Technicians: ">
+                                                                <font>
+                                                                    <Font name="System Bold" size="12.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Label fx:id="lblCaseTechnicians" text="Label" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="BOTTOM_LEFT">
+                                                        <children>
+                                                            <Label text="Contact Person: ">
+                                                                <font>
+                                                                    <Font name="System Bold" size="12.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Label fx:id="lblCaseContactPerson" text="Label" />
+                                                        </children>
+                                                    </HBox>
+                                                    <Label text="Report Description: ">
+                                                        <font>
+                                                            <Font name="System Bold" size="12.0" />
+                                                        </font>
+                                                    </Label>
+                                                    <Label fx:id="lblReportDescription" maxWidth="400.0" text="label" wrapText="true" />
+                                                </children>
+                                                <padding>
+                                                    <Insets left="80.0" top="25.0" />
+                                                </padding>
+                                            </VBox>
+                                 </children>
+                              </HBox>
+                           </center>
                               </BorderPane>
                           </children>
                       </FlowPane>
@@ -158,22 +157,40 @@
                       </ScrollPane>
                   </children>
               </VBox>
-            <VBox alignment="TOP_CENTER" spacing="35.0">
-               <children>
-                  <Button fx:id="btnAddTextField" mnemonicParsing="false" onAction="#handleAddTextField" text="Add Textfield" />
-                  <Button fx:id="btnAddImage" mnemonicParsing="false" onAction="#handleAddImage" text="Add Image" />
-                  <Button fx:id="btnAddSketch" mnemonicParsing="false" onAction="#handleAddSketch" text="Add Sketch" />
-               </children>
-               <padding>
-                  <Insets left="25.0" />
-               </padding>
-            </VBox>
          </children>
       </HBox>
     </center>
     <top>
         <BorderPane>
-            <left>
+         <right>
+            <HBox spacing="30.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="25.0" right="25.0" top="25.0" />
+               </BorderPane.margin>
+               <children>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Label text="Report Status: ">
+                           <font>
+                              <Font size="21.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblReportStatus" text="Label" underline="true">
+                           <font>
+                              <Font size="21.0" />
+                           </font></Label>
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <ImageView fx:id="imgBack" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="imgForward" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </right>
+         <center>
                 <FlowPane BorderPane.alignment="CENTER">
                     <children>
                         <HBox>
@@ -198,18 +215,7 @@
                         </HBox>
                     </children>
                 </FlowPane>
-            </left>
-         <right>
-            <HBox BorderPane.alignment="CENTER">
-               <BorderPane.margin>
-                  <Insets bottom="25.0" right="25.0" top="25.0" />
-               </BorderPane.margin>
-               <children>
-                  <ImageView fx:id="imgBack" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imgForward" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </HBox>
-         </right>
+         </center>
         </BorderPane>
     </top>
     <stylesheets>
@@ -217,4 +223,30 @@
         <URL value="@css/Main.css" />
         <URL value="@css/fonts.css" />
     </stylesheets>
+   <bottom>
+      <FlowPane alignment="BOTTOM_RIGHT" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnSubmitReportForReview" alignment="CENTER" mnemonicParsing="false" onAction="#handleSubmitReport" prefWidth="140.0" text="Submit Report">
+               <FlowPane.margin>
+                  <Insets bottom="25.0" right="25.0" />
+               </FlowPane.margin>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </FlowPane>
+   </bottom>
+   <right>
+      <VBox alignment="TOP_RIGHT" spacing="35.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnAddTextField" mnemonicParsing="false" onAction="#handleAddTextField" prefWidth="140.0" text="Add Textfield" />
+            <Button fx:id="btnAddImage" mnemonicParsing="false" onAction="#handleAddImage" prefWidth="140.0" text="Add Image" />
+            <Button fx:id="btnAddSketch" mnemonicParsing="false" onAction="#handleAddSketch" prefWidth="140.0" text="Add Sketch" />
+         </children>
+         <BorderPane.margin>
+            <Insets right="25.0" top="50.0" />
+         </BorderPane.margin>
+      </VBox>
+   </right>
 </BorderPane>
