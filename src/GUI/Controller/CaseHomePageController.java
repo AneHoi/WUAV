@@ -249,12 +249,5 @@ public class CaseHomePageController implements Initializable {
         PDFGenerator pdfGenerator = new PDFGenerator();
         pdfGenerator.generateReport((Report) tblViewExistingReports.getSelectionModel().getSelectedItem(), currentCase, currentCustomer);
     }
-
-    public void handleGetPDF(ActionEvent actionEvent) throws SQLException, DocumentException {
-        if (tblViewExistingReports.getSelectionModel().getSelectedItem() != null) {
-            PDFGenerator pdfGenerator = new PDFGenerator();
-            pdfGenerator.generateReport((Report) tblViewExistingReports.getSelectionModel().getSelectedItem(), currentCase, currentCustomer);
-        }
-    }
 }
 
