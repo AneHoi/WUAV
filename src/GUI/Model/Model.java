@@ -169,4 +169,8 @@ public class Model {
     public void moveItemDown(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException{
         reportManager.moveItemDown(textOrImageID, positionOnReport);
     }
+
+    public void deleteCase(Case casen) throws SQLException {
+        caseManager.deleteCase(casen);
+    }
 }
