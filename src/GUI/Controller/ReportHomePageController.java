@@ -113,6 +113,16 @@ public class ReportHomePageController implements Initializable {
         addShadow(btnAddSketch, btnAddTextField, btnAddImage);
     }
 
+    public List<TextsAndImagesOnReport> textsAndImagesOnReportList() {
+        List<TextsAndImagesOnReport> reportData = null;
+        try {
+            reportData = new ArrayList<>();
+            reportData = model.getImagesAndTextsForReport(currentReport.getReportID());
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get images and text", ButtonType.CANCEL);
+        }
+        return reportData;
+    }
     private void updateImagesTextsAndSketches() {
         vboxSectionAdding.getChildren().clear();
         int currentReportID = currentReport.getReportID();
@@ -467,7 +477,7 @@ public class ReportHomePageController implements Initializable {
     private void generatePDF() {
         PDFGenerator pdfGenerator = new PDFGenerator();
 
-        pdfGenerator.generateReport(currentReport, currentCase, currentCustomer);
+        pdfGenerator.generateReport(currentReport, currentCase, currentCustomer, textsAndImagesOnReportList());
 
 
     }
