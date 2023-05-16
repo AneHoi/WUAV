@@ -3,9 +3,7 @@ package GUI.Controller;
 import BE.Case;
 import BE.Customer;
 import BE.Report;
-import BLL.util.PDFGenerator;
 import GUI.Model.Model;
-import com.itextpdf.text.DocumentException;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,16 +34,15 @@ import java.util.ResourceBundle;
 
 public class CaseHomePageController implements Initializable {
 
+    public Button btnGetPDF;
     @FXML
     private ImageView imgBack, imgForward;
     @FXML
     private Label lblCaseName;
     @FXML
-    private TextField txtSearchField, txtUpdateReportName;
+    private TextField txtSearchField;
     @FXML
-    private TextArea txtUpdateReportDescription;
-    @FXML
-    private Button btnCreateNewReport, btnUpdateReport;
+    private Button btnCreateNewReport, btnEditReport, btnDeleteReport;
     @FXML
     private TableView tblViewExistingReports;
     @FXML
@@ -73,8 +70,7 @@ public class CaseHomePageController implements Initializable {
         currentCase = model.getCurrentCase();
         currentCustomer = model.getCurrentCustomer();
         updateTableView();
-        disableUpdateReport();
-        btnCreateNewReport.setDisable(true);
+        disableEditAndDelete();
         lblCaseName.setText("Case Name: " + currentCase.getCaseName());
         addListeners();
         addShadow(txtSearchField, btnCreateNewReport);
@@ -120,51 +116,45 @@ public class CaseHomePageController implements Initializable {
         tblViewExistingReports.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && tblViewExistingReports.getSelectionModel().getSelectedItem() != null) {
                 Report selectedItem = (Report) tblViewExistingReports.getSelectionModel().getSelectedItem();
-                if (selectedItem.isActive()) {
-                    try {
-                        model.setCurrentReport(selectedItem);
-                        model.setCurrentCase(currentCase);
-                        model.setCurrentCustomer(currentCustomer);
-                        controllerAssistant.loadCenter("ReportHomePageView.fxml");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Report Home Page", ButtonType.CANCEL);
-                        alert.showAndWait();
-                    }
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Report is inactive, please make a new Report instead", ButtonType.OK);
+                try {
+                    model.setCurrentReport(selectedItem);
+                    model.setCurrentCase(currentCase);
+                    model.setCurrentCustomer(currentCustomer);
+                    controllerAssistant.loadCenter("ReportHomePageView.fxml");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Report Home Page", ButtonType.CANCEL);
                     alert.showAndWait();
                 }
+
             }
         });
 
     }
 
     ChangeListener<Report> selectedItemListener = (observable, oldValue, newValue) -> {
-        if (newValue != null) {
-            if (newValue.getIsActive().equals("Active")) {
-                txtUpdateReportName.setDisable(false);
-                txtUpdateReportName.setText(newValue.getReportName());
-                txtUpdateReportDescription.setDisable(false);
-                txtUpdateReportDescription.setText(newValue.getReportDescription());
-                btnUpdateReport.setDisable(false);
-                addShadow(txtUpdateReportName, txtUpdateReportDescription, btnUpdateReport);
-            } else {
-                txtUpdateReportName.setDisable(true);
-                txtUpdateReportDescription.setDisable(true);
-                btnUpdateReport.setDisable(true);
-                removeShadow(txtUpdateReportName, txtUpdateReportDescription, btnUpdateReport);
-            }
-
+        if (newValue != null && newValue.getIsActive().equals("Open")) {
+            btnEditReport.setDisable(false);
+            btnEditReport.setOpacity(1);
+            btnDeleteReport.setDisable(false);
+            btnDeleteReport.setOpacity(1);
+            addShadow(btnEditReport, btnDeleteReport);
+        } else {
+            btnEditReport.setDisable(true);
+            btnEditReport.setOpacity(0);
+            btnDeleteReport.setDisable(true);
+            btnDeleteReport.setOpacity(0);
+            removeShadow(btnEditReport, btnDeleteReport);
         }
     };
 
 
-
-    private void disableUpdateReport() {
-        txtUpdateReportName.setDisable(true);
-        txtUpdateReportDescription.setDisable(true);
-        btnUpdateReport.setDisable(true);
+    private void disableEditAndDelete() {
+        btnDeleteReport.setDisable(true);
+        btnDeleteReport.setOpacity(0);
+        btnEditReport.setDisable(true);
+        btnEditReport.setOpacity(0);
+        removeShadow(btnDeleteReport, btnEditReport);
     }
 
     private void updateTableView() {
@@ -187,13 +177,12 @@ public class CaseHomePageController implements Initializable {
     }
 
     public void handleCreateNewReportPopUp(ActionEvent actionEvent) {
-
         PopUpCreateNewReportController popUpCreateNewReportController = new PopUpCreateNewReportController();
         popUpCreateNewReportController.setCurrentCase(currentCase);
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
         loader.setController(popUpCreateNewReportController);
-        loader.setLocation(getClass().getResource("/GUI/View/PopUpCreateNewReport.fxml"));
+        loader.setLocation(getClass().getResource("/GUI/View/PopUpCreateNewOrUpdateReport.fxml"));
         stage.setTitle("Create a new report");
         try {
             Scene scene = new Scene(loader.load());
@@ -250,9 +239,43 @@ public class CaseHomePageController implements Initializable {
 
     }
 
-    public void handleUpdateReport(ActionEvent actionEvent) throws SQLException, DocumentException {
-        PDFGenerator pdfGenerator = new PDFGenerator();
-        pdfGenerator.generateReport((Report) tblViewExistingReports.getSelectionModel().getSelectedItem(), currentCase,currentCustomer);
+    public void handleUpdateReport(ActionEvent actionEvent) {
+        PopUpCreateNewReportController popUpCreateNewReportController = new PopUpCreateNewReportController();
+        popUpCreateNewReportController.setCurrentCase(currentCase);
+        popUpCreateNewReportController.setCurrentReport((Report) tblViewExistingReports.getSelectionModel().getSelectedItem());
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController(popUpCreateNewReportController);
+        loader.setLocation(getClass().getResource("/GUI/View/PopUpCreateNewOrUpdateReport.fxml"));
+        stage.setTitle("Update report");
+        try {
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open page for updating report", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+        updateTableView();
+
+    }
+
+    public void handleDeleteReport(ActionEvent actionEvent) {
+        Report selectedReport = (Report) tblViewExistingReports.getSelectionModel().getSelectedItem();
+        Alert reallyWannaDelete = new Alert(Alert.AlertType.WARNING, "Are you sure you want to delete this report: " + selectedReport.getReportName() + "?", ButtonType.YES, ButtonType.NO);
+        reallyWannaDelete.showAndWait();
+        if (reallyWannaDelete.getResult() == ButtonType.YES) {
+            try {
+                model.deleteReport(selectedReport.getReportID());
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Could not delete report from database", ButtonType.OK);
+                alert.showAndWait();
+            }
+        }
+        updateTableView();
     }
 }
+
 

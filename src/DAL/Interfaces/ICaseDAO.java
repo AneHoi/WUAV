@@ -12,7 +12,7 @@ public interface ICaseDAO {
     void createNewCase(String caseName, String caseContact, String caseDescription, int customerID) throws SQLException;
 
     void addTechnicianToCase(int caseID, List<Technician> technicianID) throws SQLException;
-    List<Case> getChosenCase(int chosenCase) throws SQLException;
+    Case getChosenCase(int chosenCase) throws SQLException;
 
     List<Case> getAllCases() throws SQLException;
 

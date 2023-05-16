@@ -86,12 +86,13 @@ public class CaseDAO implements ICaseDAO {
     }
 
     @Override
-    public List<Case> getChosenCase(int chosenCase) throws SQLException {
-        List<Case> cases = new ArrayList<>();
+    public Case getChosenCase(int chosenCase) throws SQLException {
+        Case c = null;
+        String sql = "SELECT * FROM Case_ LEFT JOIN User_ ON Case_.Case_Assigned_Tech_ID = User_.User_ID WHERE Case_.Case_ID = "+ chosenCase + ";";
         try (Connection conn = db.getConnection()) {
-            String sql = "SELECT * FROM Case_ WHERE Case_.Case_Name ='" + chosenCase + "';";
+            String sql1 = "SELECT * FROM Case_ WHERE Case_.Case_Name ='" + chosenCase + "';";
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            ResultSet rs = stmt.executeQuery(sql1);
 
             while (rs.next()) {
                 int caseID = rs.getInt("Case_ID");
@@ -102,14 +103,15 @@ public class CaseDAO implements ICaseDAO {
                 String techName = rs.getString("User_Full_Name");
                 LocalDate date = rs.getDate("Case_Created_Date").toLocalDate();
 
-                Case c = new Case(caseID, caseName, caseDescription, contactPerson, customerID, techName, date);
-                cases.add(c);
+                c = new Case(caseID, caseName, caseDescription, contactPerson, customerID, techName, date);
+
             }
 
         } catch (SQLException e) {
-            throw new SQLException("Could not get Cases from Database");
+            e.printStackTrace();
+            throw new SQLException("Could not get Case from Database");
         }
-        return cases;
+        return c;
     }
 
 

@@ -34,7 +34,7 @@ public class Model {
         return model;
     }
 
-    public List<Customer> getChosenCustomer(int chosenCustomer) throws SQLException {
+    public Customer getChosenCustomer(int chosenCustomer) throws SQLException {
         return customerManager.getChosenCustomer(chosenCustomer);
     }
     public List<Customer> getAllCustomers() throws SQLException {
@@ -49,7 +49,7 @@ public class Model {
     public void createNewReport(String reportName, String reportDescription, int caseID, int userID) throws SQLException {
         reportManager.createNewReport(reportName, reportDescription, caseID, userID);
     }
-    public List<Report> getChosenReport(int reportID) throws SQLException {
+    public Report getChosenReport(int reportID) throws SQLException {
         return reportManager.getChosenReport(reportID);
     }
     public List<Report> getReports(int caseID) throws SQLException {
@@ -154,7 +154,7 @@ public class Model {
     public void deletePartOfReport(TextsAndImagesOnReport textOrImage) throws SQLException {
         reportManager.deletePartOfReport(textOrImage);
     }
-    public List<Case> getChosenCase(int chosenCase) throws SQLException {
+    public Case getChosenCase(int chosenCase) throws SQLException {
         return caseManager.getChosenCase(chosenCase);
     }
 
@@ -172,5 +172,20 @@ public class Model {
 
     public void deleteCase(Case casen) throws SQLException {
         caseManager.deleteCase(casen);
+    }
+    public void submitReportForReview(int reportID) throws SQLException {
+        reportManager.submitReportForReview(reportID);
+    }
+
+    public void closeReport(int reportID) throws SQLException {
+        reportManager.closeReport(reportID);
+    }
+
+    public void updateReport(int reportID, String reportName, String reportDescription, int userID) throws SQLException {
+        reportManager.updateReport(reportID, reportName, reportDescription, userID);
+    }
+
+    public void deleteReport(int reportID) throws SQLException {
+        reportManager.deleteReport(reportID);
     }
 }

@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 import BE.*;
+import BLL.util.PDFGenerator;
 import GUI.Model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,11 +36,11 @@ import java.util.ResourceBundle;
 public class ReportHomePageController implements Initializable {
 
     @FXML
-    private Button btnAddSketch, btnAddImage, btnAddTextField;
+    private Button btnAddSketch, btnAddImage, btnAddTextField, btnSubmitReportForReview;
     @FXML
     private ImageView imgBack, imgForward;
     @FXML
-    private Label lblCustomerName, lblReportName, lblCustomerAddress, lblCustomerEmail, lblCustomerTelephone, lblCaseName, lblCaseID, lblCaseCreated, lblCaseTechnicians, lblCaseContactPerson, lblReportDescription;
+    private Label lblReportStatus, lblCustomerName, lblReportName, lblCustomerAddress, lblCustomerEmail, lblCustomerTelephone, lblCaseName, lblCaseID, lblCaseCreated, lblCaseTechnicians, lblCaseContactPerson, lblReportDescription;
     @FXML
     private VBox vboxSectionAdding;
     private Customer currentCustomer;
@@ -60,6 +61,7 @@ public class ReportHomePageController implements Initializable {
         model = Model.getInstance();
         nextPosition = 0;
         currentReport = model.getCurrentReport();
+        lblReportStatus.setText(currentReport.getIsActive());
         imgBack.setImage(loadImages(back));
         imgBack.setOnMouseClicked(event -> goBack());
         imgForward.setImage(loadImages(forward));
@@ -68,9 +70,59 @@ public class ReportHomePageController implements Initializable {
         currentCustomer = model.getCurrentCustomer();
         updateReportInfo();
         updateImagesTextsAndSketches();
-        addShadow(btnAddImage, btnAddSketch, btnAddTextField);
+        checkForReportStatus();
     }
 
+    private void checkForReportStatus() {
+        disableEditing();
+        if (lblReportStatus.getText().equals("Open")
+                && ((currentReport.getAssignedTechnician().equals(controllerAssistant.getLoggedInUser().getFullName())
+                || controllerAssistant.getLoggedInUser().getUserType() == 1)
+                || controllerAssistant.getLoggedInUser().getUserType() == 2)) {
+            enableEditing();
+        } else if (lblReportStatus.getText().equals("Submitted For Review")
+                && (controllerAssistant.getLoggedInUser().getUserType() == 1)
+                || controllerAssistant.getLoggedInUser().getUserType() == 2) {
+            enableEditing();
+            btnSubmitReportForReview.setText("Close Report");
+            btnSubmitReportForReview.setDisable(false);
+            addShadow(btnSubmitReportForReview);
+        } else if (lblReportStatus.getText().equals("Closed")) {
+            btnSubmitReportForReview.setText("Generate PDF");
+            btnSubmitReportForReview.setDisable(false);
+            addShadow(btnSubmitReportForReview);
+        }
+    }
+
+    private void disableEditing() {
+        btnAddImage.setDisable(true);
+        btnAddTextField.setDisable(true);
+        btnAddSketch.setDisable(true);
+        btnSubmitReportForReview.setDisable(true);
+        vboxSectionAdding.setDisable(true);
+        removeShadow(btnAddImage, btnAddSketch, btnAddTextField, btnSubmitReportForReview);
+    }
+
+
+    private void enableEditing() {
+        btnAddImage.setDisable(false);
+        btnAddTextField.setDisable(false);
+        btnAddSketch.setDisable(false);
+        btnSubmitReportForReview.setDisable(false);
+        vboxSectionAdding.setDisable(false);
+        addShadow(btnAddSketch, btnAddTextField, btnAddImage);
+    }
+
+    public List<TextsAndImagesOnReport> textsAndImagesOnReportList() {
+        List<TextsAndImagesOnReport> reportData = null;
+        try {
+            reportData = new ArrayList<>();
+            reportData = model.getImagesAndTextsForReport(currentReport.getReportID());
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get images and text", ButtonType.CANCEL);
+        }
+        return reportData;
+    }
     private void updateImagesTextsAndSketches() {
         vboxSectionAdding.getChildren().clear();
         int currentReportID = currentReport.getReportID();
@@ -409,5 +461,64 @@ public class ReportHomePageController implements Initializable {
             alert.showAndWait();
         }
         updateImagesTextsAndSketches();
+    }
+
+    public void handleSubmitReport(ActionEvent event) {
+        if (btnSubmitReportForReview.getText().equals("Submit Report")) {
+            submitForReview();
+        } else if (btnSubmitReportForReview.getText().equals("Close Report")) {
+            closeReport();
+        } else if (btnSubmitReportForReview.getText().equals("Generate PDF")) {
+            generatePDF();
+        }
+
+    }
+
+    private void generatePDF() {
+        PDFGenerator pdfGenerator = new PDFGenerator();
+
+        pdfGenerator.generateReport(currentReport, currentCase, currentCustomer, textsAndImagesOnReportList());
+
+
+    }
+
+
+    private void closeReport() {
+        Alert areYouSureAlert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to submit your report for review?", ButtonType.YES, ButtonType.NO);
+        areYouSureAlert.showAndWait();
+        if (areYouSureAlert.getResult() == ButtonType.YES) {
+            try {
+                model.closeReport(currentReport.getReportID());
+                disableEditing();
+                btnSubmitReportForReview.setText("Generate PDF");
+                Alert success = new Alert(Alert.AlertType.INFORMATION, "Report is now closed", ButtonType.OK);
+                success.showAndWait();
+                currentReport.setIsActive("Closed");
+                lblReportStatus.setText(currentReport.getIsActive());
+                checkForReportStatus();
+            } catch (SQLException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Could not submit report for review");
+                alert.showAndWait();
+            }
+        }
+    }
+
+    private void submitForReview() {
+        Alert areYouSureAlert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to submit your report for review?", ButtonType.YES, ButtonType.NO);
+        areYouSureAlert.showAndWait();
+        if (areYouSureAlert.getResult() == ButtonType.YES) {
+            try {
+                model.submitReportForReview(currentReport.getReportID());
+                disableEditing();
+                Alert success = new Alert(Alert.AlertType.INFORMATION, "Report submitted successfully", ButtonType.OK);
+                success.showAndWait();
+                currentReport.setIsActive("Submitted For Review");
+                lblReportStatus.setText(currentReport.getIsActive());
+                checkForReportStatus();
+            } catch (SQLException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Could not submit report for review");
+                alert.showAndWait();
+            }
+        }
     }
 }

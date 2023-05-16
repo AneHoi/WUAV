@@ -23,7 +23,8 @@ public class ReportManager {
     public List<Report> getReports(int caseID) throws SQLException {
         return reportDAO.getReports(caseID);
     }
-    public List<Report> getChosenReport(int reportID) throws SQLException {
+
+    public Report getChosenReport(int reportID) throws SQLException {
         return reportDAO.getChosenReport(reportID);
     }
 
@@ -63,5 +64,21 @@ public class ReportManager {
 
     public void moveItemDown(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException {
         reportDAO.moveItemDown(textOrImageID, positionOnReport);
+    }
+
+    public void submitReportForReview(int reportID) throws SQLException {
+        reportDAO.submitReportForReview(reportID);
+    }
+
+    public void closeReport(int reportID) throws SQLException {
+        reportDAO.closeReport(reportID);
+    }
+
+    public void updateReport(int reportID, String reportName, String reportDescription, int userID) throws SQLException {
+        reportDAO.updateReport(reportID, reportName, reportDescription, userID);
+    }
+
+    public void deleteReport(int reportID) throws SQLException {
+        reportDAO.deleteReport(reportID);
     }
 }

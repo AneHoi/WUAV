@@ -52,7 +52,7 @@ public class SearchForCaseController implements Initializable {
         model = Model.getInstance();
         checkForOldCases();
         controllerAssistant = ControllerAssistant.getInstance();
-        addShadow(txtCustomer, txtCustomerAddress, txtCaseName, txtTechnician, dpDate, btnFilter, btnClear);
+        addShadow(txtReportName, txtCustomer, txtCustomerAddress, txtCaseName, txtTechnician, dpDate, btnClear);
         dpDate.setPrefWidth(600);
         addListeners();
         updateTableView();
@@ -181,9 +181,10 @@ public class SearchForCaseController implements Initializable {
                 int caseId = tblViewFilteredReports.getSelectionModel().getSelectedItem().getCaseId();
                 int customerId = tblViewFilteredReports.getSelectionModel().getSelectedItem().getCustomerId();
                 try {
-                    Report chosenReport = model.getChosenReport(reportID).get(0);
-                    Case chosenCase = model.getChosenCase(caseId).get(0);
-                    Customer chosenCustomer = model.getChosenCustomer(customerId).get(0);
+                    Report chosenReport = model.getChosenReport(reportID);
+                    Case chosenCase =  model.getChosenCase(caseId);
+                    Customer chosenCustomer = model.getChosenCustomer(customerId);
+                    System.out.println(chosenReport.getReportID() + chosenCase.getCaseID() + chosenCustomer.getCustomerID());
                     model.setCurrentReport(chosenReport);
                     model.setCurrentCase(chosenCase);
                     model.setCurrentCustomer(chosenCustomer);
@@ -214,7 +215,7 @@ public class SearchForCaseController implements Initializable {
         LocalDate createdDate = dpDate.getValue();
 
         ObservableList<ReportCaseAndCustomer> filteredList = FXCollections.observableArrayList();
-        if (!txtReportName.getText().isEmpty() || !txtCustomer.getText().isEmpty() || !txtCustomerAddress.getText().isEmpty() || !txtCaseName.getText().isEmpty() || !txtTechnician.getText().isEmpty() || !dpDate.getValue().equals(null)) {
+        if (!txtReportName.getText().isEmpty() || !txtCustomer.getText().isEmpty() || !txtCustomerAddress.getText().isEmpty() || !txtCaseName.getText().isEmpty() || !txtTechnician.getText().isEmpty() || dpDate.getValue() != null) {
             for (ReportCaseAndCustomer reportCaseAndCustomer : tblViewFilteredReports.getItems()) {
                 if (reportCaseAndCustomer.getReportName().toLowerCase().contains(reportName.toLowerCase()) && reportCaseAndCustomer.getCustomerName().toLowerCase().contains(customerName.toLowerCase())
                         && reportCaseAndCustomer.getCustomerAddress().toLowerCase().contains(customerAddress.toLowerCase())
@@ -225,6 +226,9 @@ public class SearchForCaseController implements Initializable {
                 }
             }
             tblViewFilteredReports.setItems(filteredList);
+        }
+        else {
+            updateTableView();
         }
     };
 

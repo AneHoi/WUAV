@@ -87,7 +87,7 @@ CREATE TABLE Report(
     Report_Case_ID                INT                                     NOT NULL,
     Report_Created_Date           DATE                                    NOT NULL,
     Report_Log_ID                 INT,
-    Report_Is_Active              BIT                                     NOT NULL,
+    Report_Is_Active              NVARCHAR(21)                            NOT NULL,
 
     CONSTRAINT PK_REPORT_ID PRIMARY KEY(Report_ID),
 
@@ -127,7 +127,7 @@ CREATE TABLE Text_And_Image_Report_Link(
     CONSTRAINT PK_LINK_ID PRIMARY KEY(Link_ID),
 
     CONSTRAINT FK_REPORT_IMAGE_ID FOREIGN KEY(Report_ID)
-    REFERENCES Report(Report_ID),
+    REFERENCES Report(Report_ID) ON DELETE CASCADE,
     CONSTRAINT FK_TEXT_OR_IMAGE_REPORT_LINK_ID FOREIGN KEY(Text_Or_Image_On_Report_ID)
     REFERENCES Text_Or_Image_On_Report(Text_Or_Image_On_Report_ID) ON DELETE CASCADE,
 )

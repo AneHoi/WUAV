@@ -16,7 +16,7 @@ public class CaseManager {
     public List<Case> getCasesForThisCustomer(int customerID) throws SQLException {
         return caseDAO.getCasesForThisCustomer(customerID);
     }
-    public List<Case> getChosenCase(int chosenCase) throws SQLException {
+    public Case getChosenCase(int chosenCase) throws SQLException {
         return caseDAO.getChosenCase(chosenCase);
     }
 

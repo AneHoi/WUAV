@@ -3,6 +3,7 @@ package DAL;
 import BE.*;
 import DAL.Interfaces.IReportDAO;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -29,7 +30,7 @@ public class ReportDAO implements IReportDAO {
             ps.setInt(4, caseID);
             ps.setDate(5, Date.valueOf(date));
             ps.setInt(6, 1);
-            ps.setBoolean(7, true);
+            ps.setString(7, "Open");
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -39,8 +40,8 @@ public class ReportDAO implements IReportDAO {
     }
 
     @Override
-    public List<Report> getChosenReport(int reportID) throws SQLException {
-        List<Report> reports = new ArrayList<>();
+    public Report getChosenReport(int reportID) throws SQLException {
+        Report report = null;
         try (Connection conn = db.getConnection()) {
             String sql = "SELECT * FROM Report JOIN User_ ON Report.Report_Assigned_Tech_ID = User_.User_ID WHERE Report_ID = " + reportID + ";";
             Statement ps = conn.createStatement();
@@ -53,16 +54,15 @@ public class ReportDAO implements IReportDAO {
                 String techName = rs.getString("User_Full_Name");
                 LocalDate createdDate = rs.getDate("Report_Created_Date").toLocalDate();
                 int logID = rs.getInt("Report_Log_ID");
-                boolean isActive = rs.getBoolean("Report_Is_Active");
+                String isActive = rs.getString("Report_Is_Active");
 
-                Report r = new Report(reportId, reportName, reportDescription, techName, createdDate, logID, isActive);
-                reports.add(r);
+                report = new Report(reportId, reportName, reportDescription, techName, createdDate, logID, isActive);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
             throw new SQLException("Could not get reports from Database");
         }
-        return reports;
+        return report;
     }
 
     @Override
@@ -80,7 +80,7 @@ public class ReportDAO implements IReportDAO {
                 String techName = rs.getString("User_Full_Name");
                 LocalDate createdDate = rs.getDate("Report_Created_Date").toLocalDate();
                 int logID = rs.getInt("Report_Log_ID");
-                boolean isActive = rs.getBoolean("Report_Is_Active");
+                String isActive = rs.getString("Report_Is_Active");
 
                 Report r = new Report(reportID, reportName, reportDescription, caseID, techName, createdDate, logID, isActive);
                 reports.add(r);
@@ -107,7 +107,7 @@ public class ReportDAO implements IReportDAO {
                 String techName = rs.getString("User_Full_Name");
                 LocalDate createdDate = rs.getDate("Report_Created_Date").toLocalDate();
                 int logID = rs.getInt("Report_Log_ID");
-                boolean isActive = rs.getBoolean("Report_Is_Active");
+                String isActive = rs.getString("Report_Is_Active");
                 int caseID = rs.getInt("Case_ID");
                 String caseName = rs.getString("Case_Name");
                 String caseDescription = rs.getString("Case_Description");
@@ -393,6 +393,59 @@ public class ReportDAO implements IReportDAO {
             throw new SQLException();
         }
     }
-}
 
+    @Override
+    public void submitReportForReview(int reportID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "UPDATE Report SET Report_Is_Active = 'Submitted For Review' WHERE Report_ID = " + reportID + ";";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(e);
+        }
+    }
+
+    @Override
+    public void closeReport(int reportID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "UPDATE Report SET Report_Is_Active = 'Closed' WHERE Report_ID = " + reportID + ";";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(e);
+        }
+    }
+
+    public void updateReport(int reportID, String reportName, String reportDescription, int userID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "UPDATE Report SET Report_Name = (?), Report_Description = (?), Report_Assigned_Tech_ID = (?) WHERE Report_ID = (?);";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, reportName);
+            ps.setString(2, reportDescription);
+            ps.setInt(3, userID);
+            ps.setInt(4, reportID);
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(e);
+        }
+    }
+
+    public void deleteReport(int reportID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "DELETE FROM Report WHERE Report_ID = (?);";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,reportID);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(e);
+        }
+    }
+}
 

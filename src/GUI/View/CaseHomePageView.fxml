@@ -6,9 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -42,24 +40,31 @@
         </BorderPane>
     </top>
     <center>
-        <VBox spacing="45.0" BorderPane.alignment="CENTER">
+        <VBox BorderPane.alignment="CENTER">
             <children>
-                <TextField fx:id="txtSearchField" maxWidth="300.0" prefHeight="51.0" promptText="Search...">
-                    <VBox.margin>
-                        <Insets bottom="-35.0" left="500.0" right="20.0" />
-                    </VBox.margin>
-                </TextField>
+            <HBox alignment="CENTER_RIGHT">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <children>
+                      <TextField fx:id="txtSearchField" maxWidth="300.0" prefHeight="51.0" promptText="Search..." styleClass="search">
+                     <HBox.margin>
+                        <Insets bottom="-25.0" right="20.0" />
+                     </HBox.margin>
+                      </TextField>
+               </children>
+            </HBox>
                 <Label text="Search through existing reports:" underline="true">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
                     <VBox.margin>
-                        <Insets bottom="-45.0" left="20.0" />
+                        <Insets left="20.0" />
                     </VBox.margin>
                 </Label>
                 <TableView fx:id="tblViewExistingReports" prefHeight="380.0" prefWidth="400.0">
                     <VBox.margin>
-                        <Insets left="20.0" right="20.0" />
+                        <Insets bottom="20.0" left="20.0" right="20.0" />
                     </VBox.margin>
                     <columns>
                         <TableColumn fx:id="colReportName" prefWidth="121.0" style="-fx-alignment: center;" text="Report Name" />
@@ -71,41 +76,19 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                     </columnResizePolicy>
                 </TableView>
-                <Button fx:id="btnCreateNewReport" mnemonicParsing="false" onAction="#handleCreateNewReportPopUp" prefWidth="200.0" text="Create New Report">
-                    <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" />
-                    </VBox.margin>
-                </Button>
+            <HBox spacing="30.0">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="20.0" />
+               </VBox.margin>
+               <children>
+                      <Button fx:id="btnCreateNewReport" mnemonicParsing="false" onAction="#handleCreateNewReportPopUp" prefWidth="200.0" text="Create New Report" />
+                  <Button fx:id="btnEditReport" mnemonicParsing="false" onAction="#handleUpdateReport" prefWidth="200.0" text="Edit Report" />
+                  <Button fx:id="btnDeleteReport" mnemonicParsing="false" onAction="#handleDeleteReport" prefWidth="200.0" text="Delete Report" />
+               </children>
+            </HBox>
             </children>
         </VBox>
     </center>
-    <right>
-        <VBox spacing="45.0" BorderPane.alignment="CENTER">
-            <children>
-                <TextField fx:id="txtUpdateReportName" prefWidth="300.0" promptText="Update Report Name...">
-                    <VBox.margin>
-                        <Insets left="25.0" right="25.0" top="20.0" />
-                    </VBox.margin>
-                    <tooltip>
-                        <Tooltip text="Update report name" />
-                    </tooltip>
-                </TextField>
-                <TextArea fx:id="txtUpdateReportDescription" prefHeight="300.0" prefWidth="300.0" promptText="Update Report Description..." style="-fx-: Black;" styleClass="CaseHomePageTextArea" wrapText="true">
-                    <VBox.margin>
-                        <Insets left="25.0" right="25.0" />
-                    </VBox.margin>
-                    <tooltip>
-                        <Tooltip text="Update report description" />
-                    </tooltip>
-                </TextArea>
-                <Button fx:id="btnUpdateReport" mnemonicParsing="false" onAction="#handleUpdateReport" prefWidth="200.0" text="Update Report">
-                    <VBox.margin>
-                        <Insets bottom="25.0" left="25.0" />
-                    </VBox.margin>
-                </Button>
-            </children>
-        </VBox>
-    </right>
     <stylesheets>
         <URL value="@css/tableview.css" />
         <URL value="@css/Main.css" />
