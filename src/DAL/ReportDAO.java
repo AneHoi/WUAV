@@ -3,7 +3,6 @@ package DAL;
 import BE.*;
 import DAL.Interfaces.IReportDAO;
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -440,12 +439,91 @@ public class ReportDAO implements IReportDAO {
         try (Connection conn = db.getConnection()) {
             String sql = "DELETE FROM Report WHERE Report_ID = (?);";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1,reportID);
+            ps.setInt(1, reportID);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new SQLException(e);
         }
     }
+
+    public void saveLoginDetails(int reportID, String component, String username, String password, String additionalInfo, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            // Insert into Login_Details table
+            String loginDetailsSql = "INSERT INTO Login_Details (No_Login_Details, Component, Username, Password, Additional_Info, Created_Date, Created_Time, Added_By_Tech) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+            PreparedStatement loginDetailsPs = conn.prepareStatement(loginDetailsSql, Statement.RETURN_GENERATED_KEYS);
+            loginDetailsPs.setBoolean(1, false);
+            loginDetailsPs.setString(2, component);
+            loginDetailsPs.setString(3, username);
+            loginDetailsPs.setString(4, password);
+            loginDetailsPs.setString(5, additionalInfo);
+            loginDetailsPs.setDate(6, java.sql.Date.valueOf(createdDate));
+            loginDetailsPs.setTime(7, java.sql.Time.valueOf(createdTime));
+            loginDetailsPs.setInt(8, userID);
+            loginDetailsPs.executeUpdate();
+
+            // Get the generated Login_Details_ID
+            ResultSet generatedKeys = loginDetailsPs.getGeneratedKeys();
+            int loginDetailsID;
+            if (generatedKeys.next()) {
+                loginDetailsID = generatedKeys.getInt(1);
+            } else {
+                throw new SQLException("Failed to retrieve generated Login_Details_ID.");
+            }
+
+            // Insert into Login_Details_Report_Link table
+            String loginDetailsReportLinkSql = "INSERT INTO Login_Details_Report_Link (Report_ID, Login_Details_ID) " +
+                    "VALUES (?, ?)";
+            PreparedStatement loginDetailsReportLinkPs = conn.prepareStatement(loginDetailsReportLinkSql);
+            loginDetailsReportLinkPs.setInt(1, reportID);
+            loginDetailsReportLinkPs.setInt(2, loginDetailsID);
+            loginDetailsReportLinkPs.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(e);
+        }
+    }
+
+
+    public void noLoginInfoForThisReport(int reportID, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            // Insert into Login_Details table with No_Login_Details set to true
+            String loginDetailsSql = "INSERT INTO Login_Details (No_Login_Details, Created_Date, Created_Time, Added_By_Tech) " +
+                    "VALUES (?, ?, ?, ?)";
+
+            PreparedStatement loginDetailsPs = conn.prepareStatement(loginDetailsSql, Statement.RETURN_GENERATED_KEYS);
+            loginDetailsPs.setBoolean(1, true);
+            loginDetailsPs.setDate(2, java.sql.Date.valueOf(createdDate));
+            loginDetailsPs.setTime(3, java.sql.Time.valueOf(createdTime));
+            loginDetailsPs.setInt(4, userID);
+            loginDetailsPs.executeUpdate();
+
+            // Get the generated Login_Details_ID
+            ResultSet generatedKeys = loginDetailsPs.getGeneratedKeys();
+            int loginDetailsID;
+            if (generatedKeys.next()) {
+                loginDetailsID = generatedKeys.getInt(1);
+            } else {
+                throw new SQLException("Failed to retrieve generated Login_Details_ID.");
+            }
+
+            // Insert into Login_Details_Report_Link table
+            String loginDetailsReportLinkSql = "INSERT INTO Login_Details_Report_Link (Report_ID, Login_Details_ID) " +
+                    "VALUES (?, ?)";
+            PreparedStatement loginDetailsReportLinkPs = conn.prepareStatement(loginDetailsReportLinkSql);
+            loginDetailsReportLinkPs.setInt(1, reportID);
+            loginDetailsReportLinkPs.setInt(2, loginDetailsID);
+            loginDetailsReportLinkPs.executeUpdate();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(e);
+        }
+    }
+
 }
 

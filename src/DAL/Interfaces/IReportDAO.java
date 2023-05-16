@@ -42,4 +42,8 @@ public interface IReportDAO {
     void updateReport(int reportID, String reportName, String reportDescription, int userID) throws SQLException;
 
     void deleteReport(int reportID) throws SQLException;
+
+    void saveLoginDetails(int reportID, String component, String username, String password, String additionalInfo, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException;
+
+    void noLoginInfoForThisReport(int reportID) throws SQLException;
 }

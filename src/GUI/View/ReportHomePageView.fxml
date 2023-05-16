@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ReportHomePageController">
+<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ReportHomePageController">
     <center>
       <HBox BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -233,16 +233,17 @@
             </Button>
          </children>
          <BorderPane.margin>
-            <Insets />
+            <Insets top="35.0" />
          </BorderPane.margin>
       </FlowPane>
    </bottom>
    <right>
       <VBox alignment="TOP_RIGHT" spacing="35.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnAddTextField" mnemonicParsing="false" onAction="#handleAddTextField" prefWidth="140.0" text="Add Textfield" />
-            <Button fx:id="btnAddImage" mnemonicParsing="false" onAction="#handleAddImage" prefWidth="140.0" text="Add Image" />
-            <Button fx:id="btnAddSketch" mnemonicParsing="false" onAction="#handleAddSketch" prefWidth="140.0" text="Add Sketch" />
+            <Button fx:id="btnAddTextField" mnemonicParsing="false" onAction="#handleAddTextField" prefWidth="165.0" text="Add Textfield" />
+            <Button fx:id="btnAddImage" mnemonicParsing="false" onAction="#handleAddImage" prefWidth="165.0" text="Add Image" />
+            <Button fx:id="btnAddSketch" mnemonicParsing="false" onAction="#handleAddSketch" prefWidth="165.0" text="Add Sketch" />
+            <Button fx:id="btnAddLoginDetails" mnemonicParsing="false" onAction="#handleAddLoginDetails" text="Add Login Details" />
          </children>
          <BorderPane.margin>
             <Insets right="25.0" top="50.0" />

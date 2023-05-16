@@ -81,4 +81,12 @@ public class ReportManager {
     public void deleteReport(int reportID) throws SQLException {
         reportDAO.deleteReport(reportID);
     }
+
+    public void saveLoginDetails(int reportID, String component, String username, String password, String additionalInfo, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
+        reportDAO.saveLoginDetails(reportID, component, username, password, additionalInfo, createdDate, createdTime, userID);
+    }
+
+    public void noLoginInfoForThisReport(int reportID, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
+        reportDAO.noLoginInfoForThisReport(reportID,createdDate,createdTime,userID);
+    }
 }

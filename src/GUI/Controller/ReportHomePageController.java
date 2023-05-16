@@ -36,7 +36,7 @@ import java.util.ResourceBundle;
 public class ReportHomePageController implements Initializable {
 
     @FXML
-    private Button btnAddSketch, btnAddImage, btnAddTextField, btnSubmitReportForReview;
+    private Button btnAddSketch, btnAddImage, btnAddTextField, btnAddLoginDetails, btnSubmitReportForReview;
     @FXML
     private ImageView imgBack, imgForward;
     @FXML
@@ -69,8 +69,14 @@ public class ReportHomePageController implements Initializable {
         currentCase = model.getCurrentCase();
         currentCustomer = model.getCurrentCustomer();
         updateReportInfo();
+        updateLoginDetails();
         updateImagesTextsAndSketches();
         checkForReportStatus();
+
+    }
+
+    private void updateLoginDetails() {
+        //TODO Continue from here Miran
     }
 
     private void checkForReportStatus() {
@@ -100,7 +106,7 @@ public class ReportHomePageController implements Initializable {
         btnAddSketch.setDisable(true);
         btnSubmitReportForReview.setDisable(true);
         vboxSectionAdding.setDisable(true);
-        removeShadow(btnAddImage, btnAddSketch, btnAddTextField, btnSubmitReportForReview);
+        removeShadow(btnAddImage, btnAddSketch, btnAddTextField, btnAddLoginDetails, btnSubmitReportForReview);
     }
 
 
@@ -110,7 +116,7 @@ public class ReportHomePageController implements Initializable {
         btnAddSketch.setDisable(false);
         btnSubmitReportForReview.setDisable(false);
         vboxSectionAdding.setDisable(false);
-        addShadow(btnAddSketch, btnAddTextField, btnAddImage);
+        addShadow(btnAddSketch, btnAddTextField, btnAddLoginDetails, btnAddImage);
     }
 
     public List<TextsAndImagesOnReport> textsAndImagesOnReportList() {
@@ -120,9 +126,11 @@ public class ReportHomePageController implements Initializable {
             reportData = model.getImagesAndTextsForReport(currentReport.getReportID());
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get images and text", ButtonType.CANCEL);
+            alert.showAndWait();
         }
         return reportData;
     }
+
     private void updateImagesTextsAndSketches() {
         vboxSectionAdding.getChildren().clear();
         int currentReportID = currentReport.getReportID();
@@ -519,6 +527,24 @@ public class ReportHomePageController implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Could not submit report for review");
                 alert.showAndWait();
             }
+        }
+    }
+
+    public void handleAddLoginDetails(ActionEvent actionEvent) {
+        AddLoginDetailsController addLoginDetailsController = new AddLoginDetailsController();
+        addLoginDetailsController.setCurrentReport(currentReport);
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/GUI/View/AddLoginDetailsView.fxml"));
+        loader.setController(addLoginDetailsController);
+        try {
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR,"Could not open Add Login Details Window", ButtonType.CANCEL);
+            alert.showAndWait();
         }
     }
 }
