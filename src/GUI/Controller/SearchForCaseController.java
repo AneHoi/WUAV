@@ -46,7 +46,7 @@ public class SearchForCaseController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         model = Model.getInstance();
         controllerAssistant = ControllerAssistant.getInstance();
-        addShadow(txtCustomer, txtCustomerAddress, txtCaseName, txtTechnician, dpDate, btnClear);
+        addShadow(txtReportName, txtCustomer, txtCustomerAddress, txtCaseName, txtTechnician, dpDate, btnClear);
         dpDate.setPrefWidth(600);
         addListeners();
         updateTableView();

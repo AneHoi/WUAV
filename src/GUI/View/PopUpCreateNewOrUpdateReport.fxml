@@ -40,14 +40,20 @@
           </VBox>
    </center>
    <top>
-          <Label fx:id="lblCaseName" text="Create new report" underline="true" BorderPane.alignment="CENTER">
-              <font>
-                  <Font name="System Bold" size="40.0" />
-              </font>
-              <BorderPane.margin>
-                  <Insets left="25.0" />
-              </BorderPane.margin>
-          </Label>
+      <VBox alignment="CENTER">
+         <children>
+                <Label fx:id="lblTitle" text="Create new report" underline="true">
+                    <font>
+                        <Font name="System Bold" size="40.0" />
+                    </font>
+                </Label>
+            <Label fx:id="lblReportName" text="Label">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
    </top>
     <stylesheets>
         <URL value="@css/tableview.css" />

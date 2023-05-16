@@ -89,18 +89,11 @@ public class CreateUserController implements Initializable {
         txtUserNameUpdate.textProperty().addListener(updateUserBtn);
         txtTelephoneUpdate.textProperty().addListener(updateUserBtn);
         txtEmailUpdate.textProperty().addListener(updateUserBtn);
-
-
+        cbUserActive.valueProperty().addListener(updateUserBtn); // Add listener to ComboBox value property
     }
 
     ChangeListener<String> updateUserBtn = (observable, oldValue, newValue) -> {
-        if (txtFullNameUpdate.getText().isEmpty() || txtUserNameUpdate.getText().isEmpty() || txtTelephoneUpdate.getText().isEmpty() || txtEmailUpdate.getText().isEmpty() || cbUserActive.getSelectionModel().getSelectedItem() == null) {
-            btnUpdateUser.setDisable(true);
-            removeShadow(btnUpdateUser);
-        } else {
-            btnUpdateUser.setDisable(false);
-            addShadow(btnUpdateUser);
-        }
+        updateUpdateButtonState(); // Extracted method to update the button state
     };
 
     ChangeListener<User> selectedUserListener = (observable, oldValue, newValue) -> {
@@ -113,10 +106,22 @@ public class CreateUserController implements Initializable {
             txtEmailUpdate.setText(newValue.getEmail());
             cbUserActive.setItems(activeOrInactive);
             cbUserActive.getSelectionModel().select(newValue.getIsActive());
+
+            updateUpdateButtonState(); // Update the button state when a user is selected
         }
-
-
     };
+
+    // Method to update the state of the "Update User" button
+    private void updateUpdateButtonState() {
+        if (txtFullNameUpdate.getText().isEmpty() || txtUserNameUpdate.getText().isEmpty() || txtTelephoneUpdate.getText().isEmpty() || txtEmailUpdate.getText().isEmpty() || cbUserActive.getSelectionModel().getSelectedItem() == null) {
+            btnUpdateUser.setDisable(true);
+            removeShadow(btnUpdateUser);
+        } else {
+            btnUpdateUser.setDisable(false);
+            addShadow(btnUpdateUser);
+        }
+    }
+
 
     private void updateTableView() {
         allUsers = FXCollections.observableArrayList();
@@ -179,13 +184,15 @@ public class CreateUserController implements Initializable {
         int userID = user.getUserID();
 
             if(cbUserActive.getSelectionModel().getSelectedItem().equals("Inactive")){
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to make:" + user.getFullName() + " Inactive", ButtonType.YES, ButtonType.NO);
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to make: " + user.getFullName() + " Inactive", ButtonType.YES, ButtonType.NO);
                 alert.getDialogPane().getStylesheets().add("/gui/view/Main.css");
                 alert.getDialogPane().getStyleClass().add("alertPane");
                 alert.showAndWait();
                 if (alert.getResult() == ButtonType.YES) {
                     try {
                         model.updateUser(userID, fullName, userName, userTlf, userEmail, userActive);
+                        Alert success = new Alert(Alert.AlertType.INFORMATION, "User: " + user.getFullName() + " was made inactive", ButtonType.OK );
+                        success.showAndWait();
                     } catch (SQLException e) {
                         e.printStackTrace();
                         Alert alert1 = new Alert(Alert.AlertType.ERROR, "Could not update User", ButtonType.CANCEL);
@@ -196,6 +203,8 @@ public class CreateUserController implements Initializable {
             else {
                 try {
                     model.updateUser(userID, fullName, userName, userTlf, userEmail, userActive);
+                    Alert success = new Alert(Alert.AlertType.INFORMATION, "User: " + user.getFullName() + " was made active again", ButtonType.OK );
+                    success.showAndWait();
                 } catch (SQLException e) {
                     e.printStackTrace();
                     Alert alert1 = new Alert(Alert.AlertType.ERROR, "Could not update User", ButtonType.CANCEL);

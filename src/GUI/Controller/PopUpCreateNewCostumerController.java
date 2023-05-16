@@ -3,13 +3,12 @@ package GUI.Controller;
 import BE.Customer;
 import GUI.Model.Model;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 
@@ -23,14 +22,20 @@ public class PopUpCreateNewCostumerController implements Initializable {
     private TextField txtCostumerName, txtAddress, txtTlfNumber, txtEmail, txtCVR;
     @FXML
     private Button btnCreateCostumer;
+    @FXML
+    private ComboBox<String> cbCustomerType;
     private Customer customerVar;
 
     private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private String search = "data/Images/search.png";
+    private ObservableList<String> typesOfCustomers;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        typesOfCustomers = FXCollections.observableArrayList();
+        typesOfCustomers.addAll("Corporate", "Private", "Government");
+        cbCustomerType.setItems(typesOfCustomers);
         model = Model.getInstance();
         addShadow(txtCostumerName, txtAddress, txtTlfNumber, txtEmail, txtCVR);
         addListeners();
@@ -48,6 +53,7 @@ public class PopUpCreateNewCostumerController implements Initializable {
         txtTlfNumber.setText(customerVar.getPhoneNumber());
         txtEmail.setText(customerVar.getEmail());
         txtCVR.setText(String.valueOf(customerVar.getCVR()));
+        cbCustomerType.getSelectionModel().select(customerVar.getCustomerType());
     }
 
 
@@ -106,8 +112,11 @@ public class PopUpCreateNewCostumerController implements Initializable {
             customerVar.setEmail(txtEmail.getText());
             customerVar.setCVR(Integer.parseInt(txtCVR.getText()));
             customerVar.setPhoneNumber(txtTlfNumber.getText());
+            customerVar.setCustomerType(cbCustomerType.getSelectionModel().getSelectedItem());
             try {
                 model.updateCustomer(customerVar);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Customer updated successfully", ButtonType.OK);
+                alert.showAndWait();
             } catch (SQLException e) {
                 e.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Could not update the customerVar", ButtonType.CANCEL);
@@ -120,6 +129,7 @@ public class PopUpCreateNewCostumerController implements Initializable {
             String address = txtAddress.getText();
             String email = txtEmail.getText();
             int cvr = Integer.parseInt(txtCVR.getText());
+            String customerType = cbCustomerType.getTypeSelector();
             String tlf = txtTlfNumber.getText();
             Customer customer = new Customer(id, name, address, tlf, email, cvr, "");
             model.saveCustomer(customer);

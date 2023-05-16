@@ -177,4 +177,12 @@ public class Model {
     public void closeReport(int reportID) throws SQLException {
         reportManager.closeReport(reportID);
     }
+
+    public void updateReport(int reportID, String reportName, String reportDescription, int userID) throws SQLException {
+        reportManager.updateReport(reportID, reportName, reportDescription, userID);
+    }
+
+    public void deleteReport(int reportID) throws SQLException {
+        reportManager.deleteReport(reportID);
+    }
 }
