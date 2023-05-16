@@ -18,7 +18,7 @@ INSERT INTO User_Passwords VALUES((SELECT DISTINCT User_ID FROM User_  WHERE Use
 INSERT INTO User_Passwords VALUES((SELECT DISTINCT User_ID FROM User_  WHERE User_Name = 'SR'),'SR', '1', '$2a$16$SQKnctQxB89dhg7qDpjUpO')
 GO
 
-INSERT INTO Customer VALUES('Need Help co', 'Help Me street 1', 'needhelp@help.com', '91191191', '1234321', 'Business')
+INSERT INTO Customer VALUES('Need Help co', 'Help Me street 1', 'needhelp@help.com', '91191191', '1234321', 'Corporate')
 
 INSERT INTO Case_ VALUES('Conference room set up', 'They need to be able to...', (SELECT User_ID FROM User_ WHERE [User_Name] = 'PM'), 1, (SELECT User_ID FROM User_ Where [User_Name] = 'T1'), convert(date, '2023-9-14'))
 GO

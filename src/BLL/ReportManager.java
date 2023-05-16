@@ -73,4 +73,12 @@ public class ReportManager {
     public void closeReport(int reportID) throws SQLException {
         reportDAO.closeReport(reportID);
     }
+
+    public void updateReport(int reportID, String reportName, String reportDescription, int userID) throws SQLException {
+        reportDAO.updateReport(reportID, reportName, reportDescription, userID);
+    }
+
+    public void deleteReport(int reportID) throws SQLException {
+        reportDAO.deleteReport(reportID);
+    }
 }

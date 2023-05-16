@@ -420,6 +420,32 @@ public class ReportDAO implements IReportDAO {
         }
     }
 
-}
+    public void updateReport(int reportID, String reportName, String reportDescription, int userID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "UPDATE Report SET Report_Name = (?), Report_Description = (?), Report_Assigned_Tech_ID = (?) WHERE Report_ID = (?);";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, reportName);
+            ps.setString(2, reportDescription);
+            ps.setInt(3, userID);
+            ps.setInt(4, reportID);
 
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(e);
+        }
+    }
+
+    public void deleteReport(int reportID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "DELETE FROM Report WHERE Report_ID = (?);";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,reportID);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(e);
+        }
+    }
+}
 

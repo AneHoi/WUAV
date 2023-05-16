@@ -39,4 +39,7 @@ public interface IReportDAO {
 
     void closeReport(int reportID) throws SQLException;
 
+    void updateReport(int reportID, String reportName, String reportDescription, int userID) throws SQLException;
+
+    void deleteReport(int reportID) throws SQLException;
 }
