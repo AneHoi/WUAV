@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&display=swap');
+/*The fonts from Google*/
+.label{
+    -fx-font-family: 'Assistant', sans-serif;
+}
+.table-view{
+    -fx-font-family: 'Assistant', sans-serif;
+}
+.text-field{
+    -fx-font-family: 'Assistant', sans-serif;
+}
+.assistantFont{
+    -fx-font-family: 'Assistant', sans-serif;
+    -fx-font-weight: 200;
+}
+
+.topBarSize{
+    -fx-font-size: 32;
+}
+/*Padding is the length from top of label to text*/
+.headingLabel{
+    -fx-start-margin: 50;
+    -fx-padding: 25;
+    -fx-underline: true;
+    -fx-text-fill: black;
+    -fx-font-size: 40;
+    -fx-font-weight: 800;
+}
+.underHeadingLabel{
+
+    -fx-padding: 5;
+    -fx-underline: true;
+    -fx-text-fill: black;
+    -fx-font-size: 24;
+    -fx-font-weight: 800;
+}
+.bold{
+    -fx-font-weight: 800;
+}
