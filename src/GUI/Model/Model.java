@@ -190,8 +190,6 @@ public class Model {
         return caseManager.getCasesForThisCustomer(customerID);
     }
 
-<<<<<<< Updated upstream
-=======
     public List<TextsAndImagesOnReport> getImagesAndTextsForReport(int currentReportID) throws SQLException {
         return reportManager.getImagesAndTextsForReport(currentReportID);
     }
@@ -245,5 +243,4 @@ public class Model {
     public void expandKeepingTime(Case casen, int daysToKeep) throws SQLException {
         caseManager.expandKeepingTime(casen, daysToKeep);
     }
->>>>>>> Stashed changes
 }

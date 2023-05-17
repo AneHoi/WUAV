@@ -202,9 +202,6 @@ public class ReportHomePageController implements Initializable {
 
     public void handleAddSketch(ActionEvent actionEvent) {
     }
-<<<<<<< Updated upstream
-=======
-
     private void addShadow(Node... node) {
         for (Node nodes : node) {
             nodes.setEffect(shadow);
@@ -333,5 +330,4 @@ public class ReportHomePageController implements Initializable {
             }
         }
     }
->>>>>>> Stashed changes
 }

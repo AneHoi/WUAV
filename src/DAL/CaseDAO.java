@@ -85,8 +85,6 @@ public class CaseDAO implements ICaseDAO {
         }
     }
 
-<<<<<<< Updated upstream
-=======
     @Override
     public Case getChosenCase(int chosenCase) throws SQLException {
         Case c = null;
@@ -115,8 +113,6 @@ public class CaseDAO implements ICaseDAO {
         }
         return c;
     }
-
->>>>>>> Stashed changes
 
     @Override
     public List<Case> getAllCases() throws SQLException {
@@ -192,8 +188,6 @@ public class CaseDAO implements ICaseDAO {
         }
         return assignedTechs;
     }
-<<<<<<< Updated upstream
-=======
 
     public void deleteCase(Case casen) throws SQLException {
         try (Connection conn = db.getConnection()) {

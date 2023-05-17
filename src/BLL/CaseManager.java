@@ -37,8 +37,6 @@ public class CaseManager {
     public List<Technician> getAssignedTechnicians(int caseID) throws SQLException {
         return caseDAO.getAssignedTechnicians(caseID);
     }
-<<<<<<< Updated upstream
-=======
 
     public void deleteCase(Case casen) throws SQLException {
         caseDAO.deleteCase(casen);
@@ -51,5 +49,4 @@ public class CaseManager {
     public void expandKeepingTime(Case casen, int daysToKeep) throws SQLException {
         caseDAO.expandKeepingTime(casen, daysToKeep);
     }
->>>>>>> Stashed changes
 }
