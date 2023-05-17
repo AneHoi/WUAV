@@ -26,7 +26,7 @@ public class SearchForCaseController implements Initializable {
     @FXML
     private DatePicker dpDate;
     @FXML
-    private Button btnFilter, btnClear;
+    private Button btnClear;
     @FXML
     private TableView<ReportCaseAndCustomer> tblViewFilteredCases;
     @FXML
@@ -44,6 +44,64 @@ public class SearchForCaseController implements Initializable {
         updateTableView();
     }
 
+<<<<<<< Updated upstream
+=======
+    private void checkForOldCases() {
+        ObservableList<Case> oldCases = FXCollections.observableArrayList();
+        List<Case> caseList;
+        try {
+            caseList = model.getAllCases();
+            for (Case caseBE : caseList) {
+                if (tooOld(caseBE)) {
+                    openCaseAgePopUp(true);
+                    break;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get Cases from the database", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+    }
+
+    /**
+     * Checks if the case is older than 4 years.
+     * @param casen is the case to be checked
+     * @return boolean
+     */
+    private boolean tooOld(Case casen) {
+        LocalDateTime dateToday = LocalDate.now().atStartOfDay();
+        if (casen.getDateClosed() != null) {
+            LocalDateTime dateClosed = casen.getDateClosed().atStartOfDay();
+            long daysBetween = Duration.between(dateClosed, dateToday).toDays();
+            if(daysBetween > casen.getDaysToKeep()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void openCaseAgePopUp(boolean open) {
+        if (open) {
+            PopUpAgeOfCasesController popUpAgeOfCasesController = new PopUpAgeOfCasesController();
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setController(popUpAgeOfCasesController);
+            loader.setLocation(getClass().getResource("/GUI/View/PopUpAgeOfCases.fxml"));
+            stage.setTitle("age of cases");
+            try {
+                Scene scene = new Scene(loader.load());
+                stage.setScene(scene);
+                stage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open age of cases Window", ButtonType.CANCEL);
+                alert.showAndWait();
+            }
+        }
+    }
+
+>>>>>>> Stashed changes
     private void updateTableView() {
         colReportName.setCellValueFactory(new PropertyValueFactory<>("reportName"));
         colCustomer.setCellValueFactory(new PropertyValueFactory<>("customerName"));

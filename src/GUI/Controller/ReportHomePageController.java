@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -200,4 +202,136 @@ public class ReportHomePageController implements Initializable {
 
     public void handleAddSketch(ActionEvent actionEvent) {
     }
+<<<<<<< Updated upstream
+=======
+
+    private void addShadow(Node... node) {
+        for (Node nodes : node) {
+            nodes.setEffect(shadow);
+        }
+    }
+
+    private void removeShadow(Node... node) {
+        for (Node nodes : node) {
+            nodes.setEffect(null);
+        }
+    }
+
+    private void deletePartOfReport(TextsAndImagesOnReport textOrImage) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this part of the report?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.YES) {
+            try {
+                model.deletePartOfReport(textOrImage);
+                updateImagesTextsAndSketches();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Alert alert1 = new Alert(Alert.AlertType.ERROR, "Could not delete part in database", ButtonType.CANCEL);
+                alert1.showAndWait();
+            }
+        }
+    }
+
+    private void editImage(TextsAndImagesOnReport textOrImage) {
+        AddImageController addImageController = new AddImageController();
+        addImageController.setCurrentReport(currentReport);
+        addImageController.setNextAvailablePosition(nextPosition);
+        addImageController.setCurrentImage(textOrImage);
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/GUI/View/AddImageView.fxml"));
+        loader.setController(addImageController);
+        try {
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Image Window", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+        updateImagesTextsAndSketches();
+    }
+
+    private void editText(TextsAndImagesOnReport textOrImage) {
+        AddTextFieldController addTextFieldController = new AddTextFieldController();
+        addTextFieldController.setCurrentReport(currentReport);
+        addTextFieldController.setNextAvailablePosition(nextPosition);
+        addTextFieldController.setCurrentText(textOrImage);
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/GUI/View/AddTextFieldView.fxml"));
+        loader.setController(addTextFieldController);
+        try {
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Image Window", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+        updateImagesTextsAndSketches();
+    }
+
+    public void handleSubmitReport(ActionEvent event) {
+        if (btnSubmitReportForReview.getText().equals("Submit Report")) {
+            submitForReview();
+        } else if (btnSubmitReportForReview.getText().equals("Close Report")) {
+            closeReport();
+        } else if (btnSubmitReportForReview.getText().equals("Generate PDF")) {
+            generatePDF();
+        }
+
+    }
+
+    private void generatePDF() {
+        PDFGenerator pdfGenerator = new PDFGenerator();
+
+        pdfGenerator.generateReport(currentReport, currentCase, currentCustomer, textsAndImagesOnReportList());
+
+
+    }
+
+
+    private void closeReport() {
+        Alert areYouSureAlert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to submit your report for review?", ButtonType.YES, ButtonType.NO);
+        areYouSureAlert.showAndWait();
+        if (areYouSureAlert.getResult() == ButtonType.YES) {
+            try {
+                model.closeReport(currentReport.getReportID());
+                model.closeCase(currentCase);
+                disableEditing();
+                btnSubmitReportForReview.setText("Generate PDF");
+                Alert success = new Alert(Alert.AlertType.INFORMATION, "Report is now closed", ButtonType.OK);
+                success.showAndWait();
+                currentReport.setIsActive("Closed");
+                lblReportStatus.setText(currentReport.getIsActive());
+                checkForReportStatus();
+            } catch (SQLException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Could not submit report for review");
+                alert.showAndWait();
+            }
+        }
+    }
+
+    private void submitForReview() {
+        Alert areYouSureAlert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to submit your report for review?", ButtonType.YES, ButtonType.NO);
+        areYouSureAlert.showAndWait();
+        if (areYouSureAlert.getResult() == ButtonType.YES) {
+            try {
+                model.submitReportForReview(currentReport.getReportID());
+                disableEditing();
+                Alert success = new Alert(Alert.AlertType.INFORMATION, "Report submitted successfully", ButtonType.OK);
+                success.showAndWait();
+                currentReport.setIsActive("Submitted For Review");
+                lblReportStatus.setText(currentReport.getIsActive());
+                checkForReportStatus();
+            } catch (SQLException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Could not submit report for review");
+                alert.showAndWait();
+            }
+        }
+    }
+>>>>>>> Stashed changes
 }

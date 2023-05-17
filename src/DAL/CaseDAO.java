@@ -6,6 +6,7 @@ import DAL.Interfaces.ICaseDAO;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,6 +85,38 @@ public class CaseDAO implements ICaseDAO {
         }
     }
 
+<<<<<<< Updated upstream
+=======
+    @Override
+    public Case getChosenCase(int chosenCase) throws SQLException {
+        Case c = null;
+        String sql = "SELECT * FROM Case_ LEFT JOIN User_ ON Case_.Case_Assigned_Tech_ID = User_.User_ID WHERE Case_.Case_ID = " + chosenCase + ";";
+        try (Connection conn = db.getConnection()) {
+            String sql1 = "SELECT * FROM Case_ WHERE Case_.Case_Name ='" + chosenCase + "';";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql1);
+
+            while (rs.next()) {
+                int caseID = rs.getInt("Case_ID");
+                String caseName = rs.getString("Case_Name");
+                String caseDescription = rs.getString("Case_Description");
+                String contactPerson = rs.getString("Case_Contact_Person");
+                int customerID = rs.getInt("Case_Customer_ID");
+                String techName = rs.getString("User_Full_Name");
+                LocalDate date = rs.getDate("Case_Created_Date").toLocalDate();
+
+                c = new Case(caseID, caseName, caseDescription, contactPerson, customerID, techName, date);
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Could not get Case from Database");
+        }
+        return c;
+    }
+
+>>>>>>> Stashed changes
 
     @Override
     public List<Case> getAllCases() throws SQLException {
@@ -101,12 +134,18 @@ public class CaseDAO implements ICaseDAO {
                 int customerID = rs.getInt("Case_Customer_ID");
                 String techName = rs.getString("User_Full_Name");
                 LocalDate date = rs.getDate("Case_Created_Date").toLocalDate();
+                LocalDate caseClosedDate = null;
+                if(rs.getDate("Case_Closed_Date") != null) {
+                    caseClosedDate = rs.getDate("Case_Closed_Date").toLocalDate();
+                }
+                int daysToKeep = rs.getInt("Case_Days_To_Keep");
 
-                Case c = new Case(caseID, caseName, caseDescription, contactPerson, customerID, techName, date);
+                Case c = new Case(caseID, caseName, caseDescription, contactPerson, customerID, techName, date, caseClosedDate, daysToKeep);
                 cases.add(c);
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new SQLException("Could not get Cases from Database");
         }
         return cases;
@@ -153,4 +192,63 @@ public class CaseDAO implements ICaseDAO {
         }
         return assignedTechs;
     }
+<<<<<<< Updated upstream
+=======
+
+    public void deleteCase(Case casen) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            // Create statement object
+            Statement stmt = conn.createStatement();
+
+            // Set auto-commit to false
+            conn.setAutoCommit(false);
+
+            //Create SQL statements
+            String sql1 = "DELETE FROM Technicians_Assigned_To_Case WHERE Case_ID = " + casen.getCaseID() + ";";
+            String sql2 = "DELETE FROM Report WHERE Report_Case_ID = " + casen.getCaseID() + ";";
+            String sql3 = "DELETE FROM Case_ WHERE Case_ID = " + casen.getCaseID() + ";";
+
+            //Add to batch
+            stmt.addBatch(sql1);
+            stmt.addBatch(sql2);
+            stmt.addBatch(sql3);
+
+            stmt.executeBatch();
+
+            //Explicitly commit statements to apply changes
+            conn.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Could not get delete the case from the database");
+        }
+    }
+
+    public void closeCase(Case chosenCase) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "UPDATE Case_ SET Case_Closed_Date = (?), Case_Days_To_Keep = (?) WHERE Case_ID = " + chosenCase.getCaseID() + ";";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setDate(1, Date.valueOf(LocalDate.now()));
+            ps.setInt(2, 1461);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Could not close Case in database");
+        }
+    }
+
+    public void expandKeepingTime(Case casen, int daysToKeep) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "UPDATE Case_ SET Case_Days_To_Keep = (?) WHERE Case_ID = " + casen.getCaseID() + ";";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, daysToKeep);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Could not update the time for keeping this casein the database");
+        }
+    }
+>>>>>>> Stashed changes
 }

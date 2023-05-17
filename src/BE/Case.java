@@ -1,6 +1,7 @@
 package BE;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Case {
     private int caseID;
@@ -10,6 +11,8 @@ public class Case {
     private int customerID;
     private String assignedTechnician;
     private LocalDate createdDate;
+    private LocalDate dateClosed;
+    private int daysToKeep;
 
     public Case(int caseID, String caseName, String caseDescription, String contactPerson, int customerID, String assignedTechnician, LocalDate createdDate) {
         this.caseID = caseID;
@@ -19,6 +22,17 @@ public class Case {
         this.customerID = customerID;
         this.assignedTechnician = assignedTechnician;
         this.createdDate = createdDate;
+    }
+    public Case(int caseID, String caseName, String caseDescription, String contactPerson, int customerID, String assignedTechnician, LocalDate createdDate, LocalDate dateClosed, int daysToKeep) {
+        this.caseID = caseID;
+        this.caseName = caseName;
+        this.caseDescription = caseDescription;
+        this.contactPerson = contactPerson;
+        this.customerID = customerID;
+        this.assignedTechnician = assignedTechnician;
+        this.createdDate = createdDate;
+        this.dateClosed = dateClosed;
+        this.daysToKeep = daysToKeep;
     }
 
     public int getCaseID() {
@@ -76,4 +90,21 @@ public class Case {
     public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
+
+    public LocalDate getDateClosed() {
+        return dateClosed;
+    }
+
+    public void setDateClosed(LocalDate dateClosed) {
+        this.dateClosed = dateClosed;
+    }
+
+    public int getDaysToKeep() {
+        return daysToKeep;
+    }
+
+    public void setDaysToKeep(int daysToKeep) {
+        this.daysToKeep = daysToKeep;
+    }
+
 }

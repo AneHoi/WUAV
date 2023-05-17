@@ -6,6 +6,7 @@ import BLL.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -189,4 +190,60 @@ public class Model {
         return caseManager.getCasesForThisCustomer(customerID);
     }
 
+<<<<<<< Updated upstream
+=======
+    public List<TextsAndImagesOnReport> getImagesAndTextsForReport(int currentReportID) throws SQLException {
+        return reportManager.getImagesAndTextsForReport(currentReportID);
+    }
+
+    public void updateImageInReport(int imageID, byte[] dataImage, String comment, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
+        reportManager.updateImageInReport(imageID, dataImage, comment, userID, createdDate, createdTime);
+    }
+
+    public void deletePartOfReport(TextsAndImagesOnReport textOrImage) throws SQLException {
+        reportManager.deletePartOfReport(textOrImage);
+    }
+    public Case getChosenCase(int chosenCase) throws SQLException {
+        return caseManager.getChosenCase(chosenCase);
+    }
+
+    public void updateTextInReport(int textID, String txt, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
+        reportManager.updateTextInReport(textID, txt, userID, createdDate, createdTime);
+    }
+
+    public void moveItemUp(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException {
+        reportManager.moveItemUp(textOrImageID, positionOnReport);
+    }
+
+    public void moveItemDown(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException{
+        reportManager.moveItemDown(textOrImageID, positionOnReport);
+    }
+
+    public void deleteCase(Case casen) throws SQLException {
+        caseManager.deleteCase(casen);
+    }
+    public void submitReportForReview(int reportID) throws SQLException {
+        reportManager.submitReportForReview(reportID);
+    }
+
+    public void closeReport(int reportID) throws SQLException {
+        reportManager.closeReport(reportID);
+    }
+
+    public void updateReport(int reportID, String reportName, String reportDescription, int userID) throws SQLException {
+        reportManager.updateReport(reportID, reportName, reportDescription, userID);
+    }
+
+    public void deleteReport(int reportID) throws SQLException {
+        reportManager.deleteReport(reportID);
+    }
+
+    public void closeCase(Case chosenCase) throws SQLException {
+        caseManager.closeCase(chosenCase);
+    }
+
+    public void expandKeepingTime(Case casen, int daysToKeep) throws SQLException {
+        caseManager.expandKeepingTime(casen, daysToKeep);
+    }
+>>>>>>> Stashed changes
 }

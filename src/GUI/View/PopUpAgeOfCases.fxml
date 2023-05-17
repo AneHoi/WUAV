@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="tblCases" prefHeight="300.0">
+              <columns>
+                <TableColumn fx:id="clmCaseName" prefWidth="200.0" text="CaseName" />
+                <TableColumn fx:id="clmCreated" prefWidth="175.0" text="Created" />
+                  <TableColumn fx:id="clmClosed" prefWidth="175.0" text="Closed" />
+              </columns>
+               <HBox.margin>
+                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+               </HBox.margin>
+            </TableView>
+            <VBox alignment="CENTER" spacing="30.0">
+               <children>
+                  <HBox>
+                     <children>
+                        <Label fx:id="lblInfo1" styleClass="infoLabel" text="This case is" />
+                        <Label fx:id="lblMonthsOld" styleClass="infoLabel" text="months" />
+                        <Label fx:id="lblInfo2" styleClass="infoLabel" text="months old" />
+                     </children>
+                  </HBox>
+                  <Button fx:id="btnKeepCase" mnemonicParsing="false" onAction="#keepCaseLonger" text="Keep case" />
+                  <Button fx:id="btnDeleteCase" mnemonicParsing="false" onAction="#deleteCase" text="Delete case" />
+               </children>
+            </VBox>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+         </BorderPane.margin>
+      </HBox>
+   </center>
+   <stylesheets>
+      <URL value="@css/tableview.css" />
+      <URL value="@css/Main.css" />
+      <URL value="@css/fonts.css" />
+   </stylesheets>
+   <top>
+      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <Label styleClass="headingLabel" text="Old cases">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <TextArea editable="false" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: transparent;" styleClass="underHeadingLabel" text="Here are the old cases, where you can chose to keep them for longer or delete them from the system completely" wrapText="true" />
+         </children>
+      </VBox>
+   </top>
+</BorderPane>
