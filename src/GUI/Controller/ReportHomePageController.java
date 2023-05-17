@@ -1,6 +1,9 @@
 package GUI.Controller;
 
-import BE.*;
+import BE.Case;
+import BE.Customer;
+import BE.Report;
+import BE.TextsAndImagesOnReport;
 import BLL.util.PDFGenerator;
 import GUI.Model.Model;
 import com.itextpdf.kernel.colors.Lab;
@@ -618,7 +621,9 @@ public class ReportHomePageController implements Initializable {
         } else if (btnSubmitReportForReview.getText().equals("Close Report")) {
             closeReport();
         } else if (btnSubmitReportForReview.getText().equals("Generate PDF")) {
+            //TODO make them chose destination and insert destination in generatePdf method
             generatePDF();
+            //TODO open pdf
         }
 
     }

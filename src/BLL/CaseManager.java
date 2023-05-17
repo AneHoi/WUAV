@@ -39,4 +39,8 @@ public class CaseManager {
     public List<Technician> getAssignedTechnicians(int caseID) throws SQLException {
         return caseDAO.getAssignedTechnicians(caseID);
     }
+
+    public void deleteCase(Case casen) throws SQLException {
+        caseDAO.deleteCase(casen);
+    }
 }

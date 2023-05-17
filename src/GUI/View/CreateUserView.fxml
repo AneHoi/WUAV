@@ -19,7 +19,7 @@
 
 <BorderPane prefHeight="632.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateUserController">
    <top>
-      <Label text="User page" underline="true" BorderPane.alignment="TOP_LEFT">
+      <Label styleClass="headingLabel" text="User page" underline="true" BorderPane.alignment="TOP_LEFT">
          <font>
             <Font name="System Bold" size="40.0" />
          </font>
@@ -33,12 +33,12 @@
          <children>
             <VBox prefHeight="532.0" prefWidth="811.0">
                <children>
-                  <Label text="Existing Users:" underline="true">
+                  <Label styleClass="underHeadingLabel" text="Existing Users:" underline="true">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="25.0" top="25.0" />
+                        <Insets left="25.0" />
                      </VBox.margin>
                   </Label>
                   <TableView fx:id="tblViewExistingUsers" prefHeight="1000.0" prefWidth="1000.0">
@@ -118,10 +118,13 @@
                   </Button>
                </children>
                <HBox.margin>
-                  <Insets right="25.0" />
+                  <Insets />
                </HBox.margin>
             </GridPane>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+         </BorderPane.margin>
       </HBox>
    </center>
    <stylesheets>
