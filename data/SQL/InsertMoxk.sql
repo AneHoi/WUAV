@@ -22,6 +22,8 @@ INSERT INTO Customer VALUES('Need Help co', 'Help Me street 1', 'needhelp@help.c
 
 INSERT INTO Case_ VALUES('Conference room set up', 'They need to be able to...', (SELECT User_ID FROM User_ WHERE [User_Name] = 'PM'), 1, (SELECT User_ID FROM User_ Where [User_Name] = 'T1'), convert(date, '2023-9-14'))
 GO
+INSERT INTO Case_ VALUES('Just an old case', 'They want to delete this case', (SELECT User_ID FROM User_ WHERE [User_Name] = 'PM'), 1, (SELECT User_ID FROM User_ Where [User_Name] = 'T1'), convert(date, '2003-9-14'))
+GO
 
 INSERT INTO Report VALUES('Conf room setup', 'Conf room need....', (SELECT DISTINCT User_ID FROM User_ WHERE [User_Name] = 'T1'), (SELECT DISTINCT Case_ID FROM Case_ WHERE Case_Name = 'Conference room set up'), convert(date, '2023-9-18'), 1, 'Open')
 GO

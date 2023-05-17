@@ -170,6 +170,9 @@ public class Model {
         reportManager.moveItemDown(textOrImageID, positionOnReport);
     }
 
+    public void deleteCase(Case casen) throws SQLException {
+        caseManager.deleteCase(casen);
+    }
     public void submitReportForReview(int reportID) throws SQLException {
         reportManager.submitReportForReview(reportID);
     }

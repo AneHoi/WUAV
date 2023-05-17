@@ -3,6 +3,7 @@ package DAL;
 import BE.Case;
 import BE.Technician;
 import DAL.Interfaces.ICaseDAO;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -89,8 +90,9 @@ public class CaseDAO implements ICaseDAO {
         Case c = null;
         String sql = "SELECT * FROM Case_ LEFT JOIN User_ ON Case_.Case_Assigned_Tech_ID = User_.User_ID WHERE Case_.Case_ID = "+ chosenCase + ";";
         try (Connection conn = db.getConnection()) {
+            String sql1 = "SELECT * FROM Case_ WHERE Case_.Case_Name ='" + chosenCase + "';";
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            ResultSet rs = stmt.executeQuery(sql1);
 
             while (rs.next()) {
                 int caseID = rs.getInt("Case_ID");
@@ -180,5 +182,34 @@ public class CaseDAO implements ICaseDAO {
             throw new SQLException("Could not get assigned Technicians from database");
         }
         return assignedTechs;
+    }
+
+    public void deleteCase(Case casen) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            // Create statement object
+            Statement stmt = conn.createStatement();
+
+            // Set auto-commit to false
+            conn.setAutoCommit(false);
+
+            //Create SQL statements
+            String sql1 = "DELETE FROM Technicians_Assigned_To_Case WHERE Case_ID = " + casen.getCaseID() + ";";
+            String sql2 = "DELETE FROM Report WHERE Report_Case_ID = " + casen.getCaseID() + ";";
+            String sql3 = "DELETE FROM Case_ WHERE Case_ID = " + casen.getCaseID() + ";";
+
+            //Add to batch
+            stmt.addBatch(sql1);
+            stmt.addBatch(sql2);
+            stmt.addBatch(sql3);
+
+            stmt.executeBatch();
+
+            //Explicitly commit statements to apply changes
+            conn.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Could not get delete the case from the database");
+        }
     }
 }

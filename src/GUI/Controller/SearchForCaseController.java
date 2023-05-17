@@ -10,17 +10,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -45,11 +50,71 @@ public class SearchForCaseController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = Model.getInstance();
+        checkForOldCases();
         controllerAssistant = ControllerAssistant.getInstance();
         addShadow(txtReportName, txtCustomer, txtCustomerAddress, txtCaseName, txtTechnician, dpDate, btnClear);
         dpDate.setPrefWidth(600);
         addListeners();
         updateTableView();
+    }
+
+    private void checkForOldCases() {
+        ObservableList<Case> oldCases = FXCollections.observableArrayList();
+        List<Case> caseList;
+        try {
+            caseList = model.getAllCases();
+            for (Case caseBE : caseList) {
+                if (tooOld(caseBE)) {
+                    oldCases.add(caseBE);
+                }
+            }
+            if(oldCases.size() > 0){
+                openCaseAgePopUp(true, oldCases);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get Cases from the database", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+    }
+
+    /**
+     * Checks if the case is older than 4 years.
+     * @param casen is the case to be checked
+     * @return boolean
+     */
+    private boolean tooOld(Case casen) {
+        LocalDateTime dateToday = LocalDate.now().atStartOfDay();
+        LocalDateTime dateCreated = casen.getCreatedDate().atStartOfDay();
+        long daysBetween = Duration.between(dateCreated, dateToday).toDays();
+        long yearsBetween = Math.round(daysBetween/365);
+        if(yearsBetween > 4){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    private void openCaseAgePopUp(boolean open, ObservableList<Case> oldCases) {
+        if (open) {
+            PopUpAgeOfCasesController popUpAgeOfCasesController = new PopUpAgeOfCasesController();
+            popUpAgeOfCasesController.setTooOldCases(oldCases);
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setController(popUpAgeOfCasesController);
+            loader.setLocation(getClass().getResource("/GUI/View/PopUpAgeOfCases.fxml"));
+            stage.setTitle("age of cases");
+            try {
+                Scene scene = new Scene(loader.load());
+                stage.setScene(scene);
+                stage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open age of cases Window", ButtonType.CANCEL);
+                alert.showAndWait();
+            }
+        }
     }
 
     private void updateTableView() {
@@ -65,7 +130,7 @@ public class SearchForCaseController implements Initializable {
         List<ReportCaseAndCustomer> reportCaseAndCustomers;
         try {
             reportCaseAndCustomers = model.getAllReports();
-            for (ReportCaseAndCustomer rCC: reportCaseAndCustomers) {
+            for (ReportCaseAndCustomer rCC : reportCaseAndCustomers) {
                 data.add(rCC);
             }
         } catch (SQLException e) {
@@ -108,6 +173,7 @@ public class SearchForCaseController implements Initializable {
         // Update the TableView to display the filtered list
         tblViewFilteredReports.setItems(filteredList);
     }
+
     private void addListeners() {
         tblViewFilteredReports.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && tblViewFilteredReports.getSelectionModel().getSelectedItem() != null) {
@@ -137,8 +203,9 @@ public class SearchForCaseController implements Initializable {
         txtCustomerAddress.textProperty().addListener(tableViewUpdate);
         txtCaseName.textProperty().addListener(tableViewUpdate);
         txtTechnician.textProperty().addListener(tableViewUpdate);
-        dpDate.editorProperty().addListener((ChangeListener) tableViewUpdate );
+        dpDate.editorProperty().addListener((ChangeListener) tableViewUpdate);
     }
+
     ChangeListener<String> tableViewUpdate = (observable, oldValue, newValue) -> {
         String reportName = txtReportName.getText().trim();
         String customerName = txtCustomer.getText().trim();

@@ -220,7 +220,6 @@ public class BurgerBarController implements Initializable {
             alert.showAndWait();
         }
         return image;
-
     }
 
 }
