@@ -16,26 +16,27 @@ public class Model {
     private Customer currentCustomer;
     private Case currentCase;
     private Report currentReport;
-    private Addendum currentAddendum;
-    private Section currentSection;
     private List<Customer> customers;
     private CustomerManager customerManager;
     private ReportManager reportManager;
     private UserManager userManager;
-    private SectionManager sectionManager;
+
     private CaseManager caseManager;
 
     public Model() {
         customerManager = new CustomerManager();
         reportManager = new ReportManager();
         userManager = new UserManager();
-        sectionManager = new SectionManager();
         caseManager = new CaseManager();
     }
 
     public static Model getInstance() {
         if (model == null) model = new Model();
         return model;
+    }
+
+    public Customer getChosenCustomer(int chosenCustomer) throws SQLException {
+        return customerManager.getChosenCustomer(chosenCustomer);
     }
 
     public List<Customer> getAllCustomers() throws SQLException {
@@ -51,17 +52,17 @@ public class Model {
         reportManager.createNewReport(reportName, reportDescription, caseID, userID);
     }
 
+    public Report getChosenReport(int reportID) throws SQLException {
+        return reportManager.getChosenReport(reportID);
+    }
+
     public List<Report> getReports(int caseID) throws SQLException {
         return reportManager.getReports(caseID);
     }
-    public  List<ReportCaseAndCustomer> getAllReports() throws SQLException {
+
+
+    public List<ReportCaseAndCustomer> getAllReports() throws SQLException {
         return reportManager.getAllReports();
-    }
-    public void createNewSection(String sectionTitle, byte[] sketch, String sketchComment, byte[] image, String imageComment, String description, int madeByTech, int reportID) throws Exception {
-        sectionManager.createNewSection(sectionTitle,sketch,sketchComment,image,imageComment,description,madeByTech,reportID);
-    }
-    public List<Section> getSections(int reportID) throws SQLException {
-        return sectionManager.getSections(reportID);
     }
 
     public List<Technician> getAllTechnicians() throws SQLException {
@@ -92,42 +93,6 @@ public class Model {
         userManager.createNewUser(fullName, userName, userTlf, userEmail, userType);
     }
 
-    public void createNewAddendum(String addendumName, String addendumDescription, int caseID, int reportID, int userID) throws SQLException {
-        reportManager.createNewAddendum(addendumName, addendumDescription, caseID, reportID, userID);
-    }
-
-    public List<Addendum> getAddendums(int caseID, int reportID) throws SQLException {
-        return reportManager.getAddendums(caseID, reportID);
-    }
-
-    public Addendum getCurrentAddendum() {
-        return currentAddendum;
-    }
-
-    public void setCurrentSection(Section section) {
-        currentSection = section;
-    }
-
-    public List<Section> getAllSections(int currentReportID) throws SQLException {
-        return sectionManager.getAllSections(currentReportID);
-    }
-
-    public void updateCurrentSection(Section currentSection) throws SQLException {
-        sectionManager.updateCurrentSection(currentSection);
-    }
-
-    public void createSectionForReport(Section section) throws SQLException {
-        sectionManager.createSectionForReport(section);
-    }
-
-    public void createSectionForAddendum(Section section) throws SQLException {
-        sectionManager.createSectionForAddendum(section);
-    }
-
-    public void deleteSection(int sectionID) throws SQLException {
-        sectionManager.deleteSection(sectionID);
-
-    }
 
     public void updateCase(int caseID, String caseName, String contactPerson, String caseDescription) throws SQLException {
         caseManager.updateCase(caseID, caseName, contactPerson, caseDescription);
@@ -149,18 +114,10 @@ public class Model {
         reportManager.SaveImageToReport(position, reportID, dataImage, comment, userID, createdDate, createdTime);
     }
 
-    public List<ImageOnReport> getAllImagesForReport(int currentReportID) throws SQLException {
-        return reportManager.getAllImagesForReport(currentReportID);
-    }
-
-    public List<TextOnReport> getAllTextFieldsForReport(int currentReportID) throws SQLException {
-        return reportManager.getAllTextFieldsForReport(currentReportID);
-    }
     public void deleteCustomer(Customer customer) throws SQLException {
         customerManager.deleteCustomer(customer);
 
     }
-
 
     public void setCurrentReport(Report selectedItem) {
         currentReport = selectedItem;
@@ -213,7 +170,7 @@ public class Model {
         reportManager.moveItemUp(textOrImageID, positionOnReport);
     }
 
-    public void moveItemDown(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException{
+    public void moveItemDown(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException {
         reportManager.moveItemDown(textOrImageID, positionOnReport);
     }
 
@@ -242,5 +199,28 @@ public class Model {
 
     public void expandKeepingTime(Case casen, int daysToKeep) throws SQLException {
         caseManager.expandKeepingTime(casen, daysToKeep);
+    }
+    public void saveLoginDetails(int reportID, String component, String username, String password, String additionalInfo, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
+        reportManager.saveLoginDetails(reportID, component, username, password, additionalInfo, createdDate, createdTime, userID);
+    }
+
+    public void noLoginInfoForThisReport(int reportID, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
+        reportManager.noLoginInfoForThisReport(reportID, createdDate, createdTime, userID);
+    }
+
+    public List<LoginDetails> getLoginDetails(int reportID) throws SQLException {
+        return reportManager.getLoginDetails(reportID);
+    }
+
+    public void deleteLoginDetails(int loginDetailsID) throws SQLException {
+        reportManager.deleteLoginDetails(loginDetailsID);
+    }
+
+    public void updateLoginDetails(int loginDetailsID, String component, String username, String password, String additionalInfo, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
+        reportManager.updateLoginDetails(loginDetailsID, component, username, password, additionalInfo, createdDate, createdTime, userID);
+    }
+
+    public void updateToNoLogin(int loginDetailsID, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
+        reportManager.updateToNoLogin(loginDetailsID, createdDate, createdTime, userID);
     }
 }

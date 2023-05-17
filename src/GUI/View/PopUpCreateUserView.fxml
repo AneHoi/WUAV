@@ -9,7 +9,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="647.0" prefWidth="373.0" spacing="45.0" stylesheets="@css/Main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<?import java.net.URL?>
+<VBox alignment="TOP_CENTER" prefHeight="647.0" prefWidth="373.0" spacing="45.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label text="Create New User" underline="true">
          <font>
@@ -19,7 +20,7 @@
             <Insets left="20.0" right="20.0" top="20.0" />
          </VBox.margin>
       </Label>
-      <TextField fx:id="txtFullNameCreate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Full Name..." styleClass="textFields">
+      <TextField fx:id="txtFullNameCreate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Full Name...">
          <font>
             <Font size="24.0" />
          </font>
@@ -30,7 +31,7 @@
             <Tooltip text="Full name" />
          </tooltip>
       </TextField>
-      <TextField fx:id="txtUserNameCreate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="User Name..." styleClass="textFields">
+      <TextField fx:id="txtUserNameCreate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="User Name...">
          <font>
             <Font size="24.0" />
          </font>
@@ -41,7 +42,7 @@
             <Tooltip text="User name" />
          </tooltip>
       </TextField>
-      <TextField fx:id="txtTelephoneCreate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Telephone Number..." styleClass="textFields">
+      <TextField fx:id="txtTelephoneCreate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Telephone Number...">
          <font>
             <Font size="24.0" />
          </font>
@@ -52,7 +53,7 @@
             <Tooltip text="Telephone number" />
          </tooltip>
       </TextField>
-      <TextField fx:id="txtEmailCreate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Email..." styleClass="textFields">
+      <TextField fx:id="txtEmailCreate" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Email...">
          <font>
             <Font size="24.0" />
          </font>
@@ -63,12 +64,12 @@
             <Tooltip text="Email" />
          </tooltip>
       </TextField>
-      <ComboBox fx:id="cbUserTypeCreate" prefHeight="50.0" prefWidth="250.0" promptText="User type">
+      <ComboBox fx:id="cbUserTypeCreate" prefHeight="50.0" prefWidth="250.0" promptText="User type" styleClass="text-field">
          <VBox.margin>
             <Insets left="25.0" right="25.0" />
          </VBox.margin>
       </ComboBox>
-      <Button fx:id="btnCreateNewUser" mnemonicParsing="false" onAction="#handleCreateNewUser" prefHeight="35.0" prefWidth="200.0" styleClass="orangeButtons" text="Create New User" underline="true">
+      <Button fx:id="btnCreateNewUser" mnemonicParsing="false" onAction="#handleCreateNewUser" prefWidth="200.0" text="Create New User">
          <font>
             <Font size="18.0" />
          </font>
@@ -77,4 +78,9 @@
          </VBox.margin>
       </Button>
    </children>
+   <stylesheets>
+      <URL value="@css/tableview.css" />
+      <URL value="@css/Main.css" />
+      <URL value="@css/fonts.css" />
+   </stylesheets>
 </VBox>

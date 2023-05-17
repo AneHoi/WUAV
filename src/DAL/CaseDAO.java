@@ -3,6 +3,7 @@ package DAL;
 import BE.Case;
 import BE.Technician;
 import DAL.Interfaces.ICaseDAO;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -131,7 +132,7 @@ public class CaseDAO implements ICaseDAO {
                 String techName = rs.getString("User_Full_Name");
                 LocalDate date = rs.getDate("Case_Created_Date").toLocalDate();
                 LocalDate caseClosedDate = null;
-                if(rs.getDate("Case_Closed_Date") != null) {
+                if (rs.getDate("Case_Closed_Date") != null) {
                     caseClosedDate = rs.getDate("Case_Closed_Date").toLocalDate();
                 }
                 int daysToKeep = rs.getInt("Case_Days_To_Keep");
@@ -244,5 +245,4 @@ public class CaseDAO implements ICaseDAO {
             throw new SQLException("Could not update the time for keeping this casein the database");
         }
     }
->>>>>>> Stashed changes
 }

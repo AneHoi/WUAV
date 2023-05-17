@@ -15,7 +15,6 @@ import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Struct;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -35,7 +34,6 @@ public class PopUpAgeOfCasesController implements Initializable {
     @FXML
     private TableColumn clmCaseName, clmCreated, clmClosed;
     private Model model;
-    private ObservableList<Case> tooOldCases;
     private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
 
 
@@ -51,6 +49,7 @@ public class PopUpAgeOfCasesController implements Initializable {
         addShadow(btnKeepCase, btnDeleteCase);
         disable(true);
     }
+
     private void addShadow(Node... node) {
         for (Node nodes : node) {
             nodes.setEffect(shadow);
@@ -80,7 +79,7 @@ public class PopUpAgeOfCasesController implements Initializable {
             lblInfo1.setVisible(false);
             lblInfo2.setVisible(false);
 
-        }else {
+        } else {
             lblMonthsOld.setVisible(true);
             lblInfo1.setVisible(true);
             lblInfo2.setVisible(true);
@@ -113,6 +112,7 @@ public class PopUpAgeOfCasesController implements Initializable {
 
     /**
      * Checks if the case is older than 4 years.
+     *
      * @param casen is the case to be checked
      * @return boolean
      */
@@ -121,7 +121,7 @@ public class PopUpAgeOfCasesController implements Initializable {
         if (casen.getDateClosed() != null) {
             LocalDateTime dateClosed = casen.getDateClosed().atStartOfDay();
             long daysBetween = Duration.between(dateClosed, dateToday).toDays();
-            if(daysBetween > casen.getDaysToKeep()){
+            if (daysBetween > casen.getDaysToKeep()) {
                 return true;
             }
         }
@@ -147,11 +147,12 @@ public class PopUpAgeOfCasesController implements Initializable {
             expandKeepingTime(casen, 30);
         } else if (option.get() == halfAYear) {
             expandKeepingTime(casen, 183);
-        } else if (option.get() == aYear){
+        } else if (option.get() == aYear) {
             expandKeepingTime(casen, 365);
         } else if (option.get() == fourYear) {
             expandKeepingTime(casen, 1460);
-        } else {}
+        } else {
+        }
         updateTableView();
         disable(true);
     }

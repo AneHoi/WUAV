@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,20 +25,44 @@ public class PopUpCreateNewReportController implements Initializable {
     private TextArea txtReportDescription;
     @FXML
     private Button btnCreateNewReport;
-
+    @FXML
+    private Label lblTitle, lblReportName;
     private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private ControllerAssistant controllerAssistant;
     private Model model;
     private Case currentCase;
+    private Report currentReport;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = Model.getInstance();
         controllerAssistant = ControllerAssistant.getInstance();
-        addListeners();
-        btnCreateNewReport.setDisable(true);
-        addShadow(txtReportDescription, txtReportName);
+        checkCreateOrUpdate();
+
+    }
+
+    private void checkCreateOrUpdate() {
+        if (currentReport != null) {
+            setCurrentReportInfo();
+            addShadow(txtReportDescription,txtReportName,btnCreateNewReport);
+
+        } else {
+            addListeners();
+            lblReportName.setOpacity(0);
+            btnCreateNewReport.setDisable(true);
+            addShadow(txtReportDescription, txtReportName);
+        }
+    }
+
+    private void setCurrentReportInfo() {
+        lblTitle.setText("Update Report");
+        lblReportName.setText(currentReport.getReportName());
+        btnCreateNewReport.setDisable(false);
+        btnCreateNewReport.setText("Update Report");
+        txtReportName.setText(currentReport.getReportName());
+        txtReportDescription.setText(currentReport.getReportDescription());
+
     }
 
     public void setCurrentCase(Case currentCase) {
@@ -60,8 +85,7 @@ public class PopUpCreateNewReportController implements Initializable {
     };
 
 
-
-        private void addShadow(Node... node) {
+    private void addShadow(Node... node) {
         for (Node nodes : node) {
             nodes.setEffect(shadow);
         }
@@ -72,16 +96,51 @@ public class PopUpCreateNewReportController implements Initializable {
             nodes.setEffect(null);
         }
     }
+
     public void handleCreateNewReport(ActionEvent actionEvent) {
+        if (btnCreateNewReport.getText().equals("Update Report")) {
+            updateReport();
+        } else {
+            createNewReport();
+        }
+
+    }
+
+    private void createNewReport() {
         String reportName = txtReportName.getText();
         String reportDescription = txtReportDescription.getText();
         int caseID = currentCase.getCaseID();
         try {
-            model.createNewReport(reportName, reportDescription, caseID, controllerAssistant.getLoggedInUser().getUserID()); //TODO UserID might not be right here, we need to fix this.
+            model.createNewReport(reportName, reportDescription, caseID, controllerAssistant.getLoggedInUser().getUserID());
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Report successfully created", ButtonType.OK);
+            alert.showAndWait();
+            Stage stage = (Stage) btnCreateNewReport.getScene().getWindow();
+            stage.close();
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not create a new report", ButtonType.CANCEL);
             alert.showAndWait();
         }
+    }
+
+    private void updateReport() {
+        int reportID = currentReport.getReportID();
+        String reportName = txtReportName.getText();
+        String reportDescription = txtReportDescription.getText();
+        try {
+            model.updateReport(reportID, reportName, reportDescription, controllerAssistant.getLoggedInUser().getUserID());
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Report updated successfully", ButtonType.OK);
+            alert.showAndWait();
+            Stage stage = (Stage) btnCreateNewReport.getScene().getWindow();
+            stage.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not update report in database", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+    }
+
+    public void setCurrentReport(Report selectedItem) {
+        currentReport = selectedItem;
     }
 }

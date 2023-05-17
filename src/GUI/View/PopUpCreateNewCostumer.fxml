@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" spacing="45.0" style="-fx-background-color: white;" stylesheets="@css/Main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" spacing="45.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField fx:id="txtCostumerName" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Customer Name..." styleClass="backgroundAndWhiteText">
+      <TextField fx:id="txtCostumerName" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Customer Name...">
          <font>
             <Font size="24.0" />
          </font>
@@ -20,7 +22,7 @@
             <Tooltip text="Customer name" />
          </tooltip>
       </TextField>
-      <TextField fx:id="txtAddress" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Address..." styleClass="backgroundAndWhiteText">
+      <TextField fx:id="txtAddress" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Address...">
          <font>
             <Font size="24.0" />
          </font>
@@ -31,7 +33,7 @@
             <Tooltip text="Address" />
          </tooltip>
       </TextField>
-      <TextField fx:id="txtTlfNumber" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Telephone Number..." styleClass="backgroundAndWhiteText">
+      <TextField fx:id="txtTlfNumber" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Telephone Number...">
          <font>
             <Font size="24.0" />
          </font>
@@ -42,7 +44,7 @@
             <Tooltip text="Telephone number" />
          </tooltip>
       </TextField>
-      <TextField fx:id="txtEmail" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Email..." styleClass="backgroundAndWhiteText">
+      <TextField fx:id="txtEmail" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="Email...">
          <font>
             <Font size="24.0" />
          </font>
@@ -53,7 +55,8 @@
             <Tooltip text="Email" />
          </tooltip>
       </TextField>
-      <TextField fx:id="txtCVR" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" promptText="CVR..." styleClass="backgroundAndWhiteText">
+      <ComboBox fx:id="cbCustomerType" prefHeight="50.0" prefWidth="250.0" promptText="Type..." />
+      <TextField fx:id="txtCVR" alignment="CENTER" prefWidth="250.0" promptText="CVR...">
          <font>
             <Font size="24.0" />
          </font>
@@ -64,7 +67,7 @@
             <Tooltip text="CVR" />
          </tooltip>
       </TextField>
-      <Button fx:id="btnCreateCostumer" mnemonicParsing="false" onAction="#saveCostumer" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: E84910;" styleClass="roundedEdges" text="Create New Customer" textFill="WHITE" underline="true">
+      <Button fx:id="btnCreateCostumer" mnemonicParsing="false" onAction="#saveCostumer" prefHeight="35.0" prefWidth="200.0" text="Create New Customer" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
@@ -73,4 +76,9 @@
          </VBox.margin>
       </Button>
    </children>
+   <stylesheets>
+      <URL value="@css/tableview.css" />
+      <URL value="@css/Main.css" />
+      <URL value="@css/fonts.css" />
+   </stylesheets>
 </VBox>

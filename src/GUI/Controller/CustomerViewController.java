@@ -18,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -34,6 +35,8 @@ import java.util.ResourceBundle;
 public class CustomerViewController implements Initializable {
     @FXML
     private Button btnCreateCustomer, btnDeleteCustomer;
+    @FXML
+    private HBox hBoxButtonBar;
     private Model model;
     @FXML
     private TableColumn clmCustomerName, clmAddress, clmCVR, clmCustomerType;
@@ -41,14 +44,8 @@ public class CustomerViewController implements Initializable {
     private TableView tblViewCustomers;
     @FXML
     private TextField txtSearchBar;
-    @FXML
-    private ImageView imgSearch;
-
     private ObservableList<Customer> customerObservableList;
-
     private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
-    private String search = "data/Images/search.png";
-
     private ControllerAssistant controllerAssistant;
 
     @Override
@@ -57,38 +54,34 @@ public class CustomerViewController implements Initializable {
         controllerAssistant = ControllerAssistant.getInstance();
         model = Model.getInstance();
         customerObservableList = FXCollections.observableArrayList();
-        imgSearch.setImage(loadImages(search));
         updateCostumerView();
         searchBarFilter();
         btnDeleteCustomer.setVisible(false);
         btnDeleteCustomer.setDisable(true);
-        addShadow(btnCreateCustomer, btnDeleteCustomer, txtSearchBar, imgSearch);
+        addShadow(btnCreateCustomer, btnDeleteCustomer, txtSearchBar);
     }
 
 
     private void addListeners() {
-        tblViewCustomers.focusedProperty().addListener(new ChangeListener<Boolean>()
-        {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
-            {
-                if (!newPropertyValue)
-                {
-                    btnCreateCustomer.setText("Create new customer");
-                }
+        tblViewCustomers.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                Button btnEditCustomer = new Button("Edit Customer");
+                btnEditCustomer.setPrefWidth(200);
+                addShadow(btnEditCustomer);
+                btnEditCustomer.setOnAction(event -> openNewCustomerPopUp(event));
+                hBoxButtonBar.getChildren().add(btnEditCustomer);
+                btnDeleteCustomer.setVisible(true);
+                btnDeleteCustomer.setDisable(false);
+                btnCreateCustomer.setText("Create New Customer");
+            } else {
+                hBoxButtonBar.getChildren().removeIf(node -> node instanceof Button && ((Button) node).getText().equals("Edit Customer"));
+                btnCreateCustomer.setText("Create New Customer");
+                btnDeleteCustomer.setVisible(false);
+                btnDeleteCustomer.setDisable(true);
             }
         });
 
         tblViewCustomers.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 1 && tblViewCustomers.getSelectionModel().getSelectedItem() != null){
-                btnCreateCustomer.setText("Edit customer");
-                btnDeleteCustomer.setVisible(true);
-                btnDeleteCustomer.setDisable(false);
-            }else {
-                btnCreateCustomer.setText("Create new customer");
-                btnDeleteCustomer.setVisible(false);
-                btnDeleteCustomer.setDisable(true);
-            }
             if (event.getClickCount() == 2 && tblViewCustomers.getSelectionModel().getSelectedItem() != null) {
                 Customer selectedItem = (Customer) tblViewCustomers.getSelectionModel().getSelectedItem();
                 try {
@@ -99,10 +92,8 @@ public class CustomerViewController implements Initializable {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Customer Home Page", ButtonType.CANCEL);
                     alert.showAndWait();
                 }
-
             }
         });
-
     }
     private void searchBarFilter() {  //TODO understand this...
         // Create a list to hold the original unfiltered items in the tblViewCustomers TableView

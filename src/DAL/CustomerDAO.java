@@ -40,6 +40,30 @@ public class CustomerDAO implements ICustomerDAO {
         }
         return customers;
     }
+    public Customer getChosenCustomer(int chosenCustomer) throws SQLException {
+        Customer customerVar = null;
+        try (Connection conn = db.getConnection()) {
+            String sql = "SELECT * FROM Customer WHERE Customer.Customer_ID = " + chosenCustomer + ";";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                int id = rs.getInt("Customer_ID");
+                String name = rs.getString("Customer_Name");
+                String address = rs.getString("Customer_Address");
+                String mail = rs.getString("Customer_Mail");
+                String tlf = rs.getString("Customer_Tlf");
+                int cvr = rs.getInt("Customer_CVR");
+                String type = rs.getString("Customer_Type");
+
+                customerVar = new Customer(id, name, address, tlf, mail, cvr, type);
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+        return customerVar;
+    }
     public void saveCustomer(Customer customerVar) {
         try (Connection conn = db.getConnection()) {
             String sql = "INSERT INTO Customer" + "(Customer_Name, Customer_Address, Customer_Mail, Customer_Tlf, Customer_CVR, Customer_Type)" + "VALUES(?,?,?,?,?,?);";

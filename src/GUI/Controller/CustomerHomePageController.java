@@ -39,7 +39,7 @@ public class CustomerHomePageController implements Initializable {
     @FXML
     private TableView tblViewExistingCases, tblViewTechAssigned;
     @FXML
-    private ImageView imgSearch, imgBack, imgForward;
+    private ImageView imgBack, imgForward;
     @FXML
     private Button btnCreateNewCase, btnManageTech, btnUpdateCase;
     @FXML
@@ -51,8 +51,6 @@ public class CustomerHomePageController implements Initializable {
     private final DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private ObservableList<Case> caseObservableList;
     private ObservableList<Technician> technicianObservableList;
-
-    private final String search = "data/Images/search.png";
     private final String back = "data/Images/Backward.png";
     private final String forward = "data/Images/Forward.png";
 
@@ -64,14 +62,13 @@ public class CustomerHomePageController implements Initializable {
         caseObservableList = FXCollections.observableArrayList();
         technicianObservableList = FXCollections.observableArrayList();
         lblCustomerName.setText(model.getCurrentCustomer().getCustomerName() + " Home Page");
-        imgSearch.setImage(loadImages(search));
         imgBack.setImage(loadImages(back));
         imgBack.setOnMouseClicked(event -> goBack());
         imgForward.setImage(loadImages(forward));
         imgForward.setDisable(true);
         imgForward.setOnMouseClicked(event -> goForward());
         addListeners();
-        addShadow(btnCreateNewCase);
+        addShadow(btnCreateNewCase, txtSearchBar);
         updateTableView();
         searchBarFilter();
         btnManageTech.setDisable(true);
