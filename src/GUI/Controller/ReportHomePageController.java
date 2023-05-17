@@ -1,9 +1,6 @@
 package GUI.Controller;
 
-import BE.Case;
-import BE.Customer;
-import BE.Report;
-import BE.TextsAndImagesOnReport;
+import BE.*;
 import BLL.util.PDFGenerator;
 import GUI.Model.Model;
 import com.itextpdf.kernel.colors.Lab;
