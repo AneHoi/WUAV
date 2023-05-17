@@ -148,11 +148,18 @@
                       </FlowPane>
                       <ScrollPane style="-fx-background-color: Transparent; -fx-border-color: Transparent;" vbarPolicy="NEVER">
                           <content>
-                              <VBox fx:id="vboxSectionAdding" spacing="10.0">
-                                  <padding>
-                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                  </padding>
-                              </VBox>
+                        <BorderPane>
+                           <center>
+                                    <VBox fx:id="vboxSectionAdding" spacing="10.0">
+                                        <padding>
+                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </padding>
+                                    </VBox>
+                           </center>
+                           <bottom>
+                              <VBox fx:id="vboxAddingLoginDetails" BorderPane.alignment="CENTER" />
+                           </bottom>
+                        </BorderPane>
                           </content>
                       </ScrollPane>
                   </children>

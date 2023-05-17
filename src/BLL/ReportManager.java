@@ -89,4 +89,20 @@ public class ReportManager {
     public void noLoginInfoForThisReport(int reportID, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
         reportDAO.noLoginInfoForThisReport(reportID,createdDate,createdTime,userID);
     }
+
+    public List<LoginDetails> getLoginDetails(int reportID) throws SQLException {
+        return reportDAO.getLoginDetails(reportID);
+    }
+
+    public void deleteLoginDetails(int loginDetailsID) throws SQLException {
+        reportDAO.deleteLoginDetails(loginDetailsID);
+    }
+
+    public void updateLoginDetails(int loginDetailsID, String component, String username, String password, String additionalInfo, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
+        reportDAO.updateLoginDetails(loginDetailsID, component, username, password, additionalInfo, createdDate, createdTime, userID);
+    }
+
+    public void updateToNoLogin(int loginDetailsID, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
+        reportDAO.updateToNoLogin(loginDetailsID,createdDate,createdTime,userID);
+    }
 }

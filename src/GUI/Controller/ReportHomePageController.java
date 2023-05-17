@@ -3,6 +3,7 @@ package GUI.Controller;
 import BE.*;
 import BLL.util.PDFGenerator;
 import GUI.Model.Model;
+import com.itextpdf.kernel.colors.Lab;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +20,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -42,7 +44,7 @@ public class ReportHomePageController implements Initializable {
     @FXML
     private Label lblReportStatus, lblCustomerName, lblReportName, lblCustomerAddress, lblCustomerEmail, lblCustomerTelephone, lblCaseName, lblCaseID, lblCaseCreated, lblCaseTechnicians, lblCaseContactPerson, lblReportDescription;
     @FXML
-    private VBox vboxSectionAdding;
+    private VBox vboxSectionAdding, vboxAddingLoginDetails;
     private Customer currentCustomer;
     private Case currentCase;
     private Report currentReport;
@@ -51,7 +53,7 @@ public class ReportHomePageController implements Initializable {
     private ControllerAssistant controllerAssistant;
     private String back = "data/Images/Backward.png";
     private String forward = "data/Images/Forward.png";
-
+    private int numberOfLoginDetails;
     private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
 
 
@@ -68,16 +70,152 @@ public class ReportHomePageController implements Initializable {
         imgForward.setDisable(true);
         currentCase = model.getCurrentCase();
         currentCustomer = model.getCurrentCustomer();
-        updateReportInfo();
-        updateLoginDetails();
-        updateImagesTextsAndSketches();
-        checkForReportStatus();
+        updateReport();
+    }
 
+    private void updateReport() {
+        updateReportInfo();
+        updateImagesTextsAndSketches();
+        updateLoginDetails();
+        checkForReportStatus();
     }
 
     private void updateLoginDetails() {
-        //TODO Continue from here Miran
+        vboxAddingLoginDetails.getChildren().clear();
+        List<LoginDetails> loginDetails = new ArrayList<>();
+        try {
+            loginDetails = model.getLoginDetails(currentReport.getReportID());
+            numberOfLoginDetails = loginDetails.size();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get login details from database", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+        for (LoginDetails ld : loginDetails) {
+            if (ld.isNoLoginDetails()) {
+                BorderPane bp = new BorderPane();
+                bp.setCenter(new Label("No login details for this report"));
+                VBox vbRight = new VBox();
+                Button btnEdit = new Button();
+                Button btnDelete = new Button();
+                ImageView imgViewEdit = new ImageView();
+                ImageView imgViewDelete = new ImageView();
+                imgViewEdit.setImage(loadImages("data/Images/Edit.png"));
+                imgViewDelete.setImage(loadImages("data/Images/Trash Can.png"));
+                imgViewDelete.setFitHeight(40);
+                imgViewDelete.setFitWidth(40);
+                imgViewEdit.setFitWidth(40);
+                imgViewEdit.setFitHeight(40);
+                btnEdit.setGraphic(imgViewEdit);
+                btnEdit.setOnAction(event -> editLoginDetails(ld));
+                btnEdit.getStyleClass().add("orangeButtons");
+                btnDelete.setGraphic(imgViewDelete);
+                btnDelete.setOnAction(event -> deleteLoginDetails(ld));
+                btnDelete.getStyleClass().add("orangeButtons");
+                btnEdit.setText(null);
+                btnDelete.setText(null);
+                addShadow(btnDelete, btnEdit);
+                vbRight.getChildren().addAll(btnEdit, btnDelete);
+                vbRight.setSpacing(10);
+                vbRight.setPadding(new Insets(10));
+                bp.setRight(vbRight);
+                bp.setPrefWidth(700);
+                bp.setStyle("-fx-border-width: 3");
+                bp.setStyle("-fx-border-color: BLACK");
+                vboxAddingLoginDetails.getChildren().add(bp);
+            } else {
+                BorderPane bp = new BorderPane();
+                VBox vbRight = new VBox();
+                Button btnEdit = new Button();
+                Button btnDelete = new Button();
+                ImageView imgViewEdit = new ImageView();
+                ImageView imgViewDelete = new ImageView();
+                imgViewEdit.setImage(loadImages("data/Images/Edit.png"));
+                imgViewDelete.setImage(loadImages("data/Images/Trash Can.png"));
+                imgViewDelete.setFitHeight(40);
+                imgViewDelete.setFitWidth(40);
+                imgViewEdit.setFitWidth(40);
+                imgViewEdit.setFitHeight(40);
+                btnEdit.setGraphic(imgViewEdit);
+                btnEdit.setOnAction(event -> editLoginDetails(ld));
+                btnEdit.getStyleClass().add("orangeButtons");
+                btnDelete.setGraphic(imgViewDelete);
+                btnDelete.setOnAction(event -> deleteLoginDetails(ld));
+                btnDelete.getStyleClass().add("orangeButtons");
+                btnEdit.setText(null);
+                btnDelete.setText(null);
+                addShadow(btnDelete, btnEdit);
+                vbRight.getChildren().addAll(btnEdit, btnDelete);
+                vbRight.setSpacing(10);
+                vbRight.setPadding(new Insets(10));
+                bp.setRight(vbRight);
+                bp.setPrefWidth(700);
+                bp.setStyle("-fx-border-width: 3");
+                bp.setStyle("-fx-border-color: BLACK");
+                VBox vbCenter = new VBox();
+                Label component = new Label("Component:");
+                Label componentName = new Label(ld.getComponent());
+                HBox hbUserPass = new HBox();
+                VBox names = new VBox();
+                VBox data = new VBox();
+                Label username = new Label("Username: ");
+                Label password = new Label("Password: ");
+                Label usernameData = new Label(ld.getUsername());
+                Label passwordData = new Label(ld.getPassword());
+                Label additionalInfo = new Label("Additional Info: ");
+                Label additionalInfoData = new Label(ld.getAdditionalInfo());
+                names.getChildren().addAll(username, password);
+                data.getChildren().addAll(usernameData, passwordData);
+                hbUserPass.getChildren().addAll(names, data);
+                hbUserPass.setAlignment(Pos.CENTER);
+                vbCenter.getChildren().addAll(component, componentName, hbUserPass, additionalInfo, additionalInfoData);
+                vbCenter.setAlignment(Pos.CENTER);
+                bp.setCenter(vbCenter);
+                VBox vbBottom = new VBox();
+                Label lblCreatedBy = new Label("Added by: " + ld.getAddedBy().getFullName());
+                Label lblCreatedON = new Label("Added on: " + ld.getCreatedDate() + " - " + ld.getCreatedTime());
+                vbBottom.getChildren().addAll(lblCreatedBy, lblCreatedON);
+                vbBottom.setAlignment(Pos.BOTTOM_RIGHT);
+                bp.setBottom(vbBottom);
+                vboxAddingLoginDetails.getChildren().add(bp);
+            }
+        }
     }
+
+    private void deleteLoginDetails(LoginDetails ld) {
+        Alert areYouSureAlert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to delete these login details?", ButtonType.YES, ButtonType.NO);
+        areYouSureAlert.showAndWait();
+        if (areYouSureAlert.getResult() == ButtonType.YES) {
+            try {
+                model.deleteLoginDetails(ld.getLoginDetailsID());
+            } catch (SQLException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Could not delete login details in database", ButtonType.CANCEL);
+                alert.showAndWait();
+            }
+        }
+        updateReport();
+    }
+
+    private void editLoginDetails(LoginDetails ld) {
+        AddLoginDetailsController addLoginDetailsController = new AddLoginDetailsController();
+        addLoginDetailsController.setCurrentReport(currentReport);
+        addLoginDetailsController.setCurrentLoginDetails(ld);
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/GUI/View/AddLoginDetailsView.fxml"));
+        loader.setController(addLoginDetailsController);
+        try {
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Login Details Window", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+        updateReport();
+    }
+
 
     private void checkForReportStatus() {
         disableEditing();
@@ -133,6 +271,7 @@ public class ReportHomePageController implements Initializable {
 
     private void updateImagesTextsAndSketches() {
         vboxSectionAdding.getChildren().clear();
+        nextPosition = 0;
         int currentReportID = currentReport.getReportID();
         List<TextsAndImagesOnReport> textsAndImagesOnReports = new ArrayList<>();
         try {
@@ -296,10 +435,11 @@ public class ReportHomePageController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not move item up", ButtonType.OK);
             alert.showAndWait();
         } catch (IllegalStateException e) {
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
             alert.showAndWait();
         }
-        updateImagesTextsAndSketches();
+        updateReport();
     }
 
 
@@ -313,10 +453,11 @@ public class ReportHomePageController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not move item down", ButtonType.OK);
             alert.showAndWait();
         } catch (IllegalStateException e) {
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
             alert.showAndWait();
         }
-        updateImagesTextsAndSketches();
+        updateReport();
     }
 
 
@@ -376,7 +517,7 @@ public class ReportHomePageController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Text Window", ButtonType.CANCEL);
             alert.showAndWait();
         }
-        updateImagesTextsAndSketches();
+        updateReport();
     }
 
     public void handleAddImage(ActionEvent actionEvent) {
@@ -396,7 +537,7 @@ public class ReportHomePageController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Image Window", ButtonType.CANCEL);
             alert.showAndWait();
         }
-        updateImagesTextsAndSketches();
+        updateReport();
     }
 
     public void handleAddSketch(ActionEvent actionEvent) {
@@ -447,7 +588,7 @@ public class ReportHomePageController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Image Window", ButtonType.CANCEL);
             alert.showAndWait();
         }
-        updateImagesTextsAndSketches();
+        updateReport();
     }
 
     private void editText(TextsAndImagesOnReport textOrImage) {
@@ -468,7 +609,7 @@ public class ReportHomePageController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Image Window", ButtonType.CANCEL);
             alert.showAndWait();
         }
-        updateImagesTextsAndSketches();
+        updateReport();
     }
 
     public void handleSubmitReport(ActionEvent event) {
@@ -512,6 +653,12 @@ public class ReportHomePageController implements Initializable {
     }
 
     private void submitForReview() {
+        if (numberOfLoginDetails < 1) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "This report has no login details added, you need to specify login details before it can be submitted for review.\nIf login details are not needed for this report, please check the box 'No login details for this report' in the next window.", ButtonType.OK);
+            alert.showAndWait();
+            handleAddLoginDetails(new ActionEvent());
+            return;
+        }
         Alert areYouSureAlert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to submit your report for review?", ButtonType.YES, ButtonType.NO);
         areYouSureAlert.showAndWait();
         if (areYouSureAlert.getResult() == ButtonType.YES) {
@@ -543,8 +690,9 @@ public class ReportHomePageController implements Initializable {
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR,"Could not open Add Login Details Window", ButtonType.CANCEL);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Login Details Window", ButtonType.CANCEL);
             alert.showAndWait();
         }
+        updateReport();
     }
 }

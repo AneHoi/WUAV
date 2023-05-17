@@ -1,11 +1,13 @@
 package GUI.Controller;
 
+import BE.LoginDetails;
 import BE.Report;
 import GUI.Model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -23,8 +25,8 @@ public class AddLoginDetailsController implements Initializable {
     private CheckBox checkBoxNoLogin;
     @FXML
     private Button btnSaveLoginDetails;
-
     private Report currentReport;
+    private LoginDetails currentLoginDetails;
     private Model model;
     private ControllerAssistant controllerAssistant;
 
@@ -36,8 +38,27 @@ public class AddLoginDetailsController implements Initializable {
         txtAdditionalInfo.setDisable(true);
         txtPassword.setDisable(true);
         txtUsername.setDisable(true);
+        if (currentLoginDetails != null) {
+            if (currentLoginDetails.isNoLoginDetails()) {
+                checkBoxNoLogin.setSelected(true);
+                btnSaveLoginDetails.setText("Save Changes");
+            } else {
+                updateTextFields();
+                txtUsername.setDisable(false);
+                txtPassword.setDisable(false);
+                txtAdditionalInfo.setDisable(false);
+                btnSaveLoginDetails.setText("Save Changes");
+            }
 
+        }
         setupListeners();
+    }
+
+    private void updateTextFields() {
+        txtComponent.setText(currentLoginDetails.getComponent());
+        txtUsername.setText(currentLoginDetails.getUsername());
+        txtPassword.setText(currentLoginDetails.getPassword());
+        txtAdditionalInfo.setText(currentLoginDetails.getAdditionalInfo());
     }
 
     private void setupListeners() {
@@ -62,9 +83,7 @@ public class AddLoginDetailsController implements Initializable {
 
     private void updateFieldsState() {
         boolean isNoLoginSelected = checkBoxNoLogin.isSelected();
-
         txtComponent.setDisable(isNoLoginSelected);
-
         if (!isNoLoginSelected) {
             boolean hasComponent = !txtComponent.getText().isEmpty();
             txtUsername.setDisable(!hasComponent);
@@ -90,12 +109,17 @@ public class AddLoginDetailsController implements Initializable {
     }
 
     public void handleSaveLoginDetails(ActionEvent actionEvent) {
-        if (checkBoxNoLogin.isSelected()) {
+        if(checkBoxNoLogin.isSelected() && currentLoginDetails != null) {
+            updateWithNoLogin();
+        } else if (!checkBoxNoLogin.isSelected() && currentLoginDetails != null) {
+            updateLoginDetails();
+        } else if (checkBoxNoLogin.isSelected() && currentLoginDetails == null) {
             noLogin();
-
-        } else
+        } else if (!checkBoxNoLogin.isSelected() && currentLoginDetails == null) {
             saveLoginDetails();
-
+        }
+        Stage stage = (Stage) btnSaveLoginDetails.getScene().getWindow();
+        stage.close();
     }
 
     private void saveLoginDetails() {
@@ -114,7 +138,41 @@ public class AddLoginDetailsController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not save info to report", ButtonType.OK);
             alert.showAndWait();
         }
+
     }
+
+    private void updateLoginDetails() {
+        int loginDetailsID = currentLoginDetails.getLoginDetailsID();
+        String component = txtComponent.getText();
+        String username = txtUsername.getText();
+        String password = txtPassword.getText();
+        String additionalInfo = txtAdditionalInfo.getText();
+        LocalDate createdDate = LocalDate.now();
+        LocalTime createdTime = LocalTime.now();
+        int userID = controllerAssistant.getLoggedInUser().getUserID();
+        try {
+            model.updateLoginDetails(loginDetailsID, component, username, password, additionalInfo, createdDate, createdTime, userID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not update info in database", ButtonType.OK);
+            alert.showAndWait();
+        }
+
+    }
+
+    private void updateWithNoLogin() {
+        LocalDate createdDate = LocalDate.now();
+        LocalTime createdTime = LocalTime.now();
+        int userID = controllerAssistant.getLoggedInUser().getUserID();
+        try {
+            model.updateToNoLogin(currentLoginDetails.getLoginDetailsID(), createdDate, createdTime, userID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not save info to database", ButtonType.OK);
+            alert.showAndWait();
+        }
+    }
+
 
     private void noLogin() {
         LocalDate createdDate = LocalDate.now();
@@ -131,5 +189,9 @@ public class AddLoginDetailsController implements Initializable {
 
     public void setCurrentReport(Report currentReport) {
         this.currentReport = currentReport;
+    }
+
+    public void setCurrentLoginDetails(LoginDetails ld) {
+        this.currentLoginDetails = ld;
     }
 }
