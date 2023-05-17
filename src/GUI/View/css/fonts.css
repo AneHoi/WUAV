@@ -17,6 +17,23 @@
 .topBarSize{
     -fx-font-size: 32;
 }
+/*Padding is the length from top of label to text*/
+.headingLabel{
+    -fx-start-margin: 50;
+    -fx-padding: 25;
+    -fx-underline: true;
+    -fx-text-fill: black;
+    -fx-font-size: 40;
+    -fx-font-weight: 800;
+}
+.underHeadingLabel{
+
+    -fx-padding: 5;
+    -fx-underline: true;
+    -fx-text-fill: black;
+    -fx-font-size: 24;
+    -fx-font-weight: 800;
+}
 .bold{
     -fx-font-weight: 800;
 }
