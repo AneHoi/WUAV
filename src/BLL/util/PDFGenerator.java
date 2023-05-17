@@ -17,7 +17,7 @@ import com.itextpdf.layout.element.Paragraph;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
-import java.awt.*;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -27,13 +27,14 @@ public class PDFGenerator {
     public void generateReport(Report report, Case selectedCase, Customer customer, List<TextsAndImagesOnReport> textsAndImagesOnReportList) {
         try {
             PdfFont font = PdfFontFactory.createFont(StandardFontFamilies.COURIER);
-            String destination = "data/PDFs/"+report.getReportName()+".pdf";
+            String outString = System.getProperty("user.home");
+            String destination = outString+ "\\Documents\\pdfs\\"+report.getReportName()+".pdf";
             PdfWriter writer = new PdfWriter(destination);
             PdfDocument pdf = new PdfDocument(writer);
 
             Document document = new Document(pdf);
 
-            String imageFile = "data/Images/WUAV Logo.png";
+            String imageFile = "data/Images/logoWhite.png";
             try {
                 ImageData data = ImageDataFactory.create(imageFile);
                 com.itextpdf.layout.element.Image image = new com.itextpdf.layout.element.Image(data);
@@ -76,26 +77,67 @@ public class PDFGenerator {
                 else {
                     ImageData imageData = ImageDataFactory.create(textsAndImagesOnReport.getImageData());
                     Image image = new Image(imageData);
+                    if(image.getImageHeight()>= 800){
+                        image.setHeight(800);
+                    }
+                    if (image.getImageWidth()>=540){
+                        image.setWidth(540);
+                    }
                     document.add(image);
                     if(!textsAndImagesOnReport.getImageComment().equals(null)){
                         String imageComment = textsAndImagesOnReport.getImageComment()+"\n";
                         Paragraph paragraphComment = new Paragraph(imageComment);
                         paragraphComment.setFontSize(10);
-                        paragraphComment.setFont(PdfFontFactory.createFont(StandardFontFamilies.COURIER));
+                        paragraphComment.setFont(font);
                         document.add(paragraphComment);
-
                     }
                 }
             }
+            //String para4 = "Conponent" + + "\n"
 
             document.close();
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+    /**public void downloadPdf(Report report){
+        try (BufferedInputStream bis = new BufferedInputStream(new URL("data/PDFs/"+report.getReportName()+".pdf").openStream());
+        FileOutputStream fos = new FileOutputStream(report.getReportName()+".pdf") {
+            byte dataBuffer[] = new byte[1024];
+            int bytesRead;
+            while((bytesRead = bis.))
+
+        }
+        catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }*/
 }
+/**HttpServletRequest request;
+ HttpServletResponse response;
+ response.setContentType("application/pdf");
+ response.setHeader("Content-disposition","attachment;filename="+ report.getReportName()+".pdf");
+ try {
+ File file = new File("data/PDFs/"+report.getReportName()+".pdf");
+ FileInputStream fis =  new FileInputStream(file);
+ DataOutputStream os = new DataOutputStream(response.getOutputStream());
+ response.setHeader("Content-Length", String.valueOf(file.length()));
+ byte[] buffer = new byte[1024];
+ int len = 0;
+ while ((len = fis.read(buffer)) >= 0){
+ os.write(buffer, 0 , len);
+ }
+
+ } catch (FileNotFoundException e) {
+ throw new RuntimeException(e);
+ } catch (IOException e) {
+ throw new RuntimeException(e);
+ }*/
 
 
 
