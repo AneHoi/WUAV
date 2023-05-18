@@ -10,7 +10,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -210,22 +209,9 @@ public class CaseHomePageController implements Initializable {
         PopUpCreateNewReportController popUpCreateNewReportController = new PopUpCreateNewReportController();
         popUpCreateNewReportController.setCurrentCase(currentCase);
         popUpCreateNewReportController.setCurrentReport((Report) tblViewExistingReports.getSelectionModel().getSelectedItem());
-        Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setController(popUpCreateNewReportController);
-        loader.setLocation(getClass().getResource("/GUI/View/PopUpCreateNewOrUpdateReport.fxml"));
-        stage.setTitle("Update report");
-        try {
-            Scene scene = new Scene(loader.load());
-            stage.setScene(scene);
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open page for updating report", ButtonType.CANCEL);
-            alert.showAndWait();
-        }
-        updateTableView();
 
+        util.openNewWindow("Update report", "/GUI/View/PopUpCreateNewOrUpdateReport.fxml", popUpCreateNewReportController.getClass(), "Could not open page for updating report");
+        updateTableView();
     }
 
     public void handleDeleteReport() {
