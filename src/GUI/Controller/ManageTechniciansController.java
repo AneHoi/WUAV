@@ -2,15 +2,13 @@ package GUI.Controller;
 
 import BE.Case;
 import BE.Technician;
+import GUI.Controller.Util.Util;
 import GUI.Model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -28,15 +26,14 @@ public class ManageTechniciansController implements Initializable {
     private List<Technician> alreadyAssignedTechs, chosenTechnicians;
     private Model model;
     private Case selectedCase;
-
-    private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
+    private Util util = new Util();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         chosenTechnicians = new ArrayList<>();
         model = Model.getInstance();
         btnConfirmChoices.getStyleClass().add("orangeButtons");
-        addShadow(btnConfirmChoices);
+        util.addShadow(btnConfirmChoices);
         updateTechnicians();
     }
 
@@ -62,7 +59,7 @@ public class ManageTechniciansController implements Initializable {
             cbChosenTech.setStyle("-fx-font-size: 24");
             vboxAllTechnicians.getChildren().add(technicianName);
             vboxComboBoxes.getChildren().add(cbChosenTech);
-            addShadow(cbChosenTech);
+            util.addShadow(cbChosenTech);
             // Add a listener to the checkbox
             cbChosenTech.setOnAction(event -> {
                 if (cbChosenTech.isSelected()) {
@@ -71,18 +68,6 @@ public class ManageTechniciansController implements Initializable {
                     chosenTechnicians.remove(t);
                 }
             });
-        }
-    }
-
-    private void addShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(shadow);
-        }
-    }
-
-    private void removeShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(null);
         }
     }
 

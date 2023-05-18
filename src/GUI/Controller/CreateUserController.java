@@ -2,6 +2,7 @@ package GUI.Controller;
 
 import BE.User;
 import GUI.Controller.Util.ControllerAssistant;
+import GUI.Controller.Util.Util;
 import GUI.Model.Model;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -14,8 +15,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -34,13 +33,13 @@ public class CreateUserController implements Initializable {
     private ComboBox cbUserActive;
     @FXML
     private TextField txtFullNameUpdate, txtUserNameUpdate, txtTelephoneUpdate, txtEmailUpdate;
-    private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private Model model;
     private ControllerAssistant controllerAssistant;
     private ObservableList<String> userTypes;
     private ObservableList<User> allUsers;
 
     private ObservableList<String> activeOrInactive;
+    private Util util = new Util();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -52,7 +51,7 @@ public class CreateUserController implements Initializable {
         userTypes = FXCollections.observableArrayList();
         activeOrInactive = FXCollections.observableArrayList();
         checkLoggedInUser();
-        addShadow(btnCreateNewUser);
+        util.addShadow(btnCreateNewUser);
 
         activeOrInactive.add("Active");
         activeOrInactive.add("Inactive");
@@ -100,7 +99,7 @@ public class CreateUserController implements Initializable {
     ChangeListener<User> selectedUserListener = (observable, oldValue, newValue) -> {
         if (newValue != null) {
             enableButtons(btnUpdateUser, txtFullNameUpdate, txtUserNameUpdate, txtTelephoneUpdate, txtEmailUpdate, cbUserActive);
-            addShadow(btnUpdateUser, txtFullNameUpdate, txtUserNameUpdate, txtTelephoneUpdate, txtEmailUpdate, cbUserActive);
+            util.addShadow(btnUpdateUser, txtFullNameUpdate, txtUserNameUpdate, txtTelephoneUpdate, txtEmailUpdate, cbUserActive);
             txtFullNameUpdate.setText(newValue.getFullName());
             txtUserNameUpdate.setText(newValue.getUserName());
             txtTelephoneUpdate.setText(newValue.getTelephone());
@@ -116,10 +115,10 @@ public class CreateUserController implements Initializable {
     private void updateUpdateButtonState() {
         if (txtFullNameUpdate.getText().isEmpty() || txtUserNameUpdate.getText().isEmpty() || txtTelephoneUpdate.getText().isEmpty() || txtEmailUpdate.getText().isEmpty() || cbUserActive.getSelectionModel().getSelectedItem() == null) {
             btnUpdateUser.setDisable(true);
-            removeShadow(btnUpdateUser);
+            util.removeShadow(btnUpdateUser);
         } else {
             btnUpdateUser.setDisable(false);
-            addShadow(btnUpdateUser);
+            util.addShadow(btnUpdateUser);
         }
     }
 
@@ -140,18 +139,6 @@ public class CreateUserController implements Initializable {
         }
         tblViewExistingUsers.setItems(allUsers);
         tblViewExistingUsers.getSortOrder().add(colStatus);
-    }
-
-    private void addShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(shadow);
-        }
-    }
-
-    private void removeShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(null);
-        }
     }
 
     public void handleCreateNewUser(ActionEvent actionEvent) {

@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 import GUI.Controller.Util.ControllerAssistant;
+import GUI.Controller.Util.Util;
 import GUI.Model.Model;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -10,8 +11,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -26,8 +25,8 @@ public class PopUpCreateUserController implements Initializable {
     private TextField txtFullNameCreate, txtUserNameCreate, txtTelephoneCreate, txtEmailCreate;
 
     private ObservableList<String> userTypes;
-    private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private Model model;
+    private Util util = new Util();
 
     private ControllerAssistant controllerAssistant;
 
@@ -37,7 +36,7 @@ public class PopUpCreateUserController implements Initializable {
         controllerAssistant = ControllerAssistant.getInstance();
         addListeners();
         userTypes = FXCollections.observableArrayList();
-        addShadow(txtFullNameCreate, txtUserNameCreate, txtTelephoneCreate, txtEmailCreate, cbUserTypeCreate);
+        util.addShadow(txtFullNameCreate, txtUserNameCreate, txtTelephoneCreate, txtEmailCreate, cbUserTypeCreate);
         btnCreateNewUser.setDisable(true);
         cbUserTypeCreate.setItems(userTypes);
         checkLoggedInUser();
@@ -55,10 +54,10 @@ public class PopUpCreateUserController implements Initializable {
     ChangeListener<String> createNewCustomerBtn = (observable, oldValue, newValue) -> {
         if (txtFullNameCreate.getText().isEmpty() || txtUserNameCreate.getText().isEmpty() || txtTelephoneCreate.getText().isEmpty() || txtEmailCreate.getText().isEmpty() || cbUserTypeCreate.getSelectionModel().getSelectedItem() == null) {
             btnCreateNewUser.setDisable(true);
-            removeShadow(btnCreateNewUser);
+            util.removeShadow(btnCreateNewUser);
         } else {
             btnCreateNewUser.setDisable(false);
-            addShadow(btnCreateNewUser);
+            util.addShadow(btnCreateNewUser);
         }
     };
 
@@ -106,17 +105,5 @@ public class PopUpCreateUserController implements Initializable {
         }
         //This closes the window
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
-    }
-
-    private void addShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(shadow);
-        }
-    }
-
-    private void removeShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(null);
-        }
     }
 }

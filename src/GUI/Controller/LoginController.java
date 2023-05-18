@@ -24,21 +24,14 @@ public class LoginController implements Initializable {
     @FXML private TextField txtUsername;
     @FXML
     private ImageView imgWUAVLogo;
-
-    private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private String logo = "data/Images/logoWhite.png";
     private Util util = new Util();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         SetImg();
-        setEffect(pswPassword, txtUsername, btnLogin, imgWUAVLogo);
+        util.addShadow(pswPassword, txtUsername, btnLogin, imgWUAVLogo);
     }
 
-    private void setEffect(Node... node) {
-        for (Node nodes: node) {
-            nodes.setEffect(shadow);
-        }
-    }
 
     private void SetImg() {
         imgWUAVLogo.setImage(util.loadImages(logo));

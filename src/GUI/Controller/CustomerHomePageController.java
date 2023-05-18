@@ -16,16 +16,10 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,7 +28,6 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class CustomerHomePageController implements Initializable {
-
 
     @FXML
     private TableColumn colCaseName, colCaseID, colCaseDescription, colCreatedDate, colTechAssigned;
@@ -50,17 +43,15 @@ public class CustomerHomePageController implements Initializable {
     private Label lblCustomerName;
     private ControllerAssistant controllerAssistant;
     private Model model;
-    private final DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private ObservableList<Case> caseObservableList;
     private ObservableList<Technician> technicianObservableList;
     private final String back = "data/Images/Backward.png";
     private final String forward = "data/Images/Forward.png";
-    private Util util;
+    private Util util = new Util();
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        util = new Util();
         controllerAssistant = ControllerAssistant.getInstance();
         model = Model.getInstance();
         caseObservableList = FXCollections.observableArrayList();
@@ -72,7 +63,7 @@ public class CustomerHomePageController implements Initializable {
         imgForward.setDisable(true);
         imgForward.setOnMouseClicked(event -> goForward());
         addListeners();
-        addShadow(btnCreateNewCase, txtSearchBar);
+        util.addShadow(btnCreateNewCase, txtSearchBar);
         updateTableView();
         searchBarFilter();
         btnManageTech.setDisable(true);
@@ -125,7 +116,7 @@ public class CustomerHomePageController implements Initializable {
                 ObservableList techniciansAssigned = FXCollections.observableArrayList();
                 btnManageTech.setDisable(false);
                 btnUpdateCase.setDisable(false);
-                addShadow(btnManageTech, btnUpdateCase);
+                util.addShadow(btnManageTech, btnUpdateCase);
                 try {
                     techniciansAssigned.addAll(model.getAssignedTechnicians(selectedItem.getCaseID()));
                 } catch (SQLException e) {
@@ -140,7 +131,7 @@ public class CustomerHomePageController implements Initializable {
                 tblViewTechAssigned.setDisable(true);
                 tblViewTechAssigned.getItems().clear();
                 btnManageTech.setDisable(true);
-                removeShadow(btnManageTech);
+                util.removeShadow(btnManageTech);
             }
         });
         tblViewExistingCases.setOnMouseClicked(event -> {
@@ -189,19 +180,6 @@ public class CustomerHomePageController implements Initializable {
             }
         });
     }
-
-    private void addShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(shadow);
-        }
-    }
-
-    private void removeShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(null);
-        }
-    }
-
     public void handleCreateNewCase(ActionEvent actionEvent) {
         CreateOrUpdateCaseController createOrUpdateCaseController = new CreateOrUpdateCaseController();
         Case selectedCase = (Case) tblViewExistingCases.getSelectionModel().getSelectedItem();

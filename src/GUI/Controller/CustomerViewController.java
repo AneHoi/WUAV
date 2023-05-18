@@ -2,6 +2,7 @@ package GUI.Controller;
 
 import BE.Customer;
 import GUI.Controller.Util.ControllerAssistant;
+import GUI.Controller.Util.Util;
 import GUI.Model.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,20 +11,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Objects;
@@ -43,9 +37,8 @@ public class CustomerViewController implements Initializable {
     @FXML
     private TextField txtSearchBar;
     private ObservableList<Customer> customerObservableList;
-    private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private ControllerAssistant controllerAssistant;
-
+    private Util util = new Util();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         addListeners();
@@ -56,7 +49,7 @@ public class CustomerViewController implements Initializable {
         searchBarFilter();
         btnDeleteCustomer.setVisible(false);
         btnDeleteCustomer.setDisable(true);
-        addShadow(btnCreateCustomer, btnDeleteCustomer, txtSearchBar);
+        util.addShadow(btnCreateCustomer, btnDeleteCustomer, txtSearchBar);
     }
 
 
@@ -65,7 +58,7 @@ public class CustomerViewController implements Initializable {
             if (newValue != null) {
                 Button btnEditCustomer = new Button("Edit Customer");
                 btnEditCustomer.setPrefWidth(200);
-                addShadow(btnEditCustomer);
+                util.addShadow(btnEditCustomer);
                 btnEditCustomer.setOnAction(event -> openNewCustomerPopUp(event));
                 hBoxButtonBar.getChildren().add(btnEditCustomer);
                 btnDeleteCustomer.setVisible(true);
@@ -137,11 +130,6 @@ public class CustomerViewController implements Initializable {
         tblViewCustomers.setItems(customerObservableList);
     }
 
-    private void addShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(shadow);
-        }
-    }
     public void openNewCustomerPopUp(ActionEvent event) {
         PopUpCreateNewCostumerController popUpCreateNewCostumerController = new PopUpCreateNewCostumerController();
         if(tblViewCustomers.getSelectionModel().getSelectedItem() != null){

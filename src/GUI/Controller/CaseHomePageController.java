@@ -14,20 +14,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -35,8 +28,6 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class CaseHomePageController implements Initializable {
-
-    public Button btnGetPDF;
     @FXML
     private ImageView imgBack, imgForward;
     @FXML
@@ -49,7 +40,6 @@ public class CaseHomePageController implements Initializable {
     private TableView tblViewExistingReports;
     @FXML
     private TableColumn colReportName, colTechnician, colCreatedDate, colStatus;
-    private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private ControllerAssistant controllerAssistant;
     private Model model;
     private Customer currentCustomer;
@@ -76,23 +66,10 @@ public class CaseHomePageController implements Initializable {
         disableEditAndDelete();
         lblCaseName.setText("Case Name: " + currentCase.getCaseName());
         addListeners();
-        addShadow(txtSearchField, btnCreateNewReport);
+        util.addShadow(txtSearchField, btnCreateNewReport);
         searchBarFilter();
 
     }
-
-    private void addShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(shadow);
-        }
-    }
-
-    private void removeShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(null);
-        }
-    }
-
     private void goBack() {
         try {
             controllerAssistant.loadCenter("CustomerHomePageView.fxml");
@@ -141,13 +118,13 @@ public class CaseHomePageController implements Initializable {
             btnEditReport.setOpacity(1);
             btnDeleteReport.setDisable(false);
             btnDeleteReport.setOpacity(1);
-            addShadow(btnEditReport, btnDeleteReport);
+            util.addShadow(btnEditReport, btnDeleteReport);
         } else {
             btnEditReport.setDisable(true);
             btnEditReport.setOpacity(0);
             btnDeleteReport.setDisable(true);
             btnDeleteReport.setOpacity(0);
-            removeShadow(btnEditReport, btnDeleteReport);
+            util.removeShadow(btnEditReport, btnDeleteReport);
         }
     };
 
@@ -157,7 +134,7 @@ public class CaseHomePageController implements Initializable {
         btnDeleteReport.setOpacity(0);
         btnEditReport.setDisable(true);
         btnEditReport.setOpacity(0);
-        removeShadow(btnDeleteReport, btnEditReport);
+        util.removeShadow(btnDeleteReport, btnEditReport);
     }
 
     private void updateTableView() {

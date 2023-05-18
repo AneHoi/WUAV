@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 import BE.Customer;
+import GUI.Controller.Util.Util;
 import GUI.Model.Model;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -9,8 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -26,9 +25,9 @@ public class PopUpCreateNewCostumerController implements Initializable {
     private ComboBox<String> cbCustomerType;
     private Customer customerVar;
 
-    private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private String search = "data/Images/search.png";
     private ObservableList<String> typesOfCustomers;
+    private Util util = new Util();
 
 
     @Override
@@ -37,7 +36,7 @@ public class PopUpCreateNewCostumerController implements Initializable {
         typesOfCustomers.addAll("Corporate", "Private", "Government");
         cbCustomerType.setItems(typesOfCustomers);
         model = Model.getInstance();
-        addShadow(txtCostumerName, txtAddress, txtTlfNumber, txtEmail, txtCVR);
+        util.addShadow(txtCostumerName, txtAddress, txtTlfNumber, txtEmail, txtCVR);
         addListeners();
         btnCreateCostumer.setDisable(true);
         checkCVRTextField();
@@ -79,29 +78,15 @@ public class PopUpCreateNewCostumerController implements Initializable {
     }
 
 
-
     ChangeListener<String> createNewCustomerBtn = (observable, oldValue, newValue) -> {
         if (txtCostumerName.getText().isEmpty() || txtAddress.getText().isEmpty() || txtTlfNumber.getText().isEmpty() || txtEmail.getText().isEmpty() || txtCVR.getText().isEmpty()) {
             btnCreateCostumer.setDisable(true);
-            removeShadow(btnCreateCostumer);
+            util.removeShadow(btnCreateCostumer);
         } else {
             btnCreateCostumer.setDisable(false);
-            addShadow(btnCreateCostumer);
+            util.addShadow(btnCreateCostumer);
         }
     };
-
-    private void removeShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(null);
-        }
-    }
-
-
-    private void addShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(shadow);
-        }
-    }
 
     public void saveCostumer(javafx.event.ActionEvent event) {
         //If there already is a customer, we only need to update that customer

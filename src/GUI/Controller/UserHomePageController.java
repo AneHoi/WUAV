@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 import GUI.Controller.Util.ControllerAssistant;
+import GUI.Controller.Util.Util;
 import GUI.Model.Model;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,20 +22,14 @@ public class UserHomePageController implements Initializable {
     private TableView tblViewActiveCases, tblViewViewedCustomers;
     @FXML
     private TableColumn colCustomerActiveCases, colAddressActiveCases, colTechnicians, colCaseDate, colCustomerViewed, colAddressViewed, colActiveCases, colCVR;
-    private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private Model model;
     private ControllerAssistant controllerAssistant;
+    private Util util = new Util();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = Model.getInstance();
         controllerAssistant = ControllerAssistant.getInstance();
-        addShadow();
-    }
-
-    private void addShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(shadow);
-        }
+        util.addShadow();
     }
 }

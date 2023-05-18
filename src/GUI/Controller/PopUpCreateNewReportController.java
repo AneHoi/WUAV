@@ -3,15 +3,13 @@ package GUI.Controller;
 import BE.Case;
 import BE.Report;
 import GUI.Controller.Util.ControllerAssistant;
+import GUI.Controller.Util.Util;
 import GUI.Model.Model;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -27,11 +25,11 @@ public class PopUpCreateNewReportController implements Initializable {
     private Button btnCreateNewReport;
     @FXML
     private Label lblTitle, lblReportName;
-    private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private ControllerAssistant controllerAssistant;
     private Model model;
     private Case currentCase;
     private Report currentReport;
+    private Util util = new Util();
 
 
     @Override
@@ -45,13 +43,13 @@ public class PopUpCreateNewReportController implements Initializable {
     private void checkCreateOrUpdate() {
         if (currentReport != null) {
             setCurrentReportInfo();
-            addShadow(txtReportDescription,txtReportName,btnCreateNewReport);
+            util.addShadow(txtReportDescription,txtReportName,btnCreateNewReport);
 
         } else {
             addListeners();
             lblReportName.setOpacity(0);
             btnCreateNewReport.setDisable(true);
-            addShadow(txtReportDescription, txtReportName);
+            util.addShadow(txtReportDescription, txtReportName);
         }
     }
 
@@ -77,25 +75,12 @@ public class PopUpCreateNewReportController implements Initializable {
     ChangeListener<String> createNewReportBtnListener = (observable, oldValue, newValue) -> {
         if (txtReportName.getText().isEmpty() || txtReportDescription.getText().isEmpty()) {
             btnCreateNewReport.setDisable(true);
-            removeShadow(btnCreateNewReport);
+            util.removeShadow(btnCreateNewReport);
         } else {
             btnCreateNewReport.setDisable(false);
-            addShadow(btnCreateNewReport);
+            util.addShadow(btnCreateNewReport);
         }
     };
-
-
-    private void addShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(shadow);
-        }
-    }
-
-    private void removeShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(null);
-        }
-    }
 
     public void handleCreateNewReport(ActionEvent actionEvent) {
         if (btnCreateNewReport.getText().equals("Update Report")) {

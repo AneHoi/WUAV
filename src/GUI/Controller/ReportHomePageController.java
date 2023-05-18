@@ -17,18 +17,17 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.awt.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -55,8 +54,6 @@ public class ReportHomePageController implements Initializable {
     private String forward = "data/Images/Forward.png";
     private int numberOfLoginDetails;
     private Util util = new Util();
-    private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -115,7 +112,7 @@ public class ReportHomePageController implements Initializable {
                 btnDelete.getStyleClass().add("orangeButtons");
                 btnEdit.setText(null);
                 btnDelete.setText(null);
-                addShadow(btnDelete, btnEdit);
+                util.addShadow(btnDelete, btnEdit);
                 vbRight.getChildren().addAll(btnEdit, btnDelete);
                 vbRight.setSpacing(10);
                 vbRight.setPadding(new Insets(10));
@@ -145,7 +142,7 @@ public class ReportHomePageController implements Initializable {
                 btnDelete.getStyleClass().add("orangeButtons");
                 btnEdit.setText(null);
                 btnDelete.setText(null);
-                addShadow(btnDelete, btnEdit);
+                util.addShadow(btnDelete, btnEdit);
                 vbRight.getChildren().addAll(btnEdit, btnDelete);
                 vbRight.setSpacing(10);
                 vbRight.setPadding(new Insets(10));
@@ -231,11 +228,11 @@ public class ReportHomePageController implements Initializable {
             enableEditing();
             btnSubmitReportForReview.setText("Close Report");
             btnSubmitReportForReview.setDisable(false);
-            addShadow(btnSubmitReportForReview);
+            util.addShadow(btnSubmitReportForReview);
         } else if (lblReportStatus.getText().equals("Closed")) {
             btnSubmitReportForReview.setText("Generate PDF");
             btnSubmitReportForReview.setDisable(false);
-            addShadow(btnSubmitReportForReview);
+            util.addShadow(btnSubmitReportForReview);
         }
     }
 
@@ -245,7 +242,7 @@ public class ReportHomePageController implements Initializable {
         btnAddSketch.setDisable(true);
         btnSubmitReportForReview.setDisable(true);
         vboxSectionAdding.setDisable(true);
-        removeShadow(btnAddImage, btnAddSketch, btnAddTextField, btnAddLoginDetails, btnSubmitReportForReview);
+        util.removeShadow(btnAddImage, btnAddSketch, btnAddTextField, btnAddLoginDetails, btnSubmitReportForReview);
     }
 
 
@@ -255,7 +252,7 @@ public class ReportHomePageController implements Initializable {
         btnAddSketch.setDisable(false);
         btnSubmitReportForReview.setDisable(false);
         vboxSectionAdding.setDisable(false);
-        addShadow(btnAddSketch, btnAddTextField, btnAddLoginDetails, btnAddImage);
+        util.addShadow(btnAddSketch, btnAddTextField, btnAddLoginDetails, btnAddImage);
     }
 
     public List<TextsAndImagesOnReport> textsAndImagesOnReportList() {
@@ -339,7 +336,7 @@ public class ReportHomePageController implements Initializable {
         btnDelete.getStyleClass().add("orangeButtons");
         btnEdit.setText(null);
         btnDelete.setText(null);
-        addShadow(btnDelete, btnEdit, btnUp, btnDown);
+        util.addShadow(btnDelete, btnEdit, btnUp, btnDown);
         vbRight.getChildren().addAll(btnEdit, btnDelete);
         vbRight.setSpacing(10);
         vbRight.setPadding(new Insets(10));
@@ -406,7 +403,7 @@ public class ReportHomePageController implements Initializable {
         btnDelete.getStyleClass().add("orangeButtons");
         btnEdit.setText(null);
         btnDelete.setText(null);
-        addShadow(btnDelete, btnEdit, btnUp, btnDown);
+        util.addShadow(btnDelete, btnEdit, btnUp, btnDown);
         vbRight.getChildren().addAll(btnEdit, btnDelete);
         vbRight.setSpacing(10);
         vbRight.setPadding(new Insets(10));
@@ -529,18 +526,6 @@ public class ReportHomePageController implements Initializable {
 
     public void handleAddSketch(ActionEvent actionEvent) {
     }
-    private void addShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(shadow);
-        }
-    }
-
-    private void removeShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(null);
-        }
-    }
-
     private void deletePartOfReport(TextsAndImagesOnReport textOrImage) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this part of the report?", ButtonType.YES, ButtonType.NO);
         alert.showAndWait();

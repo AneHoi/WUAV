@@ -5,6 +5,7 @@ import BE.Customer;
 import BE.Report;
 import BE.ReportCaseAndCustomer;
 import GUI.Controller.Util.ControllerAssistant;
+import GUI.Controller.Util.Util;
 import GUI.Model.Model;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -44,6 +45,7 @@ public class SearchForCaseController implements Initializable {
     private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private ControllerAssistant controllerAssistant;
     private Model model;
+    private Util util = new Util();
     private Report selectedReport;
     private Case selectedCase;
     private Customer selectedCustomer;
@@ -53,7 +55,7 @@ public class SearchForCaseController implements Initializable {
         model = Model.getInstance();
         checkForOldCases();
         controllerAssistant = ControllerAssistant.getInstance();
-        addShadow(txtReportName, txtCustomer, txtCustomerAddress, txtCaseName, txtTechnician, dpDate, btnClear);
+        util.addShadow(txtReportName, txtCustomer, txtCustomerAddress, txtCaseName, txtTechnician, dpDate, btnClear);
         dpDate.setPrefWidth(600);
         addListeners();
         updateTableView();
@@ -138,14 +140,6 @@ public class SearchForCaseController implements Initializable {
             }
             tblViewFilteredReports.setItems(data);
         }
-
-
-        private void addShadow (Node...node){
-            for (Node nodes : node) {
-                nodes.setEffect(shadow);
-            }
-        }
-
 
         public void handleFilter (ActionEvent actionEvent){
             // Get the filter criteria from the text fields and date picker

@@ -3,12 +3,12 @@ package GUI.Controller;
 import BE.Case;
 import BE.Customer;
 import GUI.Controller.Util.ControllerAssistant;
+import GUI.Controller.Util.Util;
 import GUI.Model.Model;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
@@ -32,7 +32,7 @@ public class CreateOrUpdateCaseController implements Initializable {
     private ControllerAssistant controllerAssistant;
     private Case currentCase;
     private Customer currentCustomer;
-    private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
+    private Util util = new Util();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -54,7 +54,7 @@ public class CreateOrUpdateCaseController implements Initializable {
         lblCaseName.setText("");
         txtCaseName.setPromptText("Case Name...");
         txtCaseDescription.setPromptText("Case Description...");
-        removeShadow(btnCreateOrUpdateCase);
+        util.removeShadow(btnCreateOrUpdateCase);
         btnCreateOrUpdateCase.setDisable(true);
         txtCaseName.textProperty().addListener(createNewCaseBtnListener);
         txtCaseDescription.textProperty().addListener(createNewCaseBtnListener);
@@ -126,25 +126,13 @@ public class CreateOrUpdateCaseController implements Initializable {
         stage.close();
     }
 
-    private void addShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(shadow);
-        }
-    }
-
-    private void removeShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(null);
-        }
-    }
-
     ChangeListener<String> createNewCaseBtnListener = (observable, oldValue, newValue) -> {
         if (txtCaseName.getText().isEmpty() || txtCaseDescription.getText().isEmpty() || txtContactPerson.getText().isEmpty()) {
             btnCreateOrUpdateCase.setDisable(true);
-            removeShadow(btnCreateOrUpdateCase);
+            util.removeShadow(btnCreateOrUpdateCase);
         } else {
             btnCreateOrUpdateCase.setDisable(false);
-            addShadow(btnCreateOrUpdateCase);
+            util.addShadow(btnCreateOrUpdateCase);
         }
     };
 

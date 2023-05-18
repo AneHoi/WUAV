@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 import BE.Case;
+import GUI.Controller.Util.Util;
 import GUI.Model.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,9 +35,7 @@ public class PopUpAgeOfCasesController implements Initializable {
     @FXML
     private TableColumn clmCaseName, clmCreated, clmClosed;
     private Model model;
-    private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
-
-
+    private Util util = new Util();
     public PopUpAgeOfCasesController() {
     }
 
@@ -46,14 +45,8 @@ public class PopUpAgeOfCasesController implements Initializable {
         model = Model.getInstance();
         updateTableView();
         addListeners();
-        addShadow(btnKeepCase, btnDeleteCase);
+        util.addShadow(btnKeepCase, btnDeleteCase);
         disable(true);
-    }
-
-    private void addShadow(Node... node) {
-        for (Node nodes : node) {
-            nodes.setEffect(shadow);
-        }
     }
 
     private void addListeners() {
