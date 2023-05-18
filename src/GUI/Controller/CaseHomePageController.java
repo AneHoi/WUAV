@@ -156,7 +156,7 @@ public class CaseHomePageController implements Initializable {
 
     }
 
-    public void handleCreateNewReportPopUp(ActionEvent actionEvent) {
+    public void handleCreateNewReportPopUp() {
         PopUpCreateNewReportController popUpCreateNewReportController = new PopUpCreateNewReportController();
         popUpCreateNewReportController.setCurrentCase(currentCase);
         Stage stage = new Stage();
@@ -206,7 +206,7 @@ public class CaseHomePageController implements Initializable {
         });
     }
 
-    public void handleUpdateReport(ActionEvent actionEvent) {
+    public void handleUpdateReport() {
         PopUpCreateNewReportController popUpCreateNewReportController = new PopUpCreateNewReportController();
         popUpCreateNewReportController.setCurrentCase(currentCase);
         popUpCreateNewReportController.setCurrentReport((Report) tblViewExistingReports.getSelectionModel().getSelectedItem());
@@ -228,7 +228,7 @@ public class CaseHomePageController implements Initializable {
 
     }
 
-    public void handleDeleteReport(ActionEvent actionEvent) {
+    public void handleDeleteReport() {
         Report selectedReport = (Report) tblViewExistingReports.getSelectionModel().getSelectedItem();
         Alert reallyWannaDelete = new Alert(Alert.AlertType.WARNING, "Are you sure you want to delete this report: " + selectedReport.getReportName() + "?", ButtonType.YES, ButtonType.NO);
         reallyWannaDelete.showAndWait();

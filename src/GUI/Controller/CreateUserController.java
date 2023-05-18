@@ -50,7 +50,7 @@ public class CreateUserController implements Initializable {
         addListeners();
         userTypes = FXCollections.observableArrayList();
         activeOrInactive = FXCollections.observableArrayList();
-        checkLoggedInUser();
+        userTypes = util.checkLoggedInUser(userTypes);
         util.addShadow(btnCreateNewUser);
 
         activeOrInactive.add("Active");
@@ -66,20 +66,6 @@ public class CreateUserController implements Initializable {
     private void enableButtons(Node... node) {
         for (Node nodes : node) {
             nodes.setDisable(false);
-        }
-    }
-
-    private void checkLoggedInUser() {
-        String admin = "Admin";
-        String projectManager = "ProjectManager";
-        String technician = "Technician";
-        String salesRepresentative = "SalesRepresentative";
-        int userType = controllerAssistant.getLoggedInUser().getUserType();
-        userTypes.clear();
-        if (userType == 1) {
-            userTypes.addAll(admin, projectManager, technician, salesRepresentative);
-        } else if (userType == 2) {
-            userTypes.addAll(technician);
         }
     }
 
@@ -141,7 +127,7 @@ public class CreateUserController implements Initializable {
         tblViewExistingUsers.getSortOrder().add(colStatus);
     }
 
-    public void handleCreateNewUser(ActionEvent actionEvent) {
+    public void handleCreateNewUser() {
         PopUpCreateUserController popUpCreateUserController = new PopUpCreateUserController();
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
@@ -162,7 +148,7 @@ public class CreateUserController implements Initializable {
         updateTableView();
     }
 
-    public void handleUpdateUser(ActionEvent actionEvent) {
+    public void handleUpdateUser() {
         String fullName = txtFullNameUpdate.getText();
         String userName = txtUserNameUpdate.getText();
         String userTlf = txtTelephoneUpdate.getText();

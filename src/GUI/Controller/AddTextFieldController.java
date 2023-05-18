@@ -4,7 +4,6 @@ import BE.Report;
 import BE.TextsAndImagesOnReport;
 import GUI.Controller.Util.ControllerAssistant;
 import GUI.Model.Model;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -42,7 +41,7 @@ public class AddTextFieldController implements Initializable {
         controllerAssistant = ControllerAssistant.getInstance();
     }
 
-    public void handleSave(ActionEvent actionEvent) {
+    public void handleSave() {
         if (btnSave.getText().equals("Save Changes")) {
             saveChanges();
         } else {

@@ -10,8 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -29,14 +27,12 @@ public class CreateOrUpdateCaseController implements Initializable {
     @FXML
     private Button btnCreateOrUpdateCase;
     private Model model;
-    private ControllerAssistant controllerAssistant;
     private Case currentCase;
     private Customer currentCustomer;
     private Util util = new Util();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        controllerAssistant = ControllerAssistant.getInstance();
         model = Model.getInstance();
         checkCurrentCase();
     }
@@ -81,7 +77,7 @@ public class CreateOrUpdateCaseController implements Initializable {
         this.currentCustomer = currentCustomer;
     }
 
-    public void handleCreateOrUpdateCase(ActionEvent actionEvent) {
+    public void handleCreateOrUpdateCase() {
         if (btnCreateOrUpdateCase.getText().equals("Create Case")) {
             handleCreateCase();
         } else {

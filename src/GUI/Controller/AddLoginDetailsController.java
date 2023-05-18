@@ -4,7 +4,6 @@ import BE.LoginDetails;
 import BE.Report;
 import GUI.Controller.Util.ControllerAssistant;
 import GUI.Model.Model;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -109,7 +108,7 @@ public class AddLoginDetailsController implements Initializable {
         }
     }
 
-    public void handleSaveLoginDetails(ActionEvent actionEvent) {
+    public void handleSaveLoginDetails() {
         if(checkBoxNoLogin.isSelected() && currentLoginDetails != null) {
             updateWithNoLogin();
         } else if (!checkBoxNoLogin.isSelected() && currentLoginDetails != null) {

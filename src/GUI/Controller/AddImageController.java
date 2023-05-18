@@ -4,7 +4,6 @@ import BE.Report;
 import BE.TextsAndImagesOnReport;
 import GUI.Controller.Util.ControllerAssistant;
 import GUI.Model.Model;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -64,7 +63,7 @@ public class AddImageController implements Initializable {
     }
 
 
-    public void handleChooseImage(ActionEvent actionEvent) {
+    public void handleChooseImage() {
         vBox.getChildren().remove(imgView);
         vBox.getChildren().remove(lblImage);
         FileChooser fileChooser = new FileChooser();
@@ -91,7 +90,7 @@ public class AddImageController implements Initializable {
         }
     }
 
-    public void handleSave(ActionEvent actionEvent) {
+    public void handleSave() {
         if (textOrImage != null) {
             editImage();
         } else addImage();

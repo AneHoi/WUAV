@@ -39,7 +39,7 @@ public class PopUpCreateUserController implements Initializable {
         util.addShadow(txtFullNameCreate, txtUserNameCreate, txtTelephoneCreate, txtEmailCreate, cbUserTypeCreate);
         btnCreateNewUser.setDisable(true);
         cbUserTypeCreate.setItems(userTypes);
-        checkLoggedInUser();
+        userTypes = util.checkLoggedInUser(userTypes);
     }
 
     private void addListeners() {
@@ -60,21 +60,6 @@ public class PopUpCreateUserController implements Initializable {
             util.addShadow(btnCreateNewUser);
         }
     };
-
-    private void checkLoggedInUser() {
-        String admin = "Admin";
-        String projectManager = "ProjectManager";
-        String technician = "Technician";
-        String salesRepresentative = "SalesRepresentative";
-        int userType = controllerAssistant.getLoggedInUser().getUserType();
-        userTypes.clear();
-        if (userType == 1) {
-            userTypes.addAll(admin, projectManager, technician, salesRepresentative);
-        } else if (userType == 2) {
-            userTypes.addAll(technician);
-        }
-    }
-
 
     public void handleCreateNewUser(ActionEvent actionEvent) {
         String fullName = txtFullNameCreate.getText();

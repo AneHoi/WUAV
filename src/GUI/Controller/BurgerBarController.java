@@ -14,10 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -186,8 +183,8 @@ public class BurgerBarController implements Initializable {
         setPosAndPaddingFlowPanes(flowHome, flowCustomers, flowCases, flowUsers);
     }
 
-    private void setPosAndPaddingFlowPanes(FlowPane... flowpanes) {
-        for (FlowPane flowpane: flowpanes) {
+    private void setPosAndPaddingFlowPanes(FlowPane... flowPanes) {
+        for (FlowPane flowpane: flowPanes) {
             flowpane.setAlignment(Pos.CENTER_LEFT);
             flowpane.setPadding(new Insets(20, 0, 0, 13));
         }
