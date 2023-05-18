@@ -620,7 +620,6 @@ public class ReportHomePageController implements Initializable {
         } else if (btnSubmitReportForReview.getText().equals("Close Report")) {
             closeReport();
         } else if (btnSubmitReportForReview.getText().equals("Generate PDF")) {
-            generatePDF();
             //TODO make them chose destination and insert destination in generatePdf method
             generatePDF(getPath());
             //TODO open pdf
@@ -648,6 +647,9 @@ public class ReportHomePageController implements Initializable {
         }
         System.out.println(path);
         return path;
+    }
+    private void openPdf(String path){
+        
     }
 
 
