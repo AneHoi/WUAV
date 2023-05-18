@@ -23,12 +23,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -623,18 +622,32 @@ public class ReportHomePageController implements Initializable {
         } else if (btnSubmitReportForReview.getText().equals("Generate PDF")) {
             generatePDF();
             //TODO make them chose destination and insert destination in generatePdf method
-            generatePDF();
+            generatePDF(getPath());
             //TODO open pdf
         }
-
     }
 
-    private void generatePDF() {
+    private void generatePDF(String path) {
         PDFGenerator pdfGenerator = new PDFGenerator();
 
-        pdfGenerator.generateReport(currentReport, currentCase, currentCustomer, textsAndImagesOnReportList());
+        pdfGenerator.generateReport(currentReport, currentCase, currentCustomer, textsAndImagesOnReportList(), path);
 
 
+    }
+    private String getPath(){
+        String path = "";
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select a folder");
+        directoryChooser.getInitialDirectory();
+        if(btnSubmitReportForReview.getText().equals("Generate PDF")){
+            Stage stage = (Stage) btnSubmitReportForReview.getScene().getWindow();
+            File selectedFile = directoryChooser.showDialog(stage);
+            if(selectedFile != null){
+                path = selectedFile.getPath();
+            }
+        }
+        System.out.println(path);
+        return path;
     }
 
 

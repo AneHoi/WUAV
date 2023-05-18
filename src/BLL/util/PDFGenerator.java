@@ -24,11 +24,10 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 public class PDFGenerator {
-    public void generateReport(Report report, Case selectedCase, Customer customer, List<TextsAndImagesOnReport> textsAndImagesOnReportList) {
+    public void generateReport(Report report, Case selectedCase, Customer customer, List<TextsAndImagesOnReport> textsAndImagesOnReportList, String path) {
         try {
             PdfFont font = PdfFontFactory.createFont(StandardFontFamilies.COURIER);
-            String outString = System.getProperty("user.home");
-            String destination = outString+ "\\Documents\\pdfs\\"+report.getReportName()+".pdf";
+            String destination = path + "\\"+report.getReportName()+".pdf";
             PdfWriter writer = new PdfWriter(destination);
             PdfDocument pdf = new PdfDocument(writer);
 
