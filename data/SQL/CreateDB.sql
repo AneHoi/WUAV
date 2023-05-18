@@ -160,3 +160,27 @@ CREATE TABLE Technicians_Assigned_To_Case
 
 )
     GO
+CREATE TABLE Login_Details(
+    Login_Details_ID                 INT IDENTITY(1,1)                       NOT NULL,
+    No_Login_Details                 BIT                                     NOT NULL,
+    Component                        NVARCHAR(50),
+    Username                         NVARCHAR(50),
+    Password                         NVARCHAR(50),
+    Additional_Info                  NVARCHAR(250),
+    Created_Date                     DATE                                    NOT NULL,
+    Created_Time                     TIME                                    NOT NULL,
+    Added_By_Tech                    INT                                     NOT NULL,
+
+    CONSTRAINT PK_LOGIN_DETAILS_ID PRIMARY KEY(Login_Details_ID),
+    CONSTRAINT FK_TECH_LOGIN_LINK FOREIGN KEY(Added_By_Tech)
+    REFERENCES User_(User_ID),
+)
+GO
+
+CREATE TABLE Login_Details_Report_Link(
+    Report_ID                       INT                                     NOT NULL,
+    Login_Details_ID                INT                                     NOT NULL,
+
+    CONSTRAINT PK_LOGIN_REPORT_LINK PRIMARY KEY(Login_Details_ID),
+)
+GO

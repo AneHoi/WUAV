@@ -27,6 +27,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.sql.SQLException;
@@ -34,6 +35,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class ReportHomePageController implements Initializable {
@@ -630,7 +632,13 @@ public class ReportHomePageController implements Initializable {
         PDFGenerator pdfGenerator = new PDFGenerator();
 
         pdfGenerator.generateReport(currentReport, currentCase, currentCustomer, textsAndImagesOnReportList(), path);
-
+        File file = new File(path +"\\"+ currentReport.getReportName()+".pdf");
+        try {
+            Desktop.getDesktop().open(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open pdf");
+        }
 
     }
     private String getPath(){
@@ -647,9 +655,6 @@ public class ReportHomePageController implements Initializable {
         }
         System.out.println(path);
         return path;
-    }
-    private void openPdf(String path){
-        
     }
 
 
