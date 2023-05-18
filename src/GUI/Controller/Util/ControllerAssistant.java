@@ -1,12 +1,9 @@
-package GUI.Controller;
+package GUI.Controller.Util;
 
 import BE.Admin;
-import BE.Technician;
 import BE.User;
-import DAL.UsersDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;

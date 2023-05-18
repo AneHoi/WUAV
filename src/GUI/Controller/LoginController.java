@@ -1,5 +1,6 @@
 package GUI.Controller;
 
+import GUI.Controller.Util.Util;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,6 +27,7 @@ public class LoginController implements Initializable {
 
     private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private String logo = "data/Images/logoWhite.png";
+    private Util util = new Util();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         SetImg();
@@ -39,20 +41,7 @@ public class LoginController implements Initializable {
     }
 
     private void SetImg() {
-        imgWUAVLogo.setImage(loadImages(logo));
-    }
-
-    private Image loadImages(String url) {
-        Image image = null;
-        try {
-            InputStream img = new FileInputStream(url);
-            image = new Image(img);
-        } catch (FileNotFoundException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load an image, following error occurred:\n" + e, ButtonType.CANCEL);
-            alert.showAndWait();
-        }
-        return image;
-
+        imgWUAVLogo.setImage(util.loadImages(logo));
     }
 
     public void login(ActionEvent event) {

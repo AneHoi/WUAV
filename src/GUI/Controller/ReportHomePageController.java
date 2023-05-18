@@ -2,8 +2,9 @@ package GUI.Controller;
 
 import BE.*;
 import BLL.util.PDFGenerator;
+import GUI.Controller.Util.ControllerAssistant;
+import GUI.Controller.Util.Util;
 import GUI.Model.Model;
-import com.itextpdf.kernel.colors.Lab;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,18 +25,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class ReportHomePageController implements Initializable {
@@ -57,6 +54,7 @@ public class ReportHomePageController implements Initializable {
     private String back = "data/Images/Backward.png";
     private String forward = "data/Images/Forward.png";
     private int numberOfLoginDetails;
+    private Util util = new Util();
     private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
 
 
@@ -67,9 +65,9 @@ public class ReportHomePageController implements Initializable {
         nextPosition = 0;
         currentReport = model.getCurrentReport();
         lblReportStatus.setText(currentReport.getIsActive());
-        imgBack.setImage(loadImages(back));
+        imgBack.setImage(util.loadImages(back));
         imgBack.setOnMouseClicked(event -> goBack());
-        imgForward.setImage(loadImages(forward));
+        imgForward.setImage(util.loadImages(forward));
         imgForward.setDisable(true);
         currentCase = model.getCurrentCase();
         currentCustomer = model.getCurrentCustomer();
@@ -103,8 +101,8 @@ public class ReportHomePageController implements Initializable {
                 Button btnDelete = new Button();
                 ImageView imgViewEdit = new ImageView();
                 ImageView imgViewDelete = new ImageView();
-                imgViewEdit.setImage(loadImages("data/Images/Edit.png"));
-                imgViewDelete.setImage(loadImages("data/Images/Trash Can.png"));
+                imgViewEdit.setImage(util.loadImages("data/Images/Edit.png"));
+                imgViewDelete.setImage(util.loadImages("data/Images/Trash Can.png"));
                 imgViewDelete.setFitHeight(40);
                 imgViewDelete.setFitWidth(40);
                 imgViewEdit.setFitWidth(40);
@@ -133,8 +131,8 @@ public class ReportHomePageController implements Initializable {
                 Button btnDelete = new Button();
                 ImageView imgViewEdit = new ImageView();
                 ImageView imgViewDelete = new ImageView();
-                imgViewEdit.setImage(loadImages("data/Images/Edit.png"));
-                imgViewDelete.setImage(loadImages("data/Images/Trash Can.png"));
+                imgViewEdit.setImage(util.loadImages("data/Images/Edit.png"));
+                imgViewDelete.setImage(util.loadImages("data/Images/Trash Can.png"));
                 imgViewDelete.setFitHeight(40);
                 imgViewDelete.setFitWidth(40);
                 imgViewEdit.setFitWidth(40);
@@ -312,8 +310,8 @@ public class ReportHomePageController implements Initializable {
         ImageView imgViewDelete = new ImageView();
         ImageView imgUp = new ImageView();
         ImageView imgDown = new ImageView();
-        imgUp.setImage(loadImages("data/Images/Up Arrow.png"));
-        imgDown.setImage(loadImages("data/Images/Down Arrow.png"));
+        imgUp.setImage(util.loadImages("data/Images/Up Arrow.png"));
+        imgDown.setImage(util.loadImages("data/Images/Down Arrow.png"));
         imgUp.setFitWidth(40);
         imgUp.setFitHeight(40);
         imgDown.setFitWidth(40);
@@ -327,8 +325,8 @@ public class ReportHomePageController implements Initializable {
         vbLeft.getChildren().addAll(btnUp, btnDown);
         vbLeft.setSpacing(10);
         vbLeft.setPadding(new Insets(10));
-        imgViewEdit.setImage(loadImages("data/Images/Edit.png"));
-        imgViewDelete.setImage(loadImages("data/Images/Trash Can.png"));
+        imgViewEdit.setImage(util.loadImages("data/Images/Edit.png"));
+        imgViewDelete.setImage(util.loadImages("data/Images/Trash Can.png"));
         imgViewDelete.setFitHeight(40);
         imgViewDelete.setFitWidth(40);
         imgViewEdit.setFitWidth(40);
@@ -379,8 +377,8 @@ public class ReportHomePageController implements Initializable {
         ImageView imgDown = new ImageView();
         ImageView imgViewEdit = new ImageView();
         ImageView imgViewDelete = new ImageView();
-        imgUp.setImage(loadImages("data/Images/Up Arrow.png"));
-        imgDown.setImage(loadImages("data/Images/Down Arrow.png"));
+        imgUp.setImage(util.loadImages("data/Images/Up Arrow.png"));
+        imgDown.setImage(util.loadImages("data/Images/Down Arrow.png"));
         imgUp.setFitWidth(40);
         imgUp.setFitHeight(40);
         imgDown.setFitWidth(40);
@@ -394,8 +392,8 @@ public class ReportHomePageController implements Initializable {
         vbLeft.getChildren().addAll(btnUp, btnDown);
         vbLeft.setSpacing(10);
         vbLeft.setPadding(new Insets(10));
-        imgViewEdit.setImage(loadImages("data/Images/Edit.png"));
-        imgViewDelete.setImage(loadImages("data/Images/Trash Can.png"));
+        imgViewEdit.setImage(util.loadImages("data/Images/Edit.png"));
+        imgViewDelete.setImage(util.loadImages("data/Images/Trash Can.png"));
         imgViewDelete.setFitHeight(40);
         imgViewDelete.setFitWidth(40);
         imgViewEdit.setFitWidth(40);
@@ -476,20 +474,6 @@ public class ReportHomePageController implements Initializable {
         lblCaseTechnicians.setText(currentCase.getAssignedTechnician());
         lblCaseContactPerson.setText(currentCase.getContactPerson());
         lblReportDescription.setText(currentReport.getReportDescription());
-    }
-
-
-    private Image loadImages(String url) {
-        Image image = null;
-        try {
-            InputStream img = new FileInputStream(url);
-            image = new Image(img);
-        } catch (FileNotFoundException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load an image, following error occurred:\n" + e, ButtonType.CANCEL);
-            alert.showAndWait();
-        }
-        return image;
-
     }
 
     private void goBack() {

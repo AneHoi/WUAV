@@ -2,6 +2,8 @@ package GUI.Controller;
 
 import BE.Case;
 import BE.Technician;
+import GUI.Controller.Util.ControllerAssistant;
+import GUI.Controller.Util.Util;
 import GUI.Model.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,18 +55,20 @@ public class CustomerHomePageController implements Initializable {
     private ObservableList<Technician> technicianObservableList;
     private final String back = "data/Images/Backward.png";
     private final String forward = "data/Images/Forward.png";
+    private Util util;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        util = new Util();
         controllerAssistant = ControllerAssistant.getInstance();
         model = Model.getInstance();
         caseObservableList = FXCollections.observableArrayList();
         technicianObservableList = FXCollections.observableArrayList();
         lblCustomerName.setText(model.getCurrentCustomer().getCustomerName() + " Home Page");
-        imgBack.setImage(loadImages(back));
+        imgBack.setImage(util.loadImages(back));
         imgBack.setOnMouseClicked(event -> goBack());
-        imgForward.setImage(loadImages(forward));
+        imgForward.setImage(util.loadImages(forward));
         imgForward.setDisable(true);
         imgForward.setOnMouseClicked(event -> goForward());
         addListeners();
@@ -155,21 +159,6 @@ public class CustomerHomePageController implements Initializable {
         });
 
     }
-
-    private Image loadImages(String url) {
-        Image image = null;
-        try {
-            InputStream img = new FileInputStream(url);
-            image = new Image(img);
-        } catch (FileNotFoundException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load an image, following error occurred:\n" + e, ButtonType.CANCEL);
-            alert.showAndWait();
-        }
-        return image;
-
-    }
-
-
     private void searchBarFilter() {
         // Create a list to hold the original unfiltered items in the tblViewCustomers TableView
         ObservableList<Case> originalList = FXCollections.observableArrayList(tblViewExistingCases.getItems());

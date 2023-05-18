@@ -1,6 +1,8 @@
 package GUI.Controller;
 
 import BE.User;
+import GUI.Controller.Util.ControllerAssistant;
+import GUI.Controller.Util.Util;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -35,6 +37,7 @@ public class TopBarController implements Initializable {
     private User loggedInUser;
 
     private ControllerAssistant controllerAssistant;
+    private Util util = new Util();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -46,7 +49,7 @@ public class TopBarController implements Initializable {
     }
 
     private void loadUserInfo() {
-        imgLogo.setImage(loadImages(logo));
+        imgLogo.setImage(util.loadImages(logo));
         rectangle.setArcWidth(30.0);   // Corner radius
         rectangle.setArcHeight(30.0);
         ImagePattern pattern = new ImagePattern( //TODO change to users profile picture
@@ -56,18 +59,5 @@ public class TopBarController implements Initializable {
         lblFirstName.setText("Michael"); //TODO Change to users real name
         lblLastName.setText("Tonnesen"); //TODO Chnage to users real last name
         lblLogOut.setText("Log Out");
-    }
-
-    private Image loadImages(String url) {
-        Image image = null;
-        try {
-            InputStream img = new FileInputStream(url);
-            image = new Image(img);
-        } catch (FileNotFoundException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load an image, following error occurred:\n" + e, ButtonType.CANCEL);
-            alert.showAndWait();
-        }
-        return image;
-
     }
 }

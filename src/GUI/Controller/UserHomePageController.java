@@ -1,5 +1,6 @@
 package GUI.Controller;
 
+import GUI.Controller.Util.ControllerAssistant;
 import GUI.Model.Model;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

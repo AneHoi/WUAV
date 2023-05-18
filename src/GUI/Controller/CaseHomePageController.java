@@ -3,6 +3,8 @@ package GUI.Controller;
 import BE.Case;
 import BE.Customer;
 import BE.Report;
+import GUI.Controller.Util.ControllerAssistant;
+import GUI.Controller.Util.Util;
 import GUI.Model.Model;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -57,14 +59,15 @@ public class CaseHomePageController implements Initializable {
     private ObservableList observableReports;
     private String back = "data/Images/Backward.png";
     private String forward = "data/Images/Forward.png";
+    private Util util = new Util();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = Model.getInstance();
         controllerAssistant = ControllerAssistant.getInstance();
-        imgBack.setImage(loadImages(back));
+        imgBack.setImage(util.loadImages(back));
         imgBack.setOnMouseClicked(event -> goBack());
-        imgForward.setImage(loadImages(forward));
+        imgForward.setImage(util.loadImages(forward));
         imgForward.setDisable(true);
         imgForward.setOnMouseClicked(event -> goForward());
         currentCase = model.getCurrentCase();
@@ -224,19 +227,6 @@ public class CaseHomePageController implements Initializable {
                 tblViewExistingReports.setItems(filteredList);
             }
         });
-    }
-
-    private Image loadImages(String url) {
-        Image image = null;
-        try {
-            InputStream img = new FileInputStream(url);
-            image = new Image(img);
-        } catch (FileNotFoundException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load an image, following error occurred:\n" + e, ButtonType.CANCEL);
-            alert.showAndWait();
-        }
-        return image;
-
     }
 
     public void handleUpdateReport(ActionEvent actionEvent) {

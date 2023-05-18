@@ -1,6 +1,6 @@
 package GUI.Controller;
 
-import GUI.Model.Model;
+import GUI.Controller.Util.ControllerAssistant;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;

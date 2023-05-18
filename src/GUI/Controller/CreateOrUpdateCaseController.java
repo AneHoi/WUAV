@@ -2,6 +2,7 @@ package GUI.Controller;
 
 import BE.Case;
 import BE.Customer;
+import GUI.Controller.Util.ControllerAssistant;
 import GUI.Model.Model;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;

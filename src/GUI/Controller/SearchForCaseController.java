@@ -4,6 +4,7 @@ import BE.Case;
 import BE.Customer;
 import BE.Report;
 import BE.ReportCaseAndCustomer;
+import GUI.Controller.Util.ControllerAssistant;
 import GUI.Model.Model;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;

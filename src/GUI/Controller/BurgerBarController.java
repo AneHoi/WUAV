@@ -1,6 +1,7 @@
 package GUI.Controller;
 
-import javafx.event.EventHandler;
+import GUI.Controller.Util.ControllerAssistant;
+import GUI.Controller.Util.Util;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -10,7 +11,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
@@ -28,6 +28,8 @@ public class BurgerBarController implements Initializable {
     private VBox vboxBurgerMenu;
     @FXML
     private FlowPane flowHome, flowCustomers, flowCases, flowUsers;
+
+    private Util util = new Util();
 
     private final String home = "data/Images/Home.png";
     private final String customers = "data/Images/Customers.png";
@@ -75,14 +77,14 @@ public class BurgerBarController implements Initializable {
      * loads all the different images into image-variables
      */
     private void loadAllImages() {
-        imgHomeNormal = loadImages(home);
-        imgHomeOrange = loadImages(homeOrange);
-        imgCustomerNormal = loadImages(customers);
-        imgCustomerOrange = loadImages(customersOrange);
-        imgCasesNormal = loadImages(cases);
-        imgCasesOrange = loadImages(casesOrange);
-        imgUsersNormal = loadImages(users);
-        imgUsersOrange = loadImages(usersOrange);
+        imgHomeNormal = util.loadImages(home);
+        imgHomeOrange = util.loadImages(homeOrange);
+        imgCustomerNormal = util.loadImages(customers);
+        imgCustomerOrange = util.loadImages(customersOrange);
+        imgCasesNormal = util.loadImages(cases);
+        imgCasesOrange = util.loadImages(casesOrange);
+        imgUsersNormal = util.loadImages(users);
+        imgUsersOrange = util.loadImages(usersOrange);
     }
 
     private void setImagesToWhite() {
@@ -168,7 +170,7 @@ public class BurgerBarController implements Initializable {
     private void loadLabelsForIcons() {
         lHome = new Label("Home");
         lCustomers = new Label("Customers");
-        lCases = new Label("Cases");
+        lCases = new Label("Reports");
         lUsers = new Label("Users");
 
         setStylingAndPaddingLabels(lHome, lCustomers, lCases, lUsers);
@@ -209,17 +211,4 @@ public class BurgerBarController implements Initializable {
         imgUsers.setImage(imgUsersNormal);
 
     }
-
-    private Image loadImages(String url) {
-        Image image = null;
-        try {
-            InputStream img = new FileInputStream(url);
-            image = new Image(img);
-        } catch (FileNotFoundException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load an image, following error occurred:\n" + e, ButtonType.CANCEL);
-            alert.showAndWait();
-        }
-        return image;
-    }
-
 }

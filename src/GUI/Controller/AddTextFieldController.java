@@ -2,6 +2,7 @@ package GUI.Controller;
 
 import BE.Report;
 import BE.TextsAndImagesOnReport;
+import GUI.Controller.Util.ControllerAssistant;
 import GUI.Model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -2,6 +2,7 @@ package GUI.Controller;
 
 import BE.Case;
 import BE.Report;
+import GUI.Controller.Util.ControllerAssistant;
 import GUI.Model.Model;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
@@ -13,7 +14,6 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;

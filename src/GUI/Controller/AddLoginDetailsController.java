@@ -2,6 +2,7 @@ package GUI.Controller;
 
 import BE.LoginDetails;
 import BE.Report;
+import GUI.Controller.Util.ControllerAssistant;
 import GUI.Model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
