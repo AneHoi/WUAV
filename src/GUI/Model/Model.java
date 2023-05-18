@@ -6,6 +6,7 @@ import BLL.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class Model {
     public Customer getChosenCustomer(int chosenCustomer) throws SQLException {
         return customerManager.getChosenCustomer(chosenCustomer);
     }
+
     public List<Customer> getAllCustomers() throws SQLException {
         customers = customerManager.getAllCustomers();
         return customers;
@@ -49,9 +51,11 @@ public class Model {
     public void createNewReport(String reportName, String reportDescription, int caseID, int userID) throws SQLException {
         reportManager.createNewReport(reportName, reportDescription, caseID, userID);
     }
+
     public Report getChosenReport(int reportID) throws SQLException {
         return reportManager.getChosenReport(reportID);
     }
+
     public List<Report> getReports(int caseID) throws SQLException {
         return reportManager.getReports(caseID);
     }
@@ -166,7 +170,7 @@ public class Model {
         reportManager.moveItemUp(textOrImageID, positionOnReport);
     }
 
-    public void moveItemDown(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException{
+    public void moveItemDown(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException {
         reportManager.moveItemDown(textOrImageID, positionOnReport);
     }
 
@@ -187,5 +191,36 @@ public class Model {
 
     public void deleteReport(int reportID) throws SQLException {
         reportManager.deleteReport(reportID);
+    }
+
+    public void closeCase(Case chosenCase) throws SQLException {
+        caseManager.closeCase(chosenCase);
+    }
+
+    public void expandKeepingTime(Case casen, int daysToKeep) throws SQLException {
+        caseManager.expandKeepingTime(casen, daysToKeep);
+    }
+    public void saveLoginDetails(int reportID, String component, String username, String password, String additionalInfo, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
+        reportManager.saveLoginDetails(reportID, component, username, password, additionalInfo, createdDate, createdTime, userID);
+    }
+
+    public void noLoginInfoForThisReport(int reportID, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
+        reportManager.noLoginInfoForThisReport(reportID, createdDate, createdTime, userID);
+    }
+
+    public List<LoginDetails> getLoginDetails(int reportID) throws SQLException {
+        return reportManager.getLoginDetails(reportID);
+    }
+
+    public void deleteLoginDetails(int loginDetailsID) throws SQLException {
+        reportManager.deleteLoginDetails(loginDetailsID);
+    }
+
+    public void updateLoginDetails(int loginDetailsID, String component, String username, String password, String additionalInfo, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
+        reportManager.updateLoginDetails(loginDetailsID, component, username, password, additionalInfo, createdDate, createdTime, userID);
+    }
+
+    public void updateToNoLogin(int loginDetailsID, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
+        reportManager.updateToNoLogin(loginDetailsID, createdDate, createdTime, userID);
     }
 }

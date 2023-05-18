@@ -7,6 +7,7 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,7 +89,7 @@ public class CaseDAO implements ICaseDAO {
     @Override
     public Case getChosenCase(int chosenCase) throws SQLException {
         Case c = null;
-        String sql = "SELECT * FROM Case_ LEFT JOIN User_ ON Case_.Case_Assigned_Tech_ID = User_.User_ID WHERE Case_.Case_ID = "+ chosenCase + ";";
+        String sql = "SELECT * FROM Case_ LEFT JOIN User_ ON Case_.Case_Assigned_Tech_ID = User_.User_ID WHERE Case_.Case_ID = " + chosenCase + ";";
         try (Connection conn = db.getConnection()) {
             String sql1 = "SELECT * FROM Case_ WHERE Case_.Case_Name ='" + chosenCase + "';";
             Statement stmt = conn.createStatement();
@@ -114,7 +115,6 @@ public class CaseDAO implements ICaseDAO {
         return c;
     }
 
-
     @Override
     public List<Case> getAllCases() throws SQLException {
         List<Case> cases = new ArrayList<>();
@@ -131,12 +131,18 @@ public class CaseDAO implements ICaseDAO {
                 int customerID = rs.getInt("Case_Customer_ID");
                 String techName = rs.getString("User_Full_Name");
                 LocalDate date = rs.getDate("Case_Created_Date").toLocalDate();
+                LocalDate caseClosedDate = null;
+                if (rs.getDate("Case_Closed_Date") != null) {
+                    caseClosedDate = rs.getDate("Case_Closed_Date").toLocalDate();
+                }
+                int daysToKeep = rs.getInt("Case_Days_To_Keep");
 
-                Case c = new Case(caseID, caseName, caseDescription, contactPerson, customerID, techName, date);
+                Case c = new Case(caseID, caseName, caseDescription, contactPerson, customerID, techName, date, caseClosedDate, daysToKeep);
                 cases.add(c);
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new SQLException("Could not get Cases from Database");
         }
         return cases;
@@ -210,6 +216,33 @@ public class CaseDAO implements ICaseDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new SQLException("Could not get delete the case from the database");
+        }
+    }
+
+    public void closeCase(Case chosenCase) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "UPDATE Case_ SET Case_Closed_Date = (?), Case_Days_To_Keep = (?) WHERE Case_ID = " + chosenCase.getCaseID() + ";";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setDate(1, Date.valueOf(LocalDate.now()));
+            ps.setInt(2, 1461);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Could not close Case in database");
+        }
+    }
+
+    public void expandKeepingTime(Case casen, int daysToKeep) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "UPDATE Case_ SET Case_Days_To_Keep = (?) WHERE Case_ID = " + casen.getCaseID() + ";";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, daysToKeep);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Could not update the time for keeping this casein the database");
         }
     }
 }

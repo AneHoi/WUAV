@@ -5,6 +5,7 @@ import BE.Technician;
 import DAL.CaseDAO;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class CaseManager {
@@ -42,5 +43,13 @@ public class CaseManager {
 
     public void deleteCase(Case casen) throws SQLException {
         caseDAO.deleteCase(casen);
+    }
+
+    public void closeCase(Case chosenCase) throws SQLException {
+        caseDAO.closeCase(chosenCase);
+    }
+
+    public void expandKeepingTime(Case casen, int daysToKeep) throws SQLException {
+        caseDAO.expandKeepingTime(casen, daysToKeep);
     }
 }

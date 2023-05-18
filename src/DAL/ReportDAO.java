@@ -3,7 +3,6 @@ package DAL;
 import BE.*;
 import DAL.Interfaces.IReportDAO;
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -371,7 +370,7 @@ public class ReportDAO implements IReportDAO {
                     if (resultSet.next()) {
                         itemBelowId = resultSet.getInt("Text_Or_Image_On_Report_ID");
                     } else {
-                        throw new IllegalStateException("The item is already at the top and cannot be moved up.");
+                        throw new IllegalStateException("The item is already at the bottom and cannot be moved down.");
                     }
                 }
             }
@@ -440,10 +439,184 @@ public class ReportDAO implements IReportDAO {
         try (Connection conn = db.getConnection()) {
             String sql = "DELETE FROM Report WHERE Report_ID = (?);";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1,reportID);
+            ps.setInt(1, reportID);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SQLException(e);
+        }
+    }
+
+    public void saveLoginDetails(int reportID, String component, String username, String password, String additionalInfo, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            // Insert into Login_Details table
+            String sql1 = "INSERT INTO Login_Details (No_Login_Details, Component, Username, Password, Additional_Info, Created_Date, Created_Time, Added_By_Tech) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+            PreparedStatement ps1 = conn.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
+            ps1.setBoolean(1, false);
+            ps1.setString(2, component);
+            ps1.setString(3, username);
+            ps1.setString(4, password);
+            ps1.setString(5, additionalInfo);
+            ps1.setDate(6, java.sql.Date.valueOf(createdDate));
+            ps1.setTime(7, java.sql.Time.valueOf(createdTime));
+            ps1.setInt(8, userID);
+            ps1.executeUpdate();
+
+
+            ResultSet rs = ps1.getGeneratedKeys();
+            int loginDetailsID;
+            if (rs.next()) {
+                loginDetailsID = rs.getInt(1);
+            } else {
+                throw new SQLException("Failed to retrieve generated Login_Details_ID.");
+            }
+
+
+            String sql2 = "INSERT INTO Login_Details_Report_Link (Report_ID, Login_Details_ID) " +
+                    "VALUES (?, ?)";
+            PreparedStatement ps2 = conn.prepareStatement(sql2);
+            ps2.setInt(1, reportID);
+            ps2.setInt(2, loginDetailsID);
+            ps2.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(e);
+        }
+    }
+
+
+    public void noLoginInfoForThisReport(int reportID, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            // Insert into Login_Details table with No_Login_Details set to true
+            String sql1 = "INSERT INTO Login_Details (No_Login_Details, Created_Date, Created_Time, Added_By_Tech) " +
+                    "VALUES (?, ?, ?, ?)";
+
+            PreparedStatement ps1 = conn.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
+            ps1.setBoolean(1, true);
+            ps1.setDate(2, java.sql.Date.valueOf(createdDate));
+            ps1.setTime(3, java.sql.Time.valueOf(createdTime));
+            ps1.setInt(4, userID);
+            ps1.executeUpdate();
+
+
+            ResultSet generatedKeys = ps1.getGeneratedKeys();
+            int loginDetailsID;
+            if (generatedKeys.next()) {
+                loginDetailsID = generatedKeys.getInt(1);
+            } else {
+                throw new SQLException("Failed to retrieve generated Login_Details_ID.");
+            }
+
+            String sql2 = "INSERT INTO Login_Details_Report_Link (Report_ID, Login_Details_ID) " +
+                    "VALUES (?, ?)";
+            PreparedStatement ps2 = conn.prepareStatement(sql2);
+            ps2.setInt(1, reportID);
+            ps2.setInt(2, loginDetailsID);
+            ps2.executeUpdate();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(e);
+        }
+    }
+
+    public List<LoginDetails> getLoginDetails(int reportID) throws SQLException {
+        List<LoginDetails> loginDetails = new ArrayList<>();
+        try (Connection conn = db.getConnection()) {
+            String sql = "SELECT * FROM Login_Details JOIN Login_Details_Report_Link ON " +
+                    "Login_Details.Login_Details_ID = Login_Details_Report_Link.Login_Details_ID " +
+                    "JOIN User_ ON Login_Details.Added_By_Tech = User_.User_ID " +
+                    "WHERE Report_ID = (?);";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, reportID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("Login_Details_ID");
+                boolean noLoginDetails = rs.getBoolean("No_Login_Details");
+                int techID = rs.getInt("User_ID");
+                String techName = rs.getString("User_Full_Name");
+                Technician t = new Technician(techID, techName);
+                LocalDate date = rs.getDate("Created_Date").toLocalDate();
+                LocalTime time = rs.getTime("Created_Time").toLocalTime();
+                if (!noLoginDetails) {
+                    String component = rs.getString("Component");
+                    String username = rs.getString("Username");
+                    String password = rs.getString("Password");
+                    String additionalInfo = rs.getString("Additional_Info");
+                    LoginDetails ld = new LoginDetails(id, false, component, username, password, additionalInfo, t, date, time);
+                    loginDetails.add(ld);
+                } else {
+                    LoginDetails ld = new LoginDetails(id, true, t, date, time);
+                    loginDetails.add(ld);
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(e);
+        }
+        return loginDetails;
+    }
+
+    public void deleteLoginDetails(int loginDetailsID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "DELETE FROM Login_Details WHERE Login_Details_ID = (?);";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, loginDetailsID);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+    }
+
+    public void updateLoginDetails(int loginDetailsID, String component, String username, String password, String additionalInfo, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "UPDATE Login_Details SET No_Login_Details = (?), Component = (?), " +
+                    "Username = (?), Password = (?), Additional_Info = (?), Created_Date = (?), " +
+                    "Created_Time = (?), Added_By_Tech = (?) WHERE Login_Details_ID = (?);";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setBoolean(1, false);
+            ps.setString(2, component);
+            ps.setString(3, username);
+            ps.setString(4, password);
+            ps.setString(5, additionalInfo);
+            ps.setDate(6, java.sql.Date.valueOf(createdDate));
+            ps.setTime(7, java.sql.Time.valueOf(createdTime));
+            ps.setInt(8, userID);
+            ps.setInt(9, loginDetailsID);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(e);
+        }
+    }
+
+    public void updateToNoLogin(int loginDetailsID, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+            String sql = "UPDATE Login_Details SET No_Login_Details = (?), Component = (?), " +
+                    "Username = (?), Password = (?), Additional_Info = (?), Created_Date = (?), " +
+                    "Created_Time = (?), Added_By_Tech = (?) WHERE Login_Details_ID = (?);";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setBoolean(1, true);
+            ps.setString(2, null);
+            ps.setString(3, null);
+            ps.setString(4, null);
+            ps.setString(5, null);
+            ps.setDate(6, java.sql.Date.valueOf(createdDate));
+            ps.setTime(7, java.sql.Time.valueOf(createdTime));
+            ps.setInt(8, userID);
+            ps.setInt(9, loginDetailsID);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
             throw new SQLException(e);
         }
     }

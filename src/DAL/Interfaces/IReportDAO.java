@@ -1,5 +1,6 @@
 package DAL.Interfaces;
 
+import BE.LoginDetails;
 import BE.Report;
 import BE.ReportCaseAndCustomer;
 import BE.TextsAndImagesOnReport;
@@ -42,4 +43,16 @@ public interface IReportDAO {
     void updateReport(int reportID, String reportName, String reportDescription, int userID) throws SQLException;
 
     void deleteReport(int reportID) throws SQLException;
+
+    void saveLoginDetails(int reportID, String component, String username, String password, String additionalInfo, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException;
+
+    void noLoginInfoForThisReport(int reportID, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException;
+
+    List<LoginDetails> getLoginDetails(int reportID) throws SQLException;
+
+    void deleteLoginDetails(int loginDetailsID) throws SQLException;
+
+    void updateLoginDetails(int loginDetailsID, String component, String username, String password, String additionalInfo, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException;
+
+    void updateToNoLogin(int loginDetailsID, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException;
 }
