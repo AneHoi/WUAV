@@ -93,7 +93,7 @@ public class CaseDAO implements ICaseDAO {
         try (Connection conn = db.getConnection()) {
             String sql1 = "SELECT * FROM Case_ WHERE Case_.Case_Name ='" + chosenCase + "';";
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql1);
+            ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
                 int caseID = rs.getInt("Case_ID");
