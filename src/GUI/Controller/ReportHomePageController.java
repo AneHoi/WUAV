@@ -600,19 +600,18 @@ public class ReportHomePageController implements Initializable {
         updateReport();
     }
 
-    public void handleSubmitReport(ActionEvent event) {
+    public void handleSubmitReport(ActionEvent event) throws FileNotFoundException {
         if (btnSubmitReportForReview.getText().equals("Submit Report")) {
             submitForReview();
         } else if (btnSubmitReportForReview.getText().equals("Close Report")) {
             closeReport();
         } else if (btnSubmitReportForReview.getText().equals("Generate PDF")) {
-            //TODO make them chose destination and insert destination in generatePdf method
             generatePDF(getPath());
             //TODO open pdf
         }
     }
 
-    private void generatePDF(String path) {
+    private void generatePDF(String path) throws FileNotFoundException {
         PDFGenerator pdfGenerator = new PDFGenerator();
 
         pdfGenerator.generateReport(currentReport, currentCase, currentCustomer, textsAndImagesOnReportList(), path);
