@@ -141,16 +141,43 @@ public class CaseHomePageController implements Initializable {
             reports = model.getReports(currentCase.getCaseID());
             //Sort the reports
             Comparator<Report> byStatus = (Report report1, Report report2) -> report1.getIsActive().compareTo(report2.getIsActive());
-            Collections.sort(reports, Collections.reverseOrder(byStatus));
+            Collections.sort(reports, byStatus);
 
             //Sorting the list by active cases, and does not add the "Submitted for review" status for the technicians
             if (controllerAssistant.getLoggedInUser().getUserType() == 3){
+                Comparator<Report> byOpenClosed = (Report report1, Report report2) -> report1.getIsActive().compareTo(report2.getIsActive());
+                Collections.sort(reports, Collections.reverseOrder(byOpenClosed));
                 for (Report report : reports) {
                     if (!report.getIsActive().equalsIgnoreCase("submitted for review")) {
                         observableReports.add(report);
                     }
                 }
-            }else {
+            }
+            //Sorting by "Submitted for review", "open" and "closed" if a project manager is logged in
+            else if (controllerAssistant.getLoggedInUser().getUserType() == 2) {
+                //Sort the reports
+                Comparator<Report> bySubOpenClosed = (Report report1, Report report2) -> {
+                    if (report1.getIsActive().equalsIgnoreCase("submitted for review") && report2.getIsActive().equalsIgnoreCase("open")
+                            || report1.getIsActive().equalsIgnoreCase("submitted for review") && report2.getIsActive().equalsIgnoreCase("closed")) {
+                        //"Submit for review" is 'Highest'
+                        return 1;
+                    } else if (report1.getIsActive().equalsIgnoreCase("open") && report2.getIsActive().equalsIgnoreCase("closed")) {
+                        //"Open" is 'higher' than "Closed"
+                        return 1;
+                    } else if (report1.getIsActive().equalsIgnoreCase("closed") && report2.getIsActive().equalsIgnoreCase("submitted for review")
+                            || report1.getIsActive().equalsIgnoreCase("closed") && report2.getIsActive().equalsIgnoreCase("open")
+                            || report1.getIsActive().equalsIgnoreCase("open") && report2.getIsActive().equalsIgnoreCase("submitted for review")) {
+                        //"Closed" is the absolute 'lowest'
+                        return -1;
+                    }else {
+                        return 0;
+                    }
+                };
+                Collections.sort(reports, Collections.reverseOrder(bySubOpenClosed));
+                for (Report report : reports) {
+                    observableReports.add(report);
+                }
+            } else {
                 for (Report report : reports) {
                     observableReports.add(report);
                 }

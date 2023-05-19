@@ -97,16 +97,45 @@ public class SearchForCaseController implements Initializable {
         try {
             reportCaseAndCustomers = model.getAllReports();
             Comparator<ReportCaseAndCustomer> byStatus = (ReportCaseAndCustomer pcc1, ReportCaseAndCustomer pcc2) -> pcc1.getReportStatus().compareTo(pcc2.getReportStatus());
-            Collections.sort(reportCaseAndCustomers, Collections.reverseOrder(byStatus));
+            Collections.sort(reportCaseAndCustomers, byStatus);
 
             //Sorting the list by active cases, and does not add the "Submitted for review" status for the technicians
             if (controllerAssistant.getLoggedInUser().getUserType() == 3){
+
+                Comparator<ReportCaseAndCustomer> byOpenClosed = (ReportCaseAndCustomer pcc1, ReportCaseAndCustomer pcc2) -> pcc1.getReportStatus().compareTo(pcc2.getReportStatus());
+                Collections.sort(reportCaseAndCustomers, Collections.reverseOrder(byOpenClosed));
                 for (ReportCaseAndCustomer rCC : reportCaseAndCustomers) {
                     if (!rCC.getReportStatus().equalsIgnoreCase("submitted for review")) {
                         data.add(rCC);
                     }
                 }
-            }else {
+            }
+            //Sorting by "Submitted for review", "open" and "closed" if a project manager is logged in
+            else if (controllerAssistant.getLoggedInUser().getUserType() == 2) {
+                //Sort the reports
+                Comparator<ReportCaseAndCustomer> bySubOpenClosed = (ReportCaseAndCustomer report1, ReportCaseAndCustomer report2) -> {
+                    if (report1.getReportStatus().equalsIgnoreCase("submitted for review") && report2.getReportStatus().equalsIgnoreCase("open")
+                            || report1.getReportStatus().equalsIgnoreCase("submitted for review") && report2.getReportStatus().equalsIgnoreCase("closed")) {
+                        //"Submit for review" is 'Highest'
+                        return 1;
+                    } else if (report1.getReportStatus().equalsIgnoreCase("open") && report2.getReportStatus().equalsIgnoreCase("closed")) {
+                        //"Open" is 'higher' than "Closed"
+                        return 1;
+                    } else if (report1.getReportStatus().equalsIgnoreCase("closed") && report2.getReportStatus().equalsIgnoreCase("submitted for review")
+                            || report1.getReportStatus().equalsIgnoreCase("closed") && report2.getReportStatus().equalsIgnoreCase("open")
+                            || report1.getReportStatus().equalsIgnoreCase("open") && report2.getReportStatus().equalsIgnoreCase("submitted for review")) {
+                        //"Closed" is the absolute 'lowest'
+                        return -1;
+                    }else {
+                        return 0;
+                    }
+                };
+                Collections.sort(reportCaseAndCustomers, Collections.reverseOrder(bySubOpenClosed));
+                for (ReportCaseAndCustomer rCC : reportCaseAndCustomers) {
+                    data.add(rCC);
+                }
+
+            } else {
                 for (ReportCaseAndCustomer rCC : reportCaseAndCustomers) {
                     data.add(rCC);
                 }
