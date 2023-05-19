@@ -20,12 +20,12 @@
             <Insets />
          </BorderPane.margin>
          <left>
-            <Label fx:id="lblCustomerName" text="Label" underline="true" BorderPane.alignment="CENTER">
+            <Label fx:id="lblCustomerName" styleClass="headingLabel" text="Label" underline="true" BorderPane.alignment="TOP_LEFT">
                <font>
                   <Font name="System Bold" size="40.0" />
                </font>
                <BorderPane.margin>
-                  <Insets left="25.0" />
+                  <Insets left="25.0" top="10.0" />
                </BorderPane.margin>
             </Label>
          </left>
@@ -57,7 +57,7 @@
                         <Insets bottom="-25.0" />
                      </VBox.margin>
                   </HBox>
-                  <Label text="Search through existing cases:" underline="true">
+                  <Label styleClass="underHeadingLabel" text="Search through existing cases:" underline="true">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>

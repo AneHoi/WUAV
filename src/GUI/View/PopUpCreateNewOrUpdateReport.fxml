@@ -42,12 +42,15 @@
    <top>
       <VBox alignment="CENTER">
          <children>
-                <Label fx:id="lblTitle" text="Create new report" underline="true">
+                <Label fx:id="lblTitle" styleClass="headingLabel" text="Create new report" underline="true">
                     <font>
                         <Font name="System Bold" size="40.0" />
                     </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
                 </Label>
-            <Label fx:id="lblReportName" text="Label">
+            <Label fx:id="lblReportName" styleClass="underHeadingLabel" text="Label">
                <font>
                   <Font size="22.0" />
                </font>

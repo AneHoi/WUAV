@@ -20,12 +20,12 @@
             <Insets />
          </BorderPane.margin>
          <left>
-            <Label style="-fx-text-fill: black;" text="Customer Page" underline="true" wrapText="true" BorderPane.alignment="CENTER">
+            <Label styleClass="headingLabel" text="Customer Page" underline="true" wrapText="true" BorderPane.alignment="TOP_LEFT">
                <font>
                   <Font name="System Bold" size="40.0" />
                </font>
                <BorderPane.margin>
-                  <Insets left="25.0" />
+                  <Insets left="25.0" top="10.0" />
                </BorderPane.margin>
             </Label>
          </left>
@@ -64,12 +64,12 @@
                   <Insets />
                </VBox.margin>
             </HBox>
-            <Label style="-fx-text-fill: black;" text="Search through existing customers:" underline="true" wrapText="true">
+            <Label styleClass="underHeadingLabel" text="Search through existing customers:" underline="true" wrapText="true">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
                <VBox.margin>
-                  <Insets left="20.0" />
+                  <Insets />
                </VBox.margin>
             </Label>
             <TableView fx:id="tblViewCustomers" prefHeight="380.0" prefWidth="400.0">
@@ -80,7 +80,7 @@
                   <TableColumn fx:id="clmCustomerType" prefWidth="100.0" style="-fx-alignment: center;" text="Type of Customer" />
               </columns>
                <VBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" />
+                  <Insets bottom="20.0" right="20.0" />
                </VBox.margin>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -92,6 +92,9 @@
                      <font>
                         <Font size="18.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
                   </Button>
                   <Button fx:id="btnDeleteCustomer" mnemonicParsing="false" onAction="#deleteCustomer" prefHeight="35.0" prefWidth="200.0" text="Delete Customer" textFill="WHITE" underline="true">
                      <font>
@@ -100,10 +103,13 @@
                   </Button>
                </children>
                <VBox.margin>
-                  <Insets bottom="20.0" left="20.0" />
+                  <Insets bottom="20.0" />
                </VBox.margin>
             </HBox>
          </children>
+         <BorderPane.margin>
+            <Insets left="25.0" />
+         </BorderPane.margin>
       </VBox>
    </center>
    <stylesheets>

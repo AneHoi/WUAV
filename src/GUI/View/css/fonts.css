@@ -19,23 +19,24 @@
 }
 /*Padding is the length from top of label to text*/
 .headingLabel{
-    -fx-start-margin: 50;
-    -fx-padding: 25;
     -fx-underline: true;
-    -fx-text-fill: black;
+    -fx-text-fill: blue;
     -fx-font-size: 40;
     -fx-font-weight: 800;
 }
 .underHeadingLabel{
-    -fx-padding: 5;
     -fx-underline: true;
-    -fx-text-fill: black;
+    -fx-text-fill: green;
     -fx-font-size: 24;
     -fx-font-weight: 800;
 }
 .infoLabel{
-    -fx-padding: 5;
-    -fx-text-fill: black;
+    -fx-text-fill: purple;
+    -fx-font-size: 21;
+    -fx-font-weight: 200;
+}
+.reportHomepageLabels{
+    -fx-text-fill: red;
     -fx-font-size: 18;
     -fx-font-weight: 200;
 }

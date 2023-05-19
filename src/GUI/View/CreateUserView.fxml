@@ -24,7 +24,7 @@
             <Font name="System Bold" size="40.0" />
          </font>
          <BorderPane.margin>
-            <Insets left="25.0" />
+            <Insets left="25.0" top="10.0" />
          </BorderPane.margin>
       </Label>
    </top>
@@ -38,7 +38,7 @@
                         <Font name="System Bold" size="24.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="25.0" />
+                        <Insets />
                      </VBox.margin>
                   </Label>
                   <TableView fx:id="tblViewExistingUsers" prefHeight="1000.0" prefWidth="1000.0">
@@ -52,7 +52,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                      <VBox.margin>
-                        <Insets left="25.0" right="25.0" />
+                        <Insets right="25.0" />
                      </VBox.margin>
                   </TableView>
                   <Button fx:id="btnCreateNewUser" mnemonicParsing="false" onAction="#handleCreateNewUser" prefWidth="200.0" text="Create New User">
@@ -60,7 +60,7 @@
                         <Font size="18.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                        <Insets bottom="25.0" right="25.0" top="25.0" />
                      </VBox.margin>
                   </Button>
                </children>

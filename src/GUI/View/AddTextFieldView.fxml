@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -8,14 +9,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import java.net.URL?>
 <BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <VBox alignment="CENTER" spacing="10.0">
-            <Label text="Add Text:" underline="true" fx:id="lblTitle">
+            <Label fx:id="lblTitle" styleClass="headingLabel" text="Add Text:" underline="true">
                 <font>
                     <Font name="System Bold" size="24.0" />
                 </font>
+            <VBox.margin>
+               <Insets top="10.0" />
+            </VBox.margin>
             </Label>
         </VBox>
     </top>
