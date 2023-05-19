@@ -32,7 +32,7 @@ public class CustomerHomePageController implements Initializable {
     @FXML
     private TableView tblViewExistingCases, tblViewTechAssigned;
     @FXML
-    private ImageView imgBack, imgForward;
+    private ImageView imgBack;
     @FXML
     private Button btnCreateNewCase, btnManageTech, btnUpdateCase;
     @FXML
@@ -44,7 +44,6 @@ public class CustomerHomePageController implements Initializable {
     private ObservableList<Case> caseObservableList;
     private ObservableList<Technician> technicianObservableList;
     private final String back = "data/Images/Backward.png";
-    private final String forward = "data/Images/Forward.png";
     private Util util = new Util();
 
 
@@ -57,9 +56,6 @@ public class CustomerHomePageController implements Initializable {
         lblCustomerName.setText(model.getCurrentCustomer().getCustomerName() + " Home Page");
         imgBack.setImage(util.loadImages(back));
         imgBack.setOnMouseClicked(event -> goBack());
-        imgForward.setImage(util.loadImages(forward));
-        imgForward.setDisable(true);
-        imgForward.setOnMouseClicked(event -> goForward());
         addListeners();
         util.addShadow(btnCreateNewCase, txtSearchBar);
         updateTableView();
@@ -79,18 +75,6 @@ public class CustomerHomePageController implements Initializable {
             alert.showAndWait();
         }
     }
-
-    private void goForward() {
-        try {
-            controllerAssistant.loadCenter("CaseHomePageView.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not go back", ButtonType.OK);
-            alert.showAndWait();
-        }
-    }
-
-
     private void updateTableView() {
         colCaseID.setCellValueFactory(new PropertyValueFactory<>("caseID"));
         colCaseName.setCellValueFactory(new PropertyValueFactory<>("caseName"));

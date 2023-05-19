@@ -39,7 +39,7 @@ public class ReportHomePageController implements Initializable {
     @FXML
     private Button btnAddSketch, btnAddImage, btnAddTextField, btnAddLoginDetails, btnSubmitReportForReview;
     @FXML
-    private ImageView imgBack, imgForward;
+    private ImageView imgBack;
     @FXML
     private Label lblReportStatus, lblCustomerName, lblReportName, lblCustomerAddress, lblCustomerEmail, lblCustomerTelephone, lblCaseName, lblCaseID, lblCaseCreated, lblCaseTechnicians, lblCaseContactPerson, lblReportDescription;
     @FXML
@@ -66,8 +66,6 @@ public class ReportHomePageController implements Initializable {
         lblReportStatus.setText(currentReport.getIsActive());
         imgBack.setImage(util.loadImages(back));
         imgBack.setOnMouseClicked(event -> goBack());
-        imgForward.setImage(util.loadImages(forward));
-        imgForward.setDisable(true);
         currentCase = model.getCurrentCase();
         currentCustomer = model.getCurrentCustomer();
         updateReport();

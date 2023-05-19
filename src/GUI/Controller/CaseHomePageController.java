@@ -3,7 +3,6 @@ package GUI.Controller;
 import BE.Case;
 import BE.Customer;
 import BE.Report;
-import BE.ReportCaseAndCustomer;
 import GUI.Controller.Util.ControllerAssistant;
 import GUI.Controller.Util.Util;
 import GUI.Model.Model;
@@ -14,7 +13,6 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
@@ -27,7 +25,7 @@ import java.util.*;
 
 public class CaseHomePageController implements Initializable {
     @FXML
-    private ImageView imgBack, imgForward;
+    private ImageView imgBack;
     @FXML
     private Label lblCaseName;
     @FXML
@@ -55,9 +53,6 @@ public class CaseHomePageController implements Initializable {
         controllerAssistant = ControllerAssistant.getInstance();
         imgBack.setImage(util.loadImages(back));
         imgBack.setOnMouseClicked(event -> goBack());
-        imgForward.setImage(util.loadImages(forward));
-        imgForward.setDisable(true);
-        imgForward.setOnMouseClicked(event -> goForward());
         currentCase = model.getCurrentCase();
         currentCustomer = model.getCurrentCustomer();
         updateTableView();
@@ -77,17 +72,6 @@ public class CaseHomePageController implements Initializable {
             alert.showAndWait();
         }
     }
-
-    private void goForward() {
-        try {
-            controllerAssistant.loadCenter("ReportHomePageView.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not go back", ButtonType.OK);
-            alert.showAndWait();
-        }
-    }
-
     private void addListeners() {
         tblViewExistingReports.getSelectionModel().selectedItemProperty().addListener(selectedItemListener);
 

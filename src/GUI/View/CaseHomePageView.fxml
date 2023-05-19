@@ -30,7 +30,6 @@
                 <HBox alignment="CENTER" BorderPane.alignment="CENTER">
                     <children>
                         <ImageView fx:id="imgBack" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="imgForward" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
                     </children>
                     <BorderPane.margin>
                         <Insets bottom="25.0" right="25.0" top="25.0" />
