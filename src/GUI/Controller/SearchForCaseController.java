@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -94,8 +96,20 @@ public class SearchForCaseController implements Initializable {
         List<ReportCaseAndCustomer> reportCaseAndCustomers;
         try {
             reportCaseAndCustomers = model.getAllReports();
-            for (ReportCaseAndCustomer rCC : reportCaseAndCustomers) {
-                data.add(rCC);
+            Comparator<ReportCaseAndCustomer> byStatus = (ReportCaseAndCustomer pcc1, ReportCaseAndCustomer pcc2) -> pcc1.getReportStatus().compareTo(pcc2.getReportStatus());
+            Collections.sort(reportCaseAndCustomers, Collections.reverseOrder(byStatus));
+
+            //Sorting the list by active cases, and does not add the "Submitted for review" status for the technicians
+            if (controllerAssistant.getLoggedInUser().getUserType() == 3){
+                for (ReportCaseAndCustomer rCC : reportCaseAndCustomers) {
+                    if (!rCC.getReportStatus().equalsIgnoreCase("submitted for review")) {
+                        data.add(rCC);
+                    }
+                }
+            }else {
+                for (ReportCaseAndCustomer rCC : reportCaseAndCustomers) {
+                    data.add(rCC);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

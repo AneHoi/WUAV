@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class ReportCaseAndCustomer {
     private int reportId;
     private String reportName;
+    private String reportStatus;
     private String customerName;
     private String customerAddress;
     private String caseName;
@@ -16,6 +17,7 @@ public class ReportCaseAndCustomer {
     public ReportCaseAndCustomer(Report reportObj, Case caseObj, Customer customerObj) {
         this.reportId = reportObj.getReportID();
         this.reportName = reportObj.getReportName();
+        this.reportStatus = reportObj.getIsActive();
         this.createdDate = reportObj.getCreatedDate();
         this.customerName = customerObj.getCustomerName();
         this.customerAddress = customerObj.getAddress();
@@ -51,5 +53,8 @@ public class ReportCaseAndCustomer {
     public int getCaseId(){return caseId;}
     public int getCustomerId(){return customerId;}
 
+    public String getReportStatus() {
+        return reportStatus;
+    }
 }
 

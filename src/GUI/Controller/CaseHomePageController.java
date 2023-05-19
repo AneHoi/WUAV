@@ -3,6 +3,7 @@ package GUI.Controller;
 import BE.Case;
 import BE.Customer;
 import BE.Report;
+import BE.ReportCaseAndCustomer;
 import GUI.Controller.Util.ControllerAssistant;
 import GUI.Controller.Util.Util;
 import GUI.Model.Model;
@@ -22,9 +23,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class CaseHomePageController implements Initializable {
     @FXML
@@ -137,20 +136,36 @@ public class CaseHomePageController implements Initializable {
     }
 
     private void updateTableView() {
+        observableReports = FXCollections.observableArrayList();
         try {
             reports = model.getReports(currentCase.getCaseID());
+            //Sort the reports
+            Comparator<Report> byStatus = (Report report1, Report report2) -> report1.getIsActive().compareTo(report2.getIsActive());
+            Collections.sort(reports, Collections.reverseOrder(byStatus));
+
+            //Sorting the list by active cases, and does not add the "Submitted for review" status for the technicians
+            if (controllerAssistant.getLoggedInUser().getUserType() == 3){
+                for (Report report : reports) {
+                    if (!report.getIsActive().equalsIgnoreCase("submitted for review")) {
+                        observableReports.add(report);
+                    }
+                }
+            }else {
+                for (Report report : reports) {
+                    observableReports.add(report);
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get reports from Database", ButtonType.CANCEL);
             alert.showAndWait();
         }
-        observableReports = FXCollections.observableArrayList();
-        observableReports.addAll(reports);
         colCreatedDate.setCellValueFactory(new PropertyValueFactory<>("createdDate"));
         colReportName.setCellValueFactory(new PropertyValueFactory<>("reportName"));
         colTechnician.setCellValueFactory(new PropertyValueFactory<>("assignedTechnician"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("isActive"));
         tblViewExistingReports.getColumns().addAll();
+
         tblViewExistingReports.setItems(observableReports);
 
     }
@@ -207,15 +222,7 @@ public class CaseHomePageController implements Initializable {
         loader.setController(popUpCreateNewReportController);
         loader.setLocation(getClass().getResource("/GUI/View/PopUpCreateNewOrUpdateReport.fxml"));
         stage.setTitle("Update report");
-        try {
-            Scene scene = new Scene(loader.load());
-            stage.setScene(scene);
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open page for updating report", ButtonType.CANCEL);
-            alert.showAndWait();
-        }
+        util.openNewWindow(stage, loader, "Could not open page for updating report");
         updateTableView();
     }
 
