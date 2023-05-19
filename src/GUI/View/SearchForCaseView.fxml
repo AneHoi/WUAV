@@ -19,7 +19,7 @@
 
 <BorderPane prefHeight="678.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.SearchForCaseController">
    <top>
-      <Label text="Search For Report" underline="true">
+      <Label styleClass="headingLabel" text="Search For Report" underline="true">
          <font>
             <Font name="System Bold" size="40.0" />
          </font>
@@ -105,7 +105,7 @@
             </GridPane>
             <VBox prefHeight="1000.0" prefWidth="1000.0">
                <children>
-                  <Label text="Filtered Reports:" underline="true">
+                  <Label styleClass="underHeadingLabel" text="Filtered Reports:" underline="true">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>

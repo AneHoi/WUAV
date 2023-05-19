@@ -12,7 +12,7 @@
 
 <BorderPane maxWidth="1.7976931348623157E308" prefHeight="466.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.UserHomePageController">
     <top>
-        <Label fx:id="lblWelcomeUser" alignment="TOP_LEFT" text="Welcome User" underline="true" BorderPane.alignment="TOP_LEFT">
+        <Label fx:id="lblWelcomeUser" alignment="TOP_LEFT" styleClass="headingLabel" text="Welcome User" underline="true" BorderPane.alignment="TOP_LEFT">
             <BorderPane.margin>
                 <Insets left="25.0" />
             </BorderPane.margin>
@@ -26,7 +26,7 @@
             <children>
                 <VBox>
                     <children>
-                        <Label prefHeight="40.0" prefWidth="400.0" text="Your active cases:" underline="true">
+                        <Label prefHeight="40.0" prefWidth="400.0" styleClass="underHeadingLabel" text="Your active cases:" underline="true">
                             <VBox.margin>
                                 <Insets left="25.0" />
                             </VBox.margin>
@@ -52,7 +52,7 @@
                 </VBox>
                 <VBox>
                     <children>
-                        <Label prefHeight="40.0" prefWidth="400.0" text="Recently viewed customers:" underline="true">
+                        <Label prefHeight="40.0" prefWidth="400.0" styleClass="underHeadingLabel" text="Recently viewed customers:" underline="true">
                             <font>
                                 <Font name="System Bold" size="24.0" />
                             </font>
