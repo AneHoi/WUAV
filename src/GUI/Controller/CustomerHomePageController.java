@@ -8,11 +8,9 @@ import GUI.Model.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -180,28 +178,19 @@ public class CustomerHomePageController implements Initializable {
             }
         });
     }
-    public void handleCreateNewCase(ActionEvent actionEvent) {
+    public void handleCreateNewCase() {
         CreateOrUpdateCaseController createOrUpdateCaseController = new CreateOrUpdateCaseController();
-        Case selectedCase = (Case) tblViewExistingCases.getSelectionModel().getSelectedItem();
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
         loader.setController(createOrUpdateCaseController);
         loader.setLocation(getClass().getResource("/GUI/View/CreateOrEditCaseView.fxml"));
         createOrUpdateCaseController.setOnlyCustomer(model.getCurrentCustomer());
-        try {
-            Scene scene = new Scene(loader.load());
-            stage.setScene(scene);
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Case Window", ButtonType.CANCEL);
-            alert.showAndWait();
-        }
+        util.openNewWindow(stage, loader, "Could not open Case Window");
         updateTableView();
     }
 
 
-    public void handleUpdateCase(ActionEvent actionEvent) {
+    public void handleUpdateCase() {
         CreateOrUpdateCaseController createOrUpdateCaseController = new CreateOrUpdateCaseController();
         Case selectedCase = (Case) tblViewExistingCases.getSelectionModel().getSelectedItem();
         Stage stage = new Stage();
@@ -209,19 +198,11 @@ public class CustomerHomePageController implements Initializable {
         loader.setController(createOrUpdateCaseController);
         loader.setLocation(getClass().getResource("/GUI/View/CreateOrEditCaseView.fxml"));
         createOrUpdateCaseController.setCustomerAndCase(selectedCase, model.getCurrentCustomer());
-        try {
-            Scene scene = new Scene(loader.load());
-            stage.setScene(scene);
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Case Window", ButtonType.CANCEL);
-            alert.showAndWait();
-        }
+        util.openNewWindow(stage, loader, "Could not open Case Window");
         updateTableView();
     }
 
-    public void handleManageTech(ActionEvent actionEvent) {
+    public void handleManageTech() {
         ManageTechniciansController manageTechniciansController = new ManageTechniciansController();
         Case selectedCase = (Case) tblViewExistingCases.getSelectionModel().getSelectedItem();
         List<Technician> alreadyAssignedTechs = new ArrayList<>();

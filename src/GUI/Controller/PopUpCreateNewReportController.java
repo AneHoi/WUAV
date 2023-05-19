@@ -6,7 +6,6 @@ import GUI.Controller.Util.ControllerAssistant;
 import GUI.Controller.Util.Util;
 import GUI.Model.Model;
 import javafx.beans.value.ChangeListener;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -82,7 +81,7 @@ public class PopUpCreateNewReportController implements Initializable {
         }
     };
 
-    public void handleCreateNewReport(ActionEvent actionEvent) {
+    public void handleCreateNewReport() {
         if (btnCreateNewReport.getText().equals("Update Report")) {
             updateReport();
         } else {

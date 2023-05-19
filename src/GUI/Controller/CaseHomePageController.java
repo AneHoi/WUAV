@@ -163,15 +163,7 @@ public class CaseHomePageController implements Initializable {
         loader.setController(popUpCreateNewReportController);
         loader.setLocation(getClass().getResource("/GUI/View/PopUpCreateNewOrUpdateReport.fxml"));
         stage.setTitle("Create a new report");
-        try {
-            Scene scene = new Scene(loader.load());
-            stage.setScene(scene);
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open page for creating a new report", ButtonType.CANCEL);
-            alert.showAndWait();
-        }
+        util.openNewWindow(stage, loader, "Could not open page for creating a new report");
         updateTableView();
     }
 
@@ -210,7 +202,20 @@ public class CaseHomePageController implements Initializable {
         popUpCreateNewReportController.setCurrentCase(currentCase);
         popUpCreateNewReportController.setCurrentReport((Report) tblViewExistingReports.getSelectionModel().getSelectedItem());
 
-        util.openNewWindow("Update report", "/GUI/View/PopUpCreateNewOrUpdateReport.fxml", popUpCreateNewReportController.getClass(), "Could not open page for updating report");
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController(popUpCreateNewReportController);
+        loader.setLocation(getClass().getResource("/GUI/View/PopUpCreateNewOrUpdateReport.fxml"));
+        stage.setTitle("Update report");
+        try {
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open page for updating report", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
         updateTableView();
     }
 

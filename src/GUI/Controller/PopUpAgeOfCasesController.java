@@ -5,14 +5,10 @@ import GUI.Controller.Util.Util;
 import GUI.Model.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -53,14 +49,19 @@ public class PopUpAgeOfCasesController implements Initializable {
         tblCases.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1 && tblCases.getSelectionModel().getSelectedItem() != null) {
                 disable(false);
-                Case casen = (Case) tblCases.getSelectionModel().getSelectedItem();
-                LocalDateTime dateToday = LocalDate.now().atStartOfDay();
-                LocalDateTime dateClosed = casen.getDateClosed().atStartOfDay();
-                long daysBetween = Duration.between(dateClosed, dateToday).toDays();
-                long monthsBetween = Math.round(daysBetween / 30);
-                lblMonthsOld.setText(String.valueOf(monthsBetween));
+                long monthsOld = chosenCaseAge();
+                lblMonthsOld.setText(String.valueOf(monthsOld));
             }
         });
+    }
+
+    private long chosenCaseAge() {
+        Case casen = (Case) tblCases.getSelectionModel().getSelectedItem();
+        LocalDateTime dateToday = LocalDate.now().atStartOfDay();
+        LocalDateTime dateClosed = casen.getDateClosed().atStartOfDay();
+        long daysBetween = Duration.between(dateClosed, dateToday).toDays();
+        long monthsBetween = Math.round(daysBetween / 30);
+        return monthsBetween;
     }
 
     private void disable(boolean bool) {
@@ -90,7 +91,7 @@ public class PopUpAgeOfCasesController implements Initializable {
         try {
             caseList = model.getAllCases();
             for (Case caseBE : caseList) {
-                if (tooOld(caseBE)) {
+                if (util.tooOld(caseBE)) {
                     oldCases.add(caseBE);
                 }
             }
@@ -103,25 +104,7 @@ public class PopUpAgeOfCasesController implements Initializable {
     }
 
 
-    /**
-     * Checks if the case is older than 4 years.
-     *
-     * @param casen is the case to be checked
-     * @return boolean
-     */
-    private boolean tooOld(Case casen) {
-        LocalDateTime dateToday = LocalDate.now().atStartOfDay();
-        if (casen.getDateClosed() != null) {
-            LocalDateTime dateClosed = casen.getDateClosed().atStartOfDay();
-            long daysBetween = Duration.between(dateClosed, dateToday).toDays();
-            if (daysBetween > casen.getDaysToKeep()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void keepCaseLonger(ActionEvent event) {
+    public void keepCaseLonger() {
         Case casen = (Case) tblCases.getSelectionModel().getSelectedItem();
         Alert alertCaseForDeleting = new Alert(Alert.AlertType.CONFIRMATION);
         alertCaseForDeleting.setTitle("Expanding the time for keeping a case");
@@ -144,15 +127,14 @@ public class PopUpAgeOfCasesController implements Initializable {
             expandKeepingTime(casen, 365);
         } else if (option.get() == fourYear) {
             expandKeepingTime(casen, 1460);
-        } else {
         }
         updateTableView();
         disable(true);
     }
 
-    private void expandKeepingTime(Case casen, int daysToFutherKeep) {
+    private void expandKeepingTime(Case casen, int daysToFurtherKeep) {
         int daysToKeep = casen.getDaysToKeep();
-        daysToKeep = daysToKeep + daysToFutherKeep;
+        daysToKeep = daysToKeep + daysToFurtherKeep;
         try {
             model.expandKeepingTime(casen, daysToKeep);
         } catch (SQLException e) {
@@ -162,13 +144,10 @@ public class PopUpAgeOfCasesController implements Initializable {
         }
     }
 
-    public void deleteCase(ActionEvent event) {
+    public void deleteCase() {
+        long monthsOld = chosenCaseAge();
         Case casen = (Case) tblCases.getSelectionModel().getSelectedItem();
-        LocalDateTime dateToday = LocalDate.now().atStartOfDay();
-        LocalDateTime dateClosed = casen.getDateClosed().atStartOfDay();
-        long daysBetween = Duration.between(dateClosed, dateToday).toDays();
-        long monthsBetween = Math.round(daysBetween / 30);
-        wantToDeleteCase(casen, monthsBetween);
+        wantToDeleteCase(casen, monthsOld);
     }
 
     private void wantToDeleteCase(Case casen, long monthsBetween) {

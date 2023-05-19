@@ -4,7 +4,6 @@ import BE.Case;
 import BE.Technician;
 import GUI.Controller.Util.Util;
 import GUI.Model.Model;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -76,7 +75,7 @@ public class ManageTechniciansController implements Initializable {
         this.alreadyAssignedTechs = alreadyAssignedTechs;
     }
 
-    public void handleConfirmChoices(ActionEvent actionEvent) {
+    public void handleConfirmChoices() {
         int caseID = selectedCase.getCaseID();
         try {
             model.addTechnicianToCase(caseID, chosenTechnicians);

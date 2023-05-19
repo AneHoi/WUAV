@@ -1,5 +1,6 @@
 package GUI.Controller.Util;
 
+import BE.Case;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -15,6 +16,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Util {
     private final DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
@@ -57,20 +61,34 @@ public class Util {
         }
         return userTypes;
     }
-    public void openNewWindow(String title, String fxmlPath, Class controller, String errorMessage){
-        Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setController(controller);
-        loader.setLocation(getClass().getResource(fxmlPath));
-        stage.setTitle(title);
+
+    public void openNewWindow(Stage stage, FXMLLoader loader, String errorText) {
         try {
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, errorMessage, ButtonType.CANCEL);
+            Alert alert = new Alert(Alert.AlertType.ERROR, errorText, ButtonType.CANCEL);
             alert.showAndWait();
         }
+    }
+
+    /**
+     * Checks if the case is older than 4 years.
+     *
+     * @param casen is the case to be checked
+     * @return boolean
+     */
+    public boolean tooOld(Case casen) {
+        LocalDateTime dateToday = LocalDate.now().atStartOfDay();
+        if (casen.getDateClosed() != null) {
+            LocalDateTime dateClosed = casen.getDateClosed().atStartOfDay();
+            long daysBetween = Duration.between(dateClosed, dateToday).toDays();
+            if (daysBetween > casen.getDaysToKeep()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

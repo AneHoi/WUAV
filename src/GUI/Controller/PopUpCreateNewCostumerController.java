@@ -114,7 +114,6 @@ public class PopUpCreateNewCostumerController implements Initializable {
             String address = txtAddress.getText();
             String email = txtEmail.getText();
             int cvr = Integer.parseInt(txtCVR.getText());
-            String customerType = cbCustomerType.getTypeSelector();
             String tlf = txtTlfNumber.getText();
             Customer customer = new Customer(id, name, address, tlf, email, cvr, "");
             model.saveCustomer(customer);

@@ -11,7 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
@@ -141,34 +140,24 @@ public class CustomerViewController implements Initializable {
         loader.setController(popUpCreateNewCostumerController);
         loader.setLocation(getClass().getResource("/GUI/View/PopUpCreateNewCostumer.fxml"));
         stage.setTitle("Edit or create new customer");
-        try {
-            Scene scene = new Scene(loader.load());
-            stage.setScene(scene);
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Section Window", ButtonType.CANCEL);
-            alert.showAndWait();
-        }
+        util.openNewWindow(stage, loader, "could not create or edit customer");
         updateCostumerView();
         btnDeleteCustomer.setVisible(false);
         btnDeleteCustomer.setDisable(true);
-
     }
 
     public void deleteCustomer(ActionEvent event) {
         Customer customer = (Customer) tblViewCustomers.getSelectionModel().getSelectedItem();
-        Alert alertAreyousyre = new Alert(Alert.AlertType.CONFIRMATION);
-        alertAreyousyre.setTitle("Deleting a customer");
-        alertAreyousyre.setHeaderText("Are you sure you want to delete this customer:\n" + customer.getCustomerName());
+        Alert alertAreYouSure = new Alert(Alert.AlertType.CONFIRMATION);
+        alertAreYouSure.setTitle("Deleting a customer");
+        alertAreYouSure.setHeaderText("Are you sure you want to delete this customer:\n" + customer.getCustomerName());
 
         ButtonType deleteCustomer = new ButtonType("Delete customer");
         ButtonType cancel = new ButtonType("Cancel");
 
-        alertAreyousyre.getButtonTypes().clear();
-        alertAreyousyre.getButtonTypes().addAll(deleteCustomer, cancel);
-
-        Optional <ButtonType> option = alertAreyousyre.showAndWait();
+        alertAreYouSure.getButtonTypes().clear();
+        alertAreYouSure.getButtonTypes().addAll(deleteCustomer, cancel);
+        Optional <ButtonType> option = alertAreYouSure.showAndWait();
         if (option.get()==deleteCustomer){
             try {
                 model.deleteCustomer(customer);

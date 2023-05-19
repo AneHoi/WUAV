@@ -11,16 +11,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
@@ -54,6 +54,8 @@ public class ReportHomePageController implements Initializable {
     private String forward = "data/Images/Forward.png";
     private int numberOfLoginDetails;
     private Util util = new Util();
+    private DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -93,63 +95,11 @@ public class ReportHomePageController implements Initializable {
             if (ld.isNoLoginDetails()) {
                 BorderPane bp = new BorderPane();
                 bp.setCenter(new Label("No login details for this report"));
-                VBox vbRight = new VBox();
-                Button btnEdit = new Button();
-                Button btnDelete = new Button();
-                ImageView imgViewEdit = new ImageView();
-                ImageView imgViewDelete = new ImageView();
-                imgViewEdit.setImage(util.loadImages("data/Images/Edit.png"));
-                imgViewDelete.setImage(util.loadImages("data/Images/Trash Can.png"));
-                imgViewDelete.setFitHeight(40);
-                imgViewDelete.setFitWidth(40);
-                imgViewEdit.setFitWidth(40);
-                imgViewEdit.setFitHeight(40);
-                btnEdit.setGraphic(imgViewEdit);
-                btnEdit.setOnAction(event -> editLoginDetails(ld));
-                btnEdit.getStyleClass().add("orangeButtons");
-                btnDelete.setGraphic(imgViewDelete);
-                btnDelete.setOnAction(event -> deleteLoginDetails(ld));
-                btnDelete.getStyleClass().add("orangeButtons");
-                btnEdit.setText(null);
-                btnDelete.setText(null);
-                util.addShadow(btnDelete, btnEdit);
-                vbRight.getChildren().addAll(btnEdit, btnDelete);
-                vbRight.setSpacing(10);
-                vbRight.setPadding(new Insets(10));
-                bp.setRight(vbRight);
-                bp.setPrefWidth(700);
-                bp.setStyle("-fx-border-width: 3");
-                bp.setStyle("-fx-border-color: BLACK");
+                vBoxGraphics(ld, bp);
                 vboxAddingLoginDetails.getChildren().add(bp);
             } else {
                 BorderPane bp = new BorderPane();
-                VBox vbRight = new VBox();
-                Button btnEdit = new Button();
-                Button btnDelete = new Button();
-                ImageView imgViewEdit = new ImageView();
-                ImageView imgViewDelete = new ImageView();
-                imgViewEdit.setImage(util.loadImages("data/Images/Edit.png"));
-                imgViewDelete.setImage(util.loadImages("data/Images/Trash Can.png"));
-                imgViewDelete.setFitHeight(40);
-                imgViewDelete.setFitWidth(40);
-                imgViewEdit.setFitWidth(40);
-                imgViewEdit.setFitHeight(40);
-                btnEdit.setGraphic(imgViewEdit);
-                btnEdit.setOnAction(event -> editLoginDetails(ld));
-                btnEdit.getStyleClass().add("orangeButtons");
-                btnDelete.setGraphic(imgViewDelete);
-                btnDelete.setOnAction(event -> deleteLoginDetails(ld));
-                btnDelete.getStyleClass().add("orangeButtons");
-                btnEdit.setText(null);
-                btnDelete.setText(null);
-                util.addShadow(btnDelete, btnEdit);
-                vbRight.getChildren().addAll(btnEdit, btnDelete);
-                vbRight.setSpacing(10);
-                vbRight.setPadding(new Insets(10));
-                bp.setRight(vbRight);
-                bp.setPrefWidth(700);
-                bp.setStyle("-fx-border-width: 3");
-                bp.setStyle("-fx-border-color: BLACK");
+                vBoxGraphics(ld, bp);
                 VBox vbCenter = new VBox();
                 Label component = new Label("Component:");
                 Label componentName = new Label(ld.getComponent());
@@ -180,6 +130,40 @@ public class ReportHomePageController implements Initializable {
         }
     }
 
+    private void vBoxGraphics(LoginDetails ld, BorderPane bp) {
+        VBox vbRight = new VBox();
+        Button btnEdit = new Button();
+        Button btnDelete = new Button();
+        ImageView imgViewEdit = new ImageView();
+        ImageView imgViewDelete = new ImageView();
+        heightsAndWidthImageView(btnEdit, imgViewEdit, imgViewDelete);
+        btnEdit.setOnAction(event -> editLoginDetails(ld));
+        btnEdit.getStyleClass().add("orangeButtons");
+        btnDelete.setGraphic(imgViewDelete);
+        btnDelete.setOnAction(event -> deleteLoginDetails(ld));
+        btnDelete.getStyleClass().add("orangeButtons");
+        btnEdit.setText(null);
+        btnDelete.setText(null);
+        util.addShadow(btnDelete, btnEdit);
+        vbRight.getChildren().addAll(btnEdit, btnDelete);
+        vbRight.setSpacing(10);
+        vbRight.setPadding(new Insets(10));
+        bp.setRight(vbRight);
+        bp.setPrefWidth(700);
+        bp.setStyle("-fx-border-width: 3");
+        bp.setStyle("-fx-border-color: BLACK");
+    }
+
+    private void heightsAndWidthImageView(Button btnEdit, ImageView imgViewEdit, ImageView imgViewDelete) {
+        imgViewEdit.setImage(util.loadImages("data/Images/Edit.png"));
+        imgViewDelete.setImage(util.loadImages("data/Images/Trash Can.png"));
+        imgViewDelete.setFitHeight(40);
+        imgViewDelete.setFitWidth(40);
+        imgViewEdit.setFitWidth(40);
+        imgViewEdit.setFitHeight(40);
+        btnEdit.setGraphic(imgViewEdit);
+    }
+
     private void deleteLoginDetails(LoginDetails ld) {
         Alert areYouSureAlert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to delete these login details?", ButtonType.YES, ButtonType.NO);
         areYouSureAlert.showAndWait();
@@ -198,19 +182,15 @@ public class ReportHomePageController implements Initializable {
         AddLoginDetailsController addLoginDetailsController = new AddLoginDetailsController();
         addLoginDetailsController.setCurrentReport(currentReport);
         addLoginDetailsController.setCurrentLoginDetails(ld);
+        openLogInDetailsView(addLoginDetailsController);
+    }
+
+    private void openLogInDetailsView(AddLoginDetailsController addLoginDetailsController) {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/AddLoginDetailsView.fxml"));
         loader.setController(addLoginDetailsController);
-        try {
-            Scene scene = new Scene(loader.load());
-            stage.setScene(scene);
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Login Details Window", ButtonType.CANCEL);
-            alert.showAndWait();
-        }
+        util.openNewWindow(stage, loader, "Could not open Add Login Details Window");
         updateReport();
     }
 
@@ -307,39 +287,10 @@ public class ReportHomePageController implements Initializable {
         ImageView imgViewDelete = new ImageView();
         ImageView imgUp = new ImageView();
         ImageView imgDown = new ImageView();
-        imgUp.setImage(util.loadImages("data/Images/Up Arrow.png"));
-        imgDown.setImage(util.loadImages("data/Images/Down Arrow.png"));
-        imgUp.setFitWidth(40);
-        imgUp.setFitHeight(40);
-        imgDown.setFitWidth(40);
-        imgDown.setFitHeight(40);
-        btnUp.setGraphic(imgUp);
-        btnDown.setGraphic(imgDown);
-        btnUp.getStyleClass().add("orangeButtons");
-        btnDown.getStyleClass().add("orangeButtons");
-        btnUp.setOnAction(event -> moveUp(textOrImage));
-        btnDown.setOnAction(event -> moveDown(textOrImage));
-        vbLeft.getChildren().addAll(btnUp, btnDown);
-        vbLeft.setSpacing(10);
-        vbLeft.setPadding(new Insets(10));
-        imgViewEdit.setImage(util.loadImages("data/Images/Edit.png"));
-        imgViewDelete.setImage(util.loadImages("data/Images/Trash Can.png"));
-        imgViewDelete.setFitHeight(40);
-        imgViewDelete.setFitWidth(40);
-        imgViewEdit.setFitWidth(40);
-        imgViewEdit.setFitHeight(40);
-        btnEdit.setGraphic(imgViewEdit);
+        setGraphicsForBorderPane(textOrImage, vbLeft, btnUp, btnDown, btnEdit, btnDelete, imgViewEdit, imgViewDelete, imgUp, imgDown);
+
         btnEdit.setOnAction(event -> editImage(textOrImage));
-        btnEdit.getStyleClass().add("orangeButtons");
-        btnDelete.setGraphic(imgViewDelete);
-        btnDelete.setOnAction(event -> deletePartOfReport(textOrImage));
-        btnDelete.getStyleClass().add("orangeButtons");
-        btnEdit.setText(null);
-        btnDelete.setText(null);
-        util.addShadow(btnDelete, btnEdit, btnUp, btnDown);
-        vbRight.getChildren().addAll(btnEdit, btnDelete);
-        vbRight.setSpacing(10);
-        vbRight.setPadding(new Insets(10));
+        stylingButtonAndVbox(textOrImage, vbRight, btnUp, btnDown, btnEdit, btnDelete, imgViewDelete);
         bp.setRight(vbRight);
         bp.setLeft(vbLeft);
         bp.setPrefWidth(700);
@@ -361,19 +312,7 @@ public class ReportHomePageController implements Initializable {
         vboxSectionAdding.getChildren().add(bp);
     }
 
-
-    private void setUpTextField(TextsAndImagesOnReport textOrImage) {
-        BorderPane bp = new BorderPane();
-        VBox vbLeft = new VBox();
-        VBox vbRight = new VBox();
-        Button btnUp = new Button();
-        Button btnDown = new Button();
-        Button btnEdit = new Button();
-        Button btnDelete = new Button();
-        ImageView imgUp = new ImageView();
-        ImageView imgDown = new ImageView();
-        ImageView imgViewEdit = new ImageView();
-        ImageView imgViewDelete = new ImageView();
+    private void setGraphicsForBorderPane(TextsAndImagesOnReport textOrImage, VBox vbLeft, Button btnUp, Button btnDown, Button btnEdit, Button btnDelete, ImageView imgViewEdit, ImageView imgViewDelete, ImageView imgUp, ImageView imgDown) {
         imgUp.setImage(util.loadImages("data/Images/Up Arrow.png"));
         imgDown.setImage(util.loadImages("data/Images/Down Arrow.png"));
         imgUp.setFitWidth(40);
@@ -382,21 +321,15 @@ public class ReportHomePageController implements Initializable {
         imgDown.setFitHeight(40);
         btnUp.setGraphic(imgUp);
         btnDown.setGraphic(imgDown);
-        btnUp.getStyleClass().add("orangeButtons");
-        btnDown.getStyleClass().add("orangeButtons");
         btnUp.setOnAction(event -> moveUp(textOrImage));
         btnDown.setOnAction(event -> moveDown(textOrImage));
         vbLeft.getChildren().addAll(btnUp, btnDown);
         vbLeft.setSpacing(10);
         vbLeft.setPadding(new Insets(10));
-        imgViewEdit.setImage(util.loadImages("data/Images/Edit.png"));
-        imgViewDelete.setImage(util.loadImages("data/Images/Trash Can.png"));
-        imgViewDelete.setFitHeight(40);
-        imgViewDelete.setFitWidth(40);
-        imgViewEdit.setFitWidth(40);
-        imgViewEdit.setFitHeight(40);
-        btnEdit.setGraphic(imgViewEdit);
-        btnEdit.setOnAction(event -> editText(textOrImage));
+        heightsAndWidthImageView(btnEdit, imgViewEdit, imgViewDelete);
+    }
+
+    private void stylingButtonAndVbox(TextsAndImagesOnReport textOrImage, VBox vbRight, Button btnUp, Button btnDown, Button btnEdit, Button btnDelete, ImageView imgViewDelete) {
         btnEdit.getStyleClass().add("orangeButtons");
         btnDelete.setGraphic(imgViewDelete);
         btnDelete.setOnAction(event -> deletePartOfReport(textOrImage));
@@ -407,6 +340,24 @@ public class ReportHomePageController implements Initializable {
         vbRight.getChildren().addAll(btnEdit, btnDelete);
         vbRight.setSpacing(10);
         vbRight.setPadding(new Insets(10));
+    }
+
+
+    private void setUpTextField(TextsAndImagesOnReport textOrImage) {
+        BorderPane bp = new BorderPane();
+        VBox vbLeft = new VBox();
+        VBox vbRight = new VBox();
+        Button btnUp = new Button();
+        Button btnDown = new Button();
+        Button btnEdit = new Button();
+        Button btnDelete = new Button();
+        ImageView imgViewEdit = new ImageView();
+        ImageView imgViewDelete = new ImageView();
+        ImageView imgUp = new ImageView();
+        ImageView imgDown = new ImageView();
+        setGraphicsForBorderPane(textOrImage, vbLeft, btnUp, btnDown, btnEdit, btnDelete, imgViewEdit, imgViewDelete, imgUp, imgDown);
+        btnEdit.setOnAction(event -> editText(textOrImage));
+        stylingButtonAndVbox(textOrImage, vbRight, btnUp, btnDown, btnEdit, btnDelete, imgViewDelete);
         bp.setLeft(vbLeft);
         bp.setRight(vbRight);
         bp.setPrefWidth(700);
@@ -492,15 +443,7 @@ public class ReportHomePageController implements Initializable {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/AddTextFieldView.fxml"));
         loader.setController(addTextFieldController);
-        try {
-            Scene scene = new Scene(loader.load());
-            stage.setScene(scene);
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Text Window", ButtonType.CANCEL);
-            alert.showAndWait();
-        }
+        util.openNewWindow(stage, loader, "Could not open Add Text Window");
         updateReport();
     }
 
@@ -508,24 +451,21 @@ public class ReportHomePageController implements Initializable {
         AddImageController addImageController = new AddImageController();
         addImageController.setCurrentReport(currentReport);
         addImageController.setNextAvailablePosition(nextPosition);
+        openAddImage(addImageController);
+        updateReport();
+    }
+
+    private void openAddImage(AddImageController addImageController) {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/AddImageView.fxml"));
         loader.setController(addImageController);
-        try {
-            Scene scene = new Scene(loader.load());
-            stage.setScene(scene);
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Image Window", ButtonType.CANCEL);
-            alert.showAndWait();
-        }
-        updateReport();
+        util.openNewWindow(stage, loader, "Could not open Add Image Window");
     }
 
     public void handleAddSketch(ActionEvent actionEvent) {
     }
+
     private void deletePartOfReport(TextsAndImagesOnReport textOrImage) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this part of the report?", ButtonType.YES, ButtonType.NO);
         alert.showAndWait();
@@ -546,19 +486,7 @@ public class ReportHomePageController implements Initializable {
         addImageController.setCurrentReport(currentReport);
         addImageController.setNextAvailablePosition(nextPosition);
         addImageController.setCurrentImage(textOrImage);
-        Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/GUI/View/AddImageView.fxml"));
-        loader.setController(addImageController);
-        try {
-            Scene scene = new Scene(loader.load());
-            stage.setScene(scene);
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Image Window", ButtonType.CANCEL);
-            alert.showAndWait();
-        }
+        openAddImage(addImageController);
         updateImagesTextsAndSketches();
         updateReport();
     }
@@ -572,15 +500,7 @@ public class ReportHomePageController implements Initializable {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/AddTextFieldView.fxml"));
         loader.setController(addTextFieldController);
-        try {
-            Scene scene = new Scene(loader.load());
-            stage.setScene(scene);
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Image Window", ButtonType.CANCEL);
-            alert.showAndWait();
-        }
+        util.openNewWindow(stage, loader, "Could not open Add Image Window");
         updateImagesTextsAndSketches();
         updateReport();
     }
@@ -606,6 +526,7 @@ public class ReportHomePageController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open pdf");
+            alert.showAndWait();
         }
 
     }
@@ -675,19 +596,6 @@ public class ReportHomePageController implements Initializable {
     public void handleAddLoginDetails(ActionEvent actionEvent) {
         AddLoginDetailsController addLoginDetailsController = new AddLoginDetailsController();
         addLoginDetailsController.setCurrentReport(currentReport);
-        Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/GUI/View/AddLoginDetailsView.fxml"));
-        loader.setController(addLoginDetailsController);
-        try {
-            Scene scene = new Scene(loader.load());
-            stage.setScene(scene);
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Add Login Details Window", ButtonType.CANCEL);
-            alert.showAndWait();
-        }
-        updateReport();
+        openLogInDetailsView(addLoginDetailsController);
     }
 }
