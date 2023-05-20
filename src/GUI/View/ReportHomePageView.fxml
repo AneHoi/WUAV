@@ -14,200 +14,6 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ReportHomePageController">
-    <center>
-      <HBox BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets bottom="15.0" left="50.0" right="50.0" top="50.0" />
-         </BorderPane.margin>
-         <children>
-              <VBox>
-                  <children>
-                      <FlowPane columnHalignment="CENTER" prefWrapLength="1045.0" style="-fx-border-width: 4; -fx-border-color: Black;">
-                          <children>
-                              <BorderPane>
-                           <center>
-                              <HBox spacing="50.0" BorderPane.alignment="CENTER">
-                                 <children>
-                                            <VBox>
-                                                <children>
-                                                    <HBox alignment="BOTTOM_LEFT">
-                                                        <children>
-                                                            <Label text="Customer Name: " wrapText="true">
-                                                                <font>
-                                                                    <Font name="System Bold" size="12.0" />
-                                                                </font>
-                                                                <HBox.margin>
-                                                                    <Insets top="2.0" />
-                                                                </HBox.margin>
-                                                   <styleClass>
-                                                      <String fx:value="reportHomepageLabels" />
-                                                      <String fx:value="bold" />
-                                                   </styleClass>
-                                                            </Label>
-                                                            <Label fx:id="lblCustomerName" styleClass="reportHomepageLabels" text="LABEL CUSTOMER" wrapText="true" />
-                                                        </children>
-                                                    </HBox>
-                                                    <HBox alignment="BOTTOM_LEFT">
-                                                        <children>
-                                                            <Label text="Address: ">
-                                                                <font>
-                                                                    <Font name="System Bold" size="12.0" />
-                                                                </font>
-                                                   <styleClass>
-                                                      <String fx:value="reportHomepageLabels" />
-                                                      <String fx:value="bold" />
-                                                   </styleClass>
-                                                            </Label>
-                                                            <Label fx:id="lblCustomerAddress" styleClass="reportHomepageLabels" text="Label" />
-                                                        </children>
-                                                    </HBox>
-                                                    <HBox alignment="BOTTOM_LEFT">
-                                                        <children>
-                                                            <Label text="Email: ">
-                                                                <font>
-                                                                    <Font name="System Bold" size="12.0" />
-                                                                </font>
-                                                   <styleClass>
-                                                      <String fx:value="reportHomepageLabels" />
-                                                      <String fx:value="bold" />
-                                                   </styleClass>
-                                                            </Label>
-                                                            <Label fx:id="lblCustomerEmail" styleClass="reportHomepageLabels" text="Label" />
-                                                        </children>
-                                                    </HBox>
-                                                    <HBox alignment="BOTTOM_LEFT">
-                                                        <children>
-                                                            <Label text="Label: ">
-                                                                <font>
-                                                                    <Font name="System Bold" size="12.0" />
-                                                                </font>
-                                                   <styleClass>
-                                                      <String fx:value="reportHomepageLabels" />
-                                                      <String fx:value="bold" />
-                                                   </styleClass>
-                                                            </Label>
-                                                            <Label fx:id="lblCustomerTelephone" styleClass="reportHomepageLabels" text="Label" />
-                                                        </children>
-                                                    </HBox>
-                                                </children>
-                                                <padding>
-                                                    <Insets left="25.0" top="25.0" />
-                                                </padding>
-                                            </VBox>
-                                            <VBox prefHeight="200.0" prefWidth="300.0">
-                                                <children>
-                                                    <HBox alignment="BOTTOM_LEFT">
-                                                        <children>
-                                                            <Label text="Case Name: ">
-                                                                <font>
-                                                                    <Font name="System Bold" size="12.0" />
-                                                                </font>
-                                                   <styleClass>
-                                                      <String fx:value="reportHomepageLabels" />
-                                                      <String fx:value="bold" />
-                                                   </styleClass>
-                                                            </Label>
-                                                            <Label fx:id="lblCaseName" styleClass="reportHomepageLabels" text="Label" />
-                                                        </children>
-                                                    </HBox>
-                                                    <HBox alignment="BOTTOM_LEFT">
-                                                        <children>
-                                                            <Label text="Case ID: ">
-                                                                <font>
-                                                                    <Font name="System Bold" size="12.0" />
-                                                                </font>
-                                                   <styleClass>
-                                                      <String fx:value="reportHomepageLabels" />
-                                                      <String fx:value="bold" />
-                                                   </styleClass>
-                                                            </Label>
-                                                            <Label fx:id="lblCaseID" styleClass="reportHomepageLabels" text="Label" />
-                                                        </children>
-                                                    </HBox>
-                                                    <HBox alignment="BOTTOM_LEFT">
-                                                        <children>
-                                                            <Label text="Case Created: ">
-                                                                <font>
-                                                                    <Font name="System Bold" size="12.0" />
-                                                                </font>
-                                                   <styleClass>
-                                                      <String fx:value="reportHomepageLabels" />
-                                                      <String fx:value="bold" />
-                                                   </styleClass>
-                                                            </Label>
-                                                            <Label fx:id="lblCaseCreated" styleClass="reportHomepageLabels" text="Label" />
-                                                        </children>
-                                                    </HBox>
-                                                    <HBox alignment="BOTTOM_LEFT">
-                                                        <children>
-                                                            <Label text="Technicians: ">
-                                                                <font>
-                                                                    <Font name="System Bold" size="12.0" />
-                                                                </font>
-                                                   <styleClass>
-                                                      <String fx:value="reportHomepageLabels" />
-                                                      <String fx:value="bold" />
-                                                   </styleClass>
-                                                            </Label>
-                                                            <Label fx:id="lblCaseTechnicians" styleClass="reportHomepageLabels" text="Label" />
-                                                        </children>
-                                                    </HBox>
-                                                    <HBox alignment="BOTTOM_LEFT">
-                                                        <children>
-                                                            <Label text="Contact Person: ">
-                                                                <font>
-                                                                    <Font name="System Bold" size="12.0" />
-                                                                </font>
-                                                   <styleClass>
-                                                      <String fx:value="reportHomepageLabels" />
-                                                      <String fx:value="bold" />
-                                                   </styleClass>
-                                                            </Label>
-                                                            <Label fx:id="lblCaseContactPerson" styleClass="reportHomepageLabels" text="Label" />
-                                                        </children>
-                                                    </HBox>
-                                                    <Label text="Report Description: ">
-                                                        <font>
-                                                            <Font name="System Bold" size="12.0" />
-                                                        </font>
-                                             <styleClass>
-                                                <String fx:value="reportHomepageLabels" />
-                                                <String fx:value="bold" />
-                                             </styleClass>
-                                                    </Label>
-                                                    <Label fx:id="lblReportDescription" maxWidth="400.0" styleClass="reportHomepageLabels" text="label" wrapText="true" />
-                                                </children>
-                                                <padding>
-                                                    <Insets left="80.0" top="25.0" />
-                                                </padding>
-                                            </VBox>
-                                 </children>
-                              </HBox>
-                           </center>
-                              </BorderPane>
-                          </children>
-                      </FlowPane>
-                      <ScrollPane style="-fx-background-color: Transparent; -fx-border-color: Transparent;" vbarPolicy="NEVER">
-                          <content>
-                        <BorderPane>
-                           <center>
-                                    <VBox fx:id="vboxSectionAdding" spacing="10.0">
-                                        <padding>
-                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                        </padding>
-                                    </VBox>
-                           </center>
-                           <bottom>
-                              <VBox fx:id="vboxAddingLoginDetails" BorderPane.alignment="CENTER" />
-                           </bottom>
-                        </BorderPane>
-                          </content>
-                      </ScrollPane>
-                  </children>
-              </VBox>
-         </children>
-      </HBox>
-    </center>
     <top>
         <BorderPane>
          <right>
@@ -297,4 +103,186 @@
          </BorderPane.margin>
       </VBox>
    </right>
+   <center>
+        <VBox BorderPane.alignment="CENTER">
+            <children>
+            <HBox alignment="TOP_CENTER" spacing="50.0" style="-fx-border-width: 4; -fx-border-color: black;">
+               <children>
+                          <VBox>
+                              <children>
+                                  <HBox alignment="BOTTOM_LEFT">
+                                      <children>
+                                          <Label text="Customer Name: " wrapText="true">
+                                              <font>
+                                                  <Font name="System Bold" size="12.0" />
+                                              </font>
+                                              <HBox.margin>
+                                                  <Insets top="2.0" />
+                                              </HBox.margin>
+                                 <styleClass>
+                                    <String fx:value="reportHomepageLabels" />
+                                    <String fx:value="bold" />
+                                 </styleClass>
+                                          </Label>
+                                          <Label fx:id="lblCustomerName" styleClass="reportHomepageLabels" text="LABEL CUSTOMER" wrapText="true" />
+                                      </children>
+                                  </HBox>
+                                  <HBox alignment="BOTTOM_LEFT">
+                                      <children>
+                                          <Label text="Address: ">
+                                              <font>
+                                                  <Font name="System Bold" size="12.0" />
+                                              </font>
+                                 <styleClass>
+                                    <String fx:value="reportHomepageLabels" />
+                                    <String fx:value="bold" />
+                                 </styleClass>
+                                          </Label>
+                                          <Label fx:id="lblCustomerAddress" styleClass="reportHomepageLabels" text="Label" />
+                                      </children>
+                                  </HBox>
+                                  <HBox alignment="BOTTOM_LEFT">
+                                      <children>
+                                          <Label text="Email: ">
+                                              <font>
+                                                  <Font name="System Bold" size="12.0" />
+                                              </font>
+                                 <styleClass>
+                                    <String fx:value="reportHomepageLabels" />
+                                    <String fx:value="bold" />
+                                 </styleClass>
+                                          </Label>
+                                          <Label fx:id="lblCustomerEmail" styleClass="reportHomepageLabels" text="Label" />
+                                      </children>
+                                  </HBox>
+                                  <HBox alignment="BOTTOM_LEFT">
+                                      <children>
+                                          <Label text="Label: ">
+                                              <font>
+                                                  <Font name="System Bold" size="12.0" />
+                                              </font>
+                                 <styleClass>
+                                    <String fx:value="reportHomepageLabels" />
+                                    <String fx:value="bold" />
+                                 </styleClass>
+                                          </Label>
+                                          <Label fx:id="lblCustomerTelephone" styleClass="reportHomepageLabels" text="Label" />
+                                      </children>
+                                  </HBox>
+                              </children>
+                              <padding>
+                                  <Insets left="25.0" top="25.0" />
+                              </padding>
+                          </VBox>
+                          <VBox>
+                              <children>
+                                  <HBox alignment="BOTTOM_LEFT">
+                                      <children>
+                                          <Label text="Case Name: ">
+                                              <font>
+                                                  <Font name="System Bold" size="12.0" />
+                                              </font>
+                                 <styleClass>
+                                    <String fx:value="reportHomepageLabels" />
+                                    <String fx:value="bold" />
+                                 </styleClass>
+                                          </Label>
+                                          <Label fx:id="lblCaseName" styleClass="reportHomepageLabels" text="Label" />
+                                      </children>
+                                  </HBox>
+                                  <HBox alignment="BOTTOM_LEFT">
+                                      <children>
+                                          <Label text="Case ID: ">
+                                              <font>
+                                                  <Font name="System Bold" size="12.0" />
+                                              </font>
+                                 <styleClass>
+                                    <String fx:value="reportHomepageLabels" />
+                                    <String fx:value="bold" />
+                                 </styleClass>
+                                          </Label>
+                                          <Label fx:id="lblCaseID" styleClass="reportHomepageLabels" text="Label" />
+                                      </children>
+                                  </HBox>
+                                  <HBox alignment="BOTTOM_LEFT">
+                                      <children>
+                                          <Label text="Case Created: ">
+                                              <font>
+                                                  <Font name="System Bold" size="12.0" />
+                                              </font>
+                                 <styleClass>
+                                    <String fx:value="reportHomepageLabels" />
+                                    <String fx:value="bold" />
+                                 </styleClass>
+                                          </Label>
+                                          <Label fx:id="lblCaseCreated" styleClass="reportHomepageLabels" text="Label" />
+                                      </children>
+                                  </HBox>
+                                  <HBox alignment="BOTTOM_LEFT">
+                                      <children>
+                                          <Label text="Technicians: ">
+                                              <font>
+                                                  <Font name="System Bold" size="12.0" />
+                                              </font>
+                                 <styleClass>
+                                    <String fx:value="reportHomepageLabels" />
+                                    <String fx:value="bold" />
+                                 </styleClass>
+                                          </Label>
+                                          <Label fx:id="lblCaseTechnicians" styleClass="reportHomepageLabels" text="Label" />
+                                      </children>
+                                  </HBox>
+                                  <HBox alignment="BOTTOM_LEFT">
+                                      <children>
+                                          <Label text="Contact Person: ">
+                                              <font>
+                                                  <Font name="System Bold" size="12.0" />
+                                              </font>
+                                 <styleClass>
+                                    <String fx:value="reportHomepageLabels" />
+                                    <String fx:value="bold" />
+                                 </styleClass>
+                                          </Label>
+                                          <Label fx:id="lblCaseContactPerson" styleClass="reportHomepageLabels" text="Label" />
+                                      </children>
+                                  </HBox>
+                                  <Label text="Report Description: ">
+                                      <font>
+                                          <Font name="System Bold" size="12.0" />
+                                      </font>
+                           <styleClass>
+                              <String fx:value="reportHomepageLabels" />
+                              <String fx:value="bold" />
+                           </styleClass>
+                                  </Label>
+                                  <Label fx:id="lblReportDescription" maxWidth="400.0" styleClass="reportHomepageLabels" text="label" wrapText="true" />
+                              </children>
+                              <padding>
+                                  <Insets left="80.0" top="25.0" />
+                              </padding>
+                          </VBox>
+               </children>
+            </HBox>
+                <ScrollPane style="-fx-background-color: Transparent; -fx-border-color: Transparent;" vbarPolicy="NEVER">
+                    <content>
+                  <BorderPane>
+                     <center>
+                              <VBox fx:id="vboxSectionAdding" spacing="10.0">
+                                  <padding>
+                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                  </padding>
+                              </VBox>
+                     </center>
+                     <bottom>
+                        <VBox fx:id="vboxAddingLoginDetails" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
+                    </content>
+                </ScrollPane>
+            </children>
+         <BorderPane.margin>
+            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+         </BorderPane.margin>
+        </VBox>
+   </center>
 </BorderPane>
