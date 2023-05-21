@@ -138,7 +138,7 @@ public class CaseHomePageController implements Initializable {
                 }
             }
             //Sorting by "Submitted for review", "open" and "closed" if a project manager is logged in
-            else if (controllerAssistant.getLoggedInUser().getUserType() == 2) {
+            else if (controllerAssistant.getLoggedInUser().getUserType() == 2|| controllerAssistant.getLoggedInUser().getUserType() == 1) {
                 //Sort the reports
                 Comparator<Report> bySubOpenClosed = (Report report1, Report report2) -> {
                     if (report1.getIsActive().equalsIgnoreCase("submitted for review") && report2.getIsActive().equalsIgnoreCase("open")
