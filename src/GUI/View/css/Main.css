@@ -18,7 +18,7 @@
     -fx-text-fill: white;
     -fx-border-radius: 15;
     -fx-background-radius: 15;
-    -fx-underline: true;
+    -fx-underline: false;
     -fx-pref-height: 35;
 }
 
