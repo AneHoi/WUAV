@@ -6,7 +6,6 @@ import BLL.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -22,12 +21,14 @@ public class Model {
     private UserManager userManager;
 
     private CaseManager caseManager;
+    private DrawingManager drawingManager;
 
     public Model() {
         customerManager = new CustomerManager();
         reportManager = new ReportManager();
         userManager = new UserManager();
         caseManager = new CaseManager();
+        drawingManager = new DrawingManager();
     }
 
     public static Model getInstance() {
@@ -222,5 +223,13 @@ public class Model {
 
     public void updateToNoLogin(int loginDetailsID, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
         reportManager.updateToNoLogin(loginDetailsID, createdDate, createdTime, userID);
+    }
+
+    public void addDrwaingIcon(byte[] dataImage, String text) throws SQLException {
+        drawingManager.addDrawingIcon(dataImage, text);
+    }
+
+    public List<DrawingIcon> getAllDrawingIcons() throws SQLException {
+        return drawingManager.getAllDrawingIcons();
     }
 }

@@ -49,6 +49,8 @@ public class ReportHomePageController implements Initializable {
     private VBox vboxSectionAdding, vboxAddingLoginDetails;
     private Customer currentCustomer;
     private Case currentCase;
+
+
     private Report currentReport;
     private int nextPosition;
     private Model model;
@@ -465,19 +467,22 @@ public class ReportHomePageController implements Initializable {
     }
 
     public void handleAddSketch(ActionEvent actionEvent) {
-        //TODO add the DrawSketchController instead
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/View/DrawSketchView.fxml"));
             Parent root = (Parent) fxmlLoader.load();
+            DrawSketchController drawSketchController = fxmlLoader.getController();
+            drawSketchController.setNextPosition(nextPosition);
+            drawSketchController.setCurrentReport(currentReport);
             Stage stage = new Stage();
             stage.setTitle("Draw your sketch here");
             stage.setScene(new Scene(root));
             stage.show();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open the Drawing window", ButtonType.CANCEL);
             alert.showAndWait();
         }
+        updateReport();
     }
 
     private void deletePartOfReport(TextsAndImagesOnReport textOrImage) {

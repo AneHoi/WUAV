@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
@@ -8,15 +9,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<?import java.net.URL?>
 <BorderPane fx:id="borderPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.DrawSketchController">
    <center>
-      <AnchorPane fx:id="drawingPane" style="-fx-border-color: purple; -fx-border-width: 10;" BorderPane.alignment="CENTER" />
+      <AnchorPane fx:id="drawingPane" style="-fx-border-color: rgba(23,38,58,1); -fx-border-width: 10;" BorderPane.alignment="CENTER" />
    </center>
    <left>
       <ScrollPane fx:id="scrollPane" prefWidth="125.0" BorderPane.alignment="CENTER">
          <content>
-            <VBox fx:id="vbox" alignment="TOP_CENTER" spacing="15.0">
+            <VBox fx:id="vbox" alignment="TOP_CENTER" spacing="15.0" style="-fx-border-color: rgba(23,38,58,1); -fx-border-width: 5;">
                <children>
                </children>
                <padding>
@@ -29,6 +29,7 @@
    <bottom>
       <HBox alignment="CENTER" spacing="70.0" BorderPane.alignment="CENTER">
          <children>
+            <Button fx:id="btnAddIcon" mnemonicParsing="false" onAction="#addIcon" text="Add Icon" />
             <Button fx:id="btnClear" mnemonicParsing="false" onAction="#clear" text="Clear" />
             <Button fx:id="btnSnapshot" mnemonicParsing="false" onAction="#snapshot" text="Snapshot" />
          </children>

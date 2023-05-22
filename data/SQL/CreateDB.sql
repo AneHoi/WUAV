@@ -184,3 +184,11 @@ CREATE TABLE Login_Details_Report_Link(
     CONSTRAINT PK_LOGIN_REPORT_LINK PRIMARY KEY(Login_Details_ID),
 )
 GO
+
+CREATE TABLE DrawingTable
+(
+    ImageIconID                INT IDENTITY(1,1) NOT NULL,
+    ImageIcon                  VARBINARY( MAX),
+    IconDescription            NVARCHAR(500)
+)
+GO
