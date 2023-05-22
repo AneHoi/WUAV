@@ -100,8 +100,8 @@ public class PopUpCreateNewCostumerController implements Initializable {
             customerVar.setCustomerType(cbCustomerType.getSelectionModel().getSelectedItem());
             try {
                 model.updateCustomer(customerVar);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Customer updated successfully", ButtonType.OK);
-                alert.showAndWait();
+//                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Customer updated successfully", ButtonType.OK);
+//                alert.showAndWait();
             } catch (SQLException e) {
                 e.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Could not update the customerVar", ButtonType.CANCEL);
