@@ -25,7 +25,7 @@
     -fx-font-weight: 800;
 }
 .underHeadingLabel{
-    -fx-underline: true;
+    -fx-underline: false;
     -fx-text-fill: black;
     -fx-font-size: 24;
     -fx-font-weight: 800;
