@@ -114,4 +114,92 @@ public class UsersDAO implements IUsersDAO {
         }
 
     }
+
+    @Override
+    public String getUserSalt(String userName) throws Exception {
+        String salt = "";
+        try (Connection conn = db.getConnection()) {
+
+            String sql = "SELECT Users_Salt FROM User_Passwords WHERE (User_User_Name = ?)";
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, userName);
+
+
+            stmt.executeQuery();
+
+            //Execute the update to the DB
+            ResultSet rs = stmt.getResultSet();
+
+            while (rs.next()) {
+                salt = rs.getString("Users_Salt");
+            }
+
+        }
+
+        return salt;
+    }
+
+    @Override
+    public void setPassword(String userName, String password, String salt) throws Exception {
+        try (Connection conn = db.getConnection()) {
+            String sql = "INSERT INTO User_Passwords VALUES((SELECT DISTINCT User_ID FROM User_  WHERE User_Name = ?),?,?,?)";
+
+            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            stmt.setString(1, userName);
+            stmt.setString(2, userName);
+            stmt.setString(3, password);
+            stmt.setString(4, salt);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Exception("Could not set password\n" + ex);
+        }
+    }
+
+    @Override
+    public User doesLogInExist(String username, String password) throws Exception {
+        User user = null;
+        try (Connection conn = db.getConnection()) {
+
+            String sql = "SELECT * FROM User_ WHERE User_ID = (SELECT User_User_ID FROM User_Passwords WHERE (User_User_Name = ?) AND (Users_Password = ?))";
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+
+            stmt.executeQuery();
+
+            //Execute the update to the DB
+            ResultSet rs = stmt.getResultSet();
+
+            while (rs.next()) {
+
+                int id = rs.getInt("User_ID");
+                String fullName = rs.getString("User_Full_Name");
+                String userName = rs.getString("User_Name");
+                String tlfNumber = rs.getString("User_tlf");
+                String userEmail = rs.getString("User_Email");
+                int userType = rs.getInt("User_Type");
+                boolean isActive = rs.getBoolean("User_Active");
+
+                if (userType == 1)
+                    user = new Admin(id, userType, fullName, userName, tlfNumber, userEmail);
+
+                if (userType == 2)
+                    user = new ProjectManager(id, fullName, userName, "Project Manager", tlfNumber, userEmail, isActive);
+
+                if(userType == 3)
+                    user = new Technician(id,fullName,userName,"Technician",tlfNumber,userEmail,isActive);
+
+                if(userType == 4)
+                    user = new SalesRepresentative(id,fullName,userName,"Sales Representative",tlfNumber,userEmail,isActive);
+            }
+        }
+
+        return user;
+    }
 }

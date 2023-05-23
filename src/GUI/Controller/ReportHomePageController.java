@@ -476,7 +476,7 @@ public class ReportHomePageController implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("Draw your sketch here");
             stage.setScene(new Scene(root));
-            stage.show();
+            stage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open the Drawing window", ButtonType.CANCEL);

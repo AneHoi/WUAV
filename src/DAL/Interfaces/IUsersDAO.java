@@ -15,4 +15,7 @@ public interface IUsersDAO {
     void updateUser(int userID, String fullName, String userName, String userTlf, String userEmail, boolean userActive) throws SQLException;
 
     void createNewUser(String fullName, String userName, String userTlf, String userEmail, int userType) throws SQLException;
+    String getUserSalt(String userName) throws Exception;
+    void setPassword(String userName, String password, String salt) throws Exception;
+    User doesLogInExist (String username, String password) throws Exception;
 }

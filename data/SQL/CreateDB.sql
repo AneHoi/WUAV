@@ -59,7 +59,7 @@ CREATE TABLE User_Passwords
     User_User_ID   INT NOT NULL,
     User_User_Name NVARCHAR(250) NOT NULL,
     Users_Password NVARCHAR( MAX) NOT NULL,
-    Users_Salt     NVARCHAR( MAX),
+    Users_Salt     NVARCHAR( MAX) NOT NULL,
 
     CONSTRAINT FK_USER_USER_ID FOREIGN KEY (User_User_ID)
         REFERENCES User_ (User_ID),
