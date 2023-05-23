@@ -415,7 +415,7 @@ public class ReportHomePageController implements Initializable {
 
     private void updateReportInfo() {
         lblCustomerName.setText(currentCustomer.getCustomerName());
-        lblReportName.setText(currentReport.getReportName());
+        lblReportName.setText(" "+currentReport.getReportName());
         lblCustomerAddress.setText(currentCustomer.getAddress());
         lblCustomerEmail.setText(currentCustomer.getEmail());
         lblCustomerTelephone.setText(currentCustomer.getPhoneNumber());

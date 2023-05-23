@@ -48,7 +48,7 @@
                     <children>
                         <HBox>
                             <children>
-                                <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="80.0" styleClass="headingLabel" text="Report Name: ">
+                                <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="80.0" styleClass="headingLabel" text="Report Name:">
                                     <font>
                                         <Font size="40.0" />
                                     </font>
