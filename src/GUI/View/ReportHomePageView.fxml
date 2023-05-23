@@ -86,7 +86,7 @@
             </Button>
          </children>
          <BorderPane.margin>
-            <Insets top="35.0" />
+            <Insets top="15.0" />
          </BorderPane.margin>
       </FlowPane>
    </bottom>
