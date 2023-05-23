@@ -49,6 +49,7 @@ public class AddIconController implements Initializable {
         vBox.getChildren().remove(lblImage);
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Image");
+        fileChooser.setInitialDirectory(new File("..\\WUAV\\data\\Images\\DrawingProgramTest"));
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
         Stage stage = (Stage) btnChooseImage.getScene().getWindow();
         File selectedFile = fileChooser.showOpenDialog(stage);
