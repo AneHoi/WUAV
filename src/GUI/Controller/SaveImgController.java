@@ -94,8 +94,8 @@ public class SaveImgController implements Initializable, Serializable {
         LocalTime createdTime = LocalTime.now();
         try {
             int random = (int)(Math.random()*(100-1+1)+1);
-            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", new File("data/sketches/drawingFile" + random + ".png"));
-            File selectedFile = new File("data/sketches/drawingFile" + random + ".png");
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", new File("data/sketches/drawingFile.png"));
+            File selectedFile = new File("data/sketches/drawingFile.png");
             if (selectedFile != null) {
                 dataImage = Files.readAllBytes(selectedFile.getAbsoluteFile().toPath());
             }
