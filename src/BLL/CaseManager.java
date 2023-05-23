@@ -2,6 +2,7 @@ package BLL;
 
 import BE.Case;
 import BE.Technician;
+import BE.User;
 import DAL.CaseDAO;
 
 import java.sql.SQLException;
@@ -11,12 +12,14 @@ import java.util.List;
 public class CaseManager {
     private CaseDAO caseDAO;
 
-    public CaseManager(){
+    public CaseManager() {
         caseDAO = new CaseDAO();
     }
+
     public List<Case> getCasesForThisCustomer(int customerID) throws SQLException {
         return caseDAO.getCasesForThisCustomer(customerID);
     }
+
     public Case getChosenCase(int chosenCase) throws SQLException {
         return caseDAO.getChosenCase(chosenCase);
     }
@@ -34,7 +37,7 @@ public class CaseManager {
     }
 
     public void updateCase(int caseID, String caseName, String contactPerson, String caseDescription) throws SQLException {
-        caseDAO.updateCase(caseID, caseName,contactPerson,caseDescription);
+        caseDAO.updateCase(caseID, caseName, contactPerson, caseDescription);
     }
 
     public List<Technician> getAssignedTechnicians(int caseID) throws SQLException {
@@ -51,5 +54,13 @@ public class CaseManager {
 
     public void expandKeepingTime(Case casen, int daysToKeep) throws SQLException {
         caseDAO.expandKeepingTime(casen, daysToKeep);
+    }
+
+    public void storeUserCaseLink(int userID, int caseID) throws SQLException {
+        caseDAO.storeUserCaseLink(userID, caseID);
+    }
+
+    public List<Case> getUsersActiveCases(int userID) throws SQLException {
+        return caseDAO.getUsersActiveCases(userID);
     }
 }

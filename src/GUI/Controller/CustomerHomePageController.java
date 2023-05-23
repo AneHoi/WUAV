@@ -2,6 +2,7 @@ package GUI.Controller;
 
 import BE.Case;
 import BE.Technician;
+import BE.User;
 import GUI.Controller.Util.ControllerAssistant;
 import GUI.Controller.Util.Util;
 import GUI.Model.Model;
@@ -75,6 +76,7 @@ public class CustomerHomePageController implements Initializable {
             alert.showAndWait();
         }
     }
+
     private void updateTableView() {
         colCaseID.setCellValueFactory(new PropertyValueFactory<>("caseID"));
         colCaseName.setCellValueFactory(new PropertyValueFactory<>("caseName"));
@@ -122,6 +124,7 @@ public class CustomerHomePageController implements Initializable {
                 try {
                     model.setCurrentCase(selectedItem);
                     controllerAssistant.loadCenter("CaseHomePageView.fxml");
+                    storeUserCaseLink(selectedItem);
                 } catch (IOException e) {
                     e.printStackTrace();
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Case Home Page", ButtonType.CANCEL);
@@ -132,6 +135,18 @@ public class CustomerHomePageController implements Initializable {
         });
 
     }
+
+    private void storeUserCaseLink(Case selectedCase) {
+        User user = controllerAssistant.getLoggedInUser();
+        try {
+            model.storeUserCaseLink(user.getUserID(), selectedCase.getCaseID());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not store link between User and Case in Database", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+    }
+
     private void searchBarFilter() {
         // Create a list to hold the original unfiltered items in the tblViewCustomers TableView
         ObservableList<Case> originalList = FXCollections.observableArrayList(tblViewExistingCases.getItems());
@@ -162,6 +177,7 @@ public class CustomerHomePageController implements Initializable {
             }
         });
     }
+
     public void handleCreateNewCase() {
         CreateOrUpdateCaseController createOrUpdateCaseController = new CreateOrUpdateCaseController();
         Stage stage = new Stage();

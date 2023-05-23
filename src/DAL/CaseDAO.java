@@ -3,11 +3,9 @@ package DAL;
 import BE.Case;
 import BE.Technician;
 import DAL.Interfaces.ICaseDAO;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -190,7 +188,7 @@ public class CaseDAO implements ICaseDAO {
         return assignedTechs;
     }
 
-    public void deleteCase(Case casen) throws SQLException {
+    public void deleteCase(Case selectedCase) throws SQLException {
         try (Connection conn = db.getConnection()) {
             // Create statement object
             Statement stmt = conn.createStatement();
@@ -199,9 +197,9 @@ public class CaseDAO implements ICaseDAO {
             conn.setAutoCommit(false);
 
             //Create SQL statements
-            String sql1 = "DELETE FROM Technicians_Assigned_To_Case WHERE Case_ID = " + casen.getCaseID() + ";";
-            String sql2 = "DELETE FROM Report WHERE Report_Case_ID = " + casen.getCaseID() + ";";
-            String sql3 = "DELETE FROM Case_ WHERE Case_ID = " + casen.getCaseID() + ";";
+            String sql1 = "DELETE FROM Technicians_Assigned_To_Case WHERE Case_ID = " + selectedCase.getCaseID() + ";";
+            String sql2 = "DELETE FROM Report WHERE Report_Case_ID = " + selectedCase.getCaseID() + ";";
+            String sql3 = "DELETE FROM Case_ WHERE Case_ID = " + selectedCase.getCaseID() + ";";
 
             //Add to batch
             stmt.addBatch(sql1);
@@ -233,9 +231,9 @@ public class CaseDAO implements ICaseDAO {
         }
     }
 
-    public void expandKeepingTime(Case casen, int daysToKeep) throws SQLException {
+    public void expandKeepingTime(Case selectedCase, int daysToKeep) throws SQLException {
         try (Connection conn = db.getConnection()) {
-            String sql = "UPDATE Case_ SET Case_Days_To_Keep = (?) WHERE Case_ID = " + casen.getCaseID() + ";";
+            String sql = "UPDATE Case_ SET Case_Days_To_Keep = (?) WHERE Case_ID = " + selectedCase.getCaseID() + ";";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, daysToKeep);
             ps.executeUpdate();
@@ -244,5 +242,93 @@ public class CaseDAO implements ICaseDAO {
             e.printStackTrace();
             throw new SQLException("Could not update the time for keeping this casein the database");
         }
+    }
+
+    public void storeUserCaseLink(int userID, int caseID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+
+            String sql1 = "SELECT User_ID FROM User_Active_Cases_Link WHERE User_ID = (?) AND Case_ID = (?);";
+            PreparedStatement ps1 = conn.prepareStatement(sql1);
+            ps1.setInt(1, userID);
+            ps1.setInt(2, caseID);
+            ResultSet rs1 = ps1.executeQuery();
+
+            if (rs1.next()) {
+
+                return;
+            }
+
+
+            String sql2 = "SELECT COUNT(*) FROM Report WHERE Report_Case_ID = (?) AND Report_Is_Active = 'Open';";
+            PreparedStatement ps2 = conn.prepareStatement(sql2);
+            ps2.setInt(1, caseID);
+            ResultSet rs2 = ps2.executeQuery();
+            rs2.next();
+            int activeReportsCount = rs2.getInt(1);
+            if (activeReportsCount == 0) {
+                return;
+            }
+
+
+            String sql3 = "INSERT INTO User_Active_Cases_Link (User_ID, Case_ID) VALUES (?, ?);";
+            PreparedStatement ps3 = conn.prepareStatement(sql3);
+            ps3.setInt(1, userID);
+            ps3.setInt(2, caseID);
+            ps3.executeUpdate();
+
+
+            String sql4 = "SELECT COUNT(*) FROM User_Active_Cases_Link WHERE User_ID = (?);";
+            PreparedStatement ps4 = conn.prepareStatement(sql4);
+            ps4.setInt(1, userID);
+            ResultSet rs3 = ps4.executeQuery();
+            rs3.next();
+            int linkCount = rs3.getInt(1);
+
+
+            if (linkCount > 10) {
+                String sql5 = "DELETE TOP (?) FROM User_Active_Cases_Link WHERE User_ID = (?) AND User_Active_Cases_Link_ID " +
+                        "IN (SELECT User_Active_Cases_Link_ID FROM User_Active_Cases_Link WHERE User_ID = (?) " +
+                        "ORDER BY User_Active_Cases_Link_ID ASC);";
+                PreparedStatement ps5 = conn.prepareStatement(sql5);
+                ps5.setInt(1, linkCount - 10);
+                ps5.setInt(2, userID);
+                ps5.setInt(3, userID);
+                ps5.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+    }
+
+
+    public List<Case> getUsersActiveCases(int userID) throws SQLException {
+        List<Case> usersActiveCases = new ArrayList<>();
+        try (Connection conn = db.getConnection()) {
+            String sql = "SELECT * FROM User_Active_Cases_Link JOIN Case_ ON User_Active_Cases_Link.Case_ID = Case_.Case_ID JOIN User_ ON Case_.Case_Assigned_Tech_ID = User_.User_ID WHERE User_Active_Cases_Link.User_ID = (?);";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, userID);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int caseID = rs.getInt("Case_ID");
+                String caseName = rs.getString("Case_Name");
+                String caseDescription = rs.getString("Case_Description");
+                String caseContactPerson = rs.getString("Case_Contact_Person");
+                int caseCustomerID = rs.getInt("Case_Customer_ID");
+                String caseAssignedTech = rs.getString("User_Full_Name");
+                LocalDate caseCreatedDate = rs.getDate("Case_Created_Date").toLocalDate();
+
+                Case c = new Case(caseID, caseName, caseDescription, caseContactPerson, caseCustomerID, caseAssignedTech, caseCreatedDate);
+                usersActiveCases.add(c);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException();
+        }
+
+
+        return usersActiveCases;
     }
 }

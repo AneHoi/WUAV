@@ -19,4 +19,8 @@ public interface ICaseDAO {
     void updateCase(int caseID, String caseName, String contactPerson, String caseDescription) throws SQLException;
 
     List<Technician> getAssignedTechnicians(int caseID) throws SQLException;
+
+    void storeUserCaseLink(int userID, int caseID) throws SQLException;
+
+    List<Case> getUsersActiveCases(int userID) throws SQLException;
 }
