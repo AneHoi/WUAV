@@ -192,3 +192,29 @@ CREATE TABLE DrawingTable
     IconDescription            NVARCHAR(500)
 )
 GO
+
+CREATE TABLE User_Active_Cases_Link(
+    User_Active_Cases_Link_ID       INT IDENTITY(1,1)                       NOT NULL,
+    User_ID                         INT                                     NOT NULL,
+    Case_ID                         INT                                     NOT NULL,
+
+    CONSTRAINT PK_USER_ACTIVE_CASES_LINK PRIMARY KEY(User_Active_Cases_Link_ID),
+    CONSTRAINT FK_USER_ID_LINK FOREIGN KEY(User_ID)
+    REFERENCES User_(User_ID),
+    CONSTRAINT FK_CASE_ID_LINK FOREIGN KEY(Case_ID)
+    REFERENCES Case_(Case_ID),
+)
+GO
+
+CREATE TABLE User_Customer_Link(
+    User_Customer_Link_ID           INT IDENTITY(1,1)                       NOT NULL,
+    User_ID                         INT                                     NOT NULL,
+    Customer_ID                     INT                                     NOT NULL,
+
+    CONSTRAINT PK_USER_CUSTOMER_LINK PRIMARY KEY(User_Customer_Link_ID),
+    CONSTRAINT FK_USER_ID_CUSTOMER_LINK FOREIGN KEY(User_ID)
+    REFERENCES User_(User_ID),
+    CONSTRAINT FK_CUSTOMER_ID_LINK FOREIGN KEY(Customer_ID)
+    REFERENCES Customer(Customer_ID),
+)
+GO

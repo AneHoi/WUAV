@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 import BE.Customer;
+import BE.User;
 import GUI.Controller.Util.ControllerAssistant;
 import GUI.Controller.Util.Util;
 import GUI.Model.Model;
@@ -38,6 +39,7 @@ public class CustomerViewController implements Initializable {
     private ObservableList<Customer> customerObservableList;
     private ControllerAssistant controllerAssistant;
     private Util util = new Util();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         addListeners();
@@ -77,6 +79,7 @@ public class CustomerViewController implements Initializable {
                 try {
                     model.setCurrentCustomer(selectedItem);
                     controllerAssistant.loadCenter("CustomerHomePageView.fxml");
+                    storeUserCustomerLink(selectedItem);
                 } catch (IOException e) {
                     e.printStackTrace();
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Customer Home Page", ButtonType.CANCEL);
@@ -85,6 +88,18 @@ public class CustomerViewController implements Initializable {
             }
         });
     }
+
+    private void storeUserCustomerLink(Customer customer) {
+        User user = controllerAssistant.getLoggedInUser();
+        try {
+            model.storeUserCustomerLink(user.getUserID(), customer.getCustomerID());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could store link between customer and user in database", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+    }
+
     private void searchBarFilter() {  //TODO understand this...
         // Create a list to hold the original unfiltered items in the tblViewCustomers TableView
         ObservableList<Customer> originalList = FXCollections.observableArrayList(tblViewCustomers.getItems());
@@ -114,6 +129,7 @@ public class CustomerViewController implements Initializable {
             }
         });
     }
+
     private void updateCostumerView() {
         clmCustomerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         clmAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -131,7 +147,7 @@ public class CustomerViewController implements Initializable {
 
     public void openNewCustomerPopUp(ActionEvent event) {
         PopUpCreateNewCostumerController popUpCreateNewCostumerController = new PopUpCreateNewCostumerController();
-        if(tblViewCustomers.getSelectionModel().getSelectedItem() != null){
+        if (tblViewCustomers.getSelectionModel().getSelectedItem() != null) {
             Customer customer = (Customer) tblViewCustomers.getSelectionModel().getSelectedItem();
             popUpCreateNewCostumerController.setCustomerVar(customer);
         }
@@ -157,8 +173,8 @@ public class CustomerViewController implements Initializable {
 
         alertAreYouSure.getButtonTypes().clear();
         alertAreYouSure.getButtonTypes().addAll(deleteCustomer, cancel);
-        Optional <ButtonType> option = alertAreYouSure.showAndWait();
-        if (option.get()==deleteCustomer){
+        Optional<ButtonType> option = alertAreYouSure.showAndWait();
+        if (option.get() == deleteCustomer) {
             try {
                 model.deleteCustomer(customer);
             } catch (SQLException e) {
