@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -103,37 +104,7 @@ public class SaveImgController implements Initializable, Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        /*
-        try {
-            //model.SaveImageToReport(position, reportID, imageByte, comment, userID, createdDate, createdTime);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not save drawing in the Database", ButtonType.CANCEL);
-            alert.showAndWait();
-        }
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Drawing added successfully", ButtonType.OK);
-        alert.showAndWait();
-        Stage stage = (Stage) btnSave.getScene().getWindow();
-        stage.close();
-        
-         */
-    }
-    private byte[] getBytes(Object o){
-        byte[] data = null;
-        try{
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(bos);
-            oos.writeObject(o);
-            oos.flush();
-            oos.close();
-            bos.close();
-            data = bos.toByteArray();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return data;
+        //This closes the window
+        ((Node)(event.getSource())).getScene().getWindow().hide();
     }
 }
