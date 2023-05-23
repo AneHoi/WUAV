@@ -6,6 +6,7 @@ import BE.TextsAndImagesOnReport;
 import GUI.Controller.Util.ControllerAssistant;
 import GUI.Controller.Util.Util;
 import GUI.Model.Model;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,11 +25,9 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -92,7 +91,18 @@ public class SaveImgController implements Initializable, Serializable {
         int userID = controllerAssistant.getLoggedInUser().getUserID();
         LocalDate createdDate = LocalDate.now();
         LocalTime createdTime = LocalTime.now();
-        byte[] imageByte = getBytes(image);
+        try {
+            int random = (int)(Math.random()*(100-1+1)+1);
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", new File("data/sketches/drawingFile" + random + ".png"));
+            File selectedFile = new File("data/sketches/drawingFile" + random + ".png");
+            if (selectedFile != null) {
+                dataImage = Files.readAllBytes(selectedFile.getAbsoluteFile().toPath());
+            }
+            model.SaveImageToReport(position, reportID, dataImage, comment, userID, createdDate, createdTime);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         /*
         try {
