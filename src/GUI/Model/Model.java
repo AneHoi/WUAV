@@ -93,7 +93,13 @@ public class Model {
     public void createNewUser(String fullName, String userName, String userTlf, String userEmail, int userType) throws SQLException {
         userManager.createNewUser(fullName, userName, userTlf, userEmail, userType);
     }
+    public void setPassword(String userName, String password) throws Exception {
+        userManager.handlePassword(userName, password);
+    }
 
+    public User checkLogIn(String userName, String password) throws Exception {
+        return userManager.checkLoggedInUser(userName, password);
+    }
 
     public void updateCase(int caseID, String caseName, String contactPerson, String caseDescription) throws SQLException {
         caseManager.updateCase(caseID, caseName, contactPerson, caseDescription);
