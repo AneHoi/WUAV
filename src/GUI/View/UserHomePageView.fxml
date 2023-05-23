@@ -39,10 +39,10 @@
                                 <Insets left="25.0" right="25.0" />
                             </VBox.margin>
                             <columns>
-                                <TableColumn fx:id="colCustomerActiveCases" prefWidth="75.0" style="-fx-alignment: center;" text="Customer" />
-                                <TableColumn fx:id="colAddressActiveCases" prefWidth="75.0" style="-fx-alignment: center;" text="Address" />
-                                <TableColumn fx:id="colTechnicians" prefWidth="75.0" style="-fx-alignment: center;" text="Technicians" />
-                                <TableColumn fx:id="colCaseDate" prefWidth="75.0" style="-fx-alignment: center;" text="Case Date" />
+                                <TableColumn fx:id="colCaseName" prefWidth="75.0" style="-fx-alignment: center;" text="Case Name" />
+                                <TableColumn fx:id="colContactPerson" prefWidth="75.0" style="-fx-alignment: center;" text="Contact Person" />
+                                <TableColumn fx:id="colTechnician" prefWidth="75.0" style="-fx-alignment: center;" text="Technician" />
+                                <TableColumn fx:id="colCaseCreated" prefWidth="75.0" style="-fx-alignment: center;" text="Case Created" />
                             </columns>
                             <columnResizePolicy>
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -65,9 +65,9 @@
                                 <Insets left="25.0" right="25.0" />
                             </VBox.margin>
                             <columns>
-                                <TableColumn fx:id="colCustomerViewed" prefWidth="75.0" style="-fx-alignment: center;" text="Customer" />
-                                <TableColumn fx:id="colAddressViewed" prefWidth="75.0" style="-fx-alignment: center;" text="Address" />
-                                <TableColumn fx:id="colActiveCases" prefWidth="75.0" style="-fx-alignment: center;" text="Active Cases" />
+                                <TableColumn fx:id="colCustomer" prefWidth="75.0" style="-fx-alignment: center;" text="Customer" />
+                                <TableColumn fx:id="colAddress" prefWidth="75.0" style="-fx-alignment: center;" text="Address" />
+                                <TableColumn fx:id="colCustomerType" prefWidth="75.0" style="-fx-alignment: center;" text="Customer Type" />
                                 <TableColumn fx:id="colCVR" prefWidth="75.0" style="-fx-alignment: center;" text="CVR" />
                             </columns>
                             <columnResizePolicy>

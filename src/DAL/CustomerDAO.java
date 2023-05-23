@@ -40,6 +40,7 @@ public class CustomerDAO implements ICustomerDAO {
         }
         return customers;
     }
+
     public Customer getChosenCustomer(int chosenCustomer) throws SQLException {
         Customer customerVar = null;
         try (Connection conn = db.getConnection()) {
@@ -64,6 +65,7 @@ public class CustomerDAO implements ICustomerDAO {
         }
         return customerVar;
     }
+
     public void saveCustomer(Customer customerVar) {
         try (Connection conn = db.getConnection()) {
             String sql = "INSERT INTO Customer" + "(Customer_Name, Customer_Address, Customer_Mail, Customer_Tlf, Customer_CVR, Customer_Type)" + "VALUES(?,?,?,?,?,?);";
@@ -119,4 +121,74 @@ public class CustomerDAO implements ICustomerDAO {
         }
     }
 
+    public void storeUserCustomerLink(int userID, int customerID) throws SQLException {
+        try (Connection conn = db.getConnection()) {
+
+            String sql1 = "SELECT User_ID FROM User_Customer_Link WHERE User_ID = ? AND Customer_ID = ?;";
+            PreparedStatement ps1 = conn.prepareStatement(sql1);
+            ps1.setInt(1, userID);
+            ps1.setInt(2, customerID);
+            ResultSet rs = ps1.executeQuery();
+
+            if (rs.next()) {
+                return;
+            }
+
+            String sql2 = "INSERT INTO User_Customer_Link (User_ID, Customer_ID) VALUES (?, ?);";
+            PreparedStatement ps2 = conn.prepareStatement(sql2);
+            ps2.setInt(1, userID);
+            ps2.setInt(2, customerID);
+            ps2.executeUpdate();
+
+            String sql3 = "SELECT COUNT(*) FROM User_Customer_Link WHERE User_ID = (?);";
+            PreparedStatement ps3 = conn.prepareStatement(sql3);
+            ps3.setInt(1, userID);
+            ResultSet rs2 = ps3.executeQuery();
+            rs2.next();
+            int linkCount = rs2.getInt(1);
+
+            // Delete the oldest link(s) if there are more than 10 links for the user
+            if (linkCount > 10) {
+                String sql4 = "DELETE FROM User_Customer_Link WHERE User_Customer_Link_ID IN " +
+                        "(SELECT TOP (?) User_Customer_Link_ID FROM User_Customer_Link WHERE User_ID = (?) " +
+                        "ORDER BY User_Customer_Link_ID ASC);";
+                PreparedStatement ps4 = conn.prepareStatement(sql4);
+                ps4.setInt(1, linkCount - 10);
+                ps4.setInt(2, userID);
+                ps4.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+    }
+
+
+    public List<Customer> getRecentlyViewedCustomers(int userID) throws SQLException {
+        List<Customer> recentlyViewedCustomers = new ArrayList<>();
+        try (Connection conn = db.getConnection()) {
+            String sql = "SELECT * FROM User_Customer_Link JOIN Customer ON User_Customer_Link.Customer_ID = Customer.Customer_ID WHERE User_ID = (?);";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, userID);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int customerID = rs.getInt("Customer_ID");
+                String customerName = rs.getString("Customer_Name");
+                String customerAddress = rs.getString("Customer_Address");
+                String customerMail = rs.getString("Customer_Mail");
+                String customerTelephone = rs.getString("Customer_Tlf");
+                int customerCVR = rs.getInt("Customer_CVR");
+                String customerType = rs.getString("Customer_Type");
+
+                Customer c = new Customer(customerID,customerName,customerAddress,customerTelephone,customerMail,customerCVR,customerType);
+                recentlyViewedCustomers.add(c);
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException();
+        }
+        return recentlyViewedCustomers;
+    }
 }

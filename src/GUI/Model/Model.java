@@ -165,6 +165,7 @@ public class Model {
     public void deletePartOfReport(TextsAndImagesOnReport textOrImage) throws SQLException {
         reportManager.deletePartOfReport(textOrImage);
     }
+
     public Case getChosenCase(int chosenCase) throws SQLException {
         return caseManager.getChosenCase(chosenCase);
     }
@@ -184,6 +185,7 @@ public class Model {
     public void deleteCase(Case casen) throws SQLException {
         caseManager.deleteCase(casen);
     }
+
     public void submitReportForReview(int reportID) throws SQLException {
         reportManager.submitReportForReview(reportID);
     }
@@ -207,6 +209,7 @@ public class Model {
     public void expandKeepingTime(Case casen, int daysToKeep) throws SQLException {
         caseManager.expandKeepingTime(casen, daysToKeep);
     }
+
     public void saveLoginDetails(int reportID, String component, String username, String password, String additionalInfo, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
         reportManager.saveLoginDetails(reportID, component, username, password, additionalInfo, createdDate, createdTime, userID);
     }
@@ -237,5 +240,21 @@ public class Model {
 
     public List<DrawingIcon> getAllDrawingIcons() throws SQLException {
         return drawingManager.getAllDrawingIcons();
+    }
+
+    public void storeUserCustomerLink(int userID, int customerID) throws SQLException {
+        customerManager.storeUserCustomerLink(userID, customerID);
+    }
+
+    public void storeUserCaseLink(int userID, int caseID) throws SQLException {
+        caseManager.storeUserCaseLink(userID, caseID);
+    }
+
+    public List<Case> getUsersActiveCases(int userID) throws SQLException {
+        return caseManager.getUsersActiveCases(userID);
+    }
+
+    public List<Customer> getRecentlyViewedCustomers(int userID) throws SQLException {
+        return customerManager.getRecentlyViewedCustomers(userID);
     }
 }

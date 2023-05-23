@@ -30,4 +30,12 @@ public class CustomerManager {
     public void deleteCustomer(Customer customer) throws SQLException {
         customerDAO.deleteCustomer(customer);
     }
+
+    public void storeUserCustomerLink(int userID, int customerID) throws SQLException {
+        customerDAO.storeUserCustomerLink(userID,customerID);
+    }
+
+    public List<Customer> getRecentlyViewedCustomers(int userID) throws SQLException {
+        return customerDAO.getRecentlyViewedCustomers(userID);
+    }
 }
