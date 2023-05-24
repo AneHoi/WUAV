@@ -16,10 +16,8 @@ public abstract class User {
     private String userStringType;
     private Image profilePicture;
     private boolean isActive;
-    private int[] recentlyViewedCases;
-    private int[] activeCases;
 
-    public User(int userID, String fullName, String userName, String password, String telephone, String email, int userType, String userStringType, boolean isActive, Image profilePicture, int[] recentlyViewedCases, int[] activeCases) {
+    public User(int userID, String fullName, String userName, String password, String telephone, String email, int userType, String userStringType, boolean isActive, Image profilePicture) {
         this.userID = userID;
         this.fullName = fullName;
         this.userName = userName;
@@ -30,8 +28,6 @@ public abstract class User {
         this.userStringType = userStringType;
         this.isActive = isActive;
         this.profilePicture = profilePicture;
-        this.recentlyViewedCases = recentlyViewedCases;
-        this.activeCases = activeCases;
     }
 
     public User(int techID, String techName) {
@@ -139,38 +135,6 @@ public abstract class User {
         this.profilePicture = profilePicture;
     }
 
-    public int[] getRecentlyViewedCases() {
-        return recentlyViewedCases;
-    }
-
-    public void setRecentlyViewedCases(int[] recentlyViewedCases) {
-        this.recentlyViewedCases = recentlyViewedCases;
-    }
-
-    public int[] getActiveCases() {
-        return activeCases;
-    }
-
-    public void setActiveCases(int[] activeCases) {
-        this.activeCases = activeCases;
-    }
-
-    /*
-    @Override
-    public String toString() {
-        return "User{" +
-                "userID=" + userID +
-                ", fullName='" + fullName + '\'' +
-                ", userName='" + userName + '\'' +
-                ", telephone='" + telephone + '\'' +
-                ", email='" + email + '\'' +
-                ", userStringType='" + userStringType + '\'' +
-                ", profilePicture=" + profilePicture +
-                ", recentlyViewedCases=" + Arrays.toString(recentlyViewedCases) +
-                ", activeCases=" + Arrays.toString(activeCases) +
-                '}';
-    }
-    */
 
 
     @Override

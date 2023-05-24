@@ -49,7 +49,7 @@ public class LoginController implements Initializable {
     }
     public boolean validPassword(String password){
         String specialChars = "!,.:;<>\\/()#%=+?'*";
-
+        if (password.length() >= 8){
             for (int i = 0; i < password.length() - 1; i++) {
                 for (int j = 0; j < specialChars.length() - 1; j++){
                     if(password.charAt(i) == specialChars.charAt(j)){
@@ -57,6 +57,9 @@ public class LoginController implements Initializable {
                     }
                 }
             }
+        }else if (password.length() < 8){
+            return false;
+        }
 
         return true;
     }
@@ -67,13 +70,11 @@ public class LoginController implements Initializable {
             return;
         }
         if(!validPassword(pswPassword.getText())){
-            displayAlert("Invalid user or password");
+            displayAlert("Password contains illegal characters");
             return;
         }
         try {
-            String username = txtUsername.getText();
-            String password = pswPassword.getText();
-            user = model.checkLogIn(username,password);
+            user = model.checkLogIn(txtUsername.getText().trim(),pswPassword.getText().trim());
 
             if(user == null){
                 displayAlert("Invalid username or password");
@@ -93,7 +94,6 @@ public class LoginController implements Initializable {
             stage.setTitle("WUAV");
             util.openNewWindow(stage,loader,"Could not open program");
             stage.setResizable(true);
-            stage.setOnCloseRequest(event -> System.exit(0));
             stage.show();
 
         } catch (Exception e) {

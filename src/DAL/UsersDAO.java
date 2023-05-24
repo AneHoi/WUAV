@@ -3,8 +3,12 @@ package DAL;
 import BE.*;
 import DAL.Interfaces.IUsersDAO;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import javafx.scene.image.Image;
 
 import javax.swing.plaf.nimbus.State;
+import java.awt.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -163,6 +167,7 @@ public class UsersDAO implements IUsersDAO {
     @Override
     public User doesLogInExist(String username, String password) throws Exception {
         User user = null;
+        String userStringType = "";
         try (Connection conn = db.getConnection()) {
 
             String sql = "SELECT * FROM User_ WHERE User_ID = (SELECT User_User_ID FROM User_Passwords WHERE (User_User_Name = ?) AND (Users_Password = ?))";
@@ -185,20 +190,26 @@ public class UsersDAO implements IUsersDAO {
                 String userEmail = rs.getString("User_Email");
                 int userType = rs.getInt("User_Type");
                 boolean isActive = rs.getBoolean("User_Active");
-
-                if (userType == 1)
-                    user = new Admin(id, userType, fullName, userName, tlfNumber, userEmail);
-
-                if (userType == 2)
-                    user = new ProjectManager(id, fullName, userName, "Project Manager", tlfNumber, userEmail, isActive);
-
-                if(userType == 3)
-                    user = new Technician(id,fullName,userName,"Technician",tlfNumber,userEmail,isActive);
-
-                if(userType == 4)
-                    user = new SalesRepresentative(id,fullName,userName,"Sales Representative",tlfNumber,userEmail,isActive);
+                byte[] profilePicture = rs.getBytes("User_Img");
+                Image image = null;
+                if (profilePicture != null) {
+                    image = new javafx.scene.image.Image(new ByteArrayInputStream(profilePicture));
+                }
+                if (userType == 1) {
+                    user = new Admin(id, fullName, userName, password, tlfNumber, userEmail,isActive, image);
+                }
+                if (userType == 2) {
+                    user = new ProjectManager(id, fullName, userName, password, tlfNumber, userEmail, isActive, image);
+                }
+                if (userType == 3) {
+                    user = new Technician(id, fullName, userName, password, tlfNumber, userEmail, isActive, image);
+                }
+                if (userType == 4) {
+                    user = new SalesRepresentative(id, fullName, userName,password, tlfNumber, userEmail, isActive, image);
+                }
             }
         }
+        System.out.println(user.getUserType());
 
         return user;
     }
