@@ -182,6 +182,12 @@ CREATE TABLE Login_Details_Report_Link(
     Login_Details_ID                INT                                     NOT NULL,
 
     CONSTRAINT PK_LOGIN_REPORT_LINK PRIMARY KEY(Login_Details_ID),
+
+    CONSTRAINT FK_REPORT_LOGIN_LINK FOREIGN KEY(Report_ID)
+    REFERENCES Report(Report_ID) ON DELETE CASCADE,
+
+    CONSTRAINT FK_LOGIN_DETAILS_LINK FOREIGN KEY(Login_Details_ID)
+    REFERENCES Login_Details(Login_Details_ID) ON DELETE CASCADE,
 )
 GO
 
