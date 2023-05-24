@@ -13,11 +13,11 @@ INSERT INTO User_ VALUES('Jesper Jensen','T2', (SELECT DISTINCT User_Type_ID FRO
 INSERT INTO User_ VALUES('Bo Aggerholm','SR', (SELECT DISTINCT User_Type_ID FROM User_Type WHERE USER_TYPE_TYPE = 'SalesRepresentative'), 'boa@wuav.dk', '12341234', 1, null)
 GO
 
-INSERT INTO User_Passwords VALUES((SELECT DISTINCT User_ID FROM User_  WHERE User_Name = 'T1'),'T1', '1', '$2a$16$SQKnctQxB89dhg7qDpjUpO')
-INSERT INTO User_Passwords VALUES((SELECT DISTINCT User_ID FROM User_  WHERE User_Name = 'A'), 'A', '1', '$2a$16$SQKnctQxB89dhg7qDpjUpO')
-INSERT INTO User_Passwords VALUES((SELECT DISTINCT User_ID FROM User_  WHERE User_Name = 'T2'),'T2', '1', '$2a$16$SQKnctQxB89dhg7qDpjUpO')
-INSERT INTO User_Passwords VALUES((SELECT DISTINCT User_ID FROM User_  WHERE User_Name = 'PM'), 'PM', '1', '$2a$16$SQKnctQxB89dhg7qDpjUpO')
-INSERT INTO User_Passwords VALUES((SELECT DISTINCT User_ID FROM User_  WHERE User_Name = 'SR'),'SR', '1', '$2a$16$SQKnctQxB89dhg7qDpjUpO')
+INSERT INTO User_Passwords VALUES((SELECT DISTINCT User_ID FROM User_  WHERE User_Name = 'T1'),'T1', '$2a$16$6IYC4cbLAGxWHHdOJu5A8OlAMLjc6zUpZQc.sRhCPSyDvJN/fDOAu', '$2a$16$SQKnctQxB89dhg7qDpjUpO')
+INSERT INTO User_Passwords VALUES((SELECT DISTINCT User_ID FROM User_  WHERE User_Name = 'A'), 'A', '$2a$16$6IYC4cbLAGxWHHdOJu5A8OlAMLjc6zUpZQc.sRhCPSyDvJN/fDOAu', '$2a$16$SQKnctQxB89dhg7qDpjUpO')
+INSERT INTO User_Passwords VALUES((SELECT DISTINCT User_ID FROM User_  WHERE User_Name = 'T2'),'T2', '$2a$16$6IYC4cbLAGxWHHdOJu5A8OlAMLjc6zUpZQc.sRhCPSyDvJN/fDOAu', '$2a$16$SQKnctQxB89dhg7qDpjUpO')
+INSERT INTO User_Passwords VALUES((SELECT DISTINCT User_ID FROM User_  WHERE User_Name = 'PM'), 'PM', '$2a$16$6IYC4cbLAGxWHHdOJu5A8OlAMLjc6zUpZQc.sRhCPSyDvJN/fDOAu', '$2a$16$SQKnctQxB89dhg7qDpjUpO')
+INSERT INTO User_Passwords VALUES((SELECT DISTINCT User_ID FROM User_  WHERE User_Name = 'SR'),'SR', '$2a$16$6IYC4cbLAGxWHHdOJu5A8OlAMLjc6zUpZQc.sRhCPSyDvJN/fDOAu', '$2a$16$SQKnctQxB89dhg7qDpjUpO')
 GO
 
 INSERT INTO Customer VALUES('Need Help co', 'Help Me street 1', 'needhelp@help.com', '91191191', '1234321', 'Corporate')

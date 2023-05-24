@@ -5,6 +5,7 @@ import DAL.Interfaces.IUsersDAO;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import javax.swing.plaf.nimbus.State;
+import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -163,6 +164,7 @@ public class UsersDAO implements IUsersDAO {
     @Override
     public User doesLogInExist(String username, String password) throws Exception {
         User user = null;
+        String userStringType = "";
         try (Connection conn = db.getConnection()) {
 
             String sql = "SELECT * FROM User_ WHERE User_ID = (SELECT User_User_ID FROM User_Passwords WHERE (User_User_Name = ?) AND (Users_Password = ?))";
@@ -185,18 +187,24 @@ public class UsersDAO implements IUsersDAO {
                 String userEmail = rs.getString("User_Email");
                 int userType = rs.getInt("User_Type");
                 boolean isActive = rs.getBoolean("User_Active");
+                byte[] profilePicture = rs.getBytes("User_Img");
 
-                if (userType == 1)
-                    user = new Admin(id, userType, fullName, userName, tlfNumber, userEmail);
-
-                if (userType == 2)
-                    user = new ProjectManager(id, fullName, userName, "Project Manager", tlfNumber, userEmail, isActive);
-
-                if(userType == 3)
-                    user = new Technician(id,fullName,userName,"Technician",tlfNumber,userEmail,isActive);
-
-                if(userType == 4)
-                    user = new SalesRepresentative(id,fullName,userName,"Sales Representative",tlfNumber,userEmail,isActive);
+                if (userType == 1) {
+                    userStringType = "Admin";
+                    user = new Admin(id, fullName, userName, userStringType, tlfNumber, userEmail,isActive);
+                }
+                if (userType == 2) {
+                    userStringType = "Project Manager";
+                    user = new ProjectManager(id, fullName, userName, userStringType, tlfNumber, userEmail, isActive);
+                }
+                if (userType == 3) {
+                    userStringType = "Technician";
+                    user = new Technician(id, fullName, userName, userStringType, tlfNumber, userEmail, isActive);
+                }
+                if (userType == 4) {
+                    userStringType = "Sales Representative";
+                    user = new SalesRepresentative(id, fullName, userName, userStringType, tlfNumber, userEmail, isActive);
+                }
             }
         }
 
