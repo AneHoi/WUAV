@@ -3,9 +3,12 @@ package DAL;
 import BE.*;
 import DAL.Interfaces.IUsersDAO;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import javafx.scene.image.Image;
 
 import javax.swing.plaf.nimbus.State;
 import java.awt.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -188,25 +191,25 @@ public class UsersDAO implements IUsersDAO {
                 int userType = rs.getInt("User_Type");
                 boolean isActive = rs.getBoolean("User_Active");
                 byte[] profilePicture = rs.getBytes("User_Img");
-
+                Image image = null;
+                if (profilePicture != null) {
+                    image = new javafx.scene.image.Image(new ByteArrayInputStream(profilePicture));
+                }
                 if (userType == 1) {
-                    userStringType = "Admin";
-                    user = new Admin(id, fullName, userName, userStringType, tlfNumber, userEmail,isActive);
+                    user = new Admin(id, fullName, userName, password, tlfNumber, userEmail,isActive, image);
                 }
                 if (userType == 2) {
-                    userStringType = "Project Manager";
-                    user = new ProjectManager(id, fullName, userName, userStringType, tlfNumber, userEmail, isActive);
+                    user = new ProjectManager(id, fullName, userName, password, tlfNumber, userEmail, isActive, image);
                 }
                 if (userType == 3) {
-                    userStringType = "Technician";
-                    user = new Technician(id, fullName, userName, userStringType, tlfNumber, userEmail, isActive);
+                    user = new Technician(id, fullName, userName, password, tlfNumber, userEmail, isActive, image);
                 }
                 if (userType == 4) {
-                    userStringType = "Sales Representative";
-                    user = new SalesRepresentative(id, fullName, userName, userStringType, tlfNumber, userEmail, isActive);
+                    user = new SalesRepresentative(id, fullName, userName,password, tlfNumber, userEmail, isActive, image);
                 }
             }
         }
+        System.out.println(user.getUserType());
 
         return user;
     }
