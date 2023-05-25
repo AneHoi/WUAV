@@ -114,11 +114,8 @@ public class CreateOrUpdateCaseController implements Initializable {
             alert.showAndWait();
         }
 
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Created case successfully", ButtonType.OK);
-//        alert.showAndWait();
         Stage stage = (Stage) btnCreateOrUpdateCase.getScene().getWindow();
         stage.close();
-
     }
 
     ChangeListener<String> createNewCaseBtnListener = (observable, oldValue, newValue) -> {

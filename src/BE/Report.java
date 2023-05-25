@@ -9,27 +9,24 @@ public class Report {
     private int caseID;
     private String assignedTechnician;
     private LocalDate createdDate;
-    private int logID;
     private String isActive;
 
-    public Report(int reportID, String reportName, String reportDescription, int caseID, String assignedTechnician, LocalDate createdDate, int logID, String isActive) {
+    public Report(int reportID, String reportName, String reportDescription, int caseID, String assignedTechnician, LocalDate createdDate, String isActive) {
         this.reportID = reportID;
         this.reportName = reportName;
         this.reportDescription = reportDescription;
         this.caseID = caseID;
         this.assignedTechnician = assignedTechnician;
         this.createdDate = createdDate;
-        this.logID = logID;
         this.isActive = isActive;
     }
 
-    public Report(int reportID, String reportName, String reportDescription, String assignedTechnician, LocalDate createdDate, int logID, String isActive) {
+    public Report(int reportID, String reportName, String reportDescription, String assignedTechnician, LocalDate createdDate, String isActive) {
         this.reportID = reportID;
         this.reportName = reportName;
         this.reportDescription = reportDescription;
         this.assignedTechnician = assignedTechnician;
         this.createdDate = createdDate;
-        this.logID = logID;
         this.isActive = isActive;
     }
 
@@ -79,14 +76,6 @@ public class Report {
 
     public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
-    }
-
-    public int getLogID() {
-        return logID;
-    }
-
-    public void setLogID(int logID) {
-        this.logID = logID;
     }
 
     public String getIsActive() {
