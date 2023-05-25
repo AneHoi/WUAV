@@ -8,6 +8,6 @@ public class SalesRepresentative extends User {
     }
 
     public SalesRepresentative(int userID, String fullName, String userName, String userStringType, String telephone, String email, boolean userActive) {
-        super(userID, fullName, userName, userStringType, telephone, email, userActive);
+        super(userID, fullName, userName, "SalesRepresentative", telephone, email, userActive);
     }
 }

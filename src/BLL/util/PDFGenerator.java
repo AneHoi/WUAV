@@ -90,7 +90,6 @@ public class PDFGenerator {
                     }
                 }
             }
-            //String para4 = "Conponent" + + "\n"
 
             document.close();
 

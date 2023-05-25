@@ -49,7 +49,7 @@ public class UsersDAO implements IUsersDAO {
     public List<User> getAllUsers() throws SQLException {
         List<User> users = new ArrayList<>();
         try (Connection conn = db.getConnection()) {
-            String sql = "SELECT * FROM User_ LEFT JOIN User_Type ON User_.User_Type = User_Type_ID;";
+            String sql = "SELECT * FROM User_;";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -57,21 +57,24 @@ public class UsersDAO implements IUsersDAO {
                 String userFullName = rs.getString("User_Full_Name");
                 String userName = rs.getString("User_Name");
                 int userType = rs.getInt("User_Type");
-                String userStringType = rs.getNString("USER_TYPE_TYPE");
                 String userEmail = rs.getString("User_Email");
                 String userTlf = rs.getString("User_tlf");
                 boolean userActive = rs.getBoolean("User_Active");
 
                 if (userType == 1) {
+                    String userStringType = "";
                     User user = new Admin(userID, userFullName, userName, userStringType, userTlf, userEmail, userActive);
                     users.add(user);
                 } else if (userType == 2) {
+                    String userStringType = "";
                     User user = new ProjectManager(userID, userFullName, userName, userStringType, userTlf, userEmail, userActive);
                     users.add(user);
                 } else if (userType == 3) {
+                    String userStringType = "";
                     User user = new Technician(userID, userFullName, userName, userStringType, userTlf, userEmail, userActive);
                     users.add(user);
                 } else {
+                    String userStringType = "";
                     User user = new SalesRepresentative(userID, userFullName, userName, userStringType, userTlf, userEmail, userActive);
                     users.add(user);
                 }
@@ -124,7 +127,7 @@ public class UsersDAO implements IUsersDAO {
         String salt = "";
         try (Connection conn = db.getConnection()) {
 
-            String sql = "SELECT Users_Salt FROM User_Passwords WHERE (User_User_Name = ?)";
+            String sql = "SELECT Users_Salt FROM User_Passwords WHERE (Users_Username = ?)";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, userName);
@@ -170,7 +173,7 @@ public class UsersDAO implements IUsersDAO {
         String userStringType = "";
         try (Connection conn = db.getConnection()) {
 
-            String sql = "SELECT * FROM User_ WHERE User_ID = (SELECT User_User_ID FROM User_Passwords WHERE (User_User_Name = ?) AND (Users_Password = ?))";
+            String sql = "SELECT * FROM User_ WHERE User_ID = (SELECT Users_User_ID FROM User_Passwords WHERE (Users_Username = ?) AND (Users_Password = ?))";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);

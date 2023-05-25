@@ -83,6 +83,9 @@ public class LoginController implements Initializable {
 
             controllerAssistant.setLoggedInUser(user);
 
+            pswPassword.clear();
+            txtUsername.clear();
+
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success");
             alert.setHeaderText("Successfully logged in to " + user.getUserName());

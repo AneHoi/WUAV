@@ -12,6 +12,6 @@ public class Technician extends User {
     }
 
     public Technician(int userID, String fullName, String userName, String userStringType, String telephone, String email, boolean userActive) {
-        super(userID, fullName, userName, userStringType, telephone, email, userActive);
+        super(userID, fullName, userName, "Technician", telephone, email, userActive);
     }
 }

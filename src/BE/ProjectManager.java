@@ -9,6 +9,6 @@ public class ProjectManager extends User{
     }
 
     public ProjectManager(int userID, String fullName, String userName, String userStringType, String telephone, String email, boolean userActive) {
-        super(userID, fullName, userName, userStringType, telephone, email, userActive);
+        super(userID, fullName, userName, "Project Manager", telephone, email, userActive);
     }
 }
