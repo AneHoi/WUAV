@@ -34,9 +34,9 @@ public class DrawSketchController implements Initializable {
     @FXML
     private AnchorPane drawingPane;
     @FXML
-    private VBox vbox;
+    private VBox vboxIcons;
     @FXML
-    private ScrollPane scrollPane;
+    private ScrollPane scrollPaneIcons;
     private Util util = new Util();
     private Model model;
     private Report currentReport;
@@ -53,13 +53,13 @@ public class DrawSketchController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = new Model();
-        draggableMaker.setStartVal(scrollPane.getPrefWidth());
+        draggableMaker.setStartVal(scrollPaneIcons.getPrefWidth());
         getAllIcons();
         testButtons();
     }
 
     private void getAllIcons() {
-        vbox.getChildren().clear();
+        vboxIcons.getChildren().clear();
         try {
             imageIcons = model.getAllDrawingIcons();
         } catch (SQLException e) {
@@ -72,17 +72,35 @@ public class DrawSketchController implements Initializable {
     private void testButtons() {
         getAllIcons();
         for (DrawingIcon drawingIcon: imageIcons) {
-            Label lbl = new Label();
+            Label lblIcon = new Label();
+            Label lblIconName = new Label(drawingIcon.getImageComment());
+            lblIconName.getStyleClass().add("infoLabel");
+            lblIconName.setStyle("-fx-alignment: center");
             // Creating a graphic (image) on the label
             Image img = drawingIcon.getImage();
             ImageView view = new ImageView(img);
             view.setFitHeight(80);
             view.setPreserveRatio(true);
-            lbl.setGraphic(view);
-            lbl.setPrefSize(80,80);
-            lbl.setOnMouseClicked(event -> spawnNewlbl(lbl, img));
-            vbox.getChildren().add(lbl);
+            lblIcon.setGraphic(view);
+            lblIcon.setPrefSize(80,80);
+            lblIconName.setPrefWidth(80);
+            lblIcon.setOnMouseClicked(event -> spawnNewlbl(lblIcon, img));
+            lblIconName.setOnMouseClicked(event -> SpawnLabelName(lblIconName));
+            vboxIcons.getChildren().add(lblIcon);
+            vboxIcons.getChildren().add(lblIconName);
         }
+    }
+
+    private void SpawnLabelName(Label lbl) {
+        Label newLabel = new Label();
+        newLabel.setPrefSize(lbl.getWidth(), lbl.getHeight());
+        newLabel.setText(lbl.getText());
+        newLabel.getStyleClass().add("infoLabel");
+
+        newLabel.setLayoutX(100);
+        newLabel.setLayoutY(100);
+        draggableMaker.makeDraggable(newLabel);
+        drawingPane.getChildren().add(newLabel);
     }
 
     private void spawnNewlbl(Label lbl, Image graphic) {
@@ -108,8 +126,6 @@ public class DrawSketchController implements Initializable {
             saveImgController.setImgView(snapshot);
             saveImgController.setCurrentReport(currentReport);
             saveImgController.setNextPosition(nextPosition);
-            //TODO
-            //saveImgController.setDrawingIcon();
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/GUI/View/SaveImg.fxml"));

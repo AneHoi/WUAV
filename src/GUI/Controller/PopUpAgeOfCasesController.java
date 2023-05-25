@@ -127,6 +127,8 @@ public class PopUpAgeOfCasesController implements Initializable {
             expandKeepingTime(casen, 365);
         } else if (option.get() == fourYear) {
             expandKeepingTime(casen, 1460);
+        } else {
+
         }
         updateTableView();
         disable(true);
