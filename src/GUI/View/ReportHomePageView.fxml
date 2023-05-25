@@ -22,19 +22,6 @@
                   <Insets bottom="25.0" right="25.0" top="25.0" />
                </BorderPane.margin>
                <children>
-                  <HBox alignment="CENTER" spacing="10.0">
-                     <children>
-                        <Label styleClass="infoLabel" text="Report Status: ">
-                           <font>
-                              <Font size="21.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="lblReportStatus" style="-fx-underline: true;" styleClass="infoLabel" text="Label" underline="true">
-                           <font>
-                              <Font size="21.0" />
-                           </font></Label>
-                     </children>
-                  </HBox>
                   <HBox>
                      <children>
                         <ImageView fx:id="imgBack" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
@@ -46,26 +33,47 @@
          <center>
                 <FlowPane BorderPane.alignment="CENTER">
                     <children>
-                        <HBox>
-                            <children>
-                                <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="80.0" styleClass="headingLabel" text="Report Name:">
-                                    <font>
-                                        <Font size="40.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets />
-                                    </HBox.margin>
-                                </Label>
-                                <Label fx:id="lblReportName" prefHeight="80.0" text="Label">
-                                    <font>
-                                        <Font size="40.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets left="25.0" />
-                            </padding>
+                  <VBox>
+                     <children>
+                              <HBox>
+                                  <children>
+                                      <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="80.0" styleClass="headingLabel" text="Report Name:">
+                                          <font>
+                                              <Font size="40.0" />
+                                          </font>
+                                          <HBox.margin>
+                                              <Insets />
+                                          </HBox.margin>
+                                      </Label>
+                                      <Label fx:id="lblReportName" prefHeight="80.0" text="Label">
+                                          <font>
+                                              <Font size="40.0" />
+                                          </font>
+                                      </Label>
+                                  </children>
+                                  <padding>
+                                      <Insets left="25.0" />
+                                  </padding>
+                              </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <Label styleClass="infoLabel" text="Report Status: ">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblReportStatus" style="-fx-underline: true;" styleClass="infoLabel" text="Label" underline="true">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="25.0" />
+                           </VBox.margin>
                         </HBox>
+                     </children>
+                  </VBox>
                     </children>
                 </FlowPane>
          </center>
