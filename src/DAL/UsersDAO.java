@@ -212,7 +212,7 @@ public class UsersDAO implements IUsersDAO {
                 }
             }
         }
-        System.out.println(user.getUserType());
+
 
         return user;
     }
