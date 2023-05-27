@@ -79,7 +79,10 @@ public class CustomerViewController implements Initializable {
                 try {
                     model.setCurrentCustomer(selectedItem);
                     controllerAssistant.loadCenter("CustomerHomePageView.fxml");
+                    Thread thread = new Thread(() -> {
                     storeUserCustomerLink(selectedItem);
+                    });
+                    thread.start();
                 } catch (IOException e) {
                     e.printStackTrace();
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Customer Home Page", ButtonType.CANCEL);

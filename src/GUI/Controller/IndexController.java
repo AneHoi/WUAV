@@ -1,11 +1,14 @@
 package GUI.Controller;
 
 import GUI.Controller.Util.ControllerAssistant;
+import GUI.Controller.Util.Util;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,6 +18,7 @@ public class IndexController implements Initializable {
     @FXML
     private BorderPane borderIndex;
     private ControllerAssistant controllerAssistant;
+    private Util util;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -24,6 +28,14 @@ public class IndexController implements Initializable {
             controllerAssistant.loadCenter("UserHomePageView.fxml");
             controllerAssistant.loadLeft("BurgerBarView.fxml");
             controllerAssistant.loadTop("TopBarView.fxml");
+            if(controllerAssistant.getLoggedInUser().getPassword() == "WUAV1234"){
+                Stage stage = new Stage();
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation((getClass().getResource("/GUI/View/ChangePasswordView.fxml")));
+                stage.setTitle("WUAV");
+                util.openNewWindow(stage,loader,"Could not open program");
+                stage.show();
+            }
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load the application: \n" + e, ButtonType.OK);
             alert.showAndWait();

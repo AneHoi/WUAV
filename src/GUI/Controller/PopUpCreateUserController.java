@@ -66,6 +66,7 @@ public class PopUpCreateUserController implements Initializable {
         String userName = txtUserNameCreate.getText();
         String userTlf = txtTelephoneCreate.getText();
         String userEmail = txtEmailCreate.getText();
+        String password = "WUAV1234";
         int userType = 0;
         switch ((String) cbUserTypeCreate.getSelectionModel().getSelectedItem()) {
             case "Admin":
@@ -82,10 +83,15 @@ public class PopUpCreateUserController implements Initializable {
         }
         try {
             model.createNewUser(fullName, userName, userTlf, userEmail, userType);
+            model.setPassword(userName, password);
         } catch (
                 SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not create User", ButtonType.CANCEL);
+            alert.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not create password", ButtonType.CANCEL);
             alert.showAndWait();
         }
         //This closes the window

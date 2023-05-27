@@ -44,8 +44,17 @@ public class PDFGenerator {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load an image, following error occurred:\n" + e, ButtonType.CANCEL);
                 alert.showAndWait();
             }
-            String para1 = "Costumer name: " + customer.getCustomerName() + "\n" + "Address: " + customer.getAddress() + "\n" + "Email: " + customer.getEmail() + "\n" + "Telefon: " + customer.getPhoneNumber() + "\n\n";
-            String para2 = "Case name: " + selectedCase.getCaseName() + "\n" + "Case ID: " + selectedCase.getCaseID() + "\n" + "Case created; " + selectedCase.getCreatedDate() + "\n" + "Technician: " + selectedCase.getAssignedTechnician() + "\n" + "ContactPerson: " + selectedCase.getContactPerson() + "\n" + "Report description: " + report.getReportDescription();
+            String para1 = "Costumer name: " + customer.getCustomerName() + "\n" +
+                    "Address: " + customer.getAddress() + "\n" + "Email: " +
+                    customer.getEmail() + "\n" + "Telefon: " + customer.getPhoneNumber() +
+                    "\n\n";
+            
+            String para2 = "Case name: " + selectedCase.getCaseName() + "\n" +
+                    "Case ID: " + selectedCase.getCaseID() + "\n" + "Case created; " +
+                    selectedCase.getCreatedDate() + "\n" + "Technician: " +
+                    selectedCase.getAssignedTechnician() + "\n" + "ContactPerson: " +
+                    selectedCase.getContactPerson() + "\n" + "Report description: " +
+                    report.getReportDescription();
 
             Paragraph paragraph1 = new Paragraph(para1);
             paragraph1.setFontSize(10);
@@ -90,7 +99,6 @@ public class PDFGenerator {
                     }
                 }
             }
-            //String para4 = "Conponent" + + "\n"
 
             document.close();
 

@@ -52,10 +52,9 @@ public class ReportDAO implements IReportDAO {
                 String reportDescription = rs.getString("Report_Description");
                 String techName = rs.getString("User_Full_Name");
                 LocalDate createdDate = rs.getDate("Report_Created_Date").toLocalDate();
-                int logID = rs.getInt("Report_Log_ID");
                 String isActive = rs.getString("Report_Is_Active");
 
-                report = new Report(reportId, reportName, reportDescription, techName, createdDate, logID, isActive);
+                report = new Report(reportId, reportName, reportDescription, techName, createdDate, isActive);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -78,10 +77,9 @@ public class ReportDAO implements IReportDAO {
                 String reportDescription = rs.getString("Report_Description");
                 String techName = rs.getString("User_Full_Name");
                 LocalDate createdDate = rs.getDate("Report_Created_Date").toLocalDate();
-                int logID = rs.getInt("Report_Log_ID");
                 String isActive = rs.getString("Report_Is_Active");
 
-                Report r = new Report(reportID, reportName, reportDescription, caseID, techName, createdDate, logID, isActive);
+                Report r = new Report(reportID, reportName, reportDescription, caseID, techName, createdDate, isActive);
                 reports.add(r);
             }
         } catch (SQLException ex) {
@@ -105,7 +103,6 @@ public class ReportDAO implements IReportDAO {
                 String reportDescription = rs.getString("Report_Description");
                 String techName = rs.getString("User_Full_Name");
                 LocalDate createdDate = rs.getDate("Report_Created_Date").toLocalDate();
-                int logID = rs.getInt("Report_Log_ID");
                 String isActive = rs.getString("Report_Is_Active");
                 int caseID = rs.getInt("Case_ID");
                 String caseName = rs.getString("Case_Name");
@@ -121,7 +118,7 @@ public class ReportDAO implements IReportDAO {
                 int cvr = rs.getInt("Customer_CVR");
                 String customerType = rs.getString("Customer_Type");
 
-                Report reportObj = new Report(reportID, reportName, reportDescription, techName, createdDate, logID, isActive);
+                Report reportObj = new Report(reportID, reportName, reportDescription, techName, createdDate, isActive);
                 Case caseObj = new Case(caseID, caseName, caseDescription, contactPerson, caseCustomerID, techName, caseCreatedDate);
                 Customer customerObj = new Customer(customerID, customerName, address, phoneNumber, email, cvr, customerType);
                 ReportCaseAndCustomer rCC = new ReportCaseAndCustomer(reportObj, caseObj, customerObj);

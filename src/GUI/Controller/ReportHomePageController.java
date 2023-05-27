@@ -104,6 +104,8 @@ public class ReportHomePageController implements Initializable {
                 BorderPane bp = new BorderPane();
                 vBoxGraphics(ld, bp);
                 VBox vbCenter = new VBox();
+                vbCenter.setStyle("-fx-border-width: 3");
+                vbCenter.setStyle("-fx-border-color: BLACK");
                 Label component = new Label("Component:");
                 Label componentName = new Label(ld.getComponent());
                 HBox hbUserPass = new HBox();
@@ -153,17 +155,15 @@ public class ReportHomePageController implements Initializable {
         vbRight.setPadding(new Insets(10));
         bp.setRight(vbRight);
         bp.setPrefWidth(700);
-        bp.setStyle("-fx-border-width: 3");
-        bp.setStyle("-fx-border-color: BLACK");
     }
 
     private void heightsAndWidthImageView(Button btnEdit, ImageView imgViewEdit, ImageView imgViewDelete) {
         imgViewEdit.setImage(util.loadImages("data/Images/Edit.png"));
         imgViewDelete.setImage(util.loadImages("data/Images/Trash Can.png"));
-        imgViewDelete.setFitHeight(40);
-        imgViewDelete.setFitWidth(40);
-        imgViewEdit.setFitWidth(40);
-        imgViewEdit.setFitHeight(40);
+        imgViewDelete.setFitHeight(20);
+        imgViewDelete.setFitWidth(20);
+        imgViewEdit.setFitWidth(20);
+        imgViewEdit.setFitHeight(20);
         btnEdit.setGraphic(imgViewEdit);
     }
 
@@ -297,9 +297,9 @@ public class ReportHomePageController implements Initializable {
         bp.setRight(vbRight);
         bp.setLeft(vbLeft);
         bp.setPrefWidth(700);
-        bp.setStyle("-fx-border-width: 3");
-        bp.setStyle("-fx-border-color: BLACK");
         VBox vbCenter = new VBox();
+        vbCenter.setStyle("-fx-border-width: 3");
+        vbCenter.setStyle("-fx-border-color: BLACK");
         ImageView imageView = new ImageView();
         imageView.setImage(textOrImage.getImage());
         Label lblText = new Label(textOrImage.getImageComment());
@@ -318,10 +318,10 @@ public class ReportHomePageController implements Initializable {
     private void setGraphicsForBorderPane(TextsAndImagesOnReport textOrImage, VBox vbLeft, Button btnUp, Button btnDown, Button btnEdit, Button btnDelete, ImageView imgViewEdit, ImageView imgViewDelete, ImageView imgUp, ImageView imgDown) {
         imgUp.setImage(util.loadImages("data/Images/Up Arrow.png"));
         imgDown.setImage(util.loadImages("data/Images/Down Arrow.png"));
-        imgUp.setFitWidth(40);
-        imgUp.setFitHeight(40);
-        imgDown.setFitWidth(40);
-        imgDown.setFitHeight(40);
+        imgUp.setFitWidth(20);
+        imgUp.setFitHeight(20);
+        imgDown.setFitWidth(20);
+        imgDown.setFitHeight(20);
         btnUp.setGraphic(imgUp);
         btnDown.setGraphic(imgDown);
         btnUp.setOnAction(event -> moveUp(textOrImage));
@@ -364,16 +364,18 @@ public class ReportHomePageController implements Initializable {
         bp.setLeft(vbLeft);
         bp.setRight(vbRight);
         bp.setPrefWidth(700);
-        bp.setStyle("-fx-border-width: 3");
-        bp.setStyle("-fx-border-color: BLACK");
         Label lblText = new Label(textOrImage.getText());
-        bp.setCenter(lblText);
+        BorderPane bpCenter = new BorderPane();
+        bpCenter.setCenter(lblText);
+        bpCenter.setStyle("-fx-border-width: 3");
+        bpCenter.setStyle("-fx-border-color: BLACK");
         VBox vbBottom = new VBox();
         Label lblCreatedBy = new Label("Added by: " + textOrImage.getAddedByTech().getFullName());
         Label lblCreatedON = new Label("Added on: " + textOrImage.getCreatedDate() + " - " + textOrImage.getCreatedTime());
         vbBottom.getChildren().addAll(lblCreatedBy, lblCreatedON);
         vbBottom.setAlignment(Pos.BOTTOM_RIGHT);
-        bp.setBottom(vbBottom);
+        bpCenter.setBottom(vbBottom);
+        bp.setCenter(bpCenter);
         vboxSectionAdding.getChildren().add(bp);
     }
 
@@ -415,7 +417,7 @@ public class ReportHomePageController implements Initializable {
 
     private void updateReportInfo() {
         lblCustomerName.setText(currentCustomer.getCustomerName());
-        lblReportName.setText(currentReport.getReportName());
+        lblReportName.setText(" "+currentReport.getReportName());
         lblCustomerAddress.setText(currentCustomer.getAddress());
         lblCustomerEmail.setText(currentCustomer.getEmail());
         lblCustomerTelephone.setText(currentCustomer.getPhoneNumber());

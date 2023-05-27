@@ -124,7 +124,10 @@ public class CustomerHomePageController implements Initializable {
                 try {
                     model.setCurrentCase(selectedItem);
                     controllerAssistant.loadCenter("CaseHomePageView.fxml");
-                    storeUserCaseLink(selectedItem);
+                    Thread thread = new Thread(() -> {
+                        storeUserCaseLink(selectedItem);
+                    });
+                    thread.start();
                 } catch (IOException e) {
                     e.printStackTrace();
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Case Home Page", ButtonType.CANCEL);

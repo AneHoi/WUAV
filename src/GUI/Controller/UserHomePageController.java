@@ -38,6 +38,7 @@ public class UserHomePageController implements Initializable {
         util.addShadow();
         updateTableViews();
         addListeners();
+        lblWelcomeUser.setText("Welcome " + controllerAssistant.getLoggedInUser().getFullName());
     }
 
     private void addListeners() {
