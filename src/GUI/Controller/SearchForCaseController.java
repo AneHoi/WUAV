@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -79,8 +80,9 @@ public class SearchForCaseController implements Initializable {
         FXMLLoader loader = new FXMLLoader();
         loader.setController(popUpAgeOfCasesController);
         loader.setLocation(getClass().getResource("/GUI/View/PopUpAgeOfCases.fxml"));
-        stage.setTitle("age of cases");
-        util.openNewWindow(stage, loader, "Could not open age of cases Window");
+        stage.setTitle("Cases about to expire");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        util.openNewWindow(stage, loader, "Could not open cases about to expire Window");
     }
 
     private void updateTableView() {
