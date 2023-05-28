@@ -2,16 +2,21 @@
 
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane fx:id="borderPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.DrawSketchController">
    <center>
-      <AnchorPane fx:id="drawingPane" style="-fx-border-color: rgba(23,38,58,1); -fx-border-width: 10;" BorderPane.alignment="CENTER" />
+      <StackPane fx:id="stackPane">
+         <AnchorPane fx:id="iconPane" />
+         <Canvas fx:id="canvasForCables" height="520.0" width="540.0" />
+      </StackPane>
    </center>
    <left>
       <ScrollPane fx:id="scrollPaneIcons" prefWidth="125.0" BorderPane.alignment="CENTER">

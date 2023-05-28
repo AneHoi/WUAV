@@ -21,15 +21,14 @@ public class ReportDAO implements IReportDAO {
     public void createNewReport(String reportName, String reportDescription, int caseID, int userID) throws SQLException {
         LocalDate date = LocalDate.now();
         try (Connection conn = db.getConnection()) {
-            String sql = "INSERT INTO Report(Report_Name, Report_Description, Report_Assigned_Tech_ID, Report_Case_ID, Report_Created_Date, Report_Log_ID, Report_Is_Active) VALUES(?,?,?,?,?,?,?);";
+            String sql = "INSERT INTO Report(Report_Name, Report_Description, Report_Assigned_Tech_ID, Report_Case_ID, Report_Created_Date, Report_Is_Active) VALUES(?,?,?,?,?,?);";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, reportName);
             ps.setString(2, reportDescription);
             ps.setInt(3, userID);
             ps.setInt(4, caseID);
             ps.setDate(5, Date.valueOf(date));
-            ps.setInt(6, 1);
-            ps.setString(7, "Open");
+            ps.setString(6, "Open");
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
