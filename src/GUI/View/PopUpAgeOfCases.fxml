@@ -30,9 +30,9 @@
                     <children>
                         <HBox minWidth="300.0">
                             <children>
-                                <Label fx:id="lblInfo1" styleClass="infoLabel" text="This case is" />
+                                <Label fx:id="lblInfo1" styleClass="infoLabel" text="This case is " />
                                 <Label fx:id="lblMonthsOld" styleClass="infoLabel" text="months" />
-                                <Label fx:id="lblInfo2" styleClass="infoLabel" text="months old" />
+                                <Label fx:id="lblInfo2" styleClass="infoLabel" text=" months old" />
                             </children>
                         </HBox>
                         <Button fx:id="btnKeepCase" mnemonicParsing="false" onAction="#keepCaseLonger" text="Keep case" />
@@ -61,7 +61,7 @@
                 <TextArea editable="false" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: transparent;" styleClass="underHeadingLabel" text="Here are the old cases, where you can chose to keep them for longer or delete them from the system completely" wrapText="true" />
             </children>
         </VBox>
-        <Label styleClass="headingLabel" text="Old cases that can be deleted" BorderPane.alignment="CENTER">
+        <Label styleClass="headingLabel" text="Cases about to expire" BorderPane.alignment="CENTER">
             <font>
                 <Font size="36.0" />
             </font>
