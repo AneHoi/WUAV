@@ -589,8 +589,6 @@ public class ReportHomePageController implements Initializable {
                 model.closeCase(currentCase);
                 disableEditing();
                 btnSubmitReportForReview.setText("Generate PDF");
-                Alert success = new Alert(Alert.AlertType.INFORMATION, "Report is now closed", ButtonType.OK);
-                success.showAndWait();
                 currentReport.setIsActive("Closed");
                 lblReportStatus.setText(currentReport.getIsActive());
                 checkForReportStatus();
@@ -614,8 +612,6 @@ public class ReportHomePageController implements Initializable {
             try {
                 model.submitReportForReview(currentReport.getReportID());
                 disableEditing();
-                Alert success = new Alert(Alert.AlertType.INFORMATION, "Report submitted successfully", ButtonType.OK);
-                success.showAndWait();
                 currentReport.setIsActive("Submitted For Review");
                 lblReportStatus.setText(currentReport.getIsActive());
                 checkForReportStatus();

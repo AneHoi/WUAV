@@ -2,6 +2,7 @@ package GUI.Controller;
 
 import GUI.Controller.Util.ControllerAssistant;
 import GUI.Controller.Util.Util;
+import GUI.Model.Model;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,6 +20,7 @@ public class IndexController implements Initializable {
     private BorderPane borderIndex;
     private ControllerAssistant controllerAssistant;
     private Util util;
+    private Model model;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -28,7 +30,8 @@ public class IndexController implements Initializable {
             controllerAssistant.loadCenter("UserHomePageView.fxml");
             controllerAssistant.loadLeft("BurgerBarView.fxml");
             controllerAssistant.loadTop("TopBarView.fxml");
-            if(controllerAssistant.getLoggedInUser().getPassword() == "WUAV1234"){
+            System.out.println(controllerAssistant.getLoggedInUser().getPassword());
+            if(controllerAssistant.getLoggedInUser().getPassword() == model.checkPassword(controllerAssistant.getLoggedInUser().getUserName(), controllerAssistant.getLoggedInUser().getPassword())){
                 Stage stage = new Stage();
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation((getClass().getResource("/GUI/View/ChangePasswordView.fxml")));
@@ -38,6 +41,9 @@ public class IndexController implements Initializable {
             }
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load the application: \n" + e, ButtonType.OK);
+            alert.showAndWait();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get password", ButtonType.CLOSE);
             alert.showAndWait();
         }
 

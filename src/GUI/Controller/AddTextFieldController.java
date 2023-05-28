@@ -63,8 +63,6 @@ public class AddTextFieldController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not save text in the Database", ButtonType.CANCEL);
             alert.showAndWait();
         }
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Created case successfully", ButtonType.OK);
-        alert.showAndWait();
         Stage stage = (Stage) btnSave.getScene().getWindow();
         stage.close();
     }
@@ -82,8 +80,6 @@ public class AddTextFieldController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not update text in the Database", ButtonType.CANCEL);
             alert.showAndWait();
         }
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Created case successfully", ButtonType.OK);
-        alert.showAndWait();
         Stage stage = (Stage) btnSave.getScene().getWindow();
         stage.close();
     }

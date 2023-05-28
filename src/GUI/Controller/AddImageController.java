@@ -112,8 +112,6 @@ public class AddImageController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not save image in the Database", ButtonType.CANCEL);
             alert.showAndWait();
         }
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Image added successfully", ButtonType.OK);
-        alert.showAndWait();
         Stage stage = (Stage) btnSave.getScene().getWindow();
         stage.close();
     }
@@ -132,8 +130,6 @@ public class AddImageController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not update image and comment in the Database", ButtonType.CANCEL);
             alert.showAndWait();
         }
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Image updated successfully", ButtonType.OK);
-        alert.showAndWait();
         Stage stage = (Stage) btnSave.getScene().getWindow();
         stage.close();
     }

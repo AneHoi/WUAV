@@ -96,8 +96,6 @@ public class PopUpCreateNewReportController implements Initializable {
         int caseID = currentCase.getCaseID();
         try {
             model.createNewReport(reportName, reportDescription, caseID, controllerAssistant.getLoggedInUser().getUserID());
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Report successfully created", ButtonType.OK);
-//            alert.showAndWait();
             Stage stage = (Stage) btnCreateNewReport.getScene().getWindow();
             stage.close();
         } catch (SQLException e) {
@@ -113,8 +111,6 @@ public class PopUpCreateNewReportController implements Initializable {
         String reportDescription = txtReportDescription.getText();
         try {
             model.updateReport(reportID, reportName, reportDescription, controllerAssistant.getLoggedInUser().getUserID());
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Report updated successfully", ButtonType.OK);
-//            alert.showAndWait();
             Stage stage = (Stage) btnCreateNewReport.getScene().getWindow();
             stage.close();
         } catch (SQLException e) {
