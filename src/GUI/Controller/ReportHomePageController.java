@@ -250,6 +250,18 @@ public class ReportHomePageController implements Initializable {
         return reportData;
     }
 
+    private List<LoginDetails> loginDetailsList(){
+        List<LoginDetails> loginDetails = null;
+        try{
+            loginDetails = new ArrayList<>();
+            loginDetails = model.getLoginDetails(currentReport.getReportID());
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get login details", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
+        return loginDetails;
+    }
+
     private void updateImagesTextsAndSketches() {
         vboxSectionAdding.getChildren().clear();
         nextPosition = 0;
@@ -540,7 +552,7 @@ public class ReportHomePageController implements Initializable {
     private void generatePDF(String path) throws FileNotFoundException {
         PDFGenerator pdfGenerator = new PDFGenerator();
 
-        pdfGenerator.generateReport(currentReport, currentCase, currentCustomer, textsAndImagesOnReportList(), path);
+        pdfGenerator.generateReport(currentReport, currentCase, currentCustomer, textsAndImagesOnReportList(), loginDetailsList(), path);
         File file = new File(path +"\\"+ currentReport.getReportName()+".pdf");
         try {
             Desktop.getDesktop().open(file);

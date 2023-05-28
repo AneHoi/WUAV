@@ -1,9 +1,6 @@
 package BLL.util;
 
-import BE.Case;
-import BE.Customer;
-import BE.Report;
-import BE.TextsAndImagesOnReport;
+import BE.*;
 import com.itextpdf.io.font.constants.StandardFontFamilies;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
@@ -23,7 +20,7 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 public class PDFGenerator {
-    public void generateReport(Report report, Case selectedCase, Customer customer, List<TextsAndImagesOnReport> textsAndImagesOnReportList, String path) throws FileNotFoundException {
+    public void generateReport(Report report, Case selectedCase, Customer customer, List<TextsAndImagesOnReport> textsAndImagesOnReportList, List<LoginDetails> loginDetails, String path) throws FileNotFoundException {
         try {
             PdfFont font = PdfFontFactory.createFont(StandardFontFamilies.COURIER);
             String destination = path + "\\" + report.getReportName() + ".pdf";
@@ -48,7 +45,7 @@ public class PDFGenerator {
                     "Address: " + customer.getAddress() + "\n" + "Email: " +
                     customer.getEmail() + "\n" + "Telefon: " + customer.getPhoneNumber() +
                     "\n\n";
-            
+
             String para2 = "Case name: " + selectedCase.getCaseName() + "\n" +
                     "Case ID: " + selectedCase.getCaseID() + "\n" + "Case created; " +
                     selectedCase.getCreatedDate() + "\n" + "Technician: " +
@@ -99,7 +96,19 @@ public class PDFGenerator {
                     }
                 }
             }
+            if(loginDetails != null) {
 
+                for (LoginDetails loginDetail : loginDetails) {
+                    String component = loginDetail.getComponent();
+                    String username = loginDetail.getUsername();
+                    String password = loginDetail.getPassword();
+                    String additionalInfo = loginDetail.getAdditionalInfo();
+                    Paragraph paragraphLogInDetails = new Paragraph("Component: " + component + "\n" + "Username: " + username + "\n" + "Password: " + password + "\n" + "Additional information: " + additionalInfo);
+                    paragraphLogInDetails.setFontSize(12);
+                    paragraphLogInDetails.setFont(font);
+                    document.add(paragraphLogInDetails);
+                }
+            }
             document.close();
 
         } catch (FileNotFoundException e) {
