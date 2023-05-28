@@ -34,6 +34,8 @@ public class LoginController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         SetImg();
         util.addShadow(pswPassword, txtUsername, btnLogin, imgWUAVLogo);
+        txtUsername.setText("Test");
+        pswPassword.setText("WUAV1234");
     }
 
 
@@ -85,11 +87,6 @@ public class LoginController implements Initializable {
 
             pswPassword.clear();
             txtUsername.clear();
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setHeaderText("Successfully logged in to " + user.getUserName());
-            alert.showAndWait();
 
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
