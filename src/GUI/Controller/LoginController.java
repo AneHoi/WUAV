@@ -34,8 +34,6 @@ public class LoginController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         SetImg();
         util.addShadow(pswPassword, txtUsername, btnLogin, imgWUAVLogo);
-        txtUsername.setText("Test");
-        pswPassword.setText("WUAV1234");
     }
 
 
