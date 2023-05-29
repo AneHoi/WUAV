@@ -52,7 +52,6 @@ public class IndexController implements Initializable {
         loginStage.setOnCloseRequest(event -> System.exit(0));
         loginStage.showAndWait();
 
-
         if (loginController != null) {
             if (loginController.isLoginIsSuccessful()) {
                 try {

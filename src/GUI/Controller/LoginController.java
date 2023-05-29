@@ -35,8 +35,8 @@ public class LoginController implements Initializable {
     private Model model;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        controllerAssistant = ControllerAssistant.getInstance();
         model = Model.getInstance();
+        controllerAssistant = ControllerAssistant.getInstance();
         SetImg();
         util.addShadow(pswPassword, txtUsername, btnLogin, imgWUAVLogo);
     }
@@ -85,12 +85,8 @@ public class LoginController implements Initializable {
                 displayAlert("Invalid username or password");
                 return;
             }
-            loginIsSuccessful = true;
             controllerAssistant.setLoggedInUser(user);
-
-            Stage stage = (Stage) btnLogin.getScene().getWindow();
-            stage.close();
-
+            
             if(model.checkPassword(controllerAssistant.getLoggedInUser().getPassword(), "WUAV1234")){
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/View/ChangePasswordView.fxml"));
                 Parent root = loader.load();
@@ -102,6 +98,13 @@ public class LoginController implements Initializable {
                 stage1.initModality(Modality.APPLICATION_MODAL);
                 stage1.showAndWait();
             }
+            loginIsSuccessful = true;
+
+
+            Stage stage = (Stage) btnLogin.getScene().getWindow();
+            stage.close();
+
+
         } catch (Exception e) {
             e.printStackTrace();
             displayAlert("Failed to log in");
