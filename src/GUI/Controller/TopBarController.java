@@ -65,7 +65,7 @@ public class TopBarController implements Initializable {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/GUI/View/LoginView.fxml"));
             controllerAssistant.setLoggedInUser(null);
-            thisWindow.close();
+            thisWindow.hide();
             util.openNewWindow(stage, loader, "Could not open new Login Window");
 
         }
