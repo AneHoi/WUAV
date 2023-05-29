@@ -212,3 +212,12 @@ CREATE TABLE User_Customer_Link(
     REFERENCES Customer(Customer_ID),
 )
 GO
+
+CREATE TABLE CableAndColor(
+    Cable_ID                        INT IDENTITY(1,1)                        NOT NULL,
+    Cable_Name                      NVARCHAR(30)                            NOT NULL,
+    Color_Name                      NVARCHAR(30)                            NOT NULL,
+
+    CONSTRAINT PK_CABLE_ID PRIMARY KEY(Cable_ID),
+)
+GO
