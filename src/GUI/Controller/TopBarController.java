@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 
 public class TopBarController implements Initializable {
 
-    public Rectangle rectangle;
+    private Rectangle rectangle;
     @FXML
     private HBox hboxTop;
     @FXML

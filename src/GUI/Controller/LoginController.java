@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 public class LoginController implements Initializable {
 
 
-    public boolean loginIsSuccessful = false;
+    private boolean loginIsSuccessful = false;
     @FXML private Button btnLogin;
     @FXML private PasswordField pswPassword;
     @FXML private TextField txtUsername;
