@@ -84,8 +84,6 @@ public class ManageTechniciansController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not assign Technicians to Case", ButtonType.OK);
             alert.showAndWait();
         }
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Updated case successfully", ButtonType.OK);
-        alert.showAndWait();
         Stage stage = (Stage) btnConfirmChoices.getScene().getWindow();
         stage.close();
     }

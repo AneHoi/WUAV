@@ -60,7 +60,7 @@
 .text-field{
     -fx-background-color: rgba(51,51,51,1);
     -fx-text-fill: WHITE;
-    -fx-font-size: 24;
+    -fx-font-size: 22;
     -fx-alignment: CENTER;
     -fx-pref-width: 250;
     -fx-pref-height: 50;
