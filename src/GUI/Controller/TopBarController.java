@@ -84,10 +84,15 @@ public class TopBarController implements Initializable {
         }
         rectangle.setFill(new ImagePattern(profilePicture));
 
-        String firstName = user.getFullName().substring(0, user.getFullName().indexOf(" "));
-        String lastName = user.getFullName().substring(user.getFullName().indexOf(" "));
-        lblFirstName.setText(firstName);
-        lblLastName.setText(lastName);
+        if(user.getFullName().contains(" ")) {
+            String firstName = user.getFullName().substring(0, user.getFullName().indexOf(" "));
+            String lastName = user.getFullName().substring(user.getFullName().indexOf(" "));
+            lblFirstName.setText(firstName);
+            lblLastName.setText(lastName);
+        } else {
+            lblFirstName.setText(user.getFullName());
+            lblLastName.setVisible(false);
+        }
         lblLogOut.setText("Log Out");
     }
 
