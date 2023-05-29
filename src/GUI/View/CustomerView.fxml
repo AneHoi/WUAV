@@ -88,7 +88,7 @@
             </TableView>
             <HBox fx:id="hBoxButtonBar" spacing="30.0">
                <children>
-                  <Button fx:id="btnCreateCustomer" mnemonicParsing="false" onAction="#openNewCustomerPopUp" prefHeight="35.0" prefWidth="200.0" text="Create New Customer" textFill="WHITE" underline="true">
+                  <Button fx:id="btnCreateCustomer" mnemonicParsing="false" onAction="#handleCreateCustomer" prefHeight="35.0" prefWidth="200.0" text="Create New Customer" textFill="WHITE" underline="true">
                      <font>
                         <Font size="18.0" />
                      </font>

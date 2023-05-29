@@ -4,6 +4,7 @@ import BE.User;
 import GUI.Controller.Util.ControllerAssistant;
 import GUI.Controller.Util.Util;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -13,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -41,11 +43,29 @@ public class TopBarController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        lblLogOut.setOnMouseClicked(event -> handleLogOut());
         controllerAssistant = ControllerAssistant.getInstance();
         loggedInUser = controllerAssistant.getLoggedInUser();
         loadUserInfo();
         lblLogOut.getStyleClass().add("burgerFont");
 
+    }
+
+    private void handleLogOut() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Are you sure you wish to log out?", ButtonType.YES,ButtonType.NO);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.YES) {
+            LoginController loginController2 = new LoginController();
+            Stage thisWindow = (Stage) lblLogOut.getScene().getWindow();
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setController(loginController2);
+            loader.setLocation(getClass().getResource("/GUI/View/LoginView.fxml"));
+            util.openNewWindow(stage, loader, "Could not open new Login Window");
+            thisWindow.close();
+
+
+        }
     }
 
     private void loadUserInfo() {

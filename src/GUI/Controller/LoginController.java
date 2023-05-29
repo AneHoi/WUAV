@@ -21,6 +21,8 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
+
+    public boolean loginIsSuccessful = false;
     @FXML private Button btnLogin;
     @FXML private PasswordField pswPassword;
     @FXML private TextField txtUsername;
@@ -80,19 +82,13 @@ public class LoginController implements Initializable {
                 displayAlert("Invalid username or password");
                 return;
             }
-
+            loginIsSuccessful = true;
             controllerAssistant.setLoggedInUser(user);
 
             pswPassword.clear();
             txtUsername.clear();
-
-            Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation((getClass().getResource("/GUI/View/Index.fxml")));
-            stage.setTitle("WUAV");
-            util.openNewWindow(stage,loader,"Could not open program");
-            stage.setResizable(true);
-            stage.show();
+            Stage stage = (Stage) btnLogin.getScene().getWindow();
+            stage.close();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,4 +96,10 @@ public class LoginController implements Initializable {
         }
 
     }
+
+    public boolean isLoginIsSuccessful() {
+        return loginIsSuccessful;
+    }
+
+
 }
