@@ -115,8 +115,10 @@ public class DrawSketchController implements Initializable {
     private void getAllIconsAndCables() {
         try {
             vboxIcons.getChildren().clear();
+            imageIcons.clear();
             imageIcons = model.getAllDrawingIcons();
             vboxCables.getChildren().clear();
+            cableAndColors.clear();
             cableAndColors = model.getAllCables();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -272,6 +274,8 @@ public class DrawSketchController implements Initializable {
         loader.setLocation(getClass().getResource("/GUI/View/AddIconView.fxml"));
         loader.setController(addIconController);
         util.openNewWindow(stage, loader, "Could not open Add Image Window");
+        getAllIconsAndCables();
+        createAllCables();
         addAllIconsAndNames();
     }
 

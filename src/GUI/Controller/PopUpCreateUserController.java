@@ -11,18 +11,30 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class PopUpCreateUserController implements Initializable {
     @FXML
-    private Button btnCreateNewUser;
+    private Button btnCreateNewUser, btnChooseImage;
     @FXML
     private ComboBox cbUserTypeCreate;
     @FXML
     private TextField txtFullNameCreate, txtUserNameCreate, txtTelephoneCreate, txtEmailCreate;
+
+    @FXML
+    private ImageView imgViewChooseImage;
+
+    private byte[] dataImage;
 
     private ObservableList<String> userTypes;
     private Model model;
@@ -67,6 +79,7 @@ public class PopUpCreateUserController implements Initializable {
         String userTlf = txtTelephoneCreate.getText();
         String userEmail = txtEmailCreate.getText();
         String password = "WUAV1234";
+        byte[] profilePicture = dataImage;
         int userType = 0;
         switch ((String) cbUserTypeCreate.getSelectionModel().getSelectedItem()) {
             case "Admin":
@@ -82,7 +95,12 @@ public class PopUpCreateUserController implements Initializable {
                 userType = 4;
         }
         try {
-            model.createNewUser(fullName, userName, userTlf, userEmail, userType);
+            if (profilePicture != null) {
+                model.createNewUserWithImage(fullName, userName, userTlf, userEmail, userType, profilePicture);
+            } else {
+                model.createNewUser(fullName, userName, userTlf, userEmail, userType);
+            }
+
             model.setPassword(userName, password);
         } catch (
                 SQLException e) {
@@ -95,6 +113,27 @@ public class PopUpCreateUserController implements Initializable {
             alert.showAndWait();
         }
         //This closes the window
-        ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+        ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
+    }
+
+    public void handleChooseImage(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Image");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+        Stage stage = (Stage) btnChooseImage.getScene().getWindow();
+        File selectedFile = fileChooser.showOpenDialog(stage);
+        if (selectedFile != null && selectedFile.getName().endsWith(".png") || selectedFile != null && selectedFile.getName().endsWith(".jpg") || selectedFile != null && selectedFile.getName().endsWith(".gif")) {
+            Image image = new Image(selectedFile.toURI().toString());
+            imgViewChooseImage.setImage(image);
+            btnChooseImage.setText("Change Image");
+        }
+        try {
+            if (selectedFile != null) {
+                dataImage = Files.readAllBytes(selectedFile.getAbsoluteFile().toPath());
+            }
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load image", ButtonType.OK);
+            alert.showAndWait();
+        }
     }
 }
