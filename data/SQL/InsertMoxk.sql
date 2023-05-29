@@ -25,6 +25,16 @@ INSERT INTO Report VALUES('Meeting Room Setup', 'Meeting Room needs....', (SELEC
 GO
 INSERT INTO Report VALUES('Meeting Room Setup', 'Meeting Room needs....', (SELECT DISTINCT User_ID FROM User_ WHERE [User_Name] = 'Tech1'), (SELECT DISTINCT Case_ID FROM Case_ WHERE Case_Name = 'Conference room set up'), convert(date, '2023-9-18'), 'Closed')
 GO
+INSERT INTO CableAndColor Values('HDMI', 'Blue')
+GO
+INSERT INTO CableAndColor Values('Ethernet', 'Brown')
+GO
+INSERT INTO CableAndColor Values('Power', 'Silver')
+GO
+INSERT INTO CableAndColor Values('Antenna', 'Yellow')
+GO
+INSERT INTO CableAndColor Values('Sound', 'Lavender')
+GO
 
 INSERT INTO Technicians_Assigned_To_Case VALUES(2,1)
 
@@ -37,6 +47,8 @@ GO
 SELECT * FROM Report;
 GO
 
+SELECT * FROM CableAndColor;
 GO
+
 USE master;
 GO
