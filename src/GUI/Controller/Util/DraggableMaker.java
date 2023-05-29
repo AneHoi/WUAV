@@ -5,6 +5,7 @@ import javafx.scene.Node;
 public class DraggableMaker {
     private double mouseX, mouseY, startVal;
 
+
     public void makeDraggable(Node... node) {
         for (Node nodes : node) {
             nodes.setOnMousePressed(mouseEvent -> {

@@ -41,6 +41,9 @@ public class AddTextFieldController implements Initializable {
         controllerAssistant = ControllerAssistant.getInstance();
     }
 
+    /**
+     * Checks the text of the button to see whether to update old text, or save new text
+     */
     public void handleSave() {
         if (btnSave.getText().equals("Save Changes")) {
             saveChanges();
@@ -49,6 +52,9 @@ public class AddTextFieldController implements Initializable {
         }
     }
 
+    /**
+     * Saves new text to the database
+     */
     private void saveText() {
         int position = nextPosition;
         int reportID = currentReport.getReportID();
@@ -70,6 +76,9 @@ public class AddTextFieldController implements Initializable {
         stage.close();
     }
 
+    /**
+     * Updates the old text to users input
+     */
     private void saveChanges() {
         int textID = textOrImage.getTextOrImageID();
         String txt = txtAddText.getText();
@@ -90,14 +99,26 @@ public class AddTextFieldController implements Initializable {
         stage.close();
     }
 
+    /**
+     * Sets the current report the user is working with
+     * @param currentReport
+     */
     public void setCurrentReport(Report currentReport) {
         this.currentReport = currentReport;
     }
 
+    /**
+     * Sets the position the text is saved to, to the next available position in the report
+     * @param nextPosition
+     */
     public void setNextAvailablePosition(int nextPosition) {
         this.nextPosition = nextPosition;
     }
 
+    /**
+     * If the edit button was pressedd the textOrImage is passed along to be edited.
+     * @param textOrImage
+     */
     public void setCurrentText(TextsAndImagesOnReport textOrImage) {
         this.textOrImage = textOrImage;
     }

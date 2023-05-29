@@ -58,11 +58,18 @@ public class AddImageController implements Initializable {
 
     }
 
+    /**
+     * Sets the current report the user wishes to work with
+     * @param currentReport
+     */
     public void setCurrentReport(Report currentReport) {
         this.currentReport = currentReport;
     }
 
 
+    /**
+     * Opens a file chooser for the user to choose an image to add to the report
+     */
     public void handleChooseImage() {
         vBox.getChildren().remove(imgView);
         vBox.getChildren().remove(lblImage);
@@ -93,6 +100,9 @@ public class AddImageController implements Initializable {
         }
     }
 
+    /**
+     * Check whether to save a new image or edit an existing one
+     */
     public void handleSave() {
         if (textOrImage != null) {
             editImage();
@@ -100,6 +110,9 @@ public class AddImageController implements Initializable {
 
     }
 
+    /**
+     * Save a new image to the report
+     */
     private void addImage() {
         int position = nextPosition;
         int reportID = currentReport.getReportID();
@@ -122,6 +135,9 @@ public class AddImageController implements Initializable {
         stage.close();
     }
 
+    /**
+     * Edits an existing image in the report
+     */
     private void editImage() {
         int imageID = textOrImage.getTextOrImageID();
         String comment = txtAddComment.getText();
@@ -143,10 +159,18 @@ public class AddImageController implements Initializable {
         stage.close();
     }
 
+    /**
+     * Sets the position the image is saved to, to the next available position in the report
+     * @param nextPosition
+     */
     public void setNextAvailablePosition(int nextPosition) {
         this.nextPosition = nextPosition;
     }
 
+    /**
+     * If the edit button was pressed, this textOrImage is passed along to be edited.
+     * @param textOrImage
+     */
     public void setCurrentImage(TextsAndImagesOnReport textOrImage) {
         this.textOrImage = textOrImage;
     }

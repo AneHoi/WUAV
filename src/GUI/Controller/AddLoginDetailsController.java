@@ -54,6 +54,9 @@ public class AddLoginDetailsController implements Initializable {
         setupListeners();
     }
 
+    /**
+     * If the edit button was clicked, the textfields are populated with the original text of the loginDetails to be changed.
+     */
     private void updateTextFields() {
         txtComponent.setText(currentLoginDetails.getComponent());
         txtUsername.setText(currentLoginDetails.getUsername());
@@ -61,6 +64,9 @@ public class AddLoginDetailsController implements Initializable {
         txtAdditionalInfo.setText(currentLoginDetails.getAdditionalInfo());
     }
 
+    /**
+     * Sets up listeners for the component, username, password and the checkbox.
+     */
     private void setupListeners() {
         txtComponent.textProperty().addListener((observable, oldValue, newValue) -> {
             updateFieldsState();
@@ -81,6 +87,9 @@ public class AddLoginDetailsController implements Initializable {
         });
     }
 
+    /**
+     * If the checkbox is ticked, disable all textfields
+     */
     private void updateFieldsState() {
         boolean isNoLoginSelected = checkBoxNoLogin.isSelected();
         txtComponent.setDisable(isNoLoginSelected);
@@ -96,6 +105,9 @@ public class AddLoginDetailsController implements Initializable {
         }
     }
 
+    /**
+     * Update the save button to be either disabled or enabled depending on the listeners
+     */
     private void updateSaveButtonState() {
         boolean isNoLoginSelected = checkBoxNoLogin.isSelected();
         boolean hasUsername = !txtUsername.getText().isEmpty();
@@ -108,20 +120,26 @@ public class AddLoginDetailsController implements Initializable {
         }
     }
 
+    /**
+     * Save the login details
+     */
     public void handleSaveLoginDetails() {
         if(checkBoxNoLogin.isSelected() && currentLoginDetails != null) {
-            updateWithNoLogin();
+            updateWithNoLogin(); // Check Box is selected, and old details exist, update to NO login details
         } else if (!checkBoxNoLogin.isSelected() && currentLoginDetails != null) {
-            updateLoginDetails();
+            updateLoginDetails(); //Check box is not selected, and old details exist, update to NEW login details
         } else if (checkBoxNoLogin.isSelected() && currentLoginDetails == null) {
-            noLogin();
+            noLogin(); //Check box is selected, and old details do not exist, save as NO login details
         } else if (!checkBoxNoLogin.isSelected() && currentLoginDetails == null) {
-            saveLoginDetails();
+            saveLoginDetails(); //Check box is not selected and no old details exist, save NEW login details
         }
         Stage stage = (Stage) btnSaveLoginDetails.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Save new login details
+     */
     private void saveLoginDetails() {
         int reportID = currentReport.getReportID();
         String component = txtComponent.getText();
@@ -144,6 +162,9 @@ public class AddLoginDetailsController implements Initializable {
 
     }
 
+    /**
+     * Update old login details
+     */
     private void updateLoginDetails() {
         int loginDetailsID = currentLoginDetails.getLoginDetailsID();
         String component = txtComponent.getText();
@@ -166,6 +187,9 @@ public class AddLoginDetailsController implements Initializable {
 
     }
 
+    /**
+     * Update from old login details to no login details
+     */
     private void updateWithNoLogin() {
         LocalDate createdDate = LocalDate.now();
         LocalTime createdTime = LocalTime.now();
@@ -182,7 +206,9 @@ public class AddLoginDetailsController implements Initializable {
         }
     }
 
-
+    /**
+     * Save as no login details
+     */
     private void noLogin() {
         LocalDate createdDate = LocalDate.now();
         LocalTime createdTime = LocalTime.now();
@@ -199,10 +225,18 @@ public class AddLoginDetailsController implements Initializable {
         }
     }
 
+    /**
+     * Sets the current report the user is working with
+     * @param currentReport
+     */
     public void setCurrentReport(Report currentReport) {
         this.currentReport = currentReport;
     }
 
+    /**
+     * Sets the current Login Details to be edited
+     * @param ld
+     */
     public void setCurrentLoginDetails(LoginDetails ld) {
         this.currentLoginDetails = ld;
     }

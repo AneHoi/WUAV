@@ -25,6 +25,12 @@ public class Util {
     private final DropShadow shadow = new DropShadow(0, 4, 4, Color.color(0, 0, 0, 0.25));
     private ControllerAssistant controllerAssistant = ControllerAssistant.getInstance();
 
+    /**
+     * Utility method to load a URL to an image
+     *
+     * @param url
+     * @return
+     */
     public Image loadImages(String url) {
         Image image = null;
         try {
@@ -40,17 +46,34 @@ public class Util {
         return image;
     }
 
+    /**
+     * Utility method to add shadow to buttons, textfields etc.
+     *
+     * @param node
+     */
     public void addShadow(Node... node) {
         for (Node nodes : node) {
             nodes.setEffect(shadow);
         }
     }
 
+    /**
+     * Utility method to remove the shadows from buttons, textfields etc.
+     *
+     * @param node
+     */
     public void removeShadow(Node... node) {
         for (Node nodes : node) {
             nodes.setEffect(null);
         }
     }
+
+    /**
+     * Utility tool to make sure the different roles have access to creating new users but only the ones below their own role.
+     *
+     * @param userTypes
+     * @return
+     */
     public ObservableList<String> checkLoggedInUser(ObservableList<String> userTypes) {
         String admin = "Admin";
         String projectManager = "ProjectManager";
@@ -65,6 +88,13 @@ public class Util {
         }
         return userTypes;
     }
+
+    /**
+     * Utility tool to open a new window as a popup.
+     * @param stage
+     * @param loader
+     * @param errorText
+     */
 
     public void openNewWindow(Stage stage, FXMLLoader loader, String errorText) {
         try {
@@ -83,16 +113,15 @@ public class Util {
 
     /**
      * Checks if the case is older than 4 years.
-     *
-     * @param casen is the case to be checked
+     * @param selectedCase is the case to be checked
      * @return boolean
      */
-    public boolean tooOld(Case casen) {
+    public boolean tooOld(Case selectedCase) {
         LocalDateTime dateToday = LocalDate.now().atStartOfDay();
-        if (casen.getDateClosed() != null) {
-            LocalDateTime dateClosed = casen.getDateClosed().atStartOfDay();
+        if (selectedCase.getDateClosed() != null) {
+            LocalDateTime dateClosed = selectedCase.getDateClosed().atStartOfDay();
             long daysBetween = Duration.between(dateClosed, dateToday).toDays();
-            if (daysBetween > casen.getDaysToKeep()) {
+            if (daysBetween > selectedCase.getDaysToKeep()) {
                 return true;
             }
         }

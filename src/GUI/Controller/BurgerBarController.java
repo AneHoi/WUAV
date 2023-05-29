@@ -66,6 +66,10 @@ public class BurgerBarController implements Initializable {
         lUsers.setOnMouseClicked(event -> loadUserView());
     }
 
+    /**
+     * Changes the label to orange when item is clicked.
+     * @param label
+     */
     private void changeLblStyleToOrange(Label label) {
         label.getStyleClass().remove(labelStyleWhite);
         label.getStyleClass().add(labelStyleOrange);
@@ -85,6 +89,9 @@ public class BurgerBarController implements Initializable {
         imgUsersOrange = util.loadImages(usersOrange);
     }
 
+    /**
+     * Sets the images to their white default image
+     */
     private void setImagesToWhite() {
         imgHome.setImage(imgHomeNormal);
         imgCustomers.setImage(imgCustomerNormal);
@@ -92,6 +99,10 @@ public class BurgerBarController implements Initializable {
         imgUsers.setImage(imgUsersNormal);
     }
 
+    /**
+     * Changes the label back to white
+     * @param labels
+     */
     private void changeLblStyleToWhite(Label...labels){
         for (Label label: labels){
             label.getStyleClass().remove("burgerBarMenuLabelsOrange");
@@ -99,6 +110,9 @@ public class BurgerBarController implements Initializable {
         }
     }
 
+    /**
+     * When the user Icon or label is clicked loads the center of the scene to the user window
+     */
     private void loadUserView() {
         setImagesToWhite();
         changeLblStyleToWhite(lHome, lCustomers, lCases, lUsers);
@@ -116,6 +130,9 @@ public class BurgerBarController implements Initializable {
         }
     }
 
+    /**
+     * When the customer Icon or label is  clicked loads the center of the scene to the customer window
+     */
     private void loadCustomerView() {
         setImagesToWhite();
         changeLblStyleToWhite(lHome, lCustomers, lCases, lUsers);
@@ -134,6 +151,9 @@ public class BurgerBarController implements Initializable {
         }
     }
 
+    /**
+     * When the Case Icon or label is clicked loads the center of the scene to the search for case window
+     */
     private void loadSearchForCases() {
         setImagesToWhite();
         changeLblStyleToWhite(lHome, lCustomers, lCases, lUsers);
@@ -152,6 +172,9 @@ public class BurgerBarController implements Initializable {
         }
     }
 
+    /**
+     * When the Home Icon or label is clicked loads the center of the scene to the home window
+     */
     private void loadUserHomePage() {
         setImagesToWhite();
         changeLblStyleToWhite(lHome, lCustomers, lCases, lUsers);
@@ -170,6 +193,9 @@ public class BurgerBarController implements Initializable {
         }
     }
 
+    /**
+     * Expands the menu bar to be open with labels visible
+     */
     private void expandMenuBar() {
         vboxBurgerMenu.setMinWidth(250);
         loadLabelsForIcons();
@@ -177,6 +203,9 @@ public class BurgerBarController implements Initializable {
         vboxBurgerMenu.getStyleClass().add("vboxBorderOrange");
     }
 
+    /**
+     * Loads the labels of the icons
+     */
     private void loadLabelsForIcons() {
         lHome = new Label("Home");
         lCustomers = new Label("Customers");
@@ -196,6 +225,10 @@ public class BurgerBarController implements Initializable {
         setPosAndPaddingFlowPanes(flowHome, flowCustomers, flowCases, flowUsers);
     }
 
+    /**
+     * Utility method to add padding and position of all the flow panes which hold the icons and labels.
+     * @param flowPanes
+     */
     private void setPosAndPaddingFlowPanes(FlowPane... flowPanes) {
         for (FlowPane flowpane: flowPanes) {
             flowpane.setAlignment(Pos.CENTER_LEFT);
@@ -203,6 +236,10 @@ public class BurgerBarController implements Initializable {
         }
     }
 
+    /**
+     * Sets the styling and padding of all labels
+     * @param labels
+     */
     private void setStylingAndPaddingLabels(Label...labels) {
         for (Label label: labels) {
             label.getStyleClass().add("burgerBarMenuLabels");

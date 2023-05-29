@@ -36,11 +36,19 @@ public class ChangePasswordController implements Initializable {
         addListner();
     }
 
+    /**
+     * Sets the logo at the top.
+     */
     private void setImg() {
         String logo = "data/Images/logoWhite.png";
         imgWUAVLogo.setImage(util.loadImages(logo));
     }
 
+    /**
+     * Checks to see if the old password is correct, checks if the new password is a valid length, and then saves the changes to the database
+     * @param actionEvent
+     * @throws Exception
+     */
     public void handleChangePassword(ActionEvent actionEvent) throws Exception {
         if (model.checkPassword(user.getPassword(), pswOldPassword.getText())) {
             if (pswNewPassword.getText().equals(pswNewPasswordCheck.getText())) {
@@ -57,6 +65,10 @@ public class ChangePasswordController implements Initializable {
             }
         }
     }
+
+    /**
+     * Listeners for the textfields
+     */
     private void addListner(){
         pswOldPassword.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -96,6 +108,10 @@ public class ChangePasswordController implements Initializable {
         });
     }
 
+    /**
+     * Sets the user to the one passed through.
+     * @param user
+     */
     public void setUser(User user) {
         this.user = user;
     }

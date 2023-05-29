@@ -64,6 +64,9 @@ public class CaseHomePageController implements Initializable {
 
     }
 
+    /**
+     * If the back arrow is pressed, loads the previous page
+     */
     private void goBack() {
         try {
             controllerAssistant.loadCenter("CustomerHomePageView.fxml");
@@ -77,6 +80,9 @@ public class CaseHomePageController implements Initializable {
         }
     }
 
+    /**
+     * Adds a listener to the tableview which enables/disables buttons accordingly and loads the next view when an item is double clicked
+     */
     private void addListeners() {
         tblViewExistingReports.getSelectionModel().selectedItemProperty().addListener(selectedItemListener);
 
@@ -110,15 +116,13 @@ public class CaseHomePageController implements Initializable {
             btnDeleteReport.setOpacity(1);
             util.addShadow(btnEditReport, btnDeleteReport);
         } else {
-            btnEditReport.setDisable(true);
-            btnEditReport.setOpacity(0);
-            btnDeleteReport.setDisable(true);
-            btnDeleteReport.setOpacity(0);
-            util.removeShadow(btnEditReport, btnDeleteReport);
+            disableEditAndDelete();
         }
     };
 
-
+    /**
+     * disables the buttons, makes them invisible and removes their shadow
+     */
     private void disableEditAndDelete() {
         btnDeleteReport.setDisable(true);
         btnDeleteReport.setOpacity(0);
@@ -127,6 +131,9 @@ public class CaseHomePageController implements Initializable {
         util.removeShadow(btnDeleteReport, btnEditReport);
     }
 
+    /**
+     * Populates the tableview with reports and sorts them depending on the logged in usertype
+     */
     private void updateTableView() {
         observableReports = FXCollections.observableArrayList();
         try {
@@ -192,6 +199,9 @@ public class CaseHomePageController implements Initializable {
 
     }
 
+    /**
+     * Opens a popup when "Create new report" button is pressed
+     */
     public void handleCreateNewReportPopUp() {
         PopUpCreateNewReportController popUpCreateNewReportController = new PopUpCreateNewReportController();
         popUpCreateNewReportController.setCurrentCase(currentCase);
@@ -204,7 +214,9 @@ public class CaseHomePageController implements Initializable {
         updateTableView();
     }
 
-
+    /**
+     * Filters the reports dynamically when something is typed in search bar
+     */
     private void searchBarFilter() {
         // Create a list to hold the original unfiltered items in the tblViewCustomers TableView
         ObservableList<Report> originalList = FXCollections.observableArrayList(tblViewExistingReports.getItems());
@@ -234,6 +246,9 @@ public class CaseHomePageController implements Initializable {
         });
     }
 
+    /**
+     * Opens the update report window when the "Update Report" button is clicked
+     */
     public void handleUpdateReport() {
         PopUpCreateNewReportController popUpCreateNewReportController = new PopUpCreateNewReportController();
         popUpCreateNewReportController.setCurrentCase(currentCase);
@@ -248,6 +263,9 @@ public class CaseHomePageController implements Initializable {
         updateTableView();
     }
 
+    /**
+     * Opens a dialog to check whether the user really wants to delete the report chosen. If yes is chosen, the report is delted.
+     */
     public void handleDeleteReport() {
         Report selectedReport = (Report) tblViewExistingReports.getSelectionModel().getSelectedItem();
         Alert reallyWannaDelete = new Alert(Alert.AlertType.WARNING, "Are you sure you want to delete this report: " + selectedReport.getReportName() + "?", ButtonType.YES, ButtonType.NO);

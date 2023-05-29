@@ -54,18 +54,29 @@ public class CreateUserController implements Initializable {
         activeOrInactive.add("Inactive");
     }
 
+    /**
+     * Utility method that disables the buttons
+     * @param node
+     */
     private void disableButtons(Node... node) {
         for (Node nodes : node) {
             nodes.setDisable(true);
         }
     }
 
+    /**
+     * Utility method that enables the buttons
+     * @param node
+     */
     private void enableButtons(Node... node) {
         for (Node nodes : node) {
             nodes.setDisable(false);
         }
     }
 
+    /**
+     * Adds listeners to the textfields and the combobox
+     */
     private void addListeners() {
         tblViewExistingUsers.getSelectionModel().selectedItemProperty().addListener(selectedUserListener);
         txtFullNameUpdate.textProperty().addListener(updateUserBtn);
@@ -105,7 +116,9 @@ public class CreateUserController implements Initializable {
         }
     };
 
-    // Method to update the state of the "Update User" button
+    /**
+     * Method to update the state of the "Update User" button
+     */
     private void updateUpdateButtonState() {
         if (txtFullNameUpdate.getText().isEmpty() || txtUserNameUpdate.getText().isEmpty() || txtTelephoneUpdate.getText().isEmpty() || txtEmailUpdate.getText().isEmpty() || cbUserActive.getSelectionModel().getSelectedItem() == null) {
             btnUpdateUser.setDisable(true);
@@ -116,6 +129,9 @@ public class CreateUserController implements Initializable {
         }
     }
 
+    /**
+     * Populates the tableview with all uers
+     */
 
     private void updateTableView() {
         allUsers = FXCollections.observableArrayList();
@@ -138,6 +154,9 @@ public class CreateUserController implements Initializable {
         tblViewExistingUsers.getSortOrder().add(colStatus);
     }
 
+    /**
+     * Opens a pop up for creation of a new user
+     */
     public void handleCreateNewUser() {
         PopUpCreateUserController popUpCreateUserController = new PopUpCreateUserController();
         Stage stage = new Stage();
@@ -151,6 +170,9 @@ public class CreateUserController implements Initializable {
         updateTableView();
     }
 
+    /**
+     * Updates the users info in the database
+     */
     public void handleUpdateUser() {
         String fullName = txtFullNameUpdate.getText();
         String userName = txtUserNameUpdate.getText();
