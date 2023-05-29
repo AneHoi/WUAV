@@ -44,6 +44,10 @@ public class AddIconController implements Initializable {
         btnSave.setDisable(true);
 
     }
+
+    /**
+     * Choose an image to add to the list of available images on the left side of the canvas
+     */
     public void handleChooseImage() {
         vBox.getChildren().remove(imgView);
         vBox.getChildren().remove(lblImage);
@@ -75,6 +79,10 @@ public class AddIconController implements Initializable {
             alert.showAndWait();
         }
     }
+
+    /**
+     * Saves the image and text description to the database
+     */
     public void handleSave() {
         try {
             model.addDrwaingIcon(dataImage, txtAddComment.getText());

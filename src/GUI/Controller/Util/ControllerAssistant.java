@@ -36,7 +36,7 @@ public class ControllerAssistant {
     }
 
     /**
-     * Takes a borderpane for and saves for general use.
+     * Takes a borderpane and saves for general use.
      * should be implemented the first time the class is called.
      *
      * @param borderPane
@@ -45,6 +45,11 @@ public class ControllerAssistant {
         this.borderPane = borderPane;
     }
 
+    /**
+     * Sets the center of the borderPane, the "main" window of the application
+     * @param file
+     * @throws IOException
+     */
     public void loadCenter(String file) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/" + file));
@@ -53,6 +58,11 @@ public class ControllerAssistant {
         borderPane.setCenter(newScene);
     }
 
+    /**
+     * Loads the top bar of the application
+     * @param file
+     * @throws IOException
+     */
     public void loadTop(String file) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/" + file));
@@ -61,6 +71,11 @@ public class ControllerAssistant {
         borderPane.setTop(newScene);
     }
 
+    /**
+     * Loads the burgerbar of the application
+     * @param file
+     * @throws IOException
+     */
     public void loadLeft(String file) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/" + file));
@@ -69,6 +84,10 @@ public class ControllerAssistant {
         borderPane.setLeft(newScene);
     }
 
+    /**
+     * Sets the logged-in user
+     * @param loggedInUser
+     */
     public void setLoggedInUser(User loggedInUser) {
         this.loggedInUser = loggedInUser;
     }
@@ -82,7 +101,5 @@ public class ControllerAssistant {
         return this.loggedInUser;
     }
 
-    public static BorderPane getBorderPane() {
-        return borderPane;
-    }
+
 }
