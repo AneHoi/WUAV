@@ -24,10 +24,10 @@ public class IndexController implements Initializable {
 
     @FXML
     private BorderPane borderIndex;
+
     private ControllerAssistant controllerAssistant;
     private Util util = new Util();
     private Model model = new Model();
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = Model.getInstance();
@@ -85,6 +85,10 @@ public class IndexController implements Initializable {
                 }
             }
         }
+    }
+
+    public BorderPane getBorderIndex() {
+        return borderIndex;
     }
 
 }

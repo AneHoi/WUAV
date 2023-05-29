@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -21,15 +22,19 @@ public class LoginController implements Initializable {
 
 
     private boolean loginIsSuccessful = false;
-    @FXML private Button btnLogin;
-    @FXML private PasswordField pswPassword;
-    @FXML private TextField txtUsername;
+    @FXML
+    private Button btnLogin;
+    @FXML
+    private PasswordField pswPassword;
+    @FXML
+    private TextField txtUsername;
     @FXML
     private ImageView imgWUAVLogo;
     private final Util util = new Util();
     private ControllerAssistant controllerAssistant;
     private User user;
     private Model model;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = Model.getInstance();
@@ -43,7 +48,8 @@ public class LoginController implements Initializable {
         String logo = "data/Images/logoWhite.png";
         imgWUAVLogo.setImage(util.loadImages(logo));
     }
-    private void displayAlert(String alert){
+
+    private void displayAlert(String alert) {
         Alert alertMessage = new Alert(Alert.AlertType.INFORMATION);
         alertMessage.setTitle("Alert");
         DialogPane dialogPane = alertMessage.getDialogPane();
@@ -53,17 +59,18 @@ public class LoginController implements Initializable {
         alertMessage.showAndWait();
 
     }
-    public boolean validPassword(String password){
+
+    public boolean validPassword(String password) {
         String specialChars = "!,.:;<>\\/()#%=+?'*";
-        if (password.length() >= 8){
+        if (password.length() >= 8) {
             for (int i = 0; i < password.length() - 1; i++) {
-                for (int j = 0; j < specialChars.length() - 1; j++){
-                    if(password.charAt(i) == specialChars.charAt(j)){
+                for (int j = 0; j < specialChars.length() - 1; j++) {
+                    if (password.charAt(i) == specialChars.charAt(j)) {
                         return false;
                     }
                 }
             }
-        }else if (password.length() < 8){
+        } else if (password.length() < 8) {
             return false;
         }
 
@@ -71,24 +78,24 @@ public class LoginController implements Initializable {
     }
 
     public void login() {
-        if (txtUsername.getText().isEmpty() || pswPassword.getText().isEmpty()){
+        if (txtUsername.getText().isEmpty() || pswPassword.getText().isEmpty()) {
             displayAlert("Missing username or password");
             return;
         }
-        if(!validPassword(pswPassword.getText())){
+        if (!validPassword(pswPassword.getText())) {
             displayAlert("Password contains illegal characters");
             return;
         }
         try {
-            user = model.checkLogIn(txtUsername.getText().trim(),pswPassword.getText().trim());
+            user = model.checkLogIn(txtUsername.getText().trim(), pswPassword.getText().trim());
 
-            if(user == null){
+            if (user == null) {
                 displayAlert("Invalid username or password");
                 return;
             }
             controllerAssistant.setLoggedInUser(user);
-            
-            if(model.checkPassword(controllerAssistant.getLoggedInUser().getPassword(), "WUAV1234")){
+
+            if (model.checkPassword(controllerAssistant.getLoggedInUser().getPassword(), "WUAV1234")) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/View/ChangePasswordView.fxml"));
                 Parent root = loader.load();
                 ChangePasswordController changePasswordController = loader.getController();
@@ -101,10 +108,15 @@ public class LoginController implements Initializable {
             }
             loginIsSuccessful = true;
 
-
+            if (controllerAssistant.getBorderPane() == null) {
+                IndexController indexController = new IndexController();
+                controllerAssistant.setBorderPane(indexController.getBorderIndex());
+                //controllerAssistant.loadCenter("UserHomePageView.fxml");
+                //controllerAssistant.loadLeft("BurgerBarView.fxml");
+                //controllerAssistant.loadTop("TopBarView.fxml");
+                }
             Stage stage = (Stage) btnLogin.getScene().getWindow();
             stage.close();
-
 
         } catch (Exception e) {
             e.printStackTrace();

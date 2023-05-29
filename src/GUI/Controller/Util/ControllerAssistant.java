@@ -14,8 +14,8 @@ import java.io.IOException;
 public class ControllerAssistant {
     @FXML
     private static BorderPane borderPane;
-    private static ControllerAssistant controllerAssistant;
 
+    private static ControllerAssistant controllerAssistant;
     private static User loggedInUser;
 
     /**
@@ -80,5 +80,9 @@ public class ControllerAssistant {
      */
     public User getLoggedInUser() {
         return this.loggedInUser;
+    }
+
+    public static BorderPane getBorderPane() {
+        return borderPane;
     }
 }
