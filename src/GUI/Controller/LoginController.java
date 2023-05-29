@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -85,11 +86,21 @@ public class LoginController implements Initializable {
             loginIsSuccessful = true;
             controllerAssistant.setLoggedInUser(user);
 
-            pswPassword.clear();
-            txtUsername.clear();
+
             Stage stage = (Stage) btnLogin.getScene().getWindow();
             stage.close();
 
+            if(model.checkPassword(controllerAssistant.getLoggedInUser().getPassword(), "WUAV1234")){
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/View/ChangePasswordView.fxml"));
+                Parent root = loader.load();
+                ChangePasswordController changePasswordController = loader.getController();
+                changePasswordController.setUser(controllerAssistant.getLoggedInUser());
+                Stage stage1 = new Stage();
+                stage1.setTitle("Change password");
+                stage1.setScene(new Scene(root));
+                stage1.initModality(Modality.APPLICATION_MODAL);
+                stage1.showAndWait();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             displayAlert("Failed to log in");

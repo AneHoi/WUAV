@@ -61,7 +61,6 @@ public class IndexController implements Initializable {
                     controllerAssistant.loadLeft("BurgerBarView.fxml");
                     controllerAssistant.loadTop("TopBarView.fxml");
                     loginStage.close();
-                    System.out.println(controllerAssistant.getLoggedInUser().getPassword());
                 } catch (
                         IOException e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load the application: \n" + e, ButtonType.OK);
