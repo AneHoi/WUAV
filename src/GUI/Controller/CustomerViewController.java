@@ -61,12 +61,11 @@ public class CustomerViewController implements Initializable {
                 Button btnEditCustomer = new Button("Edit Customer");
                 btnEditCustomer.setPrefWidth(200);
                 util.addShadow(btnEditCustomer);
-                btnEditCustomer.setOnAction(event -> openNewCustomerPopUp(event));
+                btnEditCustomer.setOnAction(event -> handleEditCustomer(event));
                 hBoxButtonBar.getChildren().add(btnEditCustomer);
                 btnDeleteCustomer.setVisible(true);
                 btnDeleteCustomer.setDisable(false);
                 btnCreateCustomer.setText("Create New Customer");
-
             } else {
                 hBoxButtonBar.getChildren().removeIf(node -> node instanceof Button && ((Button) node).getText().equals("Edit Customer"));
                 btnCreateCustomer.setText("Create New Customer");
@@ -150,7 +149,20 @@ public class CustomerViewController implements Initializable {
         tblViewCustomers.setItems(customerObservableList);
     }
 
-    public void openNewCustomerPopUp(ActionEvent event) {
+    public void handleCreateCustomer(ActionEvent event) {
+        PopUpCreateNewCostumerController popUpCreateNewCostumerController = new PopUpCreateNewCostumerController();
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController(popUpCreateNewCostumerController);
+        loader.setLocation(getClass().getResource("/GUI/View/PopUpCreateNewCostumer.fxml"));
+        stage.setTitle("Create New Customer");
+        util.openNewWindow(stage, loader, "Could not create open create customer window");
+        updateCostumerView();
+        btnDeleteCustomer.setVisible(false);
+        btnDeleteCustomer.setDisable(true);
+    }
+
+    public void handleEditCustomer (ActionEvent event) {
         PopUpCreateNewCostumerController popUpCreateNewCostumerController = new PopUpCreateNewCostumerController();
         if (tblViewCustomers.getSelectionModel().getSelectedItem() != null) {
             Customer customer = (Customer) tblViewCustomers.getSelectionModel().getSelectedItem();
@@ -161,7 +173,7 @@ public class CustomerViewController implements Initializable {
         loader.setController(popUpCreateNewCostumerController);
         loader.setLocation(getClass().getResource("/GUI/View/PopUpCreateNewCostumer.fxml"));
         stage.setTitle("Edit or create new customer");
-        util.openNewWindow(stage, loader, "could not create or edit customer");
+        util.openNewWindow(stage, loader, "could not open edit customer window");
         updateCostumerView();
         btnDeleteCustomer.setVisible(false);
         btnDeleteCustomer.setDisable(true);
