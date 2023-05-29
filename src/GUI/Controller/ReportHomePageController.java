@@ -208,8 +208,7 @@ public class ReportHomePageController implements Initializable {
     }
 
     /**
-     *
-     * @param addLoginDetailsController
+     * Opens the AddLoginDetailsView, sets controller and calls method updateReport.
      */
     private void openLogInDetailsView(AddLoginDetailsController addLoginDetailsController) {
         Stage stage = new Stage();
@@ -220,7 +219,10 @@ public class ReportHomePageController implements Initializable {
         updateReport();
     }
 
-
+    /**
+     * Checks report status.
+     *  It disables editing by default and enables editing and updates button properties depending on the report status and the user's type.
+     */
     private void checkForReportStatus() {
         disableEditing();
         if (lblReportStatus.getText().equals("Open")
@@ -242,6 +244,9 @@ public class ReportHomePageController implements Initializable {
         }
     }
 
+    /**
+     * Disables editing by disabling different UI components. Remove shadows from UI components.
+     */
     private void disableEditing() {
         btnAddImage.setDisable(true);
         btnAddTextField.setDisable(true);
@@ -251,7 +256,9 @@ public class ReportHomePageController implements Initializable {
         util.removeShadow(btnAddImage, btnAddSketch, btnAddTextField, btnAddLoginDetails, btnSubmitReportForReview);
     }
 
-
+    /**
+     * Enables editing by enabling different UI components and adding shadows to the UI components.
+     */
     private void enableEditing() {
         btnAddImage.setDisable(false);
         btnAddTextField.setDisable(false);
@@ -261,6 +268,9 @@ public class ReportHomePageController implements Initializable {
         util.addShadow(btnAddSketch, btnAddTextField, btnAddLoginDetails, btnAddImage);
     }
 
+    /**
+     * Creates list of textsAndImagesOnReports, and inserts data from getImagesAndTextsForReport method in model class from current report id. Returns list.
+     */
     public List<TextsAndImagesOnReport> textsAndImagesOnReportList() {
         List<TextsAndImagesOnReport> reportData = null;
         try {
@@ -273,6 +283,9 @@ public class ReportHomePageController implements Initializable {
         return reportData;
     }
 
+    /**
+     * Creates list of LoginDetails, inserts data from getLoginDetails method in model class from current report id. Returns list.
+     */
     private List<LoginDetails> loginDetailsList(){
         List<LoginDetails> loginDetails = null;
         try{
@@ -285,6 +298,11 @@ public class ReportHomePageController implements Initializable {
         return loginDetails;
     }
 
+    /**
+     * This method updates the images, texts, and sketches displayed in the section adding VBox.
+     * It clears the existing elements in the VBox, gets the texts and images for the current report from the model,
+     * and sets up the corresponding UI elements for each text or image.
+     */
     private void updateImagesTextsAndSketches() {
         vboxSectionAdding.getChildren().clear();
         nextPosition = 0;
@@ -306,6 +324,10 @@ public class ReportHomePageController implements Initializable {
         }
     }
 
+    /**
+     * Sets up the image field UI element for the given TextsAndImagesOnReport object.
+     * It gets the image data, creates and configures the necessary UI components, and adds them to the section adding VBox.
+     */
     private void setUpImageField(TextsAndImagesOnReport textOrImage) {
         try {
             textOrImage.setImageWithBytes(textOrImage.getImageData());
@@ -350,6 +372,10 @@ public class ReportHomePageController implements Initializable {
         vboxSectionAdding.getChildren().add(bp);
     }
 
+    /**
+     * Sets the graphics for the buttons and VBox on the left side of the BorderPane.
+     * It loads the images for the up and down arrows, configures the image views and buttons, and adds them to the specified VBox.
+     */
     private void setGraphicsForBorderPane(TextsAndImagesOnReport textOrImage, VBox vbLeft, Button btnUp, Button btnDown, Button btnEdit, Button btnDelete, ImageView imgViewEdit, ImageView imgViewDelete, ImageView imgUp, ImageView imgDown) {
         imgUp.setImage(util.loadImages("data/Images/Up Arrow.png"));
         imgDown.setImage(util.loadImages("data/Images/Down Arrow.png"));
@@ -367,6 +393,12 @@ public class ReportHomePageController implements Initializable {
         heightsAndWidthImageView(btnEdit, imgViewEdit, imgViewDelete);
     }
 
+    /**
+     * Applies styling to the buttons and VBox on the right side of the BorderPane.
+     * It sets the style class for the edit and delete buttons, configures the delete button's graphic,
+     * sets the actions for the delete button, removes the text from the edit and delete buttons,
+     * adds shadows to the buttons, and adds the buttons to the specified VBox.
+     */
     private void stylingButtonAndVbox(TextsAndImagesOnReport textOrImage, VBox vbRight, Button btnUp, Button btnDown, Button btnEdit, Button btnDelete, ImageView imgViewDelete) {
         btnEdit.getStyleClass().add("orangeButtons");
         btnDelete.setGraphic(imgViewDelete);
@@ -380,7 +412,13 @@ public class ReportHomePageController implements Initializable {
         vbRight.setPadding(new Insets(10));
     }
 
-
+    /**
+     * Sets up a text field in the report.
+     * Creates a BorderPane to hold the text field and related components,
+     * configures the buttons and image views on the left side of the BorderPane,
+     * sets the action for the edit button, applies styling to the buttons and VBox on the right side of the BorderPane,
+     * configures the text field and labels, and adds the components to the BorderPane and VBox.
+     */
     private void setUpTextField(TextsAndImagesOnReport textOrImage) {
         BorderPane bp = new BorderPane();
         VBox vbLeft = new VBox();
@@ -414,6 +452,13 @@ public class ReportHomePageController implements Initializable {
         vboxSectionAdding.getChildren().add(bp);
     }
 
+    /**
+     * Moves a text or image item up in the report.
+     * It retrieves the ID and position of the text or image item,
+     * calls the model to move the item up in the database,
+     * handles any SQL exceptions or illegal state exceptions that may occur,
+     * updates the report after the item has been moved.
+     */
     private void moveUp(TextsAndImagesOnReport textOrImage) {
         int textOrImageID = textOrImage.getTextOrImageID();
         int positionOnReport = textOrImage.getPositionOnReport();
@@ -431,7 +476,13 @@ public class ReportHomePageController implements Initializable {
         updateReport();
     }
 
-
+    /**
+     * Moves a text or image item down in the report.
+     * It retrieves the ID and position of the text or image item,
+     * calls the model to move the item down in the database,
+     * handles any SQL exceptions or illegal state exceptions that may occur,
+     * updates the report after the item has been moved.
+     */
     private void moveDown(TextsAndImagesOnReport textOrImage) {
         int positionOnReport = textOrImage.getPositionOnReport();
         int textOrImageID = textOrImage.getTextOrImageID();
@@ -449,7 +500,10 @@ public class ReportHomePageController implements Initializable {
         updateReport();
     }
 
-
+    /**
+     * Updates the information displayed in the report.
+     * Sets the appropriate labels with the current customer, report, and case information.
+     */
     private void updateReportInfo() {
         lblCustomerName.setText(currentCustomer.getCustomerName());
         lblReportName.setText(" "+currentReport.getReportName());
@@ -464,6 +518,10 @@ public class ReportHomePageController implements Initializable {
         lblReportDescription.setText(currentReport.getReportDescription());
     }
 
+    /**
+     * Navigates back to the Case Home Page view.
+     * Calls the controllerAssistant to load the Case Home Page view,
+     */
     private void goBack() {
         try {
             controllerAssistant.loadCenter("CaseHomePageView.fxml");
@@ -474,7 +532,12 @@ public class ReportHomePageController implements Initializable {
         }
     }
 
-
+    /**
+     * Handles the action event for adding a text field to the report.
+     * It creates an instance of AddTextFieldController, sets the necessary data (current report and next available position),
+     * opens a new window for adding the text field using the controller and FXMLLoader,
+     * and updates the report after the window is closed.
+     */
     public void handleAddTextField(ActionEvent actionEvent) {
         AddTextFieldController addTextFieldController = new AddTextFieldController();
         addTextFieldController.setCurrentReport(currentReport);
@@ -487,6 +550,12 @@ public class ReportHomePageController implements Initializable {
         updateReport();
     }
 
+    /**
+     * Handles the action event for adding an image to the report.
+     * It creates an instance of AddImageController, sets the necessary data (current report and next available position),
+     * opens the add image window using the openAddImage method,
+     * and updates the report after the window is closed.
+     */
     public void handleAddImage(ActionEvent actionEvent) {
         AddImageController addImageController = new AddImageController();
         addImageController.setCurrentReport(currentReport);
@@ -495,6 +564,11 @@ public class ReportHomePageController implements Initializable {
         updateReport();
     }
 
+    /**
+     * Opens the Add Image window by creating a new stage, loading the AddImageView.fxml file,
+     * setting the AddImageController as the controller, and calling the openNewWindow method of the util object.
+     * It takes an instance of AddImageController as a parameter to pass it to the controller of the Add Image window.
+     */
     private void openAddImage(AddImageController addImageController) {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
@@ -503,6 +577,11 @@ public class ReportHomePageController implements Initializable {
         util.openNewWindow(stage, loader, "Could not open Add Image Window");
     }
 
+    /**
+     * Handles the event when the "Add Sketch" button is clicked. It opens the Draw Sketch window
+     * by loading the DrawSketchView.fxml file, setting up the DrawSketchController, creating a new stage, and
+     * displaying the window. After the window is closed, it updates the report.
+     */
     public void handleAddSketch(ActionEvent actionEvent) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/View/DrawSketchView.fxml"));
@@ -522,6 +601,12 @@ public class ReportHomePageController implements Initializable {
         updateReport();
     }
 
+    /**
+     * Deletes a part of the report (text or image) based on the provided TextsAndImagesOnReport object.
+     * It displays a confirmation alert box to ensure the user wants to deletion this. If the yes,
+     * the part is deleted from the database using the model's deletePartOfReport method, and the report is updated by
+     * calling the updateImagesTextsAndSketches method.
+     */
     private void deletePartOfReport(TextsAndImagesOnReport textOrImage) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this part of the report?", ButtonType.YES, ButtonType.NO);
         alert.showAndWait();
@@ -537,6 +622,12 @@ public class ReportHomePageController implements Initializable {
         }
     }
 
+    /**
+     * Allows the user to edit an image in the report. It opens the Add Image window with the provided
+     * TextsAndImagesOnReport object preloaded for editing. The current report, next available position, and the
+     * current image are set in the AddImageController. After editing the image, the report's images, texts, and sketches
+     * are updated by calling the updateImagesTextsAndSketches method. Calls the updateReport method.
+     */
     private void editImage(TextsAndImagesOnReport textOrImage) {
         AddImageController addImageController = new AddImageController();
         addImageController.setCurrentReport(currentReport);
@@ -547,6 +638,12 @@ public class ReportHomePageController implements Initializable {
         updateReport();
     }
 
+    /**
+     * Allows the user to edit a text field in the report. It opens the Add Text Field window with the provided
+     * TextsAndImagesOnReport object preloaded for editing. The current report, next available position, and the current
+     * text field are set in the AddTextFieldController. After editing the text field, the report's images, texts, and
+     * sketches are updated by calling the updateImagesTextsAndSketches method. Calls the updateReport method.
+     */
     private void editText(TextsAndImagesOnReport textOrImage) {
         AddTextFieldController addTextFieldController = new AddTextFieldController();
         addTextFieldController.setCurrentReport(currentReport);
@@ -561,6 +658,12 @@ public class ReportHomePageController implements Initializable {
         updateReport();
     }
 
+    /**
+     * Handles the submission of the report based on the state of the btnSubmitReportForReview button.
+     * If the button's text is "Submit Report", it calls the submitForReview method to submit the report for review.
+     * If the button's text is "Close Report", it calls the closeReport method to close the report.
+     * If the button's text is "Generate PDF", it calls the generatePDF method with the specified path to generate a PDF version of the report.
+     */
     public void handleSubmitReport(ActionEvent event) throws FileNotFoundException {
         if (btnSubmitReportForReview.getText().equals("Submit Report")) {
             submitForReview();
@@ -568,10 +671,14 @@ public class ReportHomePageController implements Initializable {
             closeReport();
         } else if (btnSubmitReportForReview.getText().equals("Generate PDF")) {
             generatePDF(getPath());
-            //TODO open pdf
         }
     }
 
+    /**
+     * Generates a PDF version of the report using the specified path.
+     * It creates a PDFGenerator instance and calls the generateReport method to generate the PDF.
+     * The method also opens the generated PDF file using the default system PDF viewer.
+     */
     private void generatePDF(String path) throws FileNotFoundException {
         PDFGenerator pdfGenerator = new PDFGenerator();
 
@@ -586,6 +693,13 @@ public class ReportHomePageController implements Initializable {
         }
 
     }
+
+    /**
+     * Opens a directory chooser dialog to select a folder path.
+     * It sets the title of the directory chooser dialog and retrieves the initial directory.
+     * If the "Generate PDF" button is clicked, it gets the current window's stage and shows the directory chooser dialog.
+     * If a folder is selected, it returns the path of the selected folder, returns the path.
+     */
     private String getPath(){
         String path = "";
         DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -598,11 +712,15 @@ public class ReportHomePageController implements Initializable {
                 path = selectedFile.getPath();
             }
         }
-        System.out.println(path);
         return path;
     }
 
-
+    /**
+     * Closes the report and submits it for review.
+     * It displays a confirmation alert to confirm the user wants to proceed.
+     * If the user presses yes, the method updates the report and case status, disables editing,
+     * changes the text of the submit button to "Generate PDF", and updates the report status label.
+     */
     private void closeReport() {
         Alert areYouSureAlert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to submit your report for review?", ButtonType.YES, ButtonType.NO);
         areYouSureAlert.showAndWait();
@@ -622,6 +740,15 @@ public class ReportHomePageController implements Initializable {
         }
     }
 
+    /**
+     * Submits the report for review.
+     * It checks if there are any login details added to the report.
+     * If there are no login details, it displays an information alert and prompts the user to add login details.
+     * After adding login details, the method returns.
+     * If there are login details or if the user confirms the submission in the warning alert,
+     * the method proceeds to submit the report for review.
+     * It updates the report status, disables editing, and updates the report status label.
+     */
     private void submitForReview() {
         if (numberOfLoginDetails < 1) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "This report has no login details added, you need to specify login details before it can be submitted for review.\nIf login details are not needed for this report, please check the box 'No login details for this report' in the next window.", ButtonType.OK);
@@ -645,6 +772,11 @@ public class ReportHomePageController implements Initializable {
         }
     }
 
+    /**
+     * Handles the event when the "Add Login Details" button is clicked.
+     * It creates an instance of the AddLoginDetailsController and sets the current report.
+     * Calls the openLogInDetailsView method to open the login details view.
+     */
     public void handleAddLoginDetails(ActionEvent actionEvent) {
         AddLoginDetailsController addLoginDetailsController = new AddLoginDetailsController();
         addLoginDetailsController.setCurrentReport(currentReport);

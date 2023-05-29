@@ -39,6 +39,11 @@ public class PopUpCreateNewReportController implements Initializable {
 
     }
 
+    /**
+     * Checks if a current report exists and performs operations accordingly.
+     * If a current report exists, it sets the report information, adds shadow effect to UI elements,
+     * and associates listeners. Otherwise, it adds listeners, sets opacity and disables buttons, and adds shadow effect.
+     */
     private void checkCreateOrUpdate() {
         if (currentReport != null) {
             setCurrentReportInfo();
@@ -52,6 +57,11 @@ public class PopUpCreateNewReportController implements Initializable {
         }
     }
 
+    /**
+     * Sets the current report information to UI elements for updating.
+     * Updates title, report name label, and button text.
+     * Fills report name and description fields.
+     */
     private void setCurrentReportInfo() {
         lblTitle.setText("Update Report");
         lblReportName.setText(currentReport.getReportName());
@@ -62,15 +72,25 @@ public class PopUpCreateNewReportController implements Initializable {
 
     }
 
+    /**
+     * Setter for the current case.
+     */
     public void setCurrentCase(Case currentCase) {
         this.currentCase = currentCase;
     }
 
+    /**
+     * Adds listeners to report name and report description text fields.
+     */
     private void addListeners() {
         txtReportName.textProperty().addListener(createNewReportBtnListener);
         txtReportDescription.textProperty().addListener(createNewReportBtnListener);
     }
 
+    /**
+     * If report name and report description txt fields is empty btnCreateNewReport is disabled and shadows are removed.
+     * Otherwise, btnCreateNewReport is enabled and shadows are added
+     */
     ChangeListener<String> createNewReportBtnListener = (observable, oldValue, newValue) -> {
         if (txtReportName.getText().isEmpty() || txtReportDescription.getText().isEmpty()) {
             btnCreateNewReport.setDisable(true);
@@ -81,6 +101,9 @@ public class PopUpCreateNewReportController implements Initializable {
         }
     };
 
+    /**
+     * If create new report button text is update report, updateReport method is called. Otherwise createNewReport method is called.
+     */
     public void handleCreateNewReport() {
         if (btnCreateNewReport.getText().equals("Update Report")) {
             updateReport();
@@ -90,6 +113,11 @@ public class PopUpCreateNewReportController implements Initializable {
 
     }
 
+    /**
+     * Creates a new report using the provided report name, description, and current case ID.
+     * The report is associated with the ID of the logged-in user.
+     * If the report creation is successful, the current window is closed.
+     */
     private void createNewReport() {
         String reportName = txtReportName.getText();
         String reportDescription = txtReportDescription.getText();
@@ -105,6 +133,12 @@ public class PopUpCreateNewReportController implements Initializable {
         }
     }
 
+     /**
+     * Updates the current report with the provided report name and description.
+     * The report ID is obtained from the current report.
+     * The update operation is performed using the model, associating it with the ID of the logged-in user.
+     * If the report update is successful, the current window is closed.
+     */
     private void updateReport() {
         int reportID = currentReport.getReportID();
         String reportName = txtReportName.getText();
@@ -120,6 +154,9 @@ public class PopUpCreateNewReportController implements Initializable {
         }
     }
 
+    /**
+     * Setter for currentReport.
+     */
     public void setCurrentReport(Report selectedItem) {
         currentReport = selectedItem;
     }

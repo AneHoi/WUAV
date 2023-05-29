@@ -54,15 +54,21 @@ public class PopUpCreateUserController implements Initializable {
         userTypes = util.checkLoggedInUser(userTypes);
     }
 
+    /**
+     * Adds listeners to the input fields and the user type selection in the create new customer form.
+     * The listeners are triggered when there are changes in the text or selection, and they call the createNewCustomerBtn method.
+     */
     private void addListeners() {
         txtFullNameCreate.textProperty().addListener(createNewCustomerBtn);
         txtUserNameCreate.textProperty().addListener(createNewCustomerBtn);
         txtTelephoneCreate.textProperty().addListener(createNewCustomerBtn);
         txtEmailCreate.textProperty().addListener(createNewCustomerBtn);
         cbUserTypeCreate.getSelectionModel().selectedItemProperty().addListener(createNewCustomerBtn);
-
     }
 
+    /**
+     * Checks if the text fields are empty if they are btnCreateNewUser is disabled otherwise btnCreateNewUser is enabled
+     */
     ChangeListener<String> createNewCustomerBtn = (observable, oldValue, newValue) -> {
         if (txtFullNameCreate.getText().isEmpty() || txtUserNameCreate.getText().isEmpty() || txtTelephoneCreate.getText().isEmpty() || txtEmailCreate.getText().isEmpty() || cbUserTypeCreate.getSelectionModel().getSelectedItem() == null) {
             btnCreateNewUser.setDisable(true);
@@ -73,6 +79,9 @@ public class PopUpCreateUserController implements Initializable {
         }
     };
 
+    /**
+     * Gets values from input fields, checks usertype creates new user with or without picture. Closes the window.
+     */
     public void handleCreateNewUser(ActionEvent actionEvent) {
         String fullName = txtFullNameCreate.getText();
         String userName = txtUserNameCreate.getText();
@@ -116,6 +125,10 @@ public class PopUpCreateUserController implements Initializable {
         ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
     }
 
+    /**
+     * Opens file chooser for choosing an image, when image is chosen closes the window. Sets Image in imgViewChooseImage image view.
+     * Reads the chosen file into  a byte array
+     */
     public void handleChooseImage(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Image");

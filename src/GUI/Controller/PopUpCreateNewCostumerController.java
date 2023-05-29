@@ -46,6 +46,11 @@ public class PopUpCreateNewCostumerController implements Initializable {
         }
     }
 
+    /**
+     * Fills the input fields with the information of an existing customer.
+     * Sets the text values of customer name, address, phone number, email, CVR,
+     * and selects the appropriate customer type in the combo box.
+     */
     public void editableCustomer() {
         txtCostumerName.setText(customerVar.getCustomerName());
         txtAddress.setText(customerVar.getAddress());
@@ -55,7 +60,11 @@ public class PopUpCreateNewCostumerController implements Initializable {
         cbCustomerType.getSelectionModel().select(customerVar.getCustomerType());
     }
 
-
+    /**
+     * Adds a listener to the CVR text field to restrict input to numbers only.
+     * If the entered value contains anything other than a number, the text field reverts to the previous value
+     * and an information alert is displayed to inform the user to use only numbers.
+     */
     private void checkCVRTextField() {
         txtCVR.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
@@ -69,6 +78,10 @@ public class PopUpCreateNewCostumerController implements Initializable {
         });
     }
 
+    /**
+     * Adds listeners to the text properties of input fields.
+     * The listeners are attached to enable or disable the "create new customer" button based on the input values.
+     */
     private void addListeners() {
         txtCostumerName.textProperty().addListener(createNewCustomerBtn);
         txtAddress.textProperty().addListener(createNewCustomerBtn);
@@ -77,7 +90,12 @@ public class PopUpCreateNewCostumerController implements Initializable {
         txtCVR.textProperty().addListener(createNewCustomerBtn);
     }
 
-
+    /**
+     * Listener for the input fields to enable or disable the "create new customer" button.
+     * If any of the required fields (customer name, address, phone number, email, or CVR) are empty,
+     * the button is disabled and the shadow is removed.
+     * Otherwise, the button is enabled and a shadow is added.
+     */
     ChangeListener<String> createNewCustomerBtn = (observable, oldValue, newValue) -> {
         if (txtCostumerName.getText().isEmpty() || txtAddress.getText().isEmpty() || txtTlfNumber.getText().isEmpty() || txtEmail.getText().isEmpty() || txtCVR.getText().isEmpty()) {
             btnCreateCostumer.setDisable(true);
@@ -88,6 +106,13 @@ public class PopUpCreateNewCostumerController implements Initializable {
         }
     };
 
+    /**
+     * Saves or updates a customer based on the input fields.
+     * If a customer already exists, it updates the existing customer with the new information.
+     * If there is no existing customer, it generates a random ID and creates a new customer object.
+     * The customer object is then either updated or saved using the model.
+     * After the operation is done, the window is closed.
+     */
     public void saveCostumer(javafx.event.ActionEvent event) {
         //If there already is a customer, we only need to update that customer
         int id;
@@ -118,10 +143,11 @@ public class PopUpCreateNewCostumerController implements Initializable {
         }
         //This closes the window
         ((Node)(event.getSource())).getScene().getWindow().hide();
-
-
     }
 
+    /**
+     * Setter for customerVar
+     */
     public void setCustomerVar(Customer customerVar) {
         this.customerVar = customerVar;
 
