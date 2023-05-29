@@ -92,6 +92,17 @@ public class CreateUserController implements Initializable {
 
             updateUpdateButtonState(); // Update the button state when a user is selected
         }
+        else {
+            disableButtons(btnUpdateUser, txtFullNameUpdate, txtUserNameUpdate, txtTelephoneUpdate, txtEmailUpdate, cbUserActive);
+            util.removeShadow(btnUpdateUser, txtFullNameUpdate, txtUserNameUpdate, txtTelephoneUpdate, txtEmailUpdate, cbUserActive);
+            txtFullNameUpdate.clear();
+            txtUserNameUpdate.clear();
+            txtTelephoneUpdate.clear();
+            txtEmailUpdate.clear();
+            cbUserActive.setItems(activeOrInactive);
+            cbUserActive.getSelectionModel().select(null);
+            updateUpdateButtonState(); // Update the button state when a user is selected
+        }
     };
 
     // Method to update the state of the "Update User" button
