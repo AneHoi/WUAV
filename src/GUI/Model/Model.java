@@ -7,7 +7,6 @@ import BLL.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Model {
@@ -262,7 +261,7 @@ public class Model {
         return customerManager.getRecentlyViewedCustomers(userID);
     }
 
-    public ArrayList<CabelAndColor> getAllCables() {
+    public List<CabelAndColor> getAllCables() {
         return drawingManager.getAllCables();
     }
 

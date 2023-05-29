@@ -1,11 +1,13 @@
 package DAL;
 
+import BE.CabelAndColor;
 import BE.DrawingIcon;
 import DAL.Interfaces.IDrawingDAO;
-import javafx.fxml.FXML;
+import javafx.scene.paint.Color;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DrawingDAO implements IDrawingDAO {
@@ -50,5 +52,24 @@ public class DrawingDAO implements IDrawingDAO {
             throw new SQLException(e);
         }
         return allIcons;
+    }
+
+    public List<CabelAndColor> getAllCables() {
+        List<CabelAndColor> cabelAndColors = new ArrayList<>();
+        try (Connection conn = db.getConnection()) {
+            String sql = "SELECT * FROM CableAndColor;";
+
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                String cableName = rs.getString("Cable_Name");
+                String colorName = rs.getString("Color_Name");
+                CabelAndColor cabelAndColor = new CabelAndColor(cableName, colorName);
+                cabelAndColors.add(cabelAndColor);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cabelAndColors;
     }
 }
