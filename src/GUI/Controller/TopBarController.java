@@ -71,17 +71,20 @@ public class TopBarController implements Initializable {
         imgLogo.setImage(util.loadImages(logo));
         rectangle.setArcWidth(30.0);   // Corner radius
         rectangle.setArcHeight(30.0);
-        ImagePattern pattern = null;
+
+        Image profilePicture;
         if (user.getProfilePicture() != null) {
-            pattern = new ImagePattern(user.getProfilePicture(), 100, 150, 0, 0, true);
+            profilePicture = user.getProfilePicture();
         } else {
-            pattern = new ImagePattern(new Image("file:data/Images/ProfilePicture.png", 100, 150, true, true));
+            profilePicture = new Image("file:data/Images/Wuav_skabelon-mand.png", 100, 150, true, true);
         }
+        rectangle.setFill(new ImagePattern(profilePicture));
+
         String firstName = user.getFullName().substring(0, user.getFullName().indexOf(" "));
         String lastName = user.getFullName().substring(user.getFullName().indexOf(" "));
-        rectangle.setFill(pattern);
         lblFirstName.setText(firstName);
         lblLastName.setText(lastName);
         lblLogOut.setText("Log Out");
     }
+
 }
