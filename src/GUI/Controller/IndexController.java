@@ -3,7 +3,6 @@ package GUI.Controller;
 import GUI.Controller.Util.ControllerAssistant;
 import GUI.Controller.Util.Util;
 import GUI.Model.Model;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -55,10 +54,7 @@ public class IndexController implements Initializable {
         if (loginController != null) {
             if (loginController.isLoginIsSuccessful()) {
                 try {
-                    controllerAssistant.setBorderPane(borderIndex);
-                    controllerAssistant.loadCenter("UserHomePageView.fxml");
-                    controllerAssistant.loadLeft("BurgerBarView.fxml");
-                    controllerAssistant.loadTop("TopBarView.fxml");
+                    openTheApplication();
                     loginStage.close();
                 } catch (IOException e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load the application: \n" + e, ButtonType.OK);
@@ -82,6 +78,13 @@ public class IndexController implements Initializable {
                 }
             }
         }
+    }
+
+    public void openTheApplication() throws IOException {
+        controllerAssistant.setBorderPane(borderIndex);
+        controllerAssistant.loadCenter("UserHomePageView.fxml");
+        controllerAssistant.loadLeft("BurgerBarView.fxml");
+        controllerAssistant.loadTop("TopBarView.fxml");
     }
 
     public BorderPane getBorderIndex() {
