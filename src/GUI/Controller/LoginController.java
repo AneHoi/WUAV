@@ -30,11 +30,13 @@ public class LoginController implements Initializable {
     @FXML
     private ImageView imgWUAVLogo;
     private final Util util = new Util();
-    private ControllerAssistant controllerAssistant = new ControllerAssistant();
+    private ControllerAssistant controllerAssistant;
     private User user;
-    private Model model = new Model();
+    private Model model;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        controllerAssistant = ControllerAssistant.getInstance();
+        model = Model.getInstance();
         SetImg();
         util.addShadow(pswPassword, txtUsername, btnLogin, imgWUAVLogo);
     }
@@ -85,7 +87,6 @@ public class LoginController implements Initializable {
             }
             loginIsSuccessful = true;
             controllerAssistant.setLoggedInUser(user);
-
 
             Stage stage = (Stage) btnLogin.getScene().getWindow();
             stage.close();
