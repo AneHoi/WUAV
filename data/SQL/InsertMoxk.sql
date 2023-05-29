@@ -1,8 +1,8 @@
 USE OW_WUAV_x;
 GO
 
-INSERT INTO User_ VALUES('Test','Test', 1, '34567', '23456', 1, null)
-INSERT INTO User_ VALUES('Tech1','Tech1', 3, '12@12.12', '12121212', 3, null)
+INSERT INTO User_ VALUES('Michael Tonnesen','Test', 1, '34567', '23456', 1, null)
+INSERT INTO User_ VALUES('Per Julius','Tech1', 3, '12@12.12', '12121212', 3, null)
 GO
 
 INSERT INTO User_Passwords VALUES((SELECT DISTINCT User_ID FROM User_  WHERE User_Name = 'Test'), 'Test', '$2a$16$dQY0YELZUXi6qk/HL9gCd.mqkYyidX3AnFsOERgwjlc5n5ExXbUuK', '$2a$16$dQY0YELZUXi6qk/HL9gCd.')

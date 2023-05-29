@@ -52,32 +52,36 @@ public class TopBarController implements Initializable {
     }
 
     private void handleLogOut() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Are you sure you wish to log out?", ButtonType.YES,ButtonType.NO);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Are you sure you wish to log out?", ButtonType.YES, ButtonType.NO);
         alert.showAndWait();
         if (alert.getResult() == ButtonType.YES) {
-            LoginController loginController2 = new LoginController();
             Stage thisWindow = (Stage) lblLogOut.getScene().getWindow();
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            loader.setController(loginController2);
             loader.setLocation(getClass().getResource("/GUI/View/LoginView.fxml"));
-            util.openNewWindow(stage, loader, "Could not open new Login Window");
+            controllerAssistant.setLoggedInUser(null);
             thisWindow.close();
-
+            util.openNewWindow(stage, loader, "Could not open new Login Window");
 
         }
     }
 
     private void loadUserInfo() {
+        User user = controllerAssistant.getLoggedInUser();
         imgLogo.setImage(util.loadImages(logo));
         rectangle.setArcWidth(30.0);   // Corner radius
         rectangle.setArcHeight(30.0);
-        ImagePattern pattern = new ImagePattern( //TODO change to users profile picture
-                new Image("file:data/Images/ProfilePicture.png", 100, 150, true, true) // Resizing
-        );
+        ImagePattern pattern = null;
+        if (user.getProfilePicture() != null) {
+            pattern = new ImagePattern(user.getProfilePicture(), 100, 150, 0, 0, true);
+        } else {
+            pattern = new ImagePattern(new Image("file:data/Images/ProfilePicture.png", 100, 150, true, true));
+        }
+        String firstName = user.getFullName().substring(0, user.getFullName().indexOf(" "));
+        String lastName = user.getFullName().substring(user.getFullName().indexOf(" "));
         rectangle.setFill(pattern);
-        lblFirstName.setText("Michael"); //TODO Change to users real name
-        lblLastName.setText("Tonnesen"); //TODO Chnage to users real last name
+        lblFirstName.setText(firstName);
+        lblLastName.setText(lastName);
         lblLogOut.setText("Log Out");
     }
 }

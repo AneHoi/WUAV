@@ -57,6 +57,7 @@ public class IndexController implements Initializable {
         if (loginController != null) {
             if (loginController.isLoginIsSuccessful()) {
                 try {
+                    controllerAssistant.setBorderPane(borderIndex);
                     controllerAssistant.loadCenter("UserHomePageView.fxml");
                     controllerAssistant.loadLeft("BurgerBarView.fxml");
                     controllerAssistant.loadTop("TopBarView.fxml");
