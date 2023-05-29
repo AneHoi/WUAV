@@ -129,6 +129,9 @@ public class PopUpCreateNewReportController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not create a new report", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
     }
@@ -150,6 +153,9 @@ public class PopUpCreateNewReportController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not update report in database", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
     }

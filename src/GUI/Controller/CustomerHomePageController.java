@@ -73,6 +73,9 @@ public class CustomerHomePageController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not go back", ButtonType.OK);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
     }
@@ -88,6 +91,9 @@ public class CustomerHomePageController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get cases from database", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         tblViewExistingCases.setItems(caseObservableList);
@@ -106,6 +112,9 @@ public class CustomerHomePageController implements Initializable {
                 } catch (SQLException e) {
                     e.printStackTrace();
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get Technicians from database", ButtonType.CANCEL);
+                    DialogPane dialogPane = alert.getDialogPane();
+                    dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+                    dialogPane.getStyleClass().add("dialog");
                     alert.showAndWait();
                 }
                 tblViewTechAssigned.setDisable(false);
@@ -131,6 +140,9 @@ public class CustomerHomePageController implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Case Home Page", ButtonType.CANCEL);
+                    DialogPane dialogPane = alert.getDialogPane();
+                    dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+                    dialogPane.getStyleClass().add("dialog");
                     alert.showAndWait();
                 }
 
@@ -146,6 +158,9 @@ public class CustomerHomePageController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not store link between User and Case in Database", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
     }
@@ -214,6 +229,9 @@ public class CustomerHomePageController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get assigned Technicians from the database", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         manageTechniciansController.setSelectedCase(selectedCase, alreadyAssignedTechs);
@@ -228,6 +246,9 @@ public class CustomerHomePageController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Manage Technicians Window", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         updateTableView();

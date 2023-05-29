@@ -136,6 +136,9 @@ public class AddLoginDetailsController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not save info to report", ButtonType.OK);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
 
@@ -155,6 +158,9 @@ public class AddLoginDetailsController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not update info in database", ButtonType.OK);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
 
@@ -169,6 +175,9 @@ public class AddLoginDetailsController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not save info to database", ButtonType.OK);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
     }
@@ -183,6 +192,9 @@ public class AddLoginDetailsController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not save info to report", ButtonType.OK);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
     }

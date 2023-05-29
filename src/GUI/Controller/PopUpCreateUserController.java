@@ -115,10 +115,16 @@ public class PopUpCreateUserController implements Initializable {
                 SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not create User", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not create password", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         //This closes the window
@@ -146,6 +152,9 @@ public class PopUpCreateUserController implements Initializable {
             }
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load image", ButtonType.OK);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
     }

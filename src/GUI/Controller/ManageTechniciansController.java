@@ -43,6 +43,9 @@ public class ManageTechniciansController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get Technicians from Database", ButtonType.OK);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         for (Technician t : technicians) {
@@ -82,6 +85,9 @@ public class ManageTechniciansController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not assign Technicians to Case", ButtonType.OK);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         Stage stage = (Stage) btnConfirmChoices.getScene().getWindow();

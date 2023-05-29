@@ -93,6 +93,9 @@ public class CreateOrUpdateCaseController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not updated Case", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         Stage stage = (Stage) btnCreateOrUpdateCase.getScene().getWindow();
@@ -109,6 +112,9 @@ public class CreateOrUpdateCaseController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not create a new Case", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
 

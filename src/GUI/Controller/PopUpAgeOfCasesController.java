@@ -101,6 +101,9 @@ public class PopUpAgeOfCasesController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get Cases from the database", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         tblCases.setItems(oldCases);
@@ -149,6 +152,9 @@ public class PopUpAgeOfCasesController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not expand the time for keeping the case in the program", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
     }
@@ -178,6 +184,9 @@ public class PopUpAgeOfCasesController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Could not delete the case from the program", ButtonType.CANCEL);
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+                dialogPane.getStyleClass().add("dialog");
                 alert.showAndWait();
             }
             updateTableView();

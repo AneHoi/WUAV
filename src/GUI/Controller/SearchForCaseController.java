@@ -73,6 +73,9 @@ public class SearchForCaseController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get Cases from the database", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
     }
@@ -111,7 +114,7 @@ public class SearchForCaseController implements Initializable {
             Collections.sort(reportCaseAndCustomers, byStatus);
 
             //Sorting the list by active cases, and does not add the "Submitted for review" status for the technicians
-            if (controllerAssistant.getLoggedInUser().getUserType() == 3){
+            if (controllerAssistant.getLoggedInUser().getUserType() == 3) {
 
                 Comparator<ReportCaseAndCustomer> byOpenClosed = (ReportCaseAndCustomer pcc1, ReportCaseAndCustomer pcc2) -> pcc1.getReportStatus().compareTo(pcc2.getReportStatus());
                 Collections.sort(reportCaseAndCustomers, Collections.reverseOrder(byOpenClosed));
@@ -137,7 +140,7 @@ public class SearchForCaseController implements Initializable {
                             || report1.getReportStatus().equalsIgnoreCase("open") && report2.getReportStatus().equalsIgnoreCase("submitted for review")) {
                         //"Closed" is the absolute 'lowest'
                         return -1;
-                    }else {
+                    } else {
                         return 0;
                     }
                 };
@@ -154,6 +157,9 @@ public class SearchForCaseController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get Cases and Customers for list", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         tblViewFilteredReports.setItems(data);
@@ -182,6 +188,9 @@ public class SearchForCaseController implements Initializable {
                 } catch (SQLException | IOException e) {
                     e.printStackTrace();
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Report Home Page", ButtonType.CANCEL);
+                    DialogPane dialogPane = alert.getDialogPane();
+                    dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+                    dialogPane.getStyleClass().add("dialog");
                     alert.showAndWait();
                 }
 

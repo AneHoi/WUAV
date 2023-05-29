@@ -73,6 +73,9 @@ public class PopUpCreateNewCostumerController implements Initializable {
                 alert.setTitle("Invalid Character");
                 alert.setHeaderText(null);
                 alert.setContentText("Please use only numbers");
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+                dialogPane.getStyleClass().add("dialog");
                 alert.showAndWait();
             }
         });
@@ -128,6 +131,9 @@ public class PopUpCreateNewCostumerController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Could not update the customerVar", ButtonType.CANCEL);
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+                dialogPane.getStyleClass().add("dialog");
                 alert.showAndWait();
             }
         }else {

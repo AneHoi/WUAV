@@ -9,10 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
@@ -52,6 +49,10 @@ public class ChangePasswordController implements Initializable {
                     ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
                 } else {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Password must be 8 or more characters", ButtonType.CLOSE);
+                    DialogPane dialogPane = alert.getDialogPane();
+                    dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+                    dialogPane.getStyleClass().add("dialog");
+                    alert.showAndWait();
                 }
             }
         }

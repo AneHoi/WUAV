@@ -3,7 +3,6 @@ package GUI.Controller;
 import GUI.Controller.Util.ControllerAssistant;
 import GUI.Controller.Util.Util;
 import GUI.Model.Model;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -23,6 +23,7 @@ public class IndexController implements Initializable {
 
     @FXML
     private BorderPane borderIndex;
+
     private ControllerAssistant controllerAssistant;
     private Util util = new Util();
     private Model model = new Model();
@@ -33,8 +34,6 @@ public class IndexController implements Initializable {
         util = new Util();
         controllerAssistant = ControllerAssistant.getInstance();
         loadLogIn();
-
-
     }
 
     private void loadLogIn() {
@@ -55,18 +54,19 @@ public class IndexController implements Initializable {
         if (loginController != null) {
             if (loginController.isLoginIsSuccessful()) {
                 try {
-                    controllerAssistant.setBorderPane(borderIndex);
-                    controllerAssistant.loadCenter("UserHomePageView.fxml");
-                    controllerAssistant.loadLeft("BurgerBarView.fxml");
-                    controllerAssistant.loadTop("TopBarView.fxml");
+                    openTheApplication();
                     loginStage.close();
-                } catch (
-                        IOException e) {
+                } catch (IOException e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load the application: \n" + e, ButtonType.OK);
+                    DialogPane dialogPane = alert.getDialogPane();
+                    dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+                    dialogPane.getStyleClass().add("dialog");
                     alert.showAndWait();
-                } catch (
-                        Exception e) {
+                } catch (Exception e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get password", ButtonType.CLOSE);
+                    DialogPane dialogPane = alert.getDialogPane();
+                    dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+                    dialogPane.getStyleClass().add("dialog");
                     alert.showAndWait();
                 }
             } else {
@@ -78,6 +78,17 @@ public class IndexController implements Initializable {
                 }
             }
         }
+    }
+
+    public void openTheApplication() throws IOException {
+        controllerAssistant.setBorderPane(borderIndex);
+        controllerAssistant.loadCenter("UserHomePageView.fxml");
+        controllerAssistant.loadLeft("BurgerBarView.fxml");
+        controllerAssistant.loadTop("TopBarView.fxml");
+    }
+
+    public BorderPane getBorderIndex() {
+        return borderIndex;
     }
 
 }

@@ -119,10 +119,13 @@ public class DrawSketchController implements Initializable {
             imageIcons = model.getAllDrawingIcons();
             vboxCables.getChildren().clear();
             cableAndColors.clear();
-            cableAndColors = model.getAllCables();
+            cableAndColors = (ArrayList<CabelAndColor>) model.getAllCables();
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get the icons", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
     }
@@ -149,13 +152,14 @@ public class DrawSketchController implements Initializable {
             cableBtn.getStyleClass().clear();
             cableBtn.getStyleClass().add("infoLabel");
             cableBtn.setStyle("-fx-border-radius: 15");
-            cableBtn.setBackground(Background.fill(cable.getCabelColor()));
+            color = Color.valueOf(cable.getCabelColor());
+            cableBtn.setBackground(Background.fill(color));
             cableBtn.setPrefSize(80, 80);
             cableBtn.setOnMouseClicked(e ->{
                 checkEraser.setVisible(true);
                 checkEraser.setSelected(false);
                 setIconPaneInFront(false);
-                color = cable.getCabelColor();
+                color = Color.valueOf(cable.getCabelColor());
             });
             Label cableName = createLabel(cable.getCabelName());
             vboxCables.getChildren().add(cableBtn);
@@ -254,6 +258,9 @@ public class DrawSketchController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open the SaveImage page", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
     }

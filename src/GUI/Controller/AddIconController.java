@@ -69,6 +69,9 @@ public class AddIconController implements Initializable {
             }
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load image", ButtonType.OK);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
     }
@@ -78,9 +81,15 @@ public class AddIconController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not save icon in the Database", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Image added successfully", ButtonType.OK);
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+        dialogPane.getStyleClass().add("dialog");
         alert.showAndWait();
         Stage stage = (Stage) btnSave.getScene().getWindow();
         stage.close();
