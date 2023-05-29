@@ -3,6 +3,8 @@ package GUI.Controller;
 import BE.User;
 import GUI.Controller.Util.Util;
 import GUI.Model.Model;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,6 +32,8 @@ public class ChangePasswordController implements Initializable {
         model = Model.getInstance();
         setImg();
         util.addShadow(pswOldPassword, pswNewPassword, pswNewPasswordCheck, btnChangePassword, imgWUAVLogo);
+        btnChangePassword.setDisable(true);
+        addListner();
     }
 
     private void setImg() {
@@ -52,6 +56,41 @@ public class ChangePasswordController implements Initializable {
                 }
             }
         }
+    }
+    private void addListner(){
+        pswOldPassword.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(!pswOldPassword.getText().isEmpty()&&!pswNewPassword.getText().isEmpty()&&!pswNewPasswordCheck.getText().isEmpty()){
+                    btnChangePassword.setDisable(false);
+                }
+                else {
+                    btnChangePassword.setDisable(true);
+                }
+            }
+        });
+        pswNewPassword.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(!pswOldPassword.getText().isEmpty()&&!pswNewPassword.getText().isEmpty()&&!pswNewPasswordCheck.getText().isEmpty()){
+                    btnChangePassword.setDisable(false);
+                }
+                else {
+                    btnChangePassword.setDisable(true);
+                }
+            }
+        });
+        pswNewPasswordCheck.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(!pswOldPassword.getText().isEmpty()&&!pswNewPassword.getText().isEmpty()&&!pswNewPasswordCheck.getText().isEmpty()){
+                    btnChangePassword.setDisable(false);
+                }
+                else {
+                    btnChangePassword.setDisable(true);
+                }
+            }
+        });
     }
 
     public void setUser(User user) {

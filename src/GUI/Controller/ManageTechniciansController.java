@@ -21,7 +21,7 @@ public class ManageTechniciansController implements Initializable {
     @FXML
     private VBox vboxAllTechnicians, vboxComboBoxes;
     @FXML
-    Button btnConfirmChoices;
+    private Button btnConfirmChoices;
     private List<Technician> alreadyAssignedTechs, chosenTechnicians;
     private Model model;
     private Case selectedCase;
