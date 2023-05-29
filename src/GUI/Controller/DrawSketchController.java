@@ -72,6 +72,12 @@ public class DrawSketchController implements Initializable {
         drawingListener();
     }
 
+    /**
+     * Creates an eraser checkbox.
+     * Sets its style and initial visibility.
+     * Adds an event handler to handle the checkbox action.
+     * Adds the checkbox to the options' container.
+     */
     private void createErasor() {
         checkEraser = new CheckBox("Eraser");
         checkEraser.setStyle("-fx-font-size: 24");
@@ -129,6 +135,12 @@ public class DrawSketchController implements Initializable {
             alert.showAndWait();
         }
     }
+
+    /**
+     * Listens to mouse drag events on the canvas and performs drawing or erasing based on the selected tool.
+     * If the eraser tool is selected, clears the drawn area.
+     * Otherwise, fills a rectangle of specified size with the chosen color at the dragged position.
+     */
     private void drawingListener() {
         GraphicsContext g = canvasForCables.getGraphicsContext2D();
         canvasForCables.setOnMouseDragged(e -> {
@@ -146,6 +158,11 @@ public class DrawSketchController implements Initializable {
         });
     }
 
+    /**
+     * Creates cable buttons and labels based on a list of cable and color information.
+     * Each cable button is assigned a name, color, and event handler.
+     * The buttons are added to the vboxCables container.
+     */
     private void createAllCables() {
         for (CabelAndColor cable: cableAndColors) {
             Button cableBtn = new Button(cable.getCabelName());
@@ -167,6 +184,9 @@ public class DrawSketchController implements Initializable {
         }
     }
 
+    /**
+     * Creates new label with given name.
+     */
     private Label createLabel(String name) {
         Label lbl = new Label(name);
         lbl.getStyleClass().add("infoLabel");
@@ -180,6 +200,9 @@ public class DrawSketchController implements Initializable {
         return lbl;
     }
 
+    /**
+     * Adds all icons and their names to the icon container.
+     */
     private void addAllIconsAndNames() {
         for (DrawingIcon drawingIcon: imageIcons) {
             Label lblIcon = new Label();
@@ -192,6 +215,13 @@ public class DrawSketchController implements Initializable {
         }
     }
 
+    /**
+     * Sets up the graphics for a label icon.
+     * This method creates a graphic (image) on the label using the given `drawingIcon`. It sets the image as the graphic of
+     * the label, adjusts the size of the graphic to fit within the label, and sets the preferred size of the label to 80x80.
+     * It adds a mouse click event to the label, which spawns a new label based on the clicked label and sets the icon pane
+     * in front. Additionally, it ensures that the eraser tool is deselected.
+     */
     private void graphicsForLabelIcon(Label lblIcon, DrawingIcon drawingIcon) {
 
         // Creating a graphic (image) on the label
@@ -209,6 +239,13 @@ public class DrawSketchController implements Initializable {
         });
     }
 
+    /**
+     * Spawns a new label for displaying a name on the icon pane.
+     * This method creates a new label based on the given label. It sets the preferred size and text of the new label to match
+     * the given label. It adds the "infoLabel" style class to the new label for styling purposes. The label is positioned at
+     * coordinates (100, 100) on the icon pane. It makes the label draggable using `draggableMaker`, adds a context menu to
+     * the label, sets a mouse click event to update the chosenNode, and adds the new label to the icon pane.
+     */
     private void SpawnLabelName(Label lbl) {
         Label newLabel = new Label();
         newLabel.setPrefSize(lbl.getWidth(), lbl.getHeight());
@@ -223,6 +260,13 @@ public class DrawSketchController implements Initializable {
         iconPane.getChildren().add(newLabel);
     }
 
+    /**
+     * Spawns a new label with an image on the icon pane.
+     * This method creates a new label based on the given label and image. It sets the preferred size and text of the new label
+     * to match the given label. It sets the image as a graphic on the label using an ImageView. The label is positioned at
+     * coordinates (100, 100) on the icon pane. It adds a context menu to the label, sets a mouse click event to update the
+     * chosenNode, makes the label draggable, and adds it to the icon pane.
+     */
     private void spawnNewLbl(Label lbl, Image graphic) {
         Label newLabel = new Label();
         newLabel.setPrefSize(lbl.getPrefWidth(), lbl.getPrefHeight());
@@ -240,6 +284,12 @@ public class DrawSketchController implements Initializable {
         iconPane.getChildren().add(newLabel);
     }
 
+    /**
+     * Takes a snapshot of the content in the center of the border pane and opens the Save Image page.
+     * This method sets the icon pane in front, captures a snapshot of the content in the center of the border pane,
+     * and opens the Save Image page to save the snapshot. The snapshot is passed to the SaveImgController to be displayed
+     * in an ImageView, along with the current report and next position information.
+     */
     public void snapshot() {
         setIconPaneInFront(true);
         WritableImage snapshot = borderPane.getCenter().snapshot(new SnapshotParameters(), null);
@@ -265,6 +315,10 @@ public class DrawSketchController implements Initializable {
         }
     }
 
+    /**
+     * Clears the contents of the icon pane and the graphics context of the cables canvas.
+     * This method removes all children from the icon pane and clears the graphics context of the cables canvas.
+     */
     public void clear() {
         iconPane.getChildren().clear();
         GraphicsContext gc = canvasForCables.getGraphicsContext2D();
@@ -286,10 +340,16 @@ public class DrawSketchController implements Initializable {
         addAllIconsAndNames();
     }
 
+    /**
+     * Setter for currentReport
+     */
     public void setCurrentReport(Report currentReport) {
         this.currentReport = currentReport;
     }
 
+    /**
+     * Setter for nextPosition
+     */
     public void setNextPosition(int nextPosition) {
         this.nextPosition = nextPosition;
     }

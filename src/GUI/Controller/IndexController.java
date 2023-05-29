@@ -36,6 +36,11 @@ public class IndexController implements Initializable {
         loadLogIn();
     }
 
+    /**
+     * Loads the login view and handles the login process.
+     * If the login is successful, opens the main application window.
+     * If the login is unsuccessful, checks if the logged-in user has a password.
+     */
     private void loadLogIn() {
         FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/GUI/View/LoginView.fxml"));
         Parent r1;
@@ -80,6 +85,11 @@ public class IndexController implements Initializable {
         }
     }
 
+    /**
+     * Opens the main application window.
+     * Sets the border pane in the assistant controller.
+     * Loads the center, left, and top sections of the application interface.
+     */
     public void openTheApplication() throws IOException {
         controllerAssistant.setBorderPane(borderIndex);
         controllerAssistant.loadCenter("UserHomePageView.fxml");
@@ -87,6 +97,9 @@ public class IndexController implements Initializable {
         controllerAssistant.loadTop("TopBarView.fxml");
     }
 
+    /**
+     * Getter for borderIndex
+     */
     public BorderPane getBorderIndex() {
         return borderIndex;
     }

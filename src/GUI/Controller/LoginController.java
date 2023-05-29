@@ -43,12 +43,18 @@ public class LoginController implements Initializable {
         util.addShadow(pswPassword, txtUsername, btnLogin, imgWUAVLogo);
     }
 
-
+    /**
+     * Sets the image of the WUAV logo.
+     * It loads the image file from the specified path and sets it to the ImageView.
+     */
     private void SetImg() {
         String logo = "data/Images/logoWhite.png";
         imgWUAVLogo.setImage(util.loadImages(logo));
     }
-
+    /**
+     * Displays an information alert with the specified message.
+     * The alert is styled using the "Main.css" stylesheet.
+     */
     private void displayAlert(String alert) {
         Alert alertMessage = new Alert(Alert.AlertType.INFORMATION);
         alertMessage.setTitle("Alert");
@@ -60,6 +66,9 @@ public class LoginController implements Initializable {
 
     }
 
+    /**
+     * Checks if the password is valid, must contain 8 characters and not contain any special characters.
+     */
     public boolean validPassword(String password) {
         String specialChars = "!,.:;<>\\/()#%=+?'*";
         if (password.length() >= 8) {
@@ -77,6 +86,14 @@ public class LoginController implements Initializable {
         return true;
     }
 
+    /**
+     * Performs the login operation.
+     * Validates the username and password entered by the user,
+     * checks if the password is valid, and retrieves the user from the model.
+     * If the login is successful, sets the logged-in user in the assistant controller.
+     * If the user's password needs to be changed, opens the change password dialog.
+     * Closes the login window after a successful login.
+     */
     public void login() {
         if (txtUsername.getText().isEmpty() || pswPassword.getText().isEmpty()) {
             displayAlert("Missing username or password");
@@ -117,6 +134,9 @@ public class LoginController implements Initializable {
 
     }
 
+    /**
+     * Getter for loginIsSuccessful.
+     */
     public boolean isLoginIsSuccessful() {
         return loginIsSuccessful;
     }

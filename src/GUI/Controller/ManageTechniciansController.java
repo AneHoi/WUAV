@@ -36,6 +36,11 @@ public class ManageTechniciansController implements Initializable {
         updateTechnicians();
     }
 
+    /**
+     * Updates the list of technicians by retrieving them from the database and populating the UI.
+     * It adds technician names as labels, checkboxes for selection, and assigns appropriate styles.
+     * It also handles the selection and deselection of technicians using checkboxes.
+     */
     private void updateTechnicians() {
         List<Technician> technicians = new ArrayList<>();
         try {
@@ -73,11 +78,19 @@ public class ManageTechniciansController implements Initializable {
         }
     }
 
+    /**
+     * Setter for selectedCase and already assigned tech.
+     */
     public void setSelectedCase(Case selectedCase, List<Technician> alreadyAssignedTechs) {
         this.selectedCase = selectedCase;
         this.alreadyAssignedTechs = alreadyAssignedTechs;
     }
 
+    /**
+     * Handles the confirmation of selected technicians for a case.
+     * It retrieves the case ID and adds the chosen technicians to the case in the database.
+     * Finally, it closes the current window.
+     */
     public void handleConfirmChoices() {
         int caseID = selectedCase.getCaseID();
         try {

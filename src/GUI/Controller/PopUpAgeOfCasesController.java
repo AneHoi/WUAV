@@ -46,6 +46,11 @@ public class PopUpAgeOfCasesController implements Initializable {
         disable(true);
     }
 
+    /**
+     * Adds a mouse click listener to the tblCases table view.
+     * When a single mouse click occurs on a row and an item is selected,
+     * it enables certain buttons and updates the label displaying the months old information.
+     */
     private void addListeners() {
         tblCases.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1 && tblCases.getSelectionModel().getSelectedItem() != null) {
@@ -56,6 +61,13 @@ public class PopUpAgeOfCasesController implements Initializable {
         });
     }
 
+    /**
+     * Calculates and returns the age of the selected case in months.
+     * The method retrieves the selected case from the tblCases table view.
+     * It calculates the number of days between the closed date of the case and today's date.
+     * Then, it calculates the number of months by dividing the days by 30 and rounding to the nearest whole number.
+     * The calculated number of months is returned.
+     */
     private long chosenCaseAge() {
         Case selectedCase = (Case) tblCases.getSelectionModel().getSelectedItem();
         LocalDateTime dateToday = LocalDate.now().atStartOfDay();
@@ -65,6 +77,15 @@ public class PopUpAgeOfCasesController implements Initializable {
         return monthsBetween;
     }
 
+    /**
+     * Disables or enables certain UI elements based on the specified boolean value.
+     * If the boolean value is true, the btnDeleteCase and btnKeepCase buttons are disabled,
+     * and the shadow effect is removed from them. The lblMonthsOld, lblInfo1, and lblInfo2 labels
+     * are also hidden.
+     * If the boolean value is false, the btnDeleteCase and btnKeepCase buttons are enabled,
+     * and a shadow effect is added to them. The lblMonthsOld, lblInfo1, and lblInfo2 labels
+     * are made visible.
+     */
     private void disable(boolean bool) {
         btnDeleteCase.setDisable(bool);
         btnKeepCase.setDisable(bool);
@@ -83,7 +104,14 @@ public class PopUpAgeOfCasesController implements Initializable {
         }
     }
 
-
+    /**
+     * Updates the table view with the list of cases.
+     * It sets up the cell value factories for the table columns.
+     * The table columns are added to the table view.
+     * It retrieves the list of cases from the model.
+     * For each case, if it is considered too old according to the util.tooOld() method, it is added to the oldCases list.
+     * The oldCases list is set as the items of the table view.
+     */
     private void updateTableView() {
         clmCaseName.setCellValueFactory(new PropertyValueFactory<>("caseName"));
         clmCreated.setCellValueFactory(new PropertyValueFactory<>("createdDate"));
@@ -109,7 +137,14 @@ public class PopUpAgeOfCasesController implements Initializable {
         tblCases.setItems(oldCases);
     }
 
-
+    /**
+     * Allows the user to extend the keeping time for the selected case by choosing a predefined duration.
+     * It retrieves the selected case from the table view.
+     * A confirmation alert is displayed to ask the user how much time to extend the case keeping.
+     * The user can choose from options like 1 month, 0.5 year, 1 year, 4 years, or cancel.
+     * The expansion of keeping time is performed by calling the expandKeepingTime() method with the selected case and the chosen duration.
+     * After the extension, the table view is updated and the application is disabled.
+     */
     public void keepCaseLonger() {
         Case selectedCase = (Case) tblCases.getSelectionModel().getSelectedItem();
         Alert alertCaseForDeleting = new Alert(Alert.AlertType.CONFIRMATION);
@@ -141,6 +176,12 @@ public class PopUpAgeOfCasesController implements Initializable {
         disable(true);
     }
 
+    /**
+     * Expands the keeping time for the selected case by adding the specified number of days.
+     * It calculates the number of days between the case's closed date and the current date.
+     * The calculated days are incremented by the additional days to keep.
+     * The expansion of keeping time is performed by calling the model's expandKeepingTime() method.
+     */
     private void expandKeepingTime(Case selectedCase, int daysToFurtherKeep) {
         LocalDate closedDate = selectedCase.getDateClosed();
         LocalDate today = LocalDate.now();
@@ -159,12 +200,24 @@ public class PopUpAgeOfCasesController implements Initializable {
         }
     }
 
+    /**
+     * Deletes the selected case after confirming with the user.
+     * It determines the number of months the case has been open using the chosenCaseAge() method.
+     * The case to be deleted is obtained from the selected item in the table view.
+     * The deletion is initiated by calling the wantToDeleteCase() method.
+     */
     public void deleteCase() {
         long monthsOld = chosenCaseAge();
         Case casen = (Case) tblCases.getSelectionModel().getSelectedItem();
         wantToDeleteCase(casen, monthsOld);
     }
 
+    /**
+     * Displays a confirmation dialog to prompt the user for case deletion.
+     * The dialog includes the case name and the number of months since its creation.
+     * If the user confirms the deletion, the case is deleted using the model.
+     * After the deletion, the table view is updated, and certain controls are disabled.
+     */
     private void wantToDeleteCase(Case casen, long monthsBetween) {
         Alert alertCaseForDeleting = new Alert(Alert.AlertType.CONFIRMATION);
         alertCaseForDeleting.setTitle("Deleting a case");

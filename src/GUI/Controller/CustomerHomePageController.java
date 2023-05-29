@@ -67,6 +67,10 @@ public class CustomerHomePageController implements Initializable {
 
     }
 
+    /**
+     * Navigates back to the CustomerView.
+     * This method loads the CustomerView.fxml in the center of the application.
+     */
     private void goBack() {
         try {
             controllerAssistant.loadCenter("CustomerView.fxml");
@@ -80,6 +84,10 @@ public class CustomerHomePageController implements Initializable {
         }
     }
 
+    /**
+     * Updates the TableView with the cases for the current customer.
+     * This method retrieves the cases from the model and populates the TableView.
+     */
     private void updateTableView() {
         colCaseID.setCellValueFactory(new PropertyValueFactory<>("caseID"));
         colCaseName.setCellValueFactory(new PropertyValueFactory<>("caseName"));
@@ -99,6 +107,10 @@ public class CustomerHomePageController implements Initializable {
         tblViewExistingCases.setItems(caseObservableList);
     }
 
+    /**
+     * Adds listeners to the necessary components in the user interface.
+     * This method handles the selection of existing cases in the TableView and the double click event.
+     */
     private void addListeners() {
         tblViewExistingCases.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -151,6 +163,9 @@ public class CustomerHomePageController implements Initializable {
 
     }
 
+    /**
+     * Store link between logged in user and selected case in database.
+     */
     private void storeUserCaseLink(Case selectedCase) {
         User user = controllerAssistant.getLoggedInUser();
         try {
@@ -165,6 +180,11 @@ public class CustomerHomePageController implements Initializable {
         }
     }
 
+    /**
+     * Filters the items in the tblViewExistingCases TableView based on the user's input in the txtSearchBar TextField.
+     * Creates a filtered list and sets a predicate to perform the filtering.
+     * Displays all items if no input is entered, otherwise filters based on case name, assigned technician, case date, and case ID.
+     */
     private void searchBarFilter() {
         // Create a list to hold the original unfiltered items in the tblViewCustomers TableView
         ObservableList<Case> originalList = FXCollections.observableArrayList(tblViewExistingCases.getItems());
@@ -196,6 +216,12 @@ public class CustomerHomePageController implements Initializable {
         });
     }
 
+    /**
+     * Handles the creation of a new case by opening the Create or Edit Case window.
+     * Opens a new window using the FXMLLoader and sets the controller and location.
+     * Sets only the current customer (without a selected case) in the CreateOrUpdateCaseController.
+     * Updates the table view after creating the new case.
+     */
     public void handleCreateNewCase() {
         CreateOrUpdateCaseController createOrUpdateCaseController = new CreateOrUpdateCaseController();
         Stage stage = new Stage();
@@ -207,7 +233,13 @@ public class CustomerHomePageController implements Initializable {
         updateTableView();
     }
 
-
+    /**
+     * Handles the update of a case by opening the Create or Edit Case window.
+     * Retrieves the selected case from the table view.
+     * Opens a new window using the FXMLLoader and sets the controller and location.
+     * Sets the selected case and the current customer in the CreateOrUpdateCaseController.
+     * Updates the table view after updating the case.
+     */
     public void handleUpdateCase() {
         CreateOrUpdateCaseController createOrUpdateCaseController = new CreateOrUpdateCaseController();
         Case selectedCase = (Case) tblViewExistingCases.getSelectionModel().getSelectedItem();
@@ -220,6 +252,13 @@ public class CustomerHomePageController implements Initializable {
         updateTableView();
     }
 
+    /**
+     * Handles the management of technicians by opening the Manage Technicians window.
+     * Retrieves the selected case from the table view and the already assigned technicians for the case.
+     * Sets the selected case and already assigned technicians in the ManageTechniciansController.
+     * Opens a new window using the FXMLLoader and sets the controller and location.
+     * Updates the table view after managing the technicians.
+     */
     public void handleManageTech() {
         ManageTechniciansController manageTechniciansController = new ManageTechniciansController();
         Case selectedCase = (Case) tblViewExistingCases.getSelectionModel().getSelectedItem();

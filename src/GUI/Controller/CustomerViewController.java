@@ -53,7 +53,14 @@ public class CustomerViewController implements Initializable {
         util.addShadow(btnCreateCustomer, btnDeleteCustomer, txtSearchBar);
     }
 
-
+    /**
+     * Adds listeners to the tblViewCustomers TableView and handles different events.
+     * When a customer is selected, adds an "Edit Customer" button to the button bar, enables the delete button,
+     * and updates the create customer button text.
+     * When a customer is double-clicked, sets the selected customer as the current customer,
+     * loads the Customer Home Page view, and stores the user-customer link in a separate thread.
+     * If an exception occurs, displays an error alert to the user.
+     */
     private void addListeners() {
         tblViewCustomers.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -96,6 +103,11 @@ public class CustomerViewController implements Initializable {
         });
     }
 
+    /**
+     * Stores a link between a user and a customer in the database.
+     * Retrieves the logged-in user from the controller assistant.
+     * Stores the user-customer link using the user's ID and the customer's ID.
+     */
     private void storeUserCustomerLink(Customer customer) {
         User user = controllerAssistant.getLoggedInUser();
         try {
@@ -110,6 +122,13 @@ public class CustomerViewController implements Initializable {
         }
     }
 
+    /**
+     * Filters the items in the tblViewCustomers TableView based on the user's input in the search bar.
+     * Creates a list to hold the original unfiltered items.
+     * Adds a listener to the search bar to update the TableView based on the user's input.
+     * Uses a filtered list and a predicate to dynamically filter the items in the TableView.
+     * If the user has not entered any input, displays all items. Otherwise, filters the items based on the user's input.
+     */
     private void searchBarFilter() {
         // Create a list to hold the original unfiltered items in the tblViewCustomers TableView
         ObservableList<Customer> originalList = FXCollections.observableArrayList(tblViewCustomers.getItems());
@@ -140,6 +159,11 @@ public class CustomerViewController implements Initializable {
         });
     }
 
+    /**
+     * Updates the customer view by setting up the cell value factories for each column.
+     * Clears the customer observable list and retrieves all customers from the model.
+     * Sets the customer observable list as the items for the table view.
+     */
     private void updateCostumerView() {
         clmCustomerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         clmAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -158,6 +182,12 @@ public class CustomerViewController implements Initializable {
         tblViewCustomers.setItems(customerObservableList);
     }
 
+    /**
+     * Handles the creation of a new customer by opening a new window for creating a new customer.
+     * Creates an instance of the pop-up controller and sets it as the controller for the FXMLLoader.
+     * Opens a new window using the FXMLLoader and sets the controller and location.
+     * Updates the customer view and hides delete customer button.
+     */
     public void handleCreateCustomer(ActionEvent event) {
         PopUpCreateNewCostumerController popUpCreateNewCostumerController = new PopUpCreateNewCostumerController();
         Stage stage = new Stage();
@@ -171,6 +201,12 @@ public class CustomerViewController implements Initializable {
         btnDeleteCustomer.setDisable(true);
     }
 
+    /**
+     * Handles the editing of a customer by opening a new window for editing or creating a new customer.
+     * If a customer is selected from the table view, sets the customer variable in the pop-up controller.
+     * Opens a new window using the FXMLLoader and sets the controller and location.
+     * Updates the customer view and hides the delete customer button.
+     */
     public void handleEditCustomer (ActionEvent event) {
         PopUpCreateNewCostumerController popUpCreateNewCostumerController = new PopUpCreateNewCostumerController();
         if (tblViewCustomers.getSelectionModel().getSelectedItem() != null) {
@@ -188,6 +224,11 @@ public class CustomerViewController implements Initializable {
         btnDeleteCustomer.setDisable(true);
     }
 
+    /**
+     * Deletes a selected customer from the program after displaying a confirmation dialog.
+     * If the user confirms the deletion, the customer is deleted using the model.
+     * Updates the customer view and hides the delete customer button.
+     */
     public void deleteCustomer(ActionEvent event) {
         Customer customer = (Customer) tblViewCustomers.getSelectionModel().getSelectedItem();
         Alert alertAreYouSure = new Alert(Alert.AlertType.CONFIRMATION);
