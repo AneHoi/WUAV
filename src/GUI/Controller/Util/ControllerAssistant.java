@@ -22,7 +22,6 @@ public class ControllerAssistant {
      * Controller constructor, only used once in get instance
      */
     public ControllerAssistant() {
-        loggedInUser = new Admin(2, 1,"Michael Tonnesen", "A","11111111","mt@wuav.dk");
 
     }
 

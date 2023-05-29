@@ -76,6 +76,11 @@ public class DrawSketchController implements Initializable {
         checkEraser = new CheckBox("Eraser");
         checkEraser.setStyle("-fx-font-size: 24");
         checkEraser.setVisible(false);
+        checkEraser.setOnAction(e -> {
+            if(checkEraser.isSelected()){
+                setIconPaneInFront(false);
+            }
+        });
 
         options.getChildren().add(checkEraser);
     }
@@ -122,12 +127,12 @@ public class DrawSketchController implements Initializable {
     private void drawingListener() {
         GraphicsContext g = canvasForCables.getGraphicsContext2D();
         canvasForCables.setOnMouseDragged(e -> {
-            double size = Double.parseDouble(String.valueOf(20));
+            double size = Double.parseDouble(String.valueOf(10));
             double x = e.getX() - size / 2;
             double y = e.getY() - size / 2;
 
             if(checkEraser.isSelected()){
-                g.clearRect(x,y,size,size);
+                g.clearRect(x,y,size*2,size*2);
             }
             else if (color != null) {
                 g.setFill(color);
