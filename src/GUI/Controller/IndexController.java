@@ -28,14 +28,13 @@ public class IndexController implements Initializable {
     private ControllerAssistant controllerAssistant;
     private Util util = new Util();
     private Model model = new Model();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = Model.getInstance();
         util = new Util();
         controllerAssistant = ControllerAssistant.getInstance();
         loadLogIn();
-
-
     }
 
     private void loadLogIn() {
@@ -61,15 +60,13 @@ public class IndexController implements Initializable {
                     controllerAssistant.loadLeft("BurgerBarView.fxml");
                     controllerAssistant.loadTop("TopBarView.fxml");
                     loginStage.close();
-                } catch (
-                        IOException e) {
+                } catch (IOException e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load the application: \n" + e, ButtonType.OK);
                     DialogPane dialogPane = alert.getDialogPane();
                     dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
                     dialogPane.getStyleClass().add("dialog");
                     alert.showAndWait();
-                } catch (
-                        Exception e) {
+                } catch (Exception e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get password", ButtonType.CLOSE);
                     DialogPane dialogPane = alert.getDialogPane();
                     dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
