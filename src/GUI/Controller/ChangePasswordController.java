@@ -34,7 +34,7 @@ public class ChangePasswordController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         model = Model.getInstance();
         setImg();
-        util.addShadow(pswOldPassword, pswNewPassword, pswNewPasswordCheck, btnChangePassword, imgWUAVLogo);
+        util.addShadow(pswOldPassword, pswNewPassword, pswNewPasswordCheck, imgWUAVLogo);
         btnChangePassword.setDisable(true);
         addListner();
     }
@@ -62,6 +62,7 @@ public class ChangePasswordController implements Initializable {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if(!pswOldPassword.getText().isEmpty()&&!pswNewPassword.getText().isEmpty()&&!pswNewPasswordCheck.getText().isEmpty()){
                     btnChangePassword.setDisable(false);
+                    util.addShadow(btnChangePassword);
                 }
                 else {
                     btnChangePassword.setDisable(true);
@@ -73,6 +74,7 @@ public class ChangePasswordController implements Initializable {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if(!pswOldPassword.getText().isEmpty()&&!pswNewPassword.getText().isEmpty()&&!pswNewPasswordCheck.getText().isEmpty()){
                     btnChangePassword.setDisable(false);
+                    util.addShadow(btnChangePassword);
                 }
                 else {
                     btnChangePassword.setDisable(true);
@@ -84,6 +86,7 @@ public class ChangePasswordController implements Initializable {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if(!pswOldPassword.getText().isEmpty()&&!pswNewPassword.getText().isEmpty()&&!pswNewPasswordCheck.getText().isEmpty()){
                     btnChangePassword.setDisable(false);
+                    util.addShadow(btnChangePassword);
                 }
                 else {
                     btnChangePassword.setDisable(true);

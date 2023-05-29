@@ -76,6 +76,9 @@ public class ReportHomePageController implements Initializable {
         updateReport();
     }
 
+    /**
+     * Calls updateReportInfo, updateImagesAndSketches, updateLoginDetails and checkForReportStatus methods.
+     */
     private void updateReport() {
         updateReportInfo();
         updateImagesTextsAndSketches();
@@ -83,6 +86,9 @@ public class ReportHomePageController implements Initializable {
         checkForReportStatus();
     }
 
+    /**
+     * Creates list of login details, gets login details from current report, inserts borderpane with no login details message or all login details into a borderpane
+     */
     private void updateLoginDetails() {
         vboxAddingLoginDetails.getChildren().clear();
         List<LoginDetails> loginDetails = new ArrayList<>();
@@ -135,6 +141,9 @@ public class ReportHomePageController implements Initializable {
         }
     }
 
+    /**
+     * Sets up vboxes with images, text or login detail and adds edit and delete buttons
+     */
     private void vBoxGraphics(LoginDetails ld, BorderPane bp) {
         VBox vbRight = new VBox();
         Button btnEdit = new Button();
@@ -157,6 +166,9 @@ public class ReportHomePageController implements Initializable {
         bp.setPrefWidth(700);
     }
 
+    /**
+     * sets height and width for images in imageview
+     */
     private void heightsAndWidthImageView(Button btnEdit, ImageView imgViewEdit, ImageView imgViewDelete) {
         imgViewEdit.setImage(util.loadImages("data/Images/Edit.png"));
         imgViewDelete.setImage(util.loadImages("data/Images/Trash Can.png"));
@@ -167,6 +179,9 @@ public class ReportHomePageController implements Initializable {
         btnEdit.setGraphic(imgViewEdit);
     }
 
+    /**
+     * Open alert to check if login details should be deleted, if yes calls deleteLoginDetails method from model. Calls update report method.
+     */
     private void deleteLoginDetails(LoginDetails ld) {
         Alert areYouSureAlert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to delete these login details?", ButtonType.YES, ButtonType.NO);
         areYouSureAlert.showAndWait();
@@ -181,6 +196,10 @@ public class ReportHomePageController implements Initializable {
         updateReport();
     }
 
+    /**
+     * Sets addLoginDetailsController with current report as the report, sets current login details as the login details ld.
+     * Calls method openLogInDetailsView with this controller as the controller.
+     */
     private void editLoginDetails(LoginDetails ld) {
         AddLoginDetailsController addLoginDetailsController = new AddLoginDetailsController();
         addLoginDetailsController.setCurrentReport(currentReport);
@@ -188,6 +207,10 @@ public class ReportHomePageController implements Initializable {
         openLogInDetailsView(addLoginDetailsController);
     }
 
+    /**
+     *
+     * @param addLoginDetailsController
+     */
     private void openLogInDetailsView(AddLoginDetailsController addLoginDetailsController) {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();

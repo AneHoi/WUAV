@@ -57,6 +57,9 @@ public class SearchForCaseController implements Initializable {
         updateTableView();
     }
 
+    /**
+     * Check if any cases are too old, if any case is to old opens too pop-up with too old cases
+     */
     private void checkForOldCases() {
         List<Case> caseList;
         try {
@@ -74,6 +77,9 @@ public class SearchForCaseController implements Initializable {
         }
     }
 
+    /**
+     * Opens new view PopUpAgeOfCases.fxml with PopUpAgeOfCasesController as the controller. Sets title of view to Cases about to expire.
+     */
     private void openCaseAgePopUp() {
         PopUpAgeOfCasesController popUpAgeOfCasesController = new PopUpAgeOfCasesController();
         Stage stage = new Stage();
@@ -85,6 +91,9 @@ public class SearchForCaseController implements Initializable {
         util.openNewWindow(stage, loader, "Could not open cases about to expire Window");
     }
 
+    /**
+     * Creates list of ReportCaseAndCustomers, gets all reports from model, and inserts them into list. Sorts list by status.
+     */
     private void updateTableView() {
         colReportName.setCellValueFactory(new PropertyValueFactory<>("reportName"));
         colCustomer.setCellValueFactory(new PropertyValueFactory<>("customerName"));
@@ -150,31 +159,10 @@ public class SearchForCaseController implements Initializable {
         tblViewFilteredReports.setItems(data);
     }
 
-    public void handleFilter(ActionEvent actionEvent) {
-        // Get the filter criteria from the text fields and date picker
-        String reportName = txtReportName.getText().trim();
-        String customerName = txtCustomer.getText().trim();
-        String customerAddress = txtCustomerAddress.getText().trim();
-        String caseName = txtCaseName.getText().trim();
-        String technicianName = txtTechnician.getText().trim();
-        LocalDate createdDate = dpDate.getValue();
-
-        // Create a filtered list that contains only the rows that match the filter criteria
-        ObservableList<ReportCaseAndCustomer> filteredList = FXCollections.observableArrayList();
-        for (ReportCaseAndCustomer reportCaseAndCustomer : tblViewFilteredReports.getItems()) {
-            if (reportCaseAndCustomer.getReportName().toLowerCase().contains(reportName.toLowerCase()) && reportCaseAndCustomer.getCustomerName().toLowerCase().contains(customerName.toLowerCase())
-                    && reportCaseAndCustomer.getCustomerAddress().toLowerCase().contains(customerAddress.toLowerCase())
-                    && reportCaseAndCustomer.getCaseName().toLowerCase().contains(caseName.toLowerCase())
-                    && reportCaseAndCustomer.getTechnicianName().toLowerCase().contains(technicianName.toLowerCase())
-                    && (createdDate == null || reportCaseAndCustomer.getCreatedDate().isEqual(createdDate))) {
-                filteredList.add(reportCaseAndCustomer);
-            }
-        }
-
-        // Update the TableView to display the filtered list
-        tblViewFilteredReports.setItems(filteredList);
-    }
-
+    /**
+     *  adds listeners to tableviews where if double-clicked changes view to report homepage from current customer, current case and current report.
+     *  adds listeners to text fields, and filters list in tableview based on changes in text fields. Updates tableview to show changes.
+     */
     private void addListeners() {
         tblViewFilteredReports.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && tblViewFilteredReports.getSelectionModel().getSelectedItem() != null) {
@@ -232,7 +220,9 @@ public class SearchForCaseController implements Initializable {
         }
     };
 
-
+    /**
+     * If clear button is pressed, removes text from text fields and sets date in datepicker to null.
+     */
     public void handleClear(ActionEvent actionEvent) {
         txtReportName.clear();
         txtCustomer.clear();
