@@ -107,14 +107,6 @@ public class LoginController implements Initializable {
                 stage1.showAndWait();
             }
             loginIsSuccessful = true;
-
-            if (controllerAssistant.getBorderPane() == null) {
-                IndexController indexController = new IndexController();
-                controllerAssistant.setBorderPane(indexController.getBorderIndex());
-                //controllerAssistant.loadCenter("UserHomePageView.fxml");
-                //controllerAssistant.loadLeft("BurgerBarView.fxml");
-                //controllerAssistant.loadTop("TopBarView.fxml");
-                }
             Stage stage = (Stage) btnLogin.getScene().getWindow();
             stage.close();
 

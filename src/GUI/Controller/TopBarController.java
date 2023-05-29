@@ -6,6 +6,8 @@ import GUI.Controller.Util.Util;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
@@ -17,9 +19,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -61,13 +61,24 @@ public class TopBarController implements Initializable {
         alert.showAndWait();
         if (alert.getResult() == ButtonType.YES) {
             Stage thisWindow = (Stage) lblLogOut.getScene().getWindow();
-            Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/GUI/View/LoginView.fxml"));
             controllerAssistant.setLoggedInUser(null);
-            thisWindow.hide();
-            util.openNewWindow(stage, loader, "Could not open new Login Window");
+            thisWindow.close();
+            restartApplication();
+        }
+    }
 
+    private void restartApplication() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/view/Index.fxml"));
+            Parent root = loader.load();
+            Stage primaryStage = new Stage();
+            primaryStage.setTitle("WUAV");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.setResizable(true);
+            primaryStage.setOnCloseRequest(event -> System.exit(0));
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
