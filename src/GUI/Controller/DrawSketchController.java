@@ -119,7 +119,7 @@ public class DrawSketchController implements Initializable {
             imageIcons = model.getAllDrawingIcons();
             vboxCables.getChildren().clear();
             cableAndColors.clear();
-            cableAndColors = model.getAllCables();
+            cableAndColors = (ArrayList<CabelAndColor>) model.getAllCables();
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get the icons", ButtonType.CANCEL);
@@ -152,13 +152,14 @@ public class DrawSketchController implements Initializable {
             cableBtn.getStyleClass().clear();
             cableBtn.getStyleClass().add("infoLabel");
             cableBtn.setStyle("-fx-border-radius: 15");
-            cableBtn.setBackground(Background.fill(cable.getCabelColor()));
+            color = Color.valueOf(cable.getCabelColor());
+            cableBtn.setBackground(Background.fill(color));
             cableBtn.setPrefSize(80, 80);
             cableBtn.setOnMouseClicked(e ->{
                 checkEraser.setVisible(true);
                 checkEraser.setSelected(false);
                 setIconPaneInFront(false);
-                color = cable.getCabelColor();
+                color = Color.valueOf(cable.getCabelColor());
             });
             Label cableName = createLabel(cable.getCabelName());
             vboxCables.getChildren().add(cableBtn);

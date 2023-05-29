@@ -22,13 +22,7 @@ public class DrawingManager {
         return drawingDAO.getAllIcons();
     }
 
-    public ArrayList<CabelAndColor> getAllCables() {
-        CabelAndColor hdmi = new CabelAndColor("HDMI", Color.BLUE);
-        CabelAndColor ethernet = new CabelAndColor("Ethernet", Color.BROWN);
-        CabelAndColor power = new CabelAndColor("Power", Color.SILVER);
-        CabelAndColor antenna = new CabelAndColor("Antenna", Color.YELLOW);
-        CabelAndColor sound = new CabelAndColor("Sound", Color.LAVENDER);
-        return new ArrayList<>(Arrays.asList(hdmi, ethernet, power, antenna, sound));
-
+    public List<CabelAndColor> getAllCables() {
+        return drawingDAO.getAllCables();
     }
 }
