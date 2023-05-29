@@ -35,6 +35,9 @@ public class CreateOrUpdateCaseController implements Initializable {
         checkCurrentCase();
     }
 
+    /**
+     * If there is a current case set, then update the case if not then create a new case
+     */
     private void checkCurrentCase() {
         if (currentCase != null) {
             updateCase();
@@ -43,6 +46,9 @@ public class CreateOrUpdateCaseController implements Initializable {
         }
     }
 
+    /**
+     * Set prompt texts and labels accordingly and change button to "Create Case"
+     */
     private void createCase() {
         lblCreateOrUpdate.setText("Create Case:");
         lblCaseName.setText("");
@@ -55,6 +61,9 @@ public class CreateOrUpdateCaseController implements Initializable {
         btnCreateOrUpdateCase.setText("Create Case");
     }
 
+    /**
+     * Set prompt texts and labels accordingly and change button text to "Update Case"
+     */
     private void updateCase() {
         lblCreateOrUpdate.setText("Update Case:");
         lblCaseName.setText(currentCase.getCaseName());
@@ -70,11 +79,19 @@ public class CreateOrUpdateCaseController implements Initializable {
         txtCaseDescription.textProperty().addListener(createNewCaseBtnListener);
     }
 
+    /**
+     * Set the current case and customer which the user is working with
+     * @param currentCase
+     * @param currentCustomer
+     */
     public void setCustomerAndCase(Case currentCase, Customer currentCustomer) {
         this.currentCase = currentCase;
         this.currentCustomer = currentCustomer;
     }
 
+    /**
+     * If the text of the button is "Create Case", then create a new case, otherwise update the current case
+     */
     public void handleCreateOrUpdateCase() {
         if (btnCreateOrUpdateCase.getText().equals("Create Case")) {
             handleCreateCase();
@@ -83,6 +100,9 @@ public class CreateOrUpdateCaseController implements Initializable {
         }
     }
 
+    /**
+     * Update the case in the database
+     */
     private void handleUpdateCase() {
         int caseID = currentCase.getCaseID();
         String caseName = txtCaseName.getText();
@@ -102,6 +122,9 @@ public class CreateOrUpdateCaseController implements Initializable {
         stage.close();
     }
 
+    /**
+     * Create a new case in the database
+     */
     private void handleCreateCase() {
         String caseName = txtCaseName.getText();
         String contactPerson = txtContactPerson.getText();
@@ -132,6 +155,10 @@ public class CreateOrUpdateCaseController implements Initializable {
         }
     };
 
+    /**
+     * Only set the customer in case you need to create a new case
+     * @param currentCustomer
+     */
     public void setOnlyCustomer(Customer currentCustomer) {
         this.currentCustomer = currentCustomer;
     }
