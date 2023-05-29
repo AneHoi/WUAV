@@ -101,7 +101,12 @@ public class SaveImgController implements Initializable, Serializable {
             }
             model.SaveImageToReport(position, reportID, dataImage, comment, userID, createdDate, createdTime);
 
-        } catch (Exception e) {
+        } catch (SQLException | IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR,"Could not save image to database", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
+            alert.showAndWait();
             e.printStackTrace();
         }
         //This closes the window

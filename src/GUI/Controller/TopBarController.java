@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -53,6 +54,9 @@ public class TopBarController implements Initializable {
 
     private void handleLogOut() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Are you sure you wish to log out?", ButtonType.YES, ButtonType.NO);
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+        dialogPane.getStyleClass().add("dialog");
         alert.showAndWait();
         if (alert.getResult() == ButtonType.YES) {
             Stage thisWindow = (Stage) lblLogOut.getScene().getWindow();

@@ -63,15 +63,20 @@ public class CaseHomePageController implements Initializable {
         searchBarFilter();
 
     }
+
     private void goBack() {
         try {
             controllerAssistant.loadCenter("CustomerHomePageView.fxml");
         } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not go back", ButtonType.OK);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
     }
+
     private void addListeners() {
         tblViewExistingReports.getSelectionModel().selectedItemProperty().addListener(selectedItemListener);
 
@@ -86,6 +91,9 @@ public class CaseHomePageController implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Report Home Page", ButtonType.CANCEL);
+                    DialogPane dialogPane = alert.getDialogPane();
+                    dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+                    dialogPane.getStyleClass().add("dialog");
                     alert.showAndWait();
                 }
 
@@ -128,7 +136,7 @@ public class CaseHomePageController implements Initializable {
             Collections.sort(reports, byStatus);
 
             //Sorting the list by active cases, and does not add the "Submitted for review" status for the technicians
-            if (controllerAssistant.getLoggedInUser().getUserType() == 3){
+            if (controllerAssistant.getLoggedInUser().getUserType() == 3) {
                 Comparator<Report> byOpenClosed = (Report report1, Report report2) -> report1.getIsActive().compareTo(report2.getIsActive());
                 Collections.sort(reports, Collections.reverseOrder(byOpenClosed));
                 for (Report report : reports) {
@@ -138,7 +146,7 @@ public class CaseHomePageController implements Initializable {
                 }
             }
             //Sorting by "Submitted for review", "open" and "closed" if a project manager is logged in
-            else if (controllerAssistant.getLoggedInUser().getUserType() == 2|| controllerAssistant.getLoggedInUser().getUserType() == 1) {
+            else if (controllerAssistant.getLoggedInUser().getUserType() == 2 || controllerAssistant.getLoggedInUser().getUserType() == 1) {
                 //Sort the reports
                 Comparator<Report> bySubOpenClosed = (Report report1, Report report2) -> {
                     if (report1.getIsActive().equalsIgnoreCase("submitted for review") && report2.getIsActive().equalsIgnoreCase("open")
@@ -153,7 +161,7 @@ public class CaseHomePageController implements Initializable {
                             || report1.getIsActive().equalsIgnoreCase("open") && report2.getIsActive().equalsIgnoreCase("submitted for review")) {
                         //"Closed" is the absolute 'lowest'
                         return -1;
-                    }else {
+                    } else {
                         return 0;
                     }
                 };
@@ -169,6 +177,9 @@ public class CaseHomePageController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get reports from Database", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         colCreatedDate.setCellValueFactory(new PropertyValueFactory<>("createdDate"));
@@ -247,6 +258,9 @@ public class CaseHomePageController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Could not delete report from database", ButtonType.OK);
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+                dialogPane.getStyleClass().add("dialog");
                 alert.showAndWait();
             }
         }

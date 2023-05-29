@@ -13,6 +13,7 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -39,6 +40,9 @@ public class PDFGenerator {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load an image, following error occurred:\n" + e, ButtonType.CANCEL);
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+                dialogPane.getStyleClass().add("dialog");
                 alert.showAndWait();
             }
             String para1 = "Costumer name: " + customer.getCustomerName() + "\n" +
@@ -113,7 +117,6 @@ public class PDFGenerator {
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "the file could not be found", ButtonType.CANCEL);
             throw new FileNotFoundException();
         } catch (IOException ex) {
             throw new RuntimeException(ex);

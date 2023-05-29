@@ -9,10 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -49,8 +46,12 @@ public class LoginController implements Initializable {
     private void displayAlert(String alert){
         Alert alertMessage = new Alert(Alert.AlertType.INFORMATION);
         alertMessage.setTitle("Alert");
+        DialogPane dialogPane = alertMessage.getDialogPane();
+        dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+        dialogPane.getStyleClass().add("dialog");
         alertMessage.setHeaderText(alert);
         alertMessage.showAndWait();
+
     }
     public boolean validPassword(String password){
         String specialChars = "!,.:;<>\\/()#%=+?'*";

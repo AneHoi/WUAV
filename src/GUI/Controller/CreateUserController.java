@@ -129,6 +129,9 @@ public class CreateUserController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get users from database", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         tblViewExistingUsers.setItems(allUsers);
@@ -159,8 +162,9 @@ public class CreateUserController implements Initializable {
 
             if(cbUserActive.getSelectionModel().getSelectedItem().equals("Inactive")){
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to make: " + user.getFullName() + " Inactive", ButtonType.YES, ButtonType.NO);
-                alert.getDialogPane().getStylesheets().add("/gui/view/Main.css");
-                alert.getDialogPane().getStyleClass().add("alertPane");
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+                dialogPane.getStyleClass().add("dialog");
                 alert.showAndWait();
                 if (alert.getResult() == ButtonType.YES) {
                     try {
@@ -170,6 +174,9 @@ public class CreateUserController implements Initializable {
                     } catch (SQLException e) {
                         e.printStackTrace();
                         Alert alert1 = new Alert(Alert.AlertType.ERROR, "Could not update User", ButtonType.CANCEL);
+                        DialogPane dialogPane1 = alert1.getDialogPane();
+                        dialogPane1.getStylesheets().add("/GUI/View/css/Main.css");
+                        dialogPane1.getStyleClass().add("dialog");
                         alert1.showAndWait();
                     }
                 }
@@ -178,10 +185,16 @@ public class CreateUserController implements Initializable {
                 try {
                     model.updateUser(userID, fullName, userName, userTlf, userEmail, userActive);
                     Alert success = new Alert(Alert.AlertType.INFORMATION, "User: " + user.getFullName() + " was made active again", ButtonType.OK );
+                    DialogPane dialogPane1 = success.getDialogPane();
+                    dialogPane1.getStylesheets().add("/GUI/View/css/Main.css");
+                    dialogPane1.getStyleClass().add("dialog");
                     success.showAndWait();
                 } catch (SQLException e) {
                     e.printStackTrace();
                     Alert alert1 = new Alert(Alert.AlertType.ERROR, "Could not update User", ButtonType.CANCEL);
+                    DialogPane dialogPane2 = alert1.getDialogPane();
+                    dialogPane2.getStylesheets().add("/GUI/View/css/Main.css");
+                    dialogPane2.getStyleClass().add("dialog");
                     alert1.showAndWait();
                 }
             }

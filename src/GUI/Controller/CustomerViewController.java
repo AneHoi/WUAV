@@ -87,6 +87,9 @@ public class CustomerViewController implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open Customer Home Page", ButtonType.CANCEL);
+                    DialogPane dialogPane = alert.getDialogPane();
+                    dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+                    dialogPane.getStyleClass().add("dialog");
                     alert.showAndWait();
                 }
             }
@@ -100,6 +103,9 @@ public class CustomerViewController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could store link between customer and user in database", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
     }
@@ -144,6 +150,9 @@ public class CustomerViewController implements Initializable {
             customerObservableList.addAll(model.getAllCustomers());
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get customers from database", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         tblViewCustomers.setItems(customerObservableList);
@@ -184,6 +193,9 @@ public class CustomerViewController implements Initializable {
         Alert alertAreYouSure = new Alert(Alert.AlertType.CONFIRMATION);
         alertAreYouSure.setTitle("Deleting a customer");
         alertAreYouSure.setHeaderText("Are you sure you want to delete this customer:\n" + customer.getCustomerName());
+        DialogPane dialogPane = alertAreYouSure.getDialogPane();
+        dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+        dialogPane.getStyleClass().add("dialog");
 
         ButtonType deleteCustomer = new ButtonType("Delete customer");
         ButtonType cancel = new ButtonType("Cancel");
@@ -197,6 +209,9 @@ public class CustomerViewController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Could not delete a customer from the program", ButtonType.CANCEL);
+                DialogPane dialogPane1 = alert.getDialogPane();
+                dialogPane1.getStylesheets().add("/GUI/View/css/Main.css");
+                dialogPane1.getStyleClass().add("dialog");
                 alert.showAndWait();
             }
         }

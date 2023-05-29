@@ -13,9 +13,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
@@ -92,6 +91,9 @@ public class ReportHomePageController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get login details from database", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         for (LoginDetails ld : loginDetails) {
@@ -169,12 +171,18 @@ public class ReportHomePageController implements Initializable {
 
     private void deleteLoginDetails(LoginDetails ld) {
         Alert areYouSureAlert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to delete these login details?", ButtonType.YES, ButtonType.NO);
+        DialogPane dialogPane = areYouSureAlert.getDialogPane();
+        dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+        dialogPane.getStyleClass().add("dialog");
         areYouSureAlert.showAndWait();
         if (areYouSureAlert.getResult() == ButtonType.YES) {
             try {
                 model.deleteLoginDetails(ld.getLoginDetailsID());
             } catch (SQLException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Could not delete login details in database", ButtonType.CANCEL);
+                DialogPane dialogPane1 = alert.getDialogPane();
+                dialogPane1.getStylesheets().add("/GUI/View/css/Main.css");
+                dialogPane1.getStyleClass().add("dialog");
                 alert.showAndWait();
             }
         }
@@ -245,18 +253,24 @@ public class ReportHomePageController implements Initializable {
             reportData = model.getImagesAndTextsForReport(currentReport.getReportID());
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get images and text", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         return reportData;
     }
 
-    private List<LoginDetails> loginDetailsList(){
+    private List<LoginDetails> loginDetailsList() {
         List<LoginDetails> loginDetails = null;
-        try{
+        try {
             loginDetails = new ArrayList<>();
             loginDetails = model.getLoginDetails(currentReport.getReportID());
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get login details", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         return loginDetails;
@@ -271,6 +285,9 @@ public class ReportHomePageController implements Initializable {
             textsAndImagesOnReports = model.getImagesAndTextsForReport(currentReportID);
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not get images and text fields", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         for (TextsAndImagesOnReport textOrImage : textsAndImagesOnReports) {
@@ -289,6 +306,9 @@ public class ReportHomePageController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Image data not found", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         BorderPane bp = new BorderPane();
@@ -399,10 +419,16 @@ public class ReportHomePageController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not move item up", ButtonType.OK);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         } catch (IllegalStateException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         updateReport();
@@ -417,10 +443,16 @@ public class ReportHomePageController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not move item down", ButtonType.OK);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         } catch (IllegalStateException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         updateReport();
@@ -429,7 +461,7 @@ public class ReportHomePageController implements Initializable {
 
     private void updateReportInfo() {
         lblCustomerName.setText(currentCustomer.getCustomerName());
-        lblReportName.setText(" "+currentReport.getReportName());
+        lblReportName.setText(" " + currentReport.getReportName());
         lblCustomerAddress.setText(currentCustomer.getAddress());
         lblCustomerEmail.setText(currentCustomer.getEmail());
         lblCustomerTelephone.setText(currentCustomer.getPhoneNumber());
@@ -447,6 +479,9 @@ public class ReportHomePageController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not go back", ButtonType.OK);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
     }
@@ -494,6 +529,9 @@ public class ReportHomePageController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open the Drawing window", ButtonType.CANCEL);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
         updateReport();
@@ -501,6 +539,9 @@ public class ReportHomePageController implements Initializable {
 
     private void deletePartOfReport(TextsAndImagesOnReport textOrImage) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this part of the report?", ButtonType.YES, ButtonType.NO);
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+        dialogPane.getStyleClass().add("dialog");
         alert.showAndWait();
         if (alert.getResult() == ButtonType.YES) {
             try {
@@ -553,25 +594,29 @@ public class ReportHomePageController implements Initializable {
         PDFGenerator pdfGenerator = new PDFGenerator();
 
         pdfGenerator.generateReport(currentReport, currentCase, currentCustomer, textsAndImagesOnReportList(), loginDetailsList(), path);
-        File file = new File(path +"\\"+ currentReport.getReportName()+".pdf");
+        File file = new File(path + "\\" + currentReport.getReportName() + ".pdf");
         try {
             Desktop.getDesktop().open(file);
         } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open pdf");
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
         }
 
     }
-    private String getPath(){
+
+    private String getPath() {
         String path = "";
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select a folder");
         directoryChooser.getInitialDirectory();
-        if(btnSubmitReportForReview.getText().equals("Generate PDF")){
+        if (btnSubmitReportForReview.getText().equals("Generate PDF")) {
             Stage stage = (Stage) btnSubmitReportForReview.getScene().getWindow();
             File selectedFile = directoryChooser.showDialog(stage);
-            if(selectedFile != null){
+            if (selectedFile != null) {
                 path = selectedFile.getPath();
             }
         }
@@ -582,6 +627,10 @@ public class ReportHomePageController implements Initializable {
 
     private void closeReport() {
         Alert areYouSureAlert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to submit your report for review?", ButtonType.YES, ButtonType.NO);
+
+        DialogPane dialogPane = areYouSureAlert.getDialogPane();
+        dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+        dialogPane.getStyleClass().add("dialog");
         areYouSureAlert.showAndWait();
         if (areYouSureAlert.getResult() == ButtonType.YES) {
             try {
@@ -594,6 +643,9 @@ public class ReportHomePageController implements Initializable {
                 checkForReportStatus();
             } catch (SQLException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Could not submit report for review");
+                DialogPane dialogPane1 = alert.getDialogPane();
+                dialogPane1.getStylesheets().add("/GUI/View/css/Main.css");
+                dialogPane1.getStyleClass().add("dialog");
                 alert.showAndWait();
             }
         }
@@ -602,11 +654,17 @@ public class ReportHomePageController implements Initializable {
     private void submitForReview() {
         if (numberOfLoginDetails < 1) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "This report has no login details added, you need to specify login details before it can be submitted for review.\nIf login details are not needed for this report, please check the box 'No login details for this report' in the next window.", ButtonType.OK);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+            dialogPane.getStyleClass().add("dialog");
             alert.showAndWait();
             handleAddLoginDetails(new ActionEvent());
             return;
         }
         Alert areYouSureAlert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to submit your report for review?", ButtonType.YES, ButtonType.NO);
+        DialogPane dialogPane = areYouSureAlert.getDialogPane();
+        dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+        dialogPane.getStyleClass().add("dialog");
         areYouSureAlert.showAndWait();
         if (areYouSureAlert.getResult() == ButtonType.YES) {
             try {
@@ -617,6 +675,9 @@ public class ReportHomePageController implements Initializable {
                 checkForReportStatus();
             } catch (SQLException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Could not submit report for review");
+                DialogPane dialogPane1 = alert.getDialogPane();
+                dialogPane1.getStylesheets().add("/GUI/View/css/Main.css");
+                dialogPane1.getStyleClass().add("dialog");
                 alert.showAndWait();
             }
         }
