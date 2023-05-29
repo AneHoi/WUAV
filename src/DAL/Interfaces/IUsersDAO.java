@@ -18,4 +18,6 @@ public interface IUsersDAO {
     String getUserSalt(String userName) throws Exception;
     void setPassword(String userName, String password, String salt) throws Exception;
     User doesLogInExist (String username, String password) throws Exception;
+
+    void createNewUserWithImage(String fullName, String userName, String userTlf, String userEmail, int userType, byte[] profilePicture) throws SQLException;
 }

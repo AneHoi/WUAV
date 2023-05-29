@@ -49,5 +49,9 @@ public class UserManager {
         boolean hashed = (BCrypt.checkpw(checkPassword,hashedPassword));
         return hashed;
         }
+
+    public void createNewUserWithImage(String fullName, String userName, String userTlf, String userEmail, int userType, byte[] profilePicture) throws SQLException {
+        usersDAO.createNewUserWithImage(fullName, userName, userTlf, userEmail, userType, profilePicture);
     }
+}
 

@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -69,6 +70,8 @@
             <Insets left="25.0" right="25.0" />
          </VBox.margin>
       </ComboBox>
+      <ImageView fx:id="imgViewChooseImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="btnChooseImage" mnemonicParsing="false" onAction="#handleChooseImage" text="Choose Profile Picture" />
       <Button fx:id="btnCreateNewUser" mnemonicParsing="false" onAction="#handleCreateNewUser" prefWidth="200.0" text="Create New User">
          <font>
             <Font size="18.0" />

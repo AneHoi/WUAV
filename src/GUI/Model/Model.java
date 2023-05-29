@@ -265,4 +265,8 @@ public class Model {
     public ArrayList<CabelAndColor> getAllCables() {
         return drawingManager.getAllCables();
     }
+
+    public void createNewUserWithImage(String fullName, String userName, String userTlf, String userEmail, int userType, byte[] profilePicture) throws SQLException {
+        userManager.createNewUserWithImage(fullName, userName, userTlf, userEmail, userType, profilePicture);
+    }
 }
