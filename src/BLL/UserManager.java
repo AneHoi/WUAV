@@ -43,12 +43,11 @@ public class UserManager {
 
         return usersDAO.doesLogInExist(userName, hashedPassword);
     }
-    public String checkPassword(String userName, String password) throws Exception {
-        String salt = usersDAO.getUserSalt(userName);
-
-        String hashedPassword = BCrypt.hashpw(password, salt);
-
-        return  hashedPassword;
+    public boolean checkPassword(String hashedPW, String password) throws Exception {
+        String hashedPassword = hashedPW;
+        String checkPassword = password;
+        boolean hashed = (BCrypt.checkpw(checkPassword,hashedPassword));
+        return hashed;
+        }
     }
 
-}

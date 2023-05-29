@@ -5,6 +5,7 @@ import GUI.Controller.Util.Util;
 import GUI.Model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -20,9 +21,10 @@ public class ChangePasswordController implements Initializable {
     public PasswordField pswNewPassword;
     public PasswordField pswNewPasswordCheck;
     public Button btnChangePassword;
-    private Util util;
-    private Model model;
+    private Util util = new Util();
+    private Model model = new Model();
     private User user;
+
 
         @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -34,10 +36,11 @@ public class ChangePasswordController implements Initializable {
         imgWUAVLogo.setImage(util.loadImages(logo));
     }
     public void handleChangePassword(ActionEvent actionEvent) throws Exception {
-        if(pswOldPassword.getText() == "WUAV1234") {
-            if (pswNewPassword == pswNewPasswordCheck) {
+        if(model.checkPassword(user.getPassword(), pswOldPassword.getText())) {
+            if (pswNewPassword.getText().equals(pswNewPasswordCheck.getText())) {
                 if (pswNewPassword.getText().length() >= 8) {
                     model.setPassword(user.getUserName(), pswNewPassword.getText());
+                    ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
                 }
                 else {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Password must be 8 or more characters", ButtonType.CLOSE);
@@ -45,6 +48,8 @@ public class ChangePasswordController implements Initializable {
             }
         }
     }
-
+    public void setUser(User user) {
+        this.user = user;
+    }
 
 }

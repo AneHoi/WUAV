@@ -3,7 +3,6 @@ package GUI.Model;
 
 import BE.*;
 import BLL.*;
-import org.bouncycastle.util.Strings;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -102,8 +101,8 @@ public class Model {
     public User checkLogIn(String userName, String password) throws Exception {
         return userManager.checkLoggedInUser(userName, password);
     }
-    public String checkPassword(String userName, String password) throws Exception {
-        return userManager.checkPassword(userName, password);
+    public boolean checkPassword(String hashedPW, String password) throws Exception {
+        return userManager.checkPassword(hashedPW, password);
     }
 
     public void updateCase(int caseID, String caseName, String contactPerson, String caseDescription) throws SQLException {
