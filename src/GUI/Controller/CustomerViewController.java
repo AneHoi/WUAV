@@ -57,6 +57,7 @@ public class CustomerViewController implements Initializable {
     private void addListeners() {
         tblViewCustomers.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
+                hBoxButtonBar.getChildren().removeIf(node -> node instanceof Button && ((Button) node).getText().equals("Edit Customer"));
                 Button btnEditCustomer = new Button("Edit Customer");
                 btnEditCustomer.setPrefWidth(200);
                 util.addShadow(btnEditCustomer);
@@ -65,6 +66,7 @@ public class CustomerViewController implements Initializable {
                 btnDeleteCustomer.setVisible(true);
                 btnDeleteCustomer.setDisable(false);
                 btnCreateCustomer.setText("Create New Customer");
+
             } else {
                 hBoxButtonBar.getChildren().removeIf(node -> node instanceof Button && ((Button) node).getText().equals("Edit Customer"));
                 btnCreateCustomer.setText("Create New Customer");
@@ -103,7 +105,7 @@ public class CustomerViewController implements Initializable {
         }
     }
 
-    private void searchBarFilter() {  //TODO understand this...
+    private void searchBarFilter() {
         // Create a list to hold the original unfiltered items in the tblViewCustomers TableView
         ObservableList<Customer> originalList = FXCollections.observableArrayList(tblViewCustomers.getItems());
 
