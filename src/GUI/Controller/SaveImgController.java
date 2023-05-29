@@ -84,6 +84,9 @@ public class SaveImgController implements Initializable, Serializable {
         this.image = img;
     }
 
+    /**
+     * Saves sketch to report and closes window
+     */
     public void handleSave(ActionEvent event) {
 
         int position = nextPosition;

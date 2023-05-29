@@ -53,6 +53,9 @@ public class TopBarController implements Initializable {
 
     }
 
+    /**
+     * Opens alert box to check if you wish to log out, if yes is pressed closes window and reopens login window
+     */
     private void handleLogOut() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Are you sure you wish to log out?", ButtonType.YES, ButtonType.NO);
         DialogPane dialogPane = alert.getDialogPane();
@@ -82,6 +85,9 @@ public class TopBarController implements Initializable {
         }
     }
 
+    /**
+     * Gets the logged-in user, set the image, firstname and lastname. And sets the text on the logout button.
+     */
     private void loadUserInfo() {
         User user = controllerAssistant.getLoggedInUser();
         imgLogo.setImage(util.loadImages(logo));

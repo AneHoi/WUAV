@@ -41,6 +41,9 @@ public class UserHomePageController implements Initializable {
         lblWelcomeUser.setText("Welcome " + controllerAssistant.getLoggedInUser().getFullName());
     }
 
+    /**
+     * adds listeners to tableviews where if double-clicked changes view to customer homepage or case homepage
+     */
     private void addListeners() {
         tblViewViewedCustomers.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && tblViewViewedCustomers.getSelectionModel().getSelectedItem() != null) {
@@ -85,6 +88,9 @@ public class UserHomePageController implements Initializable {
         });
     }
 
+    /**
+     * Gets users active cases and recently viewed customers and inserts them into tables
+     */
     private void updateTableViews() {
         usersActiveCases = FXCollections.observableArrayList();
         recentlyViewedCustomers = FXCollections.observableArrayList();
