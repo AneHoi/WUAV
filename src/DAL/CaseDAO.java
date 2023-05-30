@@ -17,6 +17,12 @@ public class CaseDAO implements ICaseDAO {
         db = DBConnector.getInstance();
     }
 
+    /**
+     * get all cases connected to this customer
+     * @param customerID this customers ID
+     * @return A list of cases connected to the costumer
+     * @throws SQLException
+     */
     @Override
     public List<Case> getCasesForThisCustomer(int customerID) throws SQLException {
         List<Case> cases = new ArrayList<>();
@@ -44,6 +50,14 @@ public class CaseDAO implements ICaseDAO {
 
     }
 
+    /**
+     * Creating a new case based on the customer
+     * @param caseName the name of the case, that is about to be created
+     * @param caseContact the contact person for the specific case
+     * @param caseDescription The description of the case
+     * @param customerID The Customer, the case will be linked to
+     * @throws SQLException
+     */
     @Override
     public void createNewCase(String caseName, String caseContact, String caseDescription, int customerID) throws SQLException {
         try (Connection conn = db.getConnection()) {
@@ -60,6 +74,15 @@ public class CaseDAO implements ICaseDAO {
         }
     }
 
+    /**
+     * Add a technician to a specific case
+     * In the db, this creates a link between the technician and the case.
+     * The method deletes the current links between the technicians and the specific case to establish the connection with
+     * ALL the technicians that is sent into the method
+     * @param caseID
+     * @param chosenTechnicians
+     * @throws SQLException
+     */
     @Override
     public void addTechnicianToCase(int caseID, List<Technician> chosenTechnicians) throws SQLException {
         try (Connection conn = db.getConnection()) {
@@ -84,6 +107,14 @@ public class CaseDAO implements ICaseDAO {
         }
     }
 
+    /**
+     * A caseID is sent into the method to get the Case for from the id.
+     * Only used in Search for reports view, because
+     * the CaseId is the only thing from the cases saved in the tableview
+     * @param chosenCase
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Case getChosenCase(int chosenCase) throws SQLException {
         Case c = null;
@@ -113,6 +144,11 @@ public class CaseDAO implements ICaseDAO {
         return c;
     }
 
+    /**
+     * Get all the cases from the database that are assigned to a user in the system
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<Case> getAllCases() throws SQLException {
         List<Case> cases = new ArrayList<>();
@@ -146,6 +182,14 @@ public class CaseDAO implements ICaseDAO {
         return cases;
     }
 
+    /**
+     * Update a case based on the parameters:
+     * @param caseID
+     * @param caseName
+     * @param contactPerson
+     * @param caseDescription
+     * @throws SQLException
+     */
     @Override
     public void updateCase(int caseID, String caseName, String contactPerson, String caseDescription) throws SQLException {
         try (Connection conn = db.getConnection()) {
@@ -163,6 +207,12 @@ public class CaseDAO implements ICaseDAO {
         }
     }
 
+    /**
+     * Reruns all the technicians assigned to the case
+     * @param caseID
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<Technician> getAssignedTechnicians(int caseID) throws SQLException {
         List<Technician> assignedTechs = new ArrayList<>();
@@ -188,6 +238,11 @@ public class CaseDAO implements ICaseDAO {
         return assignedTechs;
     }
 
+    /**
+     * Detele the case and all the connections to it
+     * @param selectedCase
+     * @throws SQLException
+     */
     public void deleteCase(Case selectedCase) throws SQLException {
         try (Connection conn = db.getConnection()) {
             // Create statement object
@@ -217,6 +272,11 @@ public class CaseDAO implements ICaseDAO {
         }
     }
 
+    /**
+     * Close the specific case
+     * @param chosenCase
+     * @throws SQLException
+     */
     public void closeCase(Case chosenCase) throws SQLException {
         try (Connection conn = db.getConnection()) {
             String sql = "UPDATE Case_ SET Case_Closed_Date = (?), Case_Days_To_Keep = (?) WHERE Case_ID = " + chosenCase.getCaseID() + ";";
@@ -231,6 +291,12 @@ public class CaseDAO implements ICaseDAO {
         }
     }
 
+    /**
+     * Expand how much time, to keep the specific case, if it is closed
+     * @param selectedCase
+     * @param daysToKeep
+     * @throws SQLException
+     */
     public void expandKeepingTime(Case selectedCase, int daysToKeep) throws SQLException {
         try (Connection conn = db.getConnection()) {
             String sql = "UPDATE Case_ SET Case_Days_To_Keep = (?) WHERE Case_ID = " + selectedCase.getCaseID() + ";";
@@ -244,6 +310,12 @@ public class CaseDAO implements ICaseDAO {
         }
     }
 
+    /**
+     * Looks for what open cases the user have looked at recently.
+     * @param userID
+     * @param caseID
+     * @throws SQLException
+     */
     public void storeUserCaseLink(int userID, int caseID) throws SQLException {
         try (Connection conn = db.getConnection()) {
 
@@ -254,10 +326,8 @@ public class CaseDAO implements ICaseDAO {
             ResultSet rs1 = ps1.executeQuery();
 
             if (rs1.next()) {
-
                 return;
             }
-
 
             String sql2 = "SELECT COUNT(*) FROM Report WHERE Report_Case_ID = (?) AND Report_Is_Active = 'Open';";
             PreparedStatement ps2 = conn.prepareStatement(sql2);
@@ -268,7 +338,6 @@ public class CaseDAO implements ICaseDAO {
             if (activeReportsCount == 0) {
                 return;
             }
-
 
             String sql3 = "INSERT INTO User_Active_Cases_Link (User_ID, Case_ID) VALUES (?, ?);";
             PreparedStatement ps3 = conn.prepareStatement(sql3);
@@ -300,7 +369,12 @@ public class CaseDAO implements ICaseDAO {
         }
     }
 
-
+    /**
+     * Get all active cases connected to a user
+     * @param userID
+     * @return
+     * @throws SQLException
+     */
     public List<Case> getUsersActiveCases(int userID) throws SQLException {
         List<Case> usersActiveCases = new ArrayList<>();
         try (Connection conn = db.getConnection()) {
@@ -327,8 +401,6 @@ public class CaseDAO implements ICaseDAO {
             e.printStackTrace();
             throw new SQLException();
         }
-
-
         return usersActiveCases;
     }
 }
