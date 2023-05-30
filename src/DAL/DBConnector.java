@@ -54,9 +54,6 @@ public class DBConnector {
 
         try (Connection connection = databaseConnector.getConnection()) {
             System.out.println("Is it open? " + !connection.isClosed());
-            //TODO test, and get something out of the DB
-
-
         } //Connection gets closed here
     }
 }
