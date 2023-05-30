@@ -17,6 +17,12 @@ public class DrawingDAO implements IDrawingDAO {
         db = DBConnector.getInstance();
     }
 
+    /**
+     * Adds icon and icon description to database
+     * @param dataImage
+     * @param text
+     * @throws SQLException
+     */
     @Override
     public void addDrawingIcon(byte[] dataImage, String text) throws SQLException {
         try (Connection conn = db.getConnection()) {
@@ -32,6 +38,11 @@ public class DrawingDAO implements IDrawingDAO {
         }
     }
 
+    /**
+     * gets all icons from the database
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<DrawingIcon> getAllIcons() throws SQLException {
         List<DrawingIcon> allIcons = new ArrayList<>();
@@ -54,6 +65,10 @@ public class DrawingDAO implements IDrawingDAO {
         return allIcons;
     }
 
+    /**
+     * Gets all cables and cable colors from database
+     * @return
+     */
     public List<CabelAndColor> getAllCables() {
         List<CabelAndColor> cabelAndColors = new ArrayList<>();
         try (Connection conn = db.getConnection()) {
