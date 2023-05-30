@@ -20,6 +20,11 @@ public class UsersDAO implements IUsersDAO {
         db = DBConnector.getInstance();
     }
 
+    /**
+     * Gets all technicians from database
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<Technician> getAllTechnicians() throws SQLException {
         List<Technician> technicians = new ArrayList<>();
@@ -46,6 +51,11 @@ public class UsersDAO implements IUsersDAO {
         return technicians;
     }
 
+    /**
+     * Gets all users from database
+     * @return
+     * @throws SQLException
+     */
     public List<User> getAllUsers() throws SQLException {
         List<User> users = new ArrayList<>();
         try (Connection conn = db.getConnection()) {
@@ -86,6 +96,16 @@ public class UsersDAO implements IUsersDAO {
         return users;
     }
 
+    /**
+     * Updates user info in database
+     * @param userID
+     * @param fullName
+     * @param userName
+     * @param userTlf
+     * @param userEmail
+     * @param userActive
+     * @throws SQLException
+     */
     @Override
     public void updateUser(int userID, String fullName, String userName, String userTlf, String userEmail, boolean userActive) throws SQLException {
         try (Connection conn = db.getConnection()) {
@@ -103,6 +123,15 @@ public class UsersDAO implements IUsersDAO {
         }
     }
 
+    /**
+     * Creates new user without an image
+     * @param fullName
+     * @param userName
+     * @param userTlf
+     * @param userEmail
+     * @param userType
+     * @throws SQLException
+     */
     @Override
     public void createNewUser(String fullName, String userName, String userTlf, String userEmail, int userType) throws SQLException {
         try (Connection conn = db.getConnection()) {
@@ -122,6 +151,12 @@ public class UsersDAO implements IUsersDAO {
 
     }
 
+    /**
+     * Gets the user salt from tha database
+     * @param userName
+     * @return
+     * @throws Exception
+     */
     @Override
     public String getUserSalt(String userName) throws Exception {
         String salt = "";
@@ -147,6 +182,13 @@ public class UsersDAO implements IUsersDAO {
         return salt;
     }
 
+    /**
+     * Sets password for user in database
+     * @param userName
+     * @param password
+     * @param salt
+     * @throws Exception
+     */
     @Override
     public void setPassword(String userName, String password, String salt) throws Exception {
         try (Connection conn = db.getConnection()) {
@@ -167,6 +209,13 @@ public class UsersDAO implements IUsersDAO {
         }
     }
 
+    /**
+     * Checks login against passwords and username in database
+     * @param username
+     * @param password
+     * @return
+     * @throws Exception
+     */
     @Override
     public User doesLogInExist(String username, String password) throws Exception {
         User user = null;
@@ -217,6 +266,16 @@ public class UsersDAO implements IUsersDAO {
         return user;
     }
 
+    /**
+     * Creates new user in database with a profile picture
+     * @param fullName
+     * @param userName
+     * @param userTlf
+     * @param userEmail
+     * @param userType
+     * @param profilePicture
+     * @throws SQLException
+     */
     @Override
     public void createNewUserWithImage(String fullName, String userName, String userTlf, String userEmail, int userType, byte[] profilePicture) throws SQLException {
         try (Connection conn = db.getConnection()) {
