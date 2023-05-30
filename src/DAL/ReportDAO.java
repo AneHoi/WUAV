@@ -17,6 +17,14 @@ public class ReportDAO implements IReportDAO {
         db = DBConnector.getInstance();
     }
 
+    /**
+     * Creates ned report in the database with the right values in the right places
+     * @param reportName
+     * @param reportDescription
+     * @param caseID
+     * @param userID
+     * @throws SQLException
+     */
     @Override
     public void createNewReport(String reportName, String reportDescription, int caseID, int userID) throws SQLException {
         LocalDate date = LocalDate.now();
@@ -37,6 +45,12 @@ public class ReportDAO implements IReportDAO {
 
     }
 
+    /**
+     * Gets specific report from database based the report id
+     * @param reportID
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Report getChosenReport(int reportID) throws SQLException {
         Report report = null;
@@ -62,6 +76,12 @@ public class ReportDAO implements IReportDAO {
         return report;
     }
 
+    /**
+     * Gets reports from database based on the case id
+     * @param caseID
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<Report> getReports(int caseID) throws SQLException {
         List<Report> reports = new ArrayList<>();
@@ -88,6 +108,12 @@ public class ReportDAO implements IReportDAO {
         return reports;
     }
 
+    /**
+     * Gets a list of all reports cases and customers from database
+     * Add to list of reportCaseCustomer.
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<ReportCaseAndCustomer> getAllReports() throws SQLException {
         List<ReportCaseAndCustomer> reportCaseAndCustomers = new ArrayList<>();
@@ -130,7 +156,16 @@ public class ReportDAO implements IReportDAO {
         return reportCaseAndCustomers;
     }
 
-
+    /**
+     * Inserts text on reports in database links to technician and report id
+     * @param position
+     * @param reportID
+     * @param txt
+     * @param userID
+     * @param createdDate
+     * @param createdTime
+     * @throws SQLException
+     */
     @Override
     public void SaveTextToReport(int position, int reportID, String txt, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
         try (Connection conn = db.getConnection()) {
@@ -169,6 +204,17 @@ public class ReportDAO implements IReportDAO {
         }
     }
 
+    /**
+     * Inserts images in database links to technician and report id
+     * @param position
+     * @param reportID
+     * @param dataImage
+     * @param comment
+     * @param userID
+     * @param createdDate
+     * @param createdTime
+     * @throws SQLException
+     */
     @Override
     public void SaveImageToReport(int position, int reportID, byte[] dataImage, String comment, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
         try (Connection conn = db.getConnection()) {
@@ -208,6 +254,12 @@ public class ReportDAO implements IReportDAO {
         }
     }
 
+    /**
+     * Gets list og TextsAndImagesOnReport based on the given report id
+     * @param currentReportID
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<TextsAndImagesOnReport> getImagesAndTextsForReport(int currentReportID) throws SQLException {
         List<TextsAndImagesOnReport> textsAndImagesOnReports = new ArrayList<>();
@@ -249,6 +301,16 @@ public class ReportDAO implements IReportDAO {
         return textsAndImagesOnReports;
     }
 
+    /**
+     * Updates image in database
+     * @param imageID
+     * @param dataImage
+     * @param comment
+     * @param userID
+     * @param createdDate
+     * @param createdTime
+     * @throws SQLException
+     */
     public void updateImageInReport(int imageID, byte[] dataImage, String comment, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
         try (Connection conn = db.getConnection()) {
             String sql = "UPDATE Text_Or_Image_On_Report SET Image_On_Report_Image = (?), Image_On_Report_Comment = (?), Added_By_Tech = (?), Added_Date = (?), Added_Time = (?) WHERE Text_Or_Image_On_Report_ID = (?);";
@@ -268,6 +330,11 @@ public class ReportDAO implements IReportDAO {
         }
     }
 
+    /**
+     * Deletes a Text or image on the report and updates the positions on the report
+     * @param textOrImage
+     * @throws SQLException
+     */
     @Override
     public void deletePartOfReport(TextsAndImagesOnReport textOrImage) throws SQLException {
         try (Connection conn = db.getConnection()) {
@@ -298,6 +365,15 @@ public class ReportDAO implements IReportDAO {
 
     }
 
+    /**
+     * Updates the text on the reports
+     * @param textID
+     * @param txt
+     * @param userID
+     * @param createdDate
+     * @param createdTime
+     * @throws SQLException
+     */
     public void updateTextInReport(int textID, String txt, int userID, LocalDate createdDate, LocalTime createdTime) throws SQLException {
         try (Connection conn = db.getConnection()) {
             String sql = "UPDATE Text_Or_Image_On_Report SET Text_On_Report = (?), Added_By_Tech = (?), Added_Date = (?), Added_Time = (?) WHERE Text_Or_Image_On_Report_ID = (?);";
@@ -315,6 +391,13 @@ public class ReportDAO implements IReportDAO {
         }
     }
 
+    /**
+     * Updates the position of text or image position in the report to move it up in database
+     * @param textOrImageID
+     * @param positionOnReport
+     * @throws SQLException
+     * @throws IllegalStateException
+     */
     public void moveItemUp(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException {
         try (Connection conn = db.getConnection()) {
 
@@ -354,7 +437,13 @@ public class ReportDAO implements IReportDAO {
         }
     }
 
-
+    /**
+     * Updates the position of text or image position in the report to move it up in database
+     * @param textOrImageID
+     * @param positionOnReport
+     * @throws SQLException
+     * @throws IllegalStateException
+     */
     public void moveItemDown(int textOrImageID, int positionOnReport) throws SQLException, IllegalStateException {
         try (Connection conn = db.getConnection()) {
             conn.setAutoCommit(false);
@@ -389,6 +478,11 @@ public class ReportDAO implements IReportDAO {
         }
     }
 
+    /**
+     * Changes report status to submitted for review in database
+     * @param reportID
+     * @throws SQLException
+     */
     @Override
     public void submitReportForReview(int reportID) throws SQLException {
         try (Connection conn = db.getConnection()) {
@@ -402,6 +496,11 @@ public class ReportDAO implements IReportDAO {
         }
     }
 
+    /**
+     * Changes report status to closed in database
+     * @param reportID
+     * @throws SQLException
+     */
     @Override
     public void closeReport(int reportID) throws SQLException {
         try (Connection conn = db.getConnection()) {
@@ -415,6 +514,14 @@ public class ReportDAO implements IReportDAO {
         }
     }
 
+    /**
+     * Updates report name, report description and assigned technician in database on given report id
+     * @param reportID
+     * @param reportName
+     * @param reportDescription
+     * @param userID
+     * @throws SQLException
+     */
     public void updateReport(int reportID, String reportName, String reportDescription, int userID) throws SQLException {
         try (Connection conn = db.getConnection()) {
             String sql = "UPDATE Report SET Report_Name = (?), Report_Description = (?), Report_Assigned_Tech_ID = (?) WHERE Report_ID = (?);";
@@ -431,6 +538,11 @@ public class ReportDAO implements IReportDAO {
         }
     }
 
+    /**
+     * deletes report from database on given report id position
+     * @param reportID
+     * @throws SQLException
+     */
     public void deleteReport(int reportID) throws SQLException {
         try (Connection conn = db.getConnection()) {
             String sql = "DELETE FROM Report WHERE Report_ID = (?);";
@@ -443,6 +555,18 @@ public class ReportDAO implements IReportDAO {
         }
     }
 
+    /**
+     * Saves login details in database
+     * @param reportID
+     * @param component
+     * @param username
+     * @param password
+     * @param additionalInfo
+     * @param createdDate
+     * @param createdTime
+     * @param userID
+     * @throws SQLException
+     */
     public void saveLoginDetails(int reportID, String component, String username, String password, String additionalInfo, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
         try (Connection conn = db.getConnection()) {
             // Insert into Login_Details table
@@ -483,7 +607,14 @@ public class ReportDAO implements IReportDAO {
         }
     }
 
-
+    /**
+     * Set login details to null in database, on given report fills time and date created
+     * @param reportID
+     * @param createdDate
+     * @param createdTime
+     * @param userID
+     * @throws SQLException
+     */
     public void noLoginInfoForThisReport(int reportID, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
         try (Connection conn = db.getConnection()) {
             // Insert into Login_Details table with No_Login_Details set to true
@@ -520,6 +651,12 @@ public class ReportDAO implements IReportDAO {
         }
     }
 
+    /**
+     * Gets a list of all login details for report based on report id from database
+     * @param reportID
+     * @return
+     * @throws SQLException
+     */
     public List<LoginDetails> getLoginDetails(int reportID) throws SQLException {
         List<LoginDetails> loginDetails = new ArrayList<>();
         try (Connection conn = db.getConnection()) {
@@ -559,6 +696,11 @@ public class ReportDAO implements IReportDAO {
         return loginDetails;
     }
 
+    /**
+     * Deletes login details from database on given login details id
+     * @param loginDetailsID
+     * @throws SQLException
+     */
     public void deleteLoginDetails(int loginDetailsID) throws SQLException {
         try (Connection conn = db.getConnection()) {
             String sql = "DELETE FROM Login_Details WHERE Login_Details_ID = (?);";
@@ -571,6 +713,18 @@ public class ReportDAO implements IReportDAO {
         }
     }
 
+    /**
+     * Updates login details in database on given login details id position
+     * @param loginDetailsID
+     * @param component
+     * @param username
+     * @param password
+     * @param additionalInfo
+     * @param createdDate
+     * @param createdTime
+     * @param userID
+     * @throws SQLException
+     */
     public void updateLoginDetails(int loginDetailsID, String component, String username, String password, String additionalInfo, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
         try (Connection conn = db.getConnection()) {
             String sql = "UPDATE Login_Details SET No_Login_Details = (?), Component = (?), " +
@@ -595,6 +749,14 @@ public class ReportDAO implements IReportDAO {
         }
     }
 
+    /**
+     * Updates to no login detail in database on login details id position
+     * @param loginDetailsID
+     * @param createdDate
+     * @param createdTime
+     * @param userID
+     * @throws SQLException
+     */
     public void updateToNoLogin(int loginDetailsID, LocalDate createdDate, LocalTime createdTime, int userID) throws SQLException {
         try (Connection conn = db.getConnection()) {
             String sql = "UPDATE Login_Details SET No_Login_Details = (?), Component = (?), " +

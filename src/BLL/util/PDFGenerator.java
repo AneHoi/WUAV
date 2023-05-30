@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
+/**
+ * Generates pdf from the data in textAndImagesOnReport, login details, customer info and case info.
+ */
 public class PDFGenerator {
     public void generateReport(Report report, Case selectedCase, Customer customer, List<TextsAndImagesOnReport> textsAndImagesOnReportList, List<LoginDetails> loginDetails, String path) throws FileNotFoundException {
         try {

@@ -15,6 +15,11 @@ public class CustomerDAO implements ICustomerDAO {
         db = DBConnector.getInstance();
     }
 
+    /**
+     * Gets all customers from database
+     * @return
+     * @throws SQLException
+     */
     public List<Customer> getAllCostumers() throws SQLException {
         List<Customer> customers = new ArrayList<>();
         try (Connection conn = db.getConnection()) {
@@ -41,6 +46,12 @@ public class CustomerDAO implements ICustomerDAO {
         return customers;
     }
 
+    /**
+     * Gets customer from database from given customer id
+     * @param chosenCustomer
+     * @return
+     * @throws SQLException
+     */
     public Customer getChosenCustomer(int chosenCustomer) throws SQLException {
         Customer customerVar = null;
         try (Connection conn = db.getConnection()) {
@@ -66,6 +77,10 @@ public class CustomerDAO implements ICustomerDAO {
         return customerVar;
     }
 
+    /**
+     * Adds customer to database
+     * @param customerVar
+     */
     public void saveCustomer(Customer customerVar) {
         try (Connection conn = db.getConnection()) {
             String sql = "INSERT INTO Customer" + "(Customer_Name, Customer_Address, Customer_Mail, Customer_Tlf, Customer_CVR, Customer_Type)" + "VALUES(?,?,?,?,?,?);";
@@ -85,7 +100,11 @@ public class CustomerDAO implements ICustomerDAO {
         }
     }
 
-
+    /**
+     * Updates customer in database on given customer id's position
+     * @param customerVar
+     * @throws SQLException
+     */
     public void updateCustomer(Customer customerVar) throws SQLException {
         try (Connection conn = db.getConnection()) {
             String sql = """
@@ -110,6 +129,11 @@ public class CustomerDAO implements ICustomerDAO {
         }
     }
 
+    /**
+     * Deletes customer from database based on customer id
+     * @param customer
+     * @throws SQLException
+     */
     public void deleteCustomer(Customer customer) throws SQLException {
         try (Connection conn = db.getConnection()) {
             String sql = "DELETE FROM Customer WHERE Customer_ID = " + customer.getCustomerID() + ";";
@@ -121,6 +145,13 @@ public class CustomerDAO implements ICustomerDAO {
         }
     }
 
+    /**
+     * Creates link between customer and user in database in User_Customer_Link table from given customer id and user id
+     * If links to a user is greater than 10 deletes first link in table with this user id
+     * @param userID
+     * @param customerID
+     * @throws SQLException
+     */
     public void storeUserCustomerLink(int userID, int customerID) throws SQLException {
         try (Connection conn = db.getConnection()) {
 
@@ -163,7 +194,13 @@ public class CustomerDAO implements ICustomerDAO {
         }
     }
 
-
+    /**
+     * Gets all links between customers and users
+     * Creates list of customers with link to user id
+     * @param userID
+     * @return
+     * @throws SQLException
+     */
     public List<Customer> getRecentlyViewedCustomers(int userID) throws SQLException {
         List<Customer> recentlyViewedCustomers = new ArrayList<>();
         try (Connection conn = db.getConnection()) {
