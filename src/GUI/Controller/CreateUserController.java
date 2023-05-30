@@ -192,6 +192,9 @@ public class CreateUserController implements Initializable {
                     try {
                         model.updateUser(userID, fullName, userName, userTlf, userEmail, userActive);
                         Alert success = new Alert(Alert.AlertType.INFORMATION, "User: " + user.getFullName() + " was made inactive", ButtonType.OK );
+                        DialogPane dialogPane1 = success.getDialogPane();
+                        dialogPane1.getStylesheets().add("/GUI/View/css/Main.css");
+                        dialogPane1.getStyleClass().add("dialog");
                         success.showAndWait();
                     } catch (SQLException e) {
                         e.printStackTrace();

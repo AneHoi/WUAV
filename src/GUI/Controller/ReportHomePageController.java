@@ -229,7 +229,7 @@ public class ReportHomePageController implements Initializable {
 
     /**
      * Checks report status.
-     *  It disables editing by default and enables editing and updates button properties depending on the report status and the user's type.
+     * It disables editing by default and enables editing and updates button properties depending on the report status and the user's type.
      */
     private void checkForReportStatus() {
         disableEditing();
@@ -293,11 +293,11 @@ public class ReportHomePageController implements Initializable {
         }
         return reportData;
     }
-    
+
     /**
      * Creates list of LoginDetails, inserts data from getLoginDetails method in model class from current report id. Returns list.
      */
-    private List<LoginDetails> loginDetailsList(){
+    private List<LoginDetails> loginDetailsList() {
         List<LoginDetails> loginDetails = null;
         try {
             loginDetails = new ArrayList<>();
@@ -744,7 +744,7 @@ public class ReportHomePageController implements Initializable {
      * If the "Generate PDF" button is clicked, it gets the current window's stage and shows the directory chooser dialog.
      * If a folder is selected, it returns the path of the selected folder, returns the path.
      */
-    private String getPath(){
+    private String getPath() {
         String path = "";
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select a folder");
@@ -766,8 +766,12 @@ public class ReportHomePageController implements Initializable {
      * changes the text of the submit button to "Generate PDF", and updates the report status label.
      */
     private void closeReport() {
-        Alert areYouSureAlert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to submit your report for review?", ButtonType.YES, ButtonType.NO);
-
+        Alert areYouSureAlert = null;
+        if (btnSubmitReportForReview.getText().equals("Submit Report")) {
+            areYouSureAlert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to submit your report for review?", ButtonType.YES, ButtonType.NO);
+        } else if (btnSubmitReportForReview.getText().equals("Close Report")) {
+            areYouSureAlert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to close your report?", ButtonType.YES, ButtonType.NO);
+        }
         DialogPane dialogPane = areYouSureAlert.getDialogPane();
         dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
         dialogPane.getStyleClass().add("dialog");

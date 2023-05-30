@@ -150,6 +150,9 @@ public class PopUpAgeOfCasesController implements Initializable {
         Alert alertCaseForDeleting = new Alert(Alert.AlertType.CONFIRMATION);
         alertCaseForDeleting.setTitle("Expanding the time for keeping a case");
         alertCaseForDeleting.setHeaderText("How much time would you like to expand the time of keeping this case:\n" + selectedCase.getCaseName());
+        DialogPane dialogPane = alertCaseForDeleting.getDialogPane();
+        dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+        dialogPane.getStyleClass().add("dialog");
 
         ButtonType oneMonth = new ButtonType("1 month");
         ButtonType halfAYear = new ButtonType("0.5 year");
@@ -223,6 +226,9 @@ public class PopUpAgeOfCasesController implements Initializable {
         alertCaseForDeleting.setTitle("Deleting a case");
         alertCaseForDeleting.setHeaderText("Are you sure you want to delete this case:\n" + casen.getCaseName() +
                 "\t it is: " + monthsBetween + " month old");
+        DialogPane dialogPane = alertCaseForDeleting.getDialogPane();
+        dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
+        dialogPane.getStyleClass().add("dialog");
 
         ButtonType deleteCase = new ButtonType("Delete case");
         ButtonType cancel = new ButtonType("Cancel");
@@ -237,9 +243,9 @@ public class PopUpAgeOfCasesController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Could not delete the case from the program", ButtonType.CANCEL);
-                DialogPane dialogPane = alert.getDialogPane();
-                dialogPane.getStylesheets().add("/GUI/View/css/Main.css");
-                dialogPane.getStyleClass().add("dialog");
+                DialogPane dialogPane1 = alert.getDialogPane();
+                dialogPane1.getStylesheets().add("/GUI/View/css/Main.css");
+                dialogPane1.getStyleClass().add("dialog");
                 alert.showAndWait();
             }
             updateTableView();
