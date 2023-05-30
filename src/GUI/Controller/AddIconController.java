@@ -53,8 +53,6 @@ public class AddIconController implements Initializable {
         vBox.getChildren().remove(lblImage);
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Image");
-        //TODO remove this line when Handing in. It is for testing the program.
-        fileChooser.setInitialDirectory(new File("..\\WUAV\\data\\Images\\DrawingProgramTest"));
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
         Stage stage = (Stage) btnChooseImage.getScene().getWindow();
         File selectedFile = fileChooser.showOpenDialog(stage);

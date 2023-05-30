@@ -5,6 +5,10 @@ import javafx.scene.Node;
 public class DraggableMaker {
     private double mouseX, mouseY, startVal;
 
+    /**
+     * This method takes in one or more Nodes, and makes them draggable in the drawing Pane
+     * @param node
+     */
 
     public void makeDraggable(Node... node) {
         for (Node nodes : node) {
